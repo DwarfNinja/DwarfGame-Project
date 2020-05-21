@@ -9,6 +9,11 @@ var velocity = Vector2.ZERO
 # Inventory varaibles
 var can_pickup_wood = false
 var wood_in_inv = 0
+var inventory_items = {
+	"wood": 0,
+	"stone": 0,
+	"gold":0
+}
 
 # Signals
 signal wood_picked_up
@@ -16,13 +21,9 @@ signal wood_picked_up
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
-onready var woodenlogs = get_parent().get_node("WoodenLogs")
+#onready var woodenlogs = get_parent().get_node("WoodenLogs")
 
 
-func _ready():
-	#Connect Signals
-	woodenlogs.connect("player_entered_woodpickup_area", self, "_on_player_entered_woodpickup_area")
-	
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -41,12 +42,13 @@ func _physics_process(delta):
 	
 	velocity = move_and_slide(velocity)
 
-func _process(delta):
+func _process(_delta):
+	
 	if can_pickup_wood == true:
 		if Input.is_action_just_pressed("key_e"):
-			wood_in_inv += 1
+			inventory_items.wood += 1
 			emit_signal("wood_picked_up")
 
-func _on_player_entered_woodpickup_area():
+
+func _on_WoodenLogs_player_entered_woodpickup_area():
 	can_pickup_wood = true
-	
