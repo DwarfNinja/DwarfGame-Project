@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://FloorTileCaveDark.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/WoodenLogs.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Rock.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/MiningRig.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=6]
+
+[node name="World" type="Node2D"]
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 160, 90 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 320, 180 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 55, 43 )
+
+[node name="Rock" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 103, 58 )
+
+[node name="MiningRig" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 194, 80 )
+
+[node name="WoodenLogs" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 78, 97 )
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]
+[connection signal="wood_picked_up" from="YSort/Player" to="YSort/WoodenLogs" method="_on_Player_wood_picked_up"]
