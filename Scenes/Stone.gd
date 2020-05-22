@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 var can_pickup = false
-export var item_name = "wood"
+export var item_name = "stone"
 export var item_count = 1
 
 func _ready():
@@ -14,13 +14,13 @@ func _process(_delta):
 			queue_free()
 		
 
-func _on_PickUpArea_area_entered(area):
+func _on_PickupArea_area_entered(area):
 	if area.is_in_group("pickup_area"):
-			can_pickup = true
-			$GrabSprite.visible = true
-		
+		can_pickup = true
+		$GrabSprite.visible = true
 
-func _on_PickUpArea_area_exited(area):
+
+func _on_PickupArea_area_exited(area):
 	if area.get_name() == "Pickup_Area":
 		can_pickup = false
 		$GrabSprite.visible = false

@@ -7,22 +7,17 @@ const FRICTION = 600
 var velocity = Vector2.ZERO
 
 # Inventory varaibles
-var can_pickup_wood = false
-var wood_in_inv = 0
+#-----------------
 
-# Signals
-signal wood_picked_up
 
+onready var PlayerSprite = $PlayerSprite
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
+onready var PickupArea = $Pickup_Area
+
 onready var animationState = animationTree.get("parameters/playback")
-onready var woodenlogs = get_parent().get_node("WoodenLogs")
+#onready var woodenlogs = get_parent().get_node("WoodenLogs")
 
-
-func _ready():
-	#Connect Signals
-	woodenlogs.connect("player_entered_woodpickup_area", self, "_on_player_entered_woodpickup_area")
-	
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -39,14 +34,42 @@ func _physics_process(delta):
 		animationState.travel("Idle")
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	
+
 	velocity = move_and_slide(velocity)
-
-func _process(delta):
-	if can_pickup_wood == true:
-		if Input.is_action_just_pressed("key_e"):
-			wood_in_inv += 1
-			emit_signal("wood_picked_up")
-
-func _on_player_entered_woodpickup_area():
-	can_pickup_wood = true
 	
+	if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
+		PickupArea.position = Vector2(19, -5) #RIGHT
+	if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
+		PickupArea.position = Vector2(-19, -5) #LEFT
+	if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
+		PickupArea.position = Vector2(0, -26) #UP
+	if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
+		PickupArea.position = Vector2(0, 14) #DOWN
+	
+
+	
+	
+		
+		
+		
+		
+	
+#	if input_vector.y > 0:
+#		itemPicker.position = Vector2(0, 14) #DOWN
+#	elif input_vector.y < 0:
+#		itemPicker.position = Vector2(0, -26) #UP
+#	if input_vector.x > 0:
+#		itemPicker.position = Vector2(19, -5) #RIGHT
+#	elif input_vector.x < 0:
+#		itemPicker.position = Vector2(-19, -5) #LEFT
+#
+#	print(input_vector)
+		
+	
+	
+#	var playback = $AnimationTree.get("parameters/playback")
+#	var animation = playback.get_current_node().get("animation")
+#	print(animation)
+#	if animation == "IdleDown" or animation == "RunDown":
+#		itemPicker.position = Vector2(0, 16)
+		
