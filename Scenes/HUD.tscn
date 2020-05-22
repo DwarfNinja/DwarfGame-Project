@@ -39,11 +39,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ItemCount" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar/Slot_0"]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Slot_1" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar"]
 margin_left = 27.0
 margin_top = 3.0
 margin_right = 49.0
 margin_bottom = 23.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemCount" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar/Slot_1"]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -57,11 +75,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ItemCount" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar/Slot_2"]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Slot_3" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar"]
 margin_left = 75.0
 margin_top = 3.0
 margin_right = 97.0
 margin_bottom = 23.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemCount" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar/Slot_3"]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -75,11 +111,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ItemCount" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar/Slot_4"]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Slot_5" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar"]
 margin_left = 123.0
 margin_top = 3.0
 margin_right = 145.0
 margin_bottom = 23.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemCount" type="TextureRect" parent="VBoxContainer/CenterContainer/InventoryBar/Slot_5"]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
