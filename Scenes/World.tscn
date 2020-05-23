@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/MiningRig.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Stone.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Iron.tscn" type="PackedScene" id=7]
 
 [node name="World" type="Node2D"]
 
@@ -33,13 +33,16 @@ position = Vector2( 78, 97 )
 [node name="WoodenLogs2" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 126, 106 )
 
-[node name="Stone" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 151, 41 )
-
 [node name="WoodenLogs3" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 218, 128 )
 
 [node name="WoodenLogs4" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 260, 92 )
+
+[node name="Iron" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 250, 45 )
+
+[node name="Iron2" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 160, 42 )
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
