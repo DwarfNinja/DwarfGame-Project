@@ -10,7 +10,7 @@ radius = 1.99997
 height = 18.0001
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 8.0
+radius = 7.99998
 height = 12.0
 
 [node name="Iron" type="StaticBody2D"]

@@ -1,5 +1,6 @@
 extends TextureRect
 
+# This controls a single slot, every slot has this code.
 var item_count_in_slot = 0
 var item_def: R_Item
 
@@ -15,11 +16,22 @@ func is_full():
 func is_empty():
 	return item_count_in_slot <= 0
 	
+	
+	# Sets the item definition to the slot, changes texture and adds 1 to the item count
 func set_item(_item_def):
 	item_def = _item_def
 	texture = item_def.hud_texture
 	item_count_in_slot += 1
 	get_node("ItemCount").texture = get("count_" + str(item_count_in_slot))
+
+func remove_item():
+	if is_empty() == false:
+		item_count_in_slot -= 1
+	if is_empty():
+		texture = null
+		item_def = null
+	get_node("ItemCount").texture = get("count_" + str(item_count_in_slot))
+	
 	
 func clear():
 	item_count_in_slot = 0

@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Sprites/HUD/HUD.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/HUD/HUDGoldCoin.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/kenney_fontpackage/Fonts/Kenney Mini Square.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://Scenes/Slot.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -14,11 +22,67 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Icons" type="MarginContainer" parent="VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 17.0
+custom_constants/margin_top = 2
+custom_constants/margin_left = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Icons"]
+margin_left = 5.0
+margin_top = 2.0
+margin_right = 320.0
+margin_bottom = 17.0
+custom_constants/separation = 280
+
+[node name="GoldCoin" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
+margin_right = 15.0
+margin_bottom = 15.0
+texture = ExtResource( 3 )
+
+[node name="Clock" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
+visible = false
+margin_left = 295.0
+margin_right = 310.0
+margin_bottom = 15.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 21.0
+margin_right = 320.0
+margin_bottom = 25.0
+custom_constants/margin_top = -6
+custom_constants/margin_left = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Labels"]
+margin_left = 1.0
+margin_top = -6.0
+margin_right = 320.0
+margin_bottom = 4.0
+rect_min_size = Vector2( 100, 0 )
+custom_constants/separation = 280
+
+[node name="GoldCoins" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
+margin_right = 25.0
+margin_bottom = 10.0
+rect_min_size = Vector2( 25, 0 )
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
+margin_top = 29.0
 margin_right = 320.0
 margin_bottom = 145.0
-custom_constants/separation = 145
+custom_constants/separation = 116
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 149.0
