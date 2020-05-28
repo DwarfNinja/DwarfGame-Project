@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/R_Item.gd" type="Script" id=2]
+
+[resource]
+script = ExtResource( 2 )
+item_name = "miningrig"
+item_count = 1
+item_texture = ExtResource( 1 )
+hud_texture = ExtResource( 1 )

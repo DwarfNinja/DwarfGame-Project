@@ -2,6 +2,7 @@ extends CanvasLayer
 
 onready var HboxContainer = $VBoxContainer/CenterContainer/InventoryBar/HBoxContainer
 onready var GoldCoins = $VBoxContainer/Labels/HBoxContainer/GoldCoins
+onready var CraftingTable = $CraftingTable
 
 
 var count_1 = preload("res://Sprites/Count_1.png")
@@ -13,7 +14,8 @@ var count_4 = preload("res://Sprites/Count_4.png")
 var inventory_items = {
 	"wood": 0,
 	"iron": 0,
-	"coins": 0
+	"coins": 0,
+	"miningrig": 0
 }
 
 var selector_position = 0
@@ -23,6 +25,8 @@ func _ready():
 	# Connect Signals
 	Events.connect("item_picked_up", self, "_on_item_picked_up")
 	Events.connect("item_placed", self, "_on_item_placed")
+	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
+	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
 	
 
 func _process(_delta):
@@ -98,3 +102,24 @@ func _on_item_placed(selected_item):
 func update_hud_coins():
 	GoldCoins.text = str(inventory_items["coins"])
 	
+
+# Crafting Table Code
+func _on_entered_craftingtable():
+	CraftingTable.visible = true
+	
+func _on_exited_craftingtable():
+	CraftingTable.visible = false
+	
+
+func _on_Button_pressed():
+	var crafted_item = load("res://Resources/MiningRig.tres")
+	for slot in HboxContainer.get_children():
+		if slot.is_empty():
+			slot.set_item(crafted_item)
+			add_to_inventory(crafted_item)
+			return
+		elif slot.is_full() == false:
+			if slot.item_def == crafted_item:
+				slot.set_item(crafted_item)
+				add_to_inventory(crafted_item)
+				return

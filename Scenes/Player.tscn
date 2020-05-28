@@ -242,7 +242,7 @@ parameters/playback = SubResource( 23 )
 parameters/Idle/blend_position = Vector2( 0.580031, 0.749138 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
-[node name="Pickup_Area" type="Area2D" parent="." groups=[
+[node name="PlayerPickupArea" type="Area2D" parent="." groups=[
 "pickup_area",
 ]]
 position = Vector2( 0, 13 )
@@ -250,12 +250,12 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup_Area"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPickupArea"]
 shape = SubResource( 24 )
 
-[node name="SelectedItemSprite" type="Sprite" parent="Pickup_Area"]
+[node name="SelectedItemSprite" type="Sprite" parent="PlayerPickupArea"]
 modulate = Color( 1, 1, 1, 0.470588 )
 
-[node name="Position2D" type="Position2D" parent="Pickup_Area"]
+[node name="Position2D" type="Position2D" parent="PlayerPickupArea"]
 
 [node name="Camera2D" type="Camera2D" parent="."]

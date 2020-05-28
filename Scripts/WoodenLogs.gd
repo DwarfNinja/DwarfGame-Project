@@ -15,12 +15,12 @@ func _process(_delta):
 		
 
 func _on_PickUpArea_area_entered(area):
-	if area.is_in_group("pickup_area"):
+	if area.is_in_group("PlayerPickupArea"):
 			can_pickup = true
 			$GrabSprite.visible = true
 		
 
 func _on_PickUpArea_area_exited(area):
-	if area.get_name() == "Pickup_Area":
+	if area.get_name() == "PlayerPickupArea":
 		can_pickup = false
 		$GrabSprite.visible = false

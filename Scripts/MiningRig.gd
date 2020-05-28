@@ -1,3 +1,3 @@
 extends StaticBody2D
 
-onready var animationPlayer = $AnimationPlayer
+export (Resource) var item_def
