@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/CraftingTableHUD.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/kenney_fontpackage/Fonts/Kenney Pixel Square.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTable.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableResources.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 3 )
+
+[node name="CraftingTableHUD" type="TextureRect"]
+margin_right = 172.0
+margin_bottom = 96.0
+texture = ExtResource( 4 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_left = 43.0
+margin_top = 24.0
+margin_right = 134.0
+margin_bottom = 80.0
+custom_constants/vseparation = 2
+custom_constants/hseparation = -10
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CraftingButton_0" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 37.0
+margin_bottom = 27.0
+custom_styles/focus = SubResource( 1 )
+
+[node name="CraftingButton_2" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 27.0
+margin_top = 0.0
+margin_right = 64.0
+margin_bottom = 27.0
+custom_styles/focus = SubResource( 1 )
+
+[node name="CraftingButton_4" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 54.0
+margin_top = 0.0
+margin_right = 91.0
+margin_bottom = 27.0
+custom_styles/focus = SubResource( 1 )
+
+[node name="CraftingButton_1" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 29.0
+margin_right = 37.0
+margin_bottom = 56.0
+custom_styles/focus = SubResource( 1 )
+
+[node name="CraftingButton_3" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 27.0
+margin_top = 29.0
+margin_right = 64.0
+margin_bottom = 56.0
+custom_styles/focus = SubResource( 1 )
+
+[node name="CraftingButton_5" parent="GridContainer" instance=ExtResource( 2 )]
+margin_left = 54.0
+margin_top = 29.0
+margin_right = 91.0
+margin_bottom = 56.0
+custom_styles/focus = SubResource( 1 )
+
+[node name="ResouceBar" type="TextureRect" parent="."]
+margin_left = 148.0
+margin_top = 8.0
+margin_right = 172.0
+margin_bottom = 88.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WoodCostLabel" type="Label" parent="ResouceBar"]
+margin_left = 7.0
+margin_top = 16.0
+margin_right = 13.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IronCostLabel" type="Label" parent="ResouceBar"]
+margin_left = 7.0
+margin_top = 37.0
+margin_right = 19.0
+margin_bottom = 61.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}

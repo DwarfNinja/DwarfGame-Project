@@ -4,7 +4,7 @@
 [ext_resource path="res://Sprites/HUD/Selector.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/HUD/SelectorExpand.png" type="Texture" id=3]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=3]
 resource_name = "Selector Idle"
 length = 0.5
 tracks/0/type = "value"
@@ -67,5 +67,5 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
 autoplay = "Selector Idle"
-"anims/Selector Idle" = SubResource( 1 )
+"anims/Selector Idle" = SubResource( 3 )
 "anims/Selector Selecting" = SubResource( 2 )

@@ -1,3 +1,9 @@
-extends StaticBody2D
+extends Craftable_Item
 
-export (Resource) var item_def
+
+func _process(_delta):
+	pass
+
+func interact():
+	print("IM THE MINING RIG")
+	

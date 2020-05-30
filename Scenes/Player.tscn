@@ -195,14 +195,14 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
 
 [sub_resource type="AnimationNodeStateMachine" id=22]
 states/Idle/node = SubResource( 14 )
-states/Idle/position = Vector2( 327, 95 )
+states/Idle/position = Vector2( 249, 95 )
 states/Run/node = SubResource( 19 )
 states/Run/position = Vector2( 498, 95 )
-transitions = [ "Idle", "Run", SubResource( 20 ), "Run", "Idle", SubResource( 21 ) ]
+transitions = [ "Idle", "Run", SubResource( 20 ), "Run", "Idle", SubResource( 25 ) ]
 start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=23]
@@ -217,7 +217,7 @@ script = ExtResource( 2 )
 position = Vector2( 0, -4 )
 texture = ExtResource( 1 )
 hframes = 32
-frame = 24
+frame = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 4 )
@@ -239,16 +239,13 @@ tree_root = SubResource( 22 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 23 )
-parameters/Idle/blend_position = Vector2( 0.580031, 0.749138 )
+parameters/Idle/blend_position = Vector2( 0, -0.1 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerPickupArea" type="Area2D" parent="." groups=[
 "pickup_area",
 ]]
 position = Vector2( 0, 13 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPickupArea"]
 shape = SubResource( 24 )

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/LadderTest.png-66fbc5e948913e6c26d1e20bd06678e2.stex"
+path="res://.import/HUD MiningRig.png-21cf969b37c0452a8ee765a2bf6e0848.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scripts/LadderTest.png"
-dest_files=[ "res://.import/LadderTest.png-66fbc5e948913e6c26d1e20bd06678e2.stex" ]
+source_file="res://Sprites/HUD/HUD MiningRig.png"
+dest_files=[ "res://.import/HUD MiningRig.png-21cf969b37c0452a8ee765a2bf6e0848.stex" ]
 
 [params]
 
