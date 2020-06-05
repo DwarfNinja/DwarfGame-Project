@@ -53,7 +53,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-item_def = ExtResource( 3 )
+craftable_def = ExtResource( 3 )
 
 [node name="Selector" type="TextureRect" parent="."]
 margin_left = 4.0

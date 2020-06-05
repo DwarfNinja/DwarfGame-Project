@@ -31,4 +31,5 @@ func _on_InteractArea_area_exited(area):
 		$InteractSprite.visible = false
 
 func interact():
+	# Declared in the specific craftable_item
 	pass

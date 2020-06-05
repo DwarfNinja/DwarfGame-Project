@@ -2,6 +2,7 @@ extends StaticBody2D
 
 class_name Pickable_Item
 
+var more_than_one = false
 var can_pickup = false
 export (Resource) var item_def
 onready var PickUpArea = $PickUpArea
@@ -20,7 +21,6 @@ func _process(_delta):
 			Events.emit_signal("item_picked_up", item_def)
 			queue_free()
 
-
 func _on_PickUpArea_area_entered(area):
 	if area.get_name() == "PlayerPickupArea":
 		can_pickup = true
@@ -31,4 +31,4 @@ func _on_PickUpArea_area_exited(area):
 	if area.get_name() == "PlayerPickupArea":
 		can_pickup = false
 		$GrabSprite.visible = false
-		
+

@@ -4,6 +4,7 @@ onready var Gridcontainer = $GridContainer
 
 var crafting_selector_position = 0
 var craftingtable_opened = false
+onready var selected_button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 
 func _ready():
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
@@ -14,6 +15,7 @@ func _ready():
 func _process(_delta):
 	# Determines Selector position based on scroll wheel movement
 	if craftingtable_opened == true:
+		update_resourcebar()
 		var hor_add = 2
 		var vert_add = 1
 		if Input.is_action_just_pressed("ui_right") or Input.is_action_just_released("scroll_up"):
@@ -22,6 +24,7 @@ func _process(_delta):
 				crafting_selector_position = 0
 			elif crafting_selector_position == 6:
 			 crafting_selector_position = 1
+		
 		if Input.is_action_just_pressed("ui_left"):
 			crafting_selector_position -= hor_add
 			if crafting_selector_position == -1:
@@ -48,10 +51,9 @@ func _process(_delta):
 #				crafting_selector_position = 0
 					
 				
-	var selected_button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
+	selected_button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 	
-	
-	if Input.is_action_just_pressed("key_leftclick"):
+	if Input.is_action_just_pressed("key_e"):
 		if craftingtable_opened == true:
 				selected_button.craft_item()
 
@@ -66,6 +68,12 @@ func _process(_delta):
 
 func _on_craftingbutton_mouse_entered(crafting_button):
 	crafting_selector_position = int(crafting_button.get_name().split("CraftingButton_")[1])
+	
+	
+func update_resourcebar():
+	var item_def_in_craftingbutton = selected_button.craftable_def
+	$ResouceBar/WoodCostLabel.text = str(item_def_in_craftingbutton.wood_cost)
+	$ResouceBar/IronCostLabel.text = str(item_def_in_craftingbutton.iron_cost)
 	
 
 func _on_entered_craftingtable():

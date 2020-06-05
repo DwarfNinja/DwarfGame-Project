@@ -8,11 +8,15 @@ var count_3 = preload("res://Sprites/Count_3.png")
 var count_4 = preload("res://Sprites/Count_4.png")
 
 var selector_position = 0
-var craftingtable_opened = false
+var ui_menu_opened = false
 
 func _ready():
+	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
 	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
+	# Forge signals
+	Events.connect("entered_forge", self, "_on_entered_forge")
+	Events.connect("exited_forge", self, "_on_exited_forge")
 
 func _process(_delta):
 	# Clears all items in inventory
@@ -24,7 +28,7 @@ func _process(_delta):
 #			inventory_items["iron"] = 0
 			
 	# Determines Selector position based on scroll wheel movement
-	if craftingtable_opened == false:
+	if ui_menu_opened == false:
 		if Input.is_action_just_released("scroll_up"):
 				selector_position += 1
 				if selector_position > 5:
@@ -37,7 +41,7 @@ func _process(_delta):
 				
 	var selected_slot = get_node("HBoxContainer/Slot_" + str(selector_position))
 	
-	if craftingtable_opened == false:
+	if ui_menu_opened == false:
 		if Input.is_action_just_pressed("key_leftclick"):
 			get_item_in_slot(selected_slot)
 		if selected_slot.item_count_in_slot == 0:
@@ -78,17 +82,34 @@ func remove_item():
 		if slot.get_name() == "Slot_" + str(selector_position):
 			slot.remove_item()
 			
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 func remove_required_resources(crafted_item):
 	for slot in HboxContainer.get_children():
 		if slot.item_def != null:
 			var total_resources_needed = crafted_item.wood_cost + crafted_item.iron_cost
-			if slot.has_resources(crafted_item):
-				for cycles in range(0, total_resources_needed):
+			print("BINGBONG")
+			for cycles in total_resources_needed:
+				if slot.has_resources(crafted_item):
+					print("YALA")
 					slot.remove_item()
-	
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+func remove_specific_resource(_specific_resource, amount):
+	for slot in HboxContainer.get_children():
+		if slot.item_def != null:
+			var specific_resource = _specific_resource
+			if slot.has_resources(specific_resource):
+				for cycles in amount:
+					slot.remove_item()
 
 func _on_entered_craftingtable():
-	craftingtable_opened = true
+	ui_menu_opened = true
 
 func _on_exited_craftingtable():
-	craftingtable_opened = false
+	ui_menu_opened = false
+	
+func _on_entered_forge(_current_opened_forge):
+	ui_menu_opened = true
+
+func _on_exited_forge():
+	ui_menu_opened = false
+

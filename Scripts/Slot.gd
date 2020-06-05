@@ -34,14 +34,11 @@ func remove_item():
 
 
 func has_resources(crafted_item):
-	if crafted_item.wood_cost > 0:
-		if item_def.item_name == "wood":
-			return true
-		
-	if crafted_item.iron_cost > 0:
-		if item_def.item_name == "iron":
-			return true
-
+	if item_def.item_name == "wood":
+		return true
+	if item_def.item_name == "iron":
+		return true
+	
 	
 func clear():
 	item_count_in_slot = 0

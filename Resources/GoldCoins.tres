@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-item_name = "coins"
+item_name = "goldcoins"
 item_count = 20

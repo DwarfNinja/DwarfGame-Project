@@ -12,7 +12,8 @@ var can_move = true
 var selected_item = null
 const WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
-const MININGRIG_SCENE = preload("res://Scenes/MiningRig.tscn")
+const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
+const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
 
 export (bool) var static_camera = false
 var area_in_pickuparea = false
@@ -28,10 +29,15 @@ onready var animationState = animationTree.get("parameters/playback")
 #onready var woodenlogs = get_parent().get_node("WoodenLogs")
 
 func _ready():
-	# Connect Signals
+	# ___________________Connect Signals___________________
 	Events.connect("item_selected", self, "_on_item_selected")
+	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
 	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
+	# Forge signals
+	Events.connect("entered_forge", self, "_on_entered_forge")
+	Events.connect("exited_forge", self, "_on_exited_forge")
+	
 	$Camera2D.current = !static_camera
 
 func _physics_process(delta):
@@ -89,3 +95,18 @@ func _on_entered_craftingtable():
 	
 func _on_exited_craftingtable():
 	can_move = true
+	
+func _on_entered_forge(_current_opened_forge):
+	can_move = false
+
+func _on_exited_forge():
+	can_move = true
+
+
+#func _on_PlayerPickupArea_body_entered(body):
+#	var goldcoins = 0
+#	for body in PlayerPickupArea.get_overlapping_bodies():
+#		if "GoldCoins" in body.get_name():
+#			goldcoins += 1
+#			print(goldcoins)
+	
