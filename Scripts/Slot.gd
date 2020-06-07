@@ -33,10 +33,8 @@ func remove_item():
 	get_node("ItemCount").texture = get("count_" + str(item_count_in_slot))
 
 
-func has_resources(crafted_item):
-	if item_def.item_name == "wood":
-		return true
-	if item_def.item_name == "iron":
+func has_resources(requested_resource):
+	if item_def.item_name == requested_resource.item_name:
 		return true
 	
 	

@@ -7,13 +7,16 @@ var craftingtable_opened = false
 onready var selected_button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 
 func _ready():
+	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
 	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
+	# Craftingbutton signal that signals if the mouse entered the button area
 	Events.connect("craftingbutton_mouse_entered", self, "_on_craftingbutton_mouse_entered")
 	
 
 func _process(_delta):
 	# Determines Selector position based on scroll wheel movement
+	# --------LOOK AT LATER--------
 	if craftingtable_opened == true:
 		update_resourcebar()
 		var hor_add = 2

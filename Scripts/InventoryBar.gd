@@ -82,17 +82,18 @@ func remove_item():
 		if slot.get_name() == "Slot_" + str(selector_position):
 			slot.remove_item()
 			
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Can be simplified I think
 func remove_required_resources(crafted_item):
 	for slot in HboxContainer.get_children():
 		if slot.item_def != null:
-			var total_resources_needed = crafted_item.wood_cost + crafted_item.iron_cost
-			print("BINGBONG")
-			for cycles in total_resources_needed:
-				if slot.has_resources(crafted_item):
-					print("YALA")
+			if slot.item_def.item_name == "wood":
+				for amount in crafted_item.wood_cost:
 					slot.remove_item()
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			elif slot.item_def.item_name == "iron":
+				for amount in crafted_item.iron_cost:
+					slot.remove_item()
+					
+
 func remove_specific_resource(_specific_resource, amount):
 	for slot in HboxContainer.get_children():
 		if slot.item_def != null:

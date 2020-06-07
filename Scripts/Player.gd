@@ -102,11 +102,3 @@ func _on_entered_forge(_current_opened_forge):
 func _on_exited_forge():
 	can_move = true
 
-
-#func _on_PlayerPickupArea_body_entered(body):
-#	var goldcoins = 0
-#	for body in PlayerPickupArea.get_overlapping_bodies():
-#		if "GoldCoins" in body.get_name():
-#			goldcoins += 1
-#			print(goldcoins)
-	

@@ -37,7 +37,7 @@ func _on_item_picked_up(item_def):
 	InventoryBar.add_item(item_def)
 	add_to_inventory(item_def)
 	
-		
+
 func add_to_inventory(item_def):
 	inventory_items[str(item_def.item_name)] += item_def.item_count
 	update_hud_coins()
