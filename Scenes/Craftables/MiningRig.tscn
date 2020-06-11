@@ -30,7 +30,7 @@ tracks/0/keys = {
 radius = 12.0
 height = 14.0
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=4]
 radius = 7.0
 
 [node name="MiningRig" type="StaticBody2D"]
@@ -76,6 +76,6 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MiningRigDropArea"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Position2D" type="Position2D" parent="MiningRigDropArea"]

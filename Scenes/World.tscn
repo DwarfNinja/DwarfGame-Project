@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://FloorTileCaveDark.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Resources/WoodenLogs.tscn" type="PackedScene" id=2]
@@ -12,8 +12,10 @@
 [ext_resource path="res://Scenes/CraftingTable.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Craftables/Forge.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/KinematicBodies/Villager.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scripts/World.gd" type="Script" id=14]
 
 [node name="World" type="Node2D"]
+script = ExtResource( 14 )
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 160, 90 )
@@ -29,9 +31,19 @@ position = Vector2( 55, 43 )
 [node name="Rock" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 103, 58 )
 
+[node name="CraftingTable" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( 32, 93 )
+
 [node name="MiningRig" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 194, 80 )
 item_def = null
+
+[node name="Forge" parent="YSort" instance=ExtResource( 11 )]
+position = Vector2( 164, 126 )
+
+[node name="GoldCoins" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 255, 95 )
+item_def = ExtResource( 8 )
 
 [node name="WoodenLogs" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 78, 97 )
@@ -48,21 +60,11 @@ position = Vector2( 250, 45 )
 [node name="Iron2" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 160, 42 )
 
-[node name="GoldCoins" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 255, 95 )
-item_def = ExtResource( 8 )
+[node name="Iron3" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 209, 27 )
 
 [node name="Ladder" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( 292, 68 )
-
-[node name="CraftingTable" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 32, 93 )
-
-[node name="Forge" parent="YSort" instance=ExtResource( 11 )]
-position = Vector2( 164, 126 )
-
-[node name="Iron3" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 209, 27 )
 
 [node name="Villager" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( 47, 136 )

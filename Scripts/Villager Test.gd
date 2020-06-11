@@ -19,8 +19,10 @@ enum{
 
 #onready var shape = $DetectionArea/CollisionPolygon2D
 onready var DetectionTimer = $DetectionTimer
-onready var SearchTimer = $SearchTimer
+onready var WaitTimer = $WaitTimer
 
+var reached_target_position = false
+var direction
 var last_known_targetposition
 var laser_color = Color(1.0, .329, .298)
 var target
@@ -31,7 +33,7 @@ func _ready():
 	DetectionArea.connect("body_exited", self, "_on_DetectionArea_body_exited")
 	
 	DetectionTimer.connect("timeout", self, "_on_DetectionTimer_timeout")
-	SearchTimer.connect("timeout", self, "_on_SearchTimer_timeout")
+	WaitTimer.connect("timeout", self, "_on_WaitTimer_timeout")
 	
 
 
@@ -39,40 +41,39 @@ func _physics_process(delta):
 	update()
 	if target:
 		aim_raycast()
+	else:
+		can_see_target = false
 		
 	match state:
+		
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
 		SEARCH:
-			if round(global_position.x) + round(global_position.y) == round(last_known_targetposition.x) + round(last_known_targetposition.y):
-				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-				var curent_detectionarea_rotation = DetectionArea.rotation
+#			if round(global_position.x) + round(global_position.y) == round(last_known_targetposition.x) + round(last_known_targetposition.y):
+			print(move_to_player_location(delta))
+			if can_see_target == false:
+				move_to_player_location(delta)
+			if reached_target_position == true:
 				DetectionArea.rotation += 0.02
-				if SearchTimer.time_left == 0:
-					SearchTimer.start()
 			
+				
 		ROAM:
 			print("Villager is Roaming")
 		
 		CHASE:
-			if target:
-				if can_see_target == true:
-					var direction = (target.global_position - global_position).normalized()
+			if can_see_target == true:
+				if target:
+					direction = (target.global_position - global_position).normalized()
 					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 					DetectionArea.rotation = direction.angle()
-					last_known_targetposition = target.global_position
-				else:
-					state = SEARCH
-					velocity = velocity.move_toward(last_known_targetposition * MAX_SPEED, ACCELERATION  * delta)
-					print("BOOOM")
 			else:
-				state = SEARCH
-				velocity = velocity.move_toward(last_known_targetposition * MAX_SPEED, ACCELERATION  * delta)
-				print("BIIINGG")
-	
-	
+				if WaitTimer.time_left == 0:
+					WaitTimer.start()
+
+
 	velocity = move_and_slide(velocity)
+
 
 func _process(delta):
 #	print(SearchTimer.time_left)
@@ -81,9 +82,7 @@ func _process(delta):
 #		print(round(last_known_targetposition.x), round(last_known_targetposition.y))
 	if target:
 		if can_see_target == true and DetectionTimer.time_left == 0:
-			print("PAPAPAPAP")
 			DetectionTimer.start()
-		
 
 
 func aim_raycast():
@@ -100,14 +99,25 @@ func aim_raycast():
 			hit_pos.append(result.position)
 			if result.collider.name == "Player":
 				can_see_target = true
+				last_known_targetposition = target.global_position
+				state = CHASE
 			else:
 				can_see_target = false
 
+func move_to_player_location(delta):
+	if global_position.round() == last_known_targetposition.round():
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		global_position = last_known_targetposition
+		reached_target_position = true
+	if reached_target_position == false:
+		velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION  * delta)
+		
+		
 func _on_DetectionTimer_timeout():
 	state = CHASE
 	
-func _on_SearchTimer_timeout():
-	pass
+func _on_WaitTimer_timeout():
+	state = SEARCH
 
 func _on_DetectionArea_body_entered(body):
 	if body.get_name() == "Player":

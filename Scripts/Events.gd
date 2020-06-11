@@ -14,5 +14,12 @@ signal craftingtable_opened()
 signal entered_forge(current_opened_forge)
 signal exited_forge()
 signal iron_amount_set(current_opened_forge, current_iron_amount)
+
 # Mouse entered craftingtablebutton signal
 signal craftingbutton_mouse_entered()
+
+# Mouse entered craftingtablebutton signal
+signal target_entered_sight(last_known_targetposition)
+signal target_exited_sight(last_known_targetposition)
+
+
