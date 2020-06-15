@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://FloorTileCaveDark.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Resources/WoodenLogs.tscn" type="PackedScene" id=2]
@@ -11,11 +11,20 @@
 [ext_resource path="res://Scenes/Ladder.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/CraftingTable.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Craftables/Forge.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/KinematicBodies/Villager.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scripts/World.gd" type="Script" id=14]
+[ext_resource path="res://Shaders/outline.shader" type="Shader" id=12]
+[ext_resource path="res://Scenes/KinematicBodies/BlackMarket.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Shop/Shop.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/KinematicBodies/Villager.tscn" type="PackedScene" id=15]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/Smooth = false
+shader_param/width = 1.0
+shader_param/outline_color = Color( 0.941176, 0.941176, 0.941176, 0 )
+shader_param/pixel_size = 1
 
 [node name="World" type="Node2D"]
-script = ExtResource( 14 )
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 160, 90 )
@@ -32,13 +41,13 @@ position = Vector2( 55, 43 )
 position = Vector2( 103, 58 )
 
 [node name="CraftingTable" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 32, 93 )
+position = Vector2( 30, 112 )
 
 [node name="MiningRig" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 194, 80 )
-item_def = null
 
 [node name="Forge" parent="YSort" instance=ExtResource( 11 )]
+material = SubResource( 1 )
 position = Vector2( 164, 126 )
 
 [node name="GoldCoins" parent="YSort" instance=ExtResource( 6 )]
@@ -66,5 +75,9 @@ position = Vector2( 209, 27 )
 [node name="Ladder" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( 292, 68 )
 
-[node name="Villager" parent="YSort" instance=ExtResource( 12 )]
-position = Vector2( 47, 136 )
+[node name="BlackMarket" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( 26, 39 )
+
+[node name="Shop" parent="YSort" instance=ExtResource( 14 )]
+
+[node name="Villager" parent="YSort" instance=ExtResource( 15 )]

@@ -5,6 +5,7 @@ onready var HouseScene = "res://Scenes/House.tscn"
 func _on_Area2D_body_entered(body):
 	if body.get_name() == "Player":
 		get_tree().change_scene(HouseScene)
+		Events.emit_signal("exited_cave")
 
 
 # Remove the current level

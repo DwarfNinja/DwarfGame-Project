@@ -26,7 +26,7 @@ func interact():
 		Events.emit_signal("item_picked_up", gold_coins)
 		goldcoins_in_mine -= 1
 	else:
-		print("Mine isn't ready yet")
+		print("MiningRig is empty!")
 
 func _on_MiningTimer_timeout():
 	if goldcoins_in_mine < 2:

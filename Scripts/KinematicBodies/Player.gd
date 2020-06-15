@@ -24,12 +24,13 @@ onready var animationTree = $AnimationTree
 onready var PlayerPickupArea = $PlayerPickupArea
 onready var SelectedItemSprite = $PlayerPickupArea/SelectedItemSprite
 
-
 onready var animationState = animationTree.get("parameters/playback")
 #onready var woodenlogs = get_parent().get_node("WoodenLogs")
 
 func _ready():
 	# ___________________Connect Signals___________________
+	Events.connect("exited_cave", self, "_on_exited_cave")
+	
 	Events.connect("item_selected", self, "_on_item_selected")
 	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
@@ -38,7 +39,7 @@ func _ready():
 	Events.connect("entered_forge", self, "_on_entered_forge")
 	Events.connect("exited_forge", self, "_on_exited_forge")
 	
-	$Camera2D.current = !static_camera
+	$Camera2D.current = static_camera
 
 func _physics_process(delta):
 	
@@ -102,3 +103,6 @@ func _on_entered_forge(_current_opened_forge):
 func _on_exited_forge():
 	can_move = true
 
+func _on_exited_cave():
+#	$Camera2D.current = !static_camera
+	pass

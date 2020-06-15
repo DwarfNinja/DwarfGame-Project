@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GoldCoinsResizeRedoneNEW.png-a974a0c704f0d435ac2b61a50d602887.stex"
+path="res://.import/IronIngotShadow.png-1eaf347483e0a22ca9b7310af6e4a265.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/GoldCoinsResizeRedoneNEW.png"
-dest_files=[ "res://.import/GoldCoinsResizeRedoneNEW.png-a974a0c704f0d435ac2b61a50d602887.stex" ]
+source_file="res://Sprites/Resources/IronIngotShadow.png"
+dest_files=[ "res://.import/IronIngotShadow.png-1eaf347483e0a22ca9b7310af6e4a265.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GoldCoinsResizeRedone.png-4c408e86a93e65ad8fa907bc8499e135.stex"
+path="res://.import/PlagueDoctor SketchShadow.png-9b88c331195951b82646c970e000c19a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/GoldCoinsResizeRedone.png"
-dest_files=[ "res://.import/GoldCoinsResizeRedone.png-4c408e86a93e65ad8fa907bc8499e135.stex" ]
+source_file="res://PlagueDoctor SketchShadow.png"
+dest_files=[ "res://.import/PlagueDoctor SketchShadow.png-9b88c331195951b82646c970e000c19a.stex" ]
 
 [params]
 

@@ -1,7 +1,7 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform bool Smooth = true;
+uniform bool Smooth = false;
 uniform float width : hint_range(0.0, 16) = 1.0;
 uniform vec4 outline_color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
 uniform int pixel_size : hint_range(1, 10) = 4;

@@ -1,13 +1,19 @@
 extends KinematicBody2D
 
-onready var DetectionArea = $DetectionArea
+onready var CollisionArea = $CollisionArea
+onready var VisionConeArea = $VisionConeArea
+
+onready var DetectionTimer = $DetectionTimer
+onready var WaitTimer = $WaitTimer
+onready var RoamingIdleTimer = $RoamingIdleTimer
+onready var ReactionTimer = $ReactionTimer
 
 const ACCELERATION = 300
 const MAX_SPEED = 40
 const FRICTION = 300
 var velocity = Vector2.ZERO
 
-var can_see_target
+var can_see_target = false
 var state
 
 enum{
@@ -17,11 +23,6 @@ enum{
 	CHASE
 }
 
-#onready var shape = $DetectionArea/CollisionPolygon2D
-onready var DetectionTimer = $DetectionTimer
-onready var WaitTimer = $WaitTimer
-onready var RoamingIdleTimer = $RoamingIdleTimer
-onready var ReactionTimer = $ReactionTimer
 
 var full_rotation_check = 0
 var collided_with_object = false
@@ -35,14 +36,17 @@ var hit_pos
 
 func _ready():
 	randomize()
-	DetectionArea.connect("body_entered", self, "_on_DetectionArea_body_entered")
-	DetectionArea.connect("body_exited", self, "_on_DetectionArea_body_exited")
+	VisionConeArea.connect("body_entered", self, "_on_VisionConeArea_body_entered")
+	VisionConeArea.connect("body_exited", self, "_on_VisionConeArea_body_exited")
+	CollisionArea.connect("area_entered", self, "_on_CollisionArea_area_entered")
+	CollisionArea.connect("area_exited", self, "_on_CollisionArea_area_exited")
 	
 	DetectionTimer.connect("timeout", self, "_on_DetectionTimer_timeout")
 	WaitTimer.connect("timeout", self, "_on_WaitTimer_timeout")
 	RoamingIdleTimer.connect("timeout", self, "_on_RoamingIdleTimer_timeout")
 	ReactionTimer.connect("timeout", self, "_on_ReactionTimer_timeout")
 	
+	$PlayerGhostSprite.set_as_toplevel(true)
 	
 	state = choose_random_state([IDLE, ROAM])
 	
@@ -52,7 +56,7 @@ func _physics_process(delta):
 	update()
 	if target:
 		aim_raycasts()
-	else: 
+	else:
 		can_see_target = false
 		
 	match state:
@@ -94,14 +98,13 @@ func _physics_process(delta):
 					if velocity > Vector2(-1,-1) and velocity < Vector2(1,1):
 						collided_with_object = true
 			
-			print(full_rotation_check)
-			
 			if reached_target_position == true and full_rotation_check < 2*PI:
-				Events.emit_signal("target_entered_sight", last_known_targetposition)
-				DetectionArea.rotation += 0.02
+				VisionConeArea.rotation += 0.02
 				full_rotation_check += 0.02
+				update_playerghost_sprite()
 			
 			if full_rotation_check >= 2*PI:
+				print("YALA")
 				state = choose_random_state([IDLE, ROAM])
 				full_rotation_check = 0
 				
@@ -115,18 +118,16 @@ func _physics_process(delta):
 			print("Villager is Chasing")
 			
 			if can_see_target == true:
-				Events.emit_signal("target_entered_sight", last_known_targetposition)
 				direction = (target.global_position - global_position).normalized()
 				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-				DetectionArea.rotation = direction.angle()
+				VisionConeArea.rotation = direction.angle()
+				update_playerghost_sprite()
 			else:
 				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 				
 			if can_see_target == false and ReactionTimer.is_stopped():
 				ReactionTimer.start()
-				Events.emit_signal("target_exited_sight", last_known_targetposition)
-				$PlayerGhostSprite.visible = true
-				$PlayerGhostSprite.global_position = last_known_targetposition
+				update_playerghost_sprite()
 				
 			if RoamingIdleTimer.time_left > 0:
 				RoamingIdleTimer.stop()
@@ -153,10 +154,8 @@ func aim_raycasts():
 			if result.collider.name == "Player":
 				can_see_target = true
 				last_known_targetposition = target.global_position
-				break
 			else:
 				can_see_target = false
-				break
 				
 func randomize_roamingidle_timer():
 	RoamingIdleTimer.wait_time = rand_range(10, 20)
@@ -166,10 +165,19 @@ func choose_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
 
+func update_playerghost_sprite():
+	if can_see_target == false and reached_target_position == false:
+		$PlayerGhostSprite.global_position = last_known_targetposition
+		$PlayerGhostSprite.visible = true
+	else:
+		$PlayerGhostSprite.visible = false
+	
+	
 # !!!!!!!!!!!!!!!!!!!!!!!!! CAN CLEAN UP CODE !!!!!!!!!!!!!!!!!!!!!!!!!
 func move_to_player_location(delta):
-	reached_target_position = false
-	
+	if reached_target_position == true:
+		velocity = Vector2(0,0)
+		
 	if global_position.round() == last_known_targetposition.round() or collided_with_object == true:
 		velocity = Vector2(0,0)
 		reached_target_position = true
@@ -177,8 +185,6 @@ func move_to_player_location(delta):
 	if reached_target_position == false:
 		var direction_to_last_know_targeposition = (last_known_targetposition - global_position).normalized()
 		velocity = velocity.move_toward(direction_to_last_know_targeposition * MAX_SPEED, ACCELERATION  * delta)
-		$PlayerGhostSprite.visible = true
-		$PlayerGhostSprite.global_position = last_known_targetposition
 		
 		
 func _on_DetectionTimer_timeout():
@@ -198,15 +204,23 @@ func _on_RoamingIdleTimer_timeout():
 	state = choose_random_state([IDLE, ROAM])
 	randomize_roamingidle_timer()
 	RoamingIdleTimer.start()
+
 	
-func _on_DetectionArea_body_entered(body):
+func _on_VisionConeArea_body_entered(body):
 	if body.get_name() == "Player":
 		target = body
 
-func _on_DetectionArea_body_exited(body):
+func _on_VisionConeArea_body_exited(body):
 	if body.get_name() == "Player":
 		target = null
 
+func _on_CollisionArea_area_entered(area):
+	if area.get_name() == "PlayerGhostArea":
+		reached_target_position = true
+
+func _on_CollisionArea_area_exited(area):
+	if area.get_name() == "PlayerGhostArea":
+		reached_target_position = false
 
 
 # FOR DEBUG PURPOSES
