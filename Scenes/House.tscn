@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://HouseLevelDesign6x6Redesign.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Resources/Iron.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Resources/WoodenLogs.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/GoldCoins.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/KinematicBodies/Villager.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 24 )
@@ -42,6 +43,9 @@ polygon = PoolVector2Array( -320, -144, -192, -144, -192, 48, -96, 48, -96, 144,
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -44, 97 )
+
+[node name="Villager" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 50, -65 )
 
 [node name="GoldCoins" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( -168, -120 )

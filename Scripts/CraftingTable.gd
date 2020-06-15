@@ -2,6 +2,7 @@ extends StaticBody2D
 
 var can_interact = false
 onready var InteractArea = $InteractArea
+onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
 
 func _ready():
 	# Connect signals
@@ -17,15 +18,14 @@ func _process(_delta):
 			Events.emit_signal("exited_craftingtable")
 
 
-
 func _on_InteractArea_area_entered(area):
 	if area.get_name() == "PlayerPickupArea":
 		can_interact = true
-		$GrabSprite.visible = true
+		$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 		
 
 func _on_InteractArea_area_exited(area):
 	if area.get_name() == "PlayerPickupArea":
 		can_interact = false
-		$GrabSprite.visible = false
+		$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 		
