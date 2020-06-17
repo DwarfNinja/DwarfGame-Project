@@ -36,6 +36,9 @@ position = Vector2( 0, 13 )
 shape = SubResource( 2 )
 
 [node name="VisionConeArea" type="Area2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="VillagerViewcone" type="Sprite" parent="VisionConeArea"]
 position = Vector2( 60, 0 )
@@ -45,6 +48,10 @@ texture = ExtResource( 4 )
 position = Vector2( 1, -4 )
 polygon = PoolVector2Array( -1, 4, 11, -20, 119, -60, 119, 68, 11, 28 )
 
+[node name="IdleRotationTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
 [node name="DetectionTimer" type="Timer" parent="."]
 wait_time = 0.8
 one_shot = true
@@ -53,7 +60,7 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
-[node name="RoamingIdleTimer" type="Timer" parent="."]
+[node name="RoamingIdleDurationTimer" type="Timer" parent="."]
 wait_time = 15.0
 one_shot = true
 

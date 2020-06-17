@@ -3,9 +3,10 @@ extends KinematicBody2D
 onready var CollisionArea = $CollisionArea
 onready var VisionConeArea = $VisionConeArea
 
+onready var IdleRotationTimer = $IdleRotationTimer
 onready var DetectionTimer = $DetectionTimer
 onready var WaitTimer = $WaitTimer
-onready var RoamingIdleTimer = $RoamingIdleTimer
+onready var RoamingIdleDurationTimer = $RoamingIdleDurationTimer
 onready var ReactionTimer = $ReactionTimer
 
 const ACCELERATION = 300
@@ -43,14 +44,13 @@ func _ready():
 	
 	DetectionTimer.connect("timeout", self, "_on_DetectionTimer_timeout")
 	WaitTimer.connect("timeout", self, "_on_WaitTimer_timeout")
-	RoamingIdleTimer.connect("timeout", self, "_on_RoamingIdleTimer_timeout")
+	RoamingIdleDurationTimer.connect("timeout", self, "_on_RoamingIdleDurationTimer_timeout")
 	ReactionTimer.connect("timeout", self, "_on_ReactionTimer_timeout")
 	
 	$PlayerGhostSprite.set_as_toplevel(true)
 	
 	state = choose_random_state([IDLE, ROAM])
 	
-
 
 func _physics_process(delta):
 	update()
@@ -62,33 +62,34 @@ func _physics_process(delta):
 	match state:
 		
 		IDLE:
-			print("Villager is Idling")
+#			print("Villager is Idling")
 			
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-
+			if IdleRotationTimer.time_left == 0:
+				VisionConeArea.rotation += 90
 			if can_see_target == true and DetectionTimer.is_stopped():
 				DetectionTimer.start()
 				
 			if can_see_target == false:
 				DetectionTimer.stop()
 			
-			if RoamingIdleTimer.is_stopped():
-				RoamingIdleTimer.start()
+			if RoamingIdleDurationTimer.is_stopped():
+				RoamingIdleDurationTimer.start()
 
 		ROAM:
-			print("Villager is Roaming")
+#			print("Villager is Roaming")
 			
 			if can_see_target == true and DetectionTimer.is_stopped():
 				DetectionTimer.start()
 			if can_see_target == false:
 				DetectionTimer.stop()
 				
-			if RoamingIdleTimer.is_stopped():
-				RoamingIdleTimer.start()
+			if RoamingIdleDurationTimer.is_stopped():
+				RoamingIdleDurationTimer.start()
 				
 
 		SEARCH:
-			print("Villager is Searching")
+#			print("Villager is Searching")
 			move_to_player_location(delta)
 			
 			for slides in get_slide_count():
@@ -111,11 +112,11 @@ func _physics_process(delta):
 			if can_see_target == true:
 				state = CHASE
 			
-			if RoamingIdleTimer.time_left > 0:
-				RoamingIdleTimer.stop()
+			if RoamingIdleDurationTimer.time_left > 0:
+				RoamingIdleDurationTimer.stop()
 				
 		CHASE:
-			print("Villager is Chasing")
+#			print("Villager is Chasing")
 			
 			if can_see_target == true:
 				direction = (target.global_position - global_position).normalized()
@@ -129,8 +130,8 @@ func _physics_process(delta):
 				ReactionTimer.start()
 				update_playerghost_sprite()
 				
-			if RoamingIdleTimer.time_left > 0:
-				RoamingIdleTimer.stop()
+			if RoamingIdleDurationTimer.time_left > 0:
+				RoamingIdleDurationTimer.stop()
 
 	velocity = move_and_slide(velocity)
 
@@ -158,8 +159,8 @@ func aim_raycasts():
 				can_see_target = false
 				
 func randomize_roamingidle_timer():
-	RoamingIdleTimer.wait_time = rand_range(10, 20)
-	print("RoamingIdleTimer Wait Time is Randomized")
+	RoamingIdleDurationTimer.wait_time = rand_range(10, 20)
+	print("RoamingIdleDurationTimer Wait Time is Randomized")
 
 func choose_random_state(state_list):
 	state_list.shuffle()
@@ -200,10 +201,10 @@ func _on_WaitTimer_timeout():
 func _on_ReactionTimer_timeout():
 	state = SEARCH
 	
-func _on_RoamingIdleTimer_timeout():
+func _on_RoamingIdleDurationTimer_timeout():
 	state = choose_random_state([IDLE, ROAM])
 	randomize_roamingidle_timer()
-	RoamingIdleTimer.start()
+	RoamingIdleDurationTimer.start()
 
 	
 func _on_VisionConeArea_body_entered(body):

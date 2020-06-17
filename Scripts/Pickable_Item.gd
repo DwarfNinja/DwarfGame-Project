@@ -14,7 +14,6 @@ func _ready():
 	PickUpArea.connect("area_entered", self, "_on_PickUpArea_area_entered")
 	PickUpArea.connect("area_exited", self, "_on_PickUpArea_area_exited")
 	
-
 func _process(_delta):
 	if not item_def:
 		return

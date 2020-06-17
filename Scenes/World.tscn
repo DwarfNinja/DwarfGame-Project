@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://FloorTileCaveDark.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Resources/WoodenLogs.tscn" type="PackedScene" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://Shaders/outline.shader" type="Shader" id=12]
 [ext_resource path="res://Scenes/KinematicBodies/BlackMarket.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Shop/Shop.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Scenes/KinematicBodies/Villager.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -44,32 +43,41 @@ position = Vector2( 103, 58 )
 position = Vector2( 30, 112 )
 
 [node name="MiningRig" parent="YSort" instance=ExtResource( 5 )]
+visible = false
 position = Vector2( 194, 80 )
 
 [node name="Forge" parent="YSort" instance=ExtResource( 11 )]
+visible = false
 material = SubResource( 1 )
 position = Vector2( 164, 126 )
 
 [node name="GoldCoins" parent="YSort" instance=ExtResource( 6 )]
+visible = false
 position = Vector2( 255, 95 )
 item_def = ExtResource( 8 )
 
 [node name="WoodenLogs" parent="YSort" instance=ExtResource( 2 )]
+visible = false
 position = Vector2( 78, 97 )
 
 [node name="WoodenLogs2" parent="YSort" instance=ExtResource( 2 )]
+visible = false
 position = Vector2( 126, 106 )
 
 [node name="WoodenLogs3" parent="YSort" instance=ExtResource( 2 )]
+visible = false
 position = Vector2( 218, 128 )
 
 [node name="Iron" parent="YSort" instance=ExtResource( 7 )]
+visible = false
 position = Vector2( 250, 45 )
 
 [node name="Iron2" parent="YSort" instance=ExtResource( 7 )]
+visible = false
 position = Vector2( 160, 42 )
 
 [node name="Iron3" parent="YSort" instance=ExtResource( 7 )]
+visible = false
 position = Vector2( 209, 27 )
 
 [node name="Ladder" parent="YSort" instance=ExtResource( 9 )]
@@ -79,5 +87,3 @@ position = Vector2( 292, 68 )
 position = Vector2( 26, 39 )
 
 [node name="Shop" parent="YSort" instance=ExtResource( 14 )]
-
-[node name="Villager" parent="YSort" instance=ExtResource( 15 )]

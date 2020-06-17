@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="DwarfGame-Project"
-run/main_scene="res://Scenes/World.tscn"
+run/main_scene="res://Scenes/UI/Menu's/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
