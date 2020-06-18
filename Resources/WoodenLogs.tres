@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://Scripts/R_Item.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Item.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Resources/WoodLogs2.0.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/HUD/InventoryBar/HUDWood2.0.png" type="Texture" id=3]
 

@@ -34,6 +34,7 @@ var last_known_targetposition
 var laser_color = Color(1.0, .329, .298)
 var target
 var hit_pos
+var points
 
 func _ready():
 	randomize()
@@ -65,8 +66,10 @@ func _physics_process(delta):
 #			print("Villager is Idling")
 			
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-			if IdleRotationTimer.time_left == 0:
-				VisionConeArea.rotation += 90
+			if IdleRotationTimer.is_stopped():
+				VisionConeArea.rotation_degrees += 45
+				IdleRotationTimer.start()
+				
 			if can_see_target == true and DetectionTimer.is_stopped():
 				DetectionTimer.start()
 				
@@ -95,7 +98,7 @@ func _physics_process(delta):
 			for slides in get_slide_count():
 				var collision = get_slide_collision(slides)
 				# ALTERATE CODE?: if CollisionShape2D in collision.collider_shape:
-				if "CollisionShape2D" in collision.collider_shape.to_string():
+				if "CollisionShape2D" or "CollisionPolygon2D" in collision.collider_shape.to_string():
 					if velocity > Vector2(-1,-1) and velocity < Vector2(1,1):
 						collided_with_object = true
 			
@@ -105,7 +108,6 @@ func _physics_process(delta):
 				update_playerghost_sprite()
 			
 			if full_rotation_check >= 2*PI:
-				print("YALA")
 				state = choose_random_state([IDLE, ROAM])
 				full_rotation_check = 0
 				
@@ -139,7 +141,7 @@ func _physics_process(delta):
 
 func _process(_delta):
 	pass
-	
+
 func aim_raycasts():
 	hit_pos = []
 	var space_state = get_world_2d().direct_space_state
@@ -159,7 +161,7 @@ func aim_raycasts():
 				can_see_target = false
 				
 func randomize_roamingidle_timer():
-	RoamingIdleDurationTimer.wait_time = rand_range(10, 20)
+	RoamingIdleDurationTimer.wait_time = rand_range(5, 20)
 	print("RoamingIdleDurationTimer Wait Time is Randomized")
 
 func choose_random_state(state_list):

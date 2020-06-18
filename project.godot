@@ -12,22 +12,22 @@ _global_script_classes=[ {
 "base": "StaticBody2D",
 "class": "Craftable_Item",
 "language": "GDScript",
-"path": "res://Scripts/Craftable_Item.gd"
+"path": "res://Scripts/Resources/Craftable_Item.gd"
 }, {
 "base": "StaticBody2D",
 "class": "Pickable_Item",
 "language": "GDScript",
-"path": "res://Scripts/Pickable_Item.gd"
+"path": "res://Scripts/Resources/Pickable_Item.gd"
 }, {
 "base": "R_Item",
 "class": "R_Craftable",
 "language": "GDScript",
-"path": "res://Scripts/R_Craftable.gd"
+"path": "res://Scripts/Resources/R_Craftable.gd"
 }, {
 "base": "Resource",
 "class": "R_Item",
 "language": "GDScript",
-"path": "res://Scripts/R_Item.gd"
+"path": "res://Scripts/Resources/R_Item.gd"
 } ]
 _global_script_class_icons={
 "Craftable_Item": "",
@@ -44,8 +44,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://Scripts/Events.gd"
+Events="*res://Scripts/Managers/Events.gd"
 HUD="*res://Scenes/UI/HUD.tscn"
+GameManager="*res://Scripts/Managers/GameManager.gd"
 
 [debug]
 

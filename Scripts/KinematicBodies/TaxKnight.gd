@@ -1,36 +1,32 @@
-extends StaticBody2D
+extends KinematicBody2D
 
 var can_interact = false
 onready var InteractArea = $InteractArea
 onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
-onready var HouseScene = "res://Scenes/House.tscn"
+
 
 func _ready():
+	# Connect signals
 	InteractArea.connect("area_entered", self, "_on_InteractArea_area_entered")
 	InteractArea.connect("area_exited", self, "_on_InteractArea_area_exited")
+	
 
 func _process(_delta):
 	if can_interact == true:
 		if Input.is_action_just_pressed("key_e"):
-			Events.emit_signal("exited_cave")
+			Events.emit_signal("entered_taxknight")
+		if Input.is_action_just_pressed("key_esc"):
+			Events.emit_signal("exited_taxknight")
+
+
 
 func _on_InteractArea_area_entered(area):
 	if area.get_name() == "PlayerPickupArea":
 		can_interact = true
-		$LadderSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
-		
+		$TaxKnightSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 
 func _on_InteractArea_area_exited(area):
 	if area.get_name() == "PlayerPickupArea":
 		can_interact = false
-		$LadderSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
-
-# Remove the current level
-#var level = root.get_node("Level")
-#root.remove_child(level)
-#level.call_deferred("free")
-
-# Add the next level
-#var next_level_resource = load("res://path/to/scene.tscn)
-#var next_level = next_level_resource.instance()
-#root.add_child(next_level)
+		$TaxKnightSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
+		

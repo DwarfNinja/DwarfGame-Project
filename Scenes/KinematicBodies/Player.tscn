@@ -208,7 +208,7 @@ start_node = "Idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=23]
 
 [sub_resource type="CircleShape2D" id=24]
-radius = 6.0
+radius = 7.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )

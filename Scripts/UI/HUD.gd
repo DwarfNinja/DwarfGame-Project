@@ -16,6 +16,7 @@ var inventory_items = {
 
 var craftingtable_opened = false
 var tax = 200
+var TaxKnight_instanced
 
 func _ready():
 	# Connect Signals
@@ -35,7 +36,9 @@ func _ready():
 
 func _process(_delta):
 	update_taxtimer()
-	print(inventory_items["goldcoins"])
+	if int(round(TaxTimer.time_left)) == int(round(TaxTimer.wait_time * 0.25)):
+		Events.emit_signal("taxtimer_is_25_percent")
+
 func _on_item_picked_up(item_def):
 	if item_def.item_name == "goldcoins":
 		add_to_inventory(item_def)
@@ -53,8 +56,8 @@ func update_hud_coins():
 	GoldCoins.text = str(inventory_items["goldcoins"])
 
 func update_taxtimer():
-	var minutes = int(TaxTimer.time_left)/60
-	var seconds = int(TaxTimer.time_left)%60
+	var minutes = int(round(TaxTimer.time_left))/60
+	var seconds = int(round(TaxTimer.time_left))%60
 	
 	TaxTimerLabel.text = ("%02d : %02d" % [minutes, seconds])
 
@@ -65,9 +68,11 @@ func _on_item_placed(selected_item):
 
 func _on_TaxTimer_timeout():
 	if inventory_items["goldcoins"] > 0:
-		inventory_items["goldcoins"] -= 200
+		inventory_items["goldcoins"] -= 20
+		update_hud_coins()
 		TaxTimer.wait_time = TaxTimer.wait_time * 0.5
 		TaxTimer.start()
+		Events.emit_signal("taxtimer_restarted")
 	else:
 		print("Game Ended")
 
@@ -85,5 +90,6 @@ func _on_exited_forge():
 	ForgeHUD.visible = false
 	
 func _on_exited_cave():
-	TaxTimer.start()
+	if TaxTimer.is_stopped():
+		TaxTimer.start()
 

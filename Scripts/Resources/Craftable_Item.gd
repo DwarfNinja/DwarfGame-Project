@@ -8,8 +8,6 @@ onready var InteractArea = $InteractArea
 onready var CraftableSprite = get_node(str(item_def.item_name.capitalize()) + "Sprite")
 
 
-
-
 func _ready():
 	# Connect signals
 	InteractArea.connect("area_entered", self, "_on_InteractArea_area_entered")

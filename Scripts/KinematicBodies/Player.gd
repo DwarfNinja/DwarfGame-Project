@@ -15,6 +15,8 @@ const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
 
+var packed_cave_scene = load("res://Scenes/Packed_Cave.tscn")
+
 export (bool) var static_camera = false
 var area_in_pickuparea = false
 
@@ -62,13 +64,13 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	
 	if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
-		PlayerPickupArea.position = Vector2(19, -5) #RIGHT
+		PlayerPickupArea.position = Vector2(17, -1) #RIGHT
 	if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
-		PlayerPickupArea.position = Vector2(-19, -5) #LEFT
+		PlayerPickupArea.position = Vector2(-17, -1) #LEFT
 	if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
-		PlayerPickupArea.position = Vector2(0, -26) #UP
+		PlayerPickupArea.position = Vector2(-0.5, -8) #UP
 	if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
-		PlayerPickupArea.position = Vector2(0, 14) #DOWN
+		PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("key_rightclick"):

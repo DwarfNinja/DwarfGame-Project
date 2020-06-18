@@ -21,15 +21,16 @@ height = 4.0
 script = ExtResource( 2 )
 
 [node name="VillagerSprite" type="Sprite" parent="."]
-position = Vector2( -1, 4 )
+position = Vector2( -1, 5 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.5, 13 )
+position = Vector2( -1.5, 15 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="CollisionArea" type="Area2D" parent="."]
+position = Vector2( -1, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
 position = Vector2( 0, 13 )
@@ -49,6 +50,7 @@ position = Vector2( 1, -4 )
 polygon = PoolVector2Array( -1, 4, 11, -20, 119, -60, 119, 68, 11, 28 )
 
 [node name="IdleRotationTimer" type="Timer" parent="."]
+wait_time = 1.5
 one_shot = true
 autostart = true
 

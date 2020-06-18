@@ -20,3 +20,7 @@ signal craftingbutton_mouse_entered()
 
 # ----------------------
 signal exited_cave()
+signal entered_cave()
+
+signal taxtimer_is_25_percent()
+signal taxtimer_restarted()
