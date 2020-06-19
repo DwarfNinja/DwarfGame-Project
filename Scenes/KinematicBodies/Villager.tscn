@@ -50,7 +50,6 @@ position = Vector2( 1, -4 )
 polygon = PoolVector2Array( -1, 4, 11, -20, 119, -60, 119, 68, 11, 28 )
 
 [node name="IdleRotationTimer" type="Timer" parent="."]
-wait_time = 1.5
 one_shot = true
 autostart = true
 

@@ -15,7 +15,7 @@ const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
 
-var packed_cave_scene = load("res://Scenes/Packed_Cave.tscn")
+signal place_item
 
 export (bool) var static_camera = false
 var area_in_pickuparea = false
@@ -64,11 +64,11 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	
 	if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
-		PlayerPickupArea.position = Vector2(17, -1) #RIGHT
+		PlayerPickupArea.position = Vector2(18, 0) #RIGHT
 	if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
-		PlayerPickupArea.position = Vector2(-17, -1) #LEFT
+		PlayerPickupArea.position = Vector2(-18, 0) #LEFT
 	if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
-		PlayerPickupArea.position = Vector2(-0.5, -8) #UP
+		PlayerPickupArea.position = Vector2(-0.5, -11) #UP
 	if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
 		PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
 	
@@ -86,9 +86,7 @@ func _on_item_selected(item_in_selected_slot):
 func place_item():
 	if selected_item != null:
 		if PlayerPickupArea.get_overlapping_bodies() == []:
-			var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
-			item_scene_instance.set_position(get_node("PlayerPickupArea/Position2D").get_global_position())
-			get_parent().add_child(item_scene_instance)
+			Events.emit_signal("place_item", selected_item)
 			Events.emit_signal("item_placed", selected_item)
 		else:
 			print("CANT PLACE ITEM!")

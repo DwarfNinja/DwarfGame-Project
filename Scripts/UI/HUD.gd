@@ -36,8 +36,11 @@ func _ready():
 
 func _process(_delta):
 	update_taxtimer()
-	if int(round(TaxTimer.time_left)) == int(round(TaxTimer.wait_time * 0.25)):
+	if int(round(TaxTimer.time_left)) < int(round(TaxTimer.wait_time * 0.25)):
 		Events.emit_signal("taxtimer_is_25_percent")
+	if TaxTimer.is_stopped():
+		Events.emit_signal("taxtimer_restarted")
+		
 
 func _on_item_picked_up(item_def):
 	if item_def.item_name == "goldcoins":

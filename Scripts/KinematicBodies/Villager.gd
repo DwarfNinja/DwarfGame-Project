@@ -51,6 +51,7 @@ func _ready():
 	$PlayerGhostSprite.set_as_toplevel(true)
 	
 	state = choose_random_state([IDLE, ROAM])
+	randomize_roamingidle_timer()
 	
 
 func _physics_process(delta):
@@ -161,7 +162,7 @@ func aim_raycasts():
 				can_see_target = false
 				
 func randomize_roamingidle_timer():
-	RoamingIdleDurationTimer.wait_time = rand_range(5, 20)
+	RoamingIdleDurationTimer.wait_time = rand_range(7, 20)
 	print("RoamingIdleDurationTimer Wait Time is Randomized")
 
 func choose_random_state(state_list):

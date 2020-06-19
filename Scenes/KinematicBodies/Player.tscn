@@ -7,6 +7,9 @@
 radius = 1.99999
 height = 7.00002
 
+[sub_resource type="CircleShape2D" id=24]
+radius = 7.0
+
 [sub_resource type="Animation" id=2]
 resource_name = "IdleDown"
 length = 0.1
@@ -207,9 +210,6 @@ start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=23]
 
-[sub_resource type="CircleShape2D" id=24]
-radius = 7.0
-
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 static_camera = true
@@ -224,6 +224,20 @@ frame = 24
 position = Vector2( -0.5, 4 )
 rotation = 1.5708
 shape = SubResource( 1 )
+
+[node name="PlayerPickupArea" type="Area2D" parent="." groups=[
+"pickup_area",
+]]
+show_behind_parent = true
+position = Vector2( 0, 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPickupArea"]
+shape = SubResource( 24 )
+
+[node name="SelectedItemSprite" type="Sprite" parent="PlayerPickupArea"]
+modulate = Color( 1, 1, 1, 0.470588 )
+
+[node name="Position2D" type="Position2D" parent="PlayerPickupArea"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/IdleDown = SubResource( 2 )
@@ -242,18 +256,5 @@ active = true
 parameters/playback = SubResource( 23 )
 parameters/Idle/blend_position = Vector2( 0, 0.1 )
 parameters/Run/blend_position = Vector2( 0, 0 )
-
-[node name="PlayerPickupArea" type="Area2D" parent="." groups=[
-"pickup_area",
-]]
-position = Vector2( 0, 13 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPickupArea"]
-shape = SubResource( 24 )
-
-[node name="SelectedItemSprite" type="Sprite" parent="PlayerPickupArea"]
-modulate = Color( 1, 1, 1, 0.470588 )
-
-[node name="Position2D" type="Position2D" parent="PlayerPickupArea"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
