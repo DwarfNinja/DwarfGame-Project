@@ -54,7 +54,7 @@ position = Vector2( 284, 129 )
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" type="KinematicBody2D" parent="YSort" instance=ExtResource( 25 )]
-position = Vector2( 290.13, 73.0799 )
+position = Vector2( 283, 86.2778 )
 script = ExtResource( 18 )
 static_camera = true
 

@@ -64,11 +64,11 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	
 	if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
-		PlayerPickupArea.position = Vector2(18, 0) #RIGHT
+		PlayerPickupArea.position = Vector2(19, 0) #RIGHT
 	if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
-		PlayerPickupArea.position = Vector2(-18, 0) #LEFT
+		PlayerPickupArea.position = Vector2(-19, 0) #LEFT
 	if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
-		PlayerPickupArea.position = Vector2(-0.5, -11) #UP
+		PlayerPickupArea.position = Vector2(-0.5, -10) #UP
 	if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
 		PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
 	

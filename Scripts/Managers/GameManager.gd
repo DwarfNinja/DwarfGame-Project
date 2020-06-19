@@ -17,15 +17,13 @@ func _ready():
 	Events.connect("place_item", self, "_on_place_item")
 
 func _process(delta):
-	print(saved_scene)
+	pass
 
 func _on_place_item(selected_item):
 	var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
 	item_scene_instance.set_position(get_tree().get_root().get_node("Cave/YSort/Player/PlayerPickupArea/Position2D").get_global_position())
 	get_tree().get_root().get_node("Cave/YSort").add_child(item_scene_instance)
 	item_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
-
-
 
 func switch_scene(temp_scene):
 	# save scene and remove it from the tree
@@ -40,9 +38,11 @@ func switch_scene(temp_scene):
 func load_scene():
 	if saved_scene != null:
 		# free temporary scene
-		get_tree().get_current_scene().queue_free()
+#		get_tree().get_current_scene().queue_free()
 		# add saved scene back to the tree
 		get_tree().get_root().add_child(saved_scene)
+		get_tree().set_current_scene(get_tree().get_root().get_node("Cave"))
+		get_tree().get_root().get_node("House").queue_free()
 #		saved_scene = null
 
 
