@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Resources/Craftables/MiningRig.tres" type="Resource" id=1]
 [ext_resource path="res://Resources/Craftables/Forge.tres" type="Resource" id=2]
@@ -7,11 +7,9 @@
 [ext_resource path="res://Scripts/Resources/Pickable_Item.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/Craftables/MiningRig.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/Craftables/Forge.gd" type="Script" id=7]
-[ext_resource path="res://Resources/Iron.tres" type="Resource" id=8]
 [ext_resource path="res://Scenes/Craftables/Forge.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Shop/Shop.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Craftables/MiningRig.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Resources/Iron.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Shaders/outline.shader" type="Shader" id=13]
 [ext_resource path="res://Scripts/Ladder.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/Shop.gd" type="Script" id=15]
@@ -25,8 +23,6 @@
 [ext_resource path="res://Scenes/KinematicBodies/BlackMarket.tscn" type="PackedScene" id=23]
 [ext_resource path="res://FloorTileCaveDark.png" type="Texture" id=24]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=25]
-[ext_resource path="res://Scenes/GoldCoins.tscn" type="PackedScene" id=26]
-[ext_resource path="res://Resources/GoldCoins.tres" type="Resource" id=27]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -54,9 +50,9 @@ position = Vector2( 284, 129 )
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" type="KinematicBody2D" parent="YSort" instance=ExtResource( 25 )]
-position = Vector2( 283, 86.2778 )
+position = Vector2( 272.113, 76.4518 )
 script = ExtResource( 18 )
-static_camera = true
+static_camera = false
 
 [node name="Rock" type="StaticBody2D" parent="YSort" instance=ExtResource( 20 )]
 position = Vector2( 103, 58 )
@@ -79,11 +75,6 @@ position = Vector2( 164, 126 )
 script = ExtResource( 7 )
 item_def = ExtResource( 2 )
 
-[node name="GoldCoins" type="StaticBody2D" parent="YSort" instance=ExtResource( 26 )]
-position = Vector2( 255, 95 )
-script = ExtResource( 5 )
-item_def = ExtResource( 27 )
-
 [node name="WoodenLogs" type="StaticBody2D" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 78, 97 )
 script = ExtResource( 5 )
@@ -98,21 +89,6 @@ item_def = ExtResource( 4 )
 position = Vector2( 218, 128 )
 script = ExtResource( 5 )
 item_def = ExtResource( 4 )
-
-[node name="Iron" type="StaticBody2D" parent="YSort" instance=ExtResource( 12 )]
-position = Vector2( 250, 45 )
-script = ExtResource( 5 )
-item_def = ExtResource( 8 )
-
-[node name="Iron2" type="StaticBody2D" parent="YSort" instance=ExtResource( 12 )]
-position = Vector2( 160, 42 )
-script = ExtResource( 5 )
-item_def = ExtResource( 8 )
-
-[node name="Iron3" type="StaticBody2D" parent="YSort" instance=ExtResource( 12 )]
-position = Vector2( 209, 27 )
-script = ExtResource( 5 )
-item_def = ExtResource( 8 )
 
 [node name="Ladder" type="StaticBody2D" parent="YSort" instance=ExtResource( 22 )]
 position = Vector2( 292, 68 )

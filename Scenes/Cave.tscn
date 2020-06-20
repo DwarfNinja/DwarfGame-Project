@@ -34,15 +34,19 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 576, 352 )
 
 [node name="PlayerPosition" type="Position2D" parent="."]
-position = Vector2( 283, 87 )
+position = Vector2( 283, 89 )
 
 [node name="TaxKnightPosition" type="Position2D" parent="."]
 position = Vector2( 284, 129 )
 
+[node name="CaveCamera" type="Camera2D" parent="."]
+position = Vector2( 160, 90 )
+
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 16 )]
-position = Vector2( 325, 98 )
+position = Vector2( 139, 79 )
+static_camera = false
 
 [node name="Rock" parent="YSort" instance=ExtResource( 13 )]
 position = Vector2( 103, 58 )

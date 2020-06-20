@@ -31,7 +31,6 @@ onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
 	# ___________________Connect Signals___________________
-	Events.connect("exited_cave", self, "_on_exited_cave")
 	
 	Events.connect("item_selected", self, "_on_item_selected")
 	# Craftingtable signals
@@ -40,37 +39,37 @@ func _ready():
 	# Forge signals
 	Events.connect("entered_forge", self, "_on_entered_forge")
 	Events.connect("exited_forge", self, "_on_exited_forge")
-	
-	$Camera2D.current = static_camera
+
+	$PlayerCamera.current = static_camera
 
 func _physics_process(delta):
-	
-	var input_vector = Vector2.ZERO
-	
-	if can_move == true:
-		input_vector.x = Input.get_action_strength("key_right") - Input.get_action_strength("key_left")
-		input_vector.y = Input.get_action_strength("key_down") - Input.get_action_strength("key_up")
-		input_vector = input_vector.normalized()
-	
-	if input_vector != Vector2.ZERO:
-		animationTree.set("parameters/Idle/blend_position", input_vector)
-		animationTree.set("parameters/Run/blend_position", input_vector)
-		animationState.travel("Run")
-		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
-	else:
-		animationState.travel("Idle")
-		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	
-	velocity = move_and_slide(velocity)
-	
-	if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
-		PlayerPickupArea.position = Vector2(19, 0) #RIGHT
-	if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
-		PlayerPickupArea.position = Vector2(-19, 0) #LEFT
-	if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
-		PlayerPickupArea.position = Vector2(-0.5, -10) #UP
-	if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
-		PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
+	if is_visible_in_tree():
+		var input_vector = Vector2.ZERO
+		
+		if can_move == true:
+			input_vector.x = Input.get_action_strength("key_right") - Input.get_action_strength("key_left")
+			input_vector.y = Input.get_action_strength("key_down") - Input.get_action_strength("key_up")
+			input_vector = input_vector.normalized()
+		
+		if input_vector != Vector2.ZERO:
+			animationTree.set("parameters/Idle/blend_position", input_vector)
+			animationTree.set("parameters/Run/blend_position", input_vector)
+			animationState.travel("Run")
+			velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+		else:
+			animationState.travel("Idle")
+			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		
+		velocity = move_and_slide(velocity)
+		
+		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
+			PlayerPickupArea.position = Vector2(19, 0) #RIGHT
+		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
+			PlayerPickupArea.position = Vector2(-19, 0) #LEFT
+		if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
+			PlayerPickupArea.position = Vector2(-0.5, -14) #UP
+		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
+			PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("key_rightclick"):
@@ -102,7 +101,3 @@ func _on_entered_forge(_current_opened_forge):
 
 func _on_exited_forge():
 	can_move = true
-
-func _on_exited_cave():
-#	$Camera2D.current = !static_camera
-	pass

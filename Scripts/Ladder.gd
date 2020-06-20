@@ -10,9 +10,10 @@ func _ready():
 	InteractArea.connect("area_exited", self, "_on_InteractArea_area_exited")
 
 func _process(_delta):
-	if can_interact == true:
-		if Input.is_action_just_pressed("key_e"):
-			Events.emit_signal("exited_cave")
+	if is_visible_in_tree():
+		if can_interact == true:
+			if Input.is_action_just_pressed("key_e"):
+				Events.emit_signal("exited_cave")
 
 func _on_InteractArea_area_entered(area):
 	if area.get_name() == "PlayerPickupArea":
