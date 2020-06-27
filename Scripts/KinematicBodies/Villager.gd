@@ -146,7 +146,7 @@ func _process(_delta):
 func aim_raycasts():
 	hit_pos = []
 	var space_state = get_world_2d().direct_space_state
-	var target_extents = Vector2(target.get_node('CollisionShape2D').shape.radius, target.get_node('CollisionShape2D').shape.height) - Vector2(5, 5)
+	var target_extents = Vector2(target.get_node("CollisionShape2D").shape.radius, target.get_node("CollisionShape2D").shape.height) - Vector2(5, 5)
 	var nw = target.position - target_extents
 	var se = target.position + target_extents
 	var ne = target.position + Vector2(target_extents.x, -target_extents.y)

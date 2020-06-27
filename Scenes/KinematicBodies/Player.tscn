@@ -250,3 +250,4 @@ parameters/Idle/blend_position = Vector2( 0, 0.1 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
+zoom = Vector2( 3, 3 )

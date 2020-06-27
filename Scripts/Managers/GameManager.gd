@@ -4,7 +4,7 @@ const WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
-const HOUSE_SCENE = preload("res://Scenes/House.tscn")
+const HOUSE_SCENE = preload("res://Scenes/House/RandomGenHouse.tscn")
 
 var saved_cave_scene 
 
@@ -19,27 +19,18 @@ func _ready():
 
 
 func _on_place_item(selected_item):
+	var current_scene = str(get_tree().get_current_scene().get_name())
 	var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
-	item_scene_instance.set_position(get_tree().get_root().get_node("Cave/YSort/Player/PlayerPickupArea/Position2D").get_global_position())
-	get_tree().get_root().get_node("Cave/YSort").add_child(item_scene_instance)
-	item_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
-
+	item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/YSort/Player/PlayerPickupArea/Position2D").get_global_position())
+	get_tree().get_root().get_node(current_scene + "/YSort").add_child(item_scene_instance)
+	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
 
 
 func _on_exited_cave():
-	# Hiding/Showing Cave
-#	var house_scene_instance = HOUSE_SCENE.instance()
-#	get_tree().get_root().add_child(house_scene_instance)
-#	get_tree().get_root().get_node("Cave").hide()
-	
 	# Saving Cave Scene and instancing House Scene
 	switch_scene()
 
 func _on_entered_cave():
-	# Hiding/Showing Cave
-#	get_tree().get_root().get_node("House").queue_free()
-#	get_tree().get_root().get_node("Cave").show()
-	
 	# Loading Cave and freeing House Scene
 	load_scene()
 

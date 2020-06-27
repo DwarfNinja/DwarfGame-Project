@@ -26,9 +26,6 @@ func _on_taxtimer_restarted():
 
 func _on_cave_scene_saved():
 	$YSort/Player.queue_free()
-#	$YSort/Player.global_position = $PlayerPosition.global_position
-#	$YSort/Player/AnimationTree.set("parameters/Run/blend_position", Vector2(0, 1))
-#	$YSort/Player/AnimationTree.set("parameters/Idle/blend_position", Vector2(0, 1))
 	
 func _on_cave_scene_loaded():
 	var player_scene_instance = PLAYER_SCENE.instance()
@@ -36,4 +33,4 @@ func _on_cave_scene_loaded():
 	player_scene_instance.set_position(get_tree().get_root().get_node("Cave/PlayerPosition").get_global_position())
 	player_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
 #	$YSort/Player/PlayerCamera.current = false
-	$CaveCamera.current = true
+	$CaveCamera.current = true 
