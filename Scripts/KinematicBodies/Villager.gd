@@ -49,7 +49,8 @@ func _ready():
 	ReactionTimer.connect("timeout", self, "_on_ReactionTimer_timeout")
 	
 	$PlayerGhostSprite.set_as_toplevel(true)
-	
+	#IF POSITION.DISTANCE_TO(PLAYER_LOCATION) < 5: STOP
+	#https://www.youtube.com/watch?v=05OixHPbxNA
 	state = choose_random_state([IDLE, ROAM])
 	randomize_roamingidle_timer()
 	

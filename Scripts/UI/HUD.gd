@@ -58,14 +58,14 @@ func add_to_inventory(item_def):
 func update_hud_coins():
 	GoldCoins.text = str(inventory_items["goldcoins"])
 
-func update_taxtimer(): # 900 * 96
-	var hours = int(round(TaxTimer.time_left * 96)/3600)
-	var minutes = int(round(TaxTimer.time_left))%60
-#	var minutes = int(round(TaxTimer.time_left))/60
-#	var seconds = int(round(TaxTimer.time_left))%60
+func update_taxtimer():
+#	var hours = int(round(TaxTimer.time_left * 96)/3600)
+#	var minutes = int(round(TaxTimer.time_left))%60
+	var minutes = int(round(TaxTimer.time_left))/60
+	var seconds = int(round(TaxTimer.time_left))%60
 	
-	TaxTimerLabel.text = ("%02d : %02d" % [hours, minutes])
-#	TaxTimerLabel.text = ("%02d : %02d" % [minutes, seconds])
+#	TaxTimerLabel.text = ("%02d : %02d" % [hours, minutes])
+	TaxTimerLabel.text = ("%02d : %02d" % [minutes, seconds])
 
 func _on_item_placed(selected_item):
 	if selected_item.item_name in inventory_items:
