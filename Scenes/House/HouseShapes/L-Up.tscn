@@ -1,12 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://WallTileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Scripts/House/Shape.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/House/ShapeV1.2.gd" type="Script" id=2]
 
 [node name="L_Up" type="Node2D"]
 script = ExtResource( 2 )
-opening_north = true
-opening_west = true
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Scripts/House/V1.2-RandomGenHouse.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/House/V1.1-RandomGenHouse.gd" type="Script" id=1]
 [ext_resource path="res://WallTileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/House/HouseShapes/R-Down.tscn" type="PackedScene" id=4]
