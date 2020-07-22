@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/House/V1.1-RandomGenHouse.gd" type="Script" id=1]
 [ext_resource path="res://WallTileset.tres" type="TileSet" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Scenes/House/HouseShapes/L-Down.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/House/HouseShapes/L-Up.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/House/HouseShapes/R-Up.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/House/HouseShapes/SquareSpace_SW-E.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/House/HouseShapes/Zig_NW-S.tscn" type="PackedScene" id=11]
 
 [node name="RandomGenHouse" type="Node2D"]
 script = ExtResource( 1 )
@@ -50,3 +52,7 @@ position = Vector2( -1120, 0 )
 [node name="R_Down" parent="HouseShapes" instance=ExtResource( 4 )]
 
 [node name="R_Up" parent="HouseShapes" instance=ExtResource( 9 )]
+
+[node name="SquareSpace_SW-E" parent="HouseShapes" instance=ExtResource( 10 )]
+
+[node name="Zig_NW-S" parent="HouseShapes" instance=ExtResource( 11 )]
