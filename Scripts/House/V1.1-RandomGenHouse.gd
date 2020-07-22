@@ -31,6 +31,7 @@ func _process(_delta):
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("key_e"):
 		fill_with_walls()
+		update_allcell_bitmasks()
 	if first_room_placed == false:
 		set_first_room()
 		
@@ -38,6 +39,7 @@ func _process(_delta):
 		check_randomroom_viability()
 		
 	if rooms == max_rooms and rooms_generated == false:
+		fill_with_walls()
 		update_allcell_bitmasks()
 		
 func set_first_room():
@@ -59,8 +61,8 @@ func set_random_room(random_shape_walls, random_shape_floor, new_random_room_loc
 		cell.y + get("room_pos_" + str(new_random_room_location)).y, random_shape_walls.get_cellv(cell), 
 		false, false, false, random_shape_walls.get_cell_autotile_coord(cell.x, cell.y))
 	for cell in random_shape_floor.get_used_cells():
-		$Floor.set_cell(cell.x + get("room_pos_" + str(new_random_room_location)).x/2, 
-		cell.y + get("room_pos_" + str(new_random_room_location)).y/2, random_shape_floor.get_cellv(cell), 
+		$Floor.set_cell(cell.x + get("room_pos_" + str(new_random_room_location)).x, 
+		cell.y + get("room_pos_" + str(new_random_room_location)).y, random_shape_floor.get_cellv(cell), 
 		false, false, false, random_shape_floor.get_cell_autotile_coord(cell.x, cell.y))
 	rooms += 1
 	
@@ -94,7 +96,7 @@ func update_allcell_bitmasks():
 		$Walls.update_bitmask_area(cell)
 	rooms_generated = true
 
-func fill_with_walls(rect = Rect2(-40, -40, 80, 80)):
+func fill_with_walls(rect = Rect2(-40, -40, 120, 120)):
 	for y in range(rect.position.y, rect.end.y):
 		for x in range(rect.position.x, rect.end.x):
 			if $Floor.get_cell(x,y) == -1:
