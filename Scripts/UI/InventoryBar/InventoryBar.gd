@@ -47,8 +47,8 @@ func _process(_delta):
 		if selected_slot.item_count_in_slot == 0:
 			get_item_in_slot(selected_slot)
 					
-	# Iterates over all the slots and determines if it is the slot selected,
-	# all other slot's selectors are turned off
+		# Iterates over all the slots and determines if it is the slot selected,
+		# all other slot's selectors are turned off
 		for index in range(0, HboxContainer.get_children().size()):
 			var slot = HboxContainer.get_children()[index]
 			if index == selector_position:

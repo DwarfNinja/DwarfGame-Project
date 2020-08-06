@@ -1,12 +1,12 @@
 extends Node2D
 
-onready var CROSS_SHAPE = get_node("HouseShapes/Cross")
-onready var L_DOWN_SHAPE = get_node("HouseShapes/L_Down")
-onready var L_UP_SHAPE = get_node("HouseShapes/L_Up")
-onready var R_DOWN_SHAPE = get_node("HouseShapes/R_Down")
-onready var R_UP_SHAPE = get_node("HouseShapes/R_Up")
-onready var SQUARESPACE_SW_E = get_node("HouseShapes/SquareSpace_SW-E")
-onready var ZIG_NW_S = get_node("HouseShapes/Zig_NW-S")
+onready var CROSS_SHAPE = get_node("HouseRooms/Cross")
+onready var L_DOWN_SHAPE = get_node("HouseRooms/L_Down")
+onready var L_UP_SHAPE = get_node("HouseRooms/L_Up")
+onready var R_DOWN_SHAPE = get_node("HouseRooms/R_Down")
+onready var R_UP_SHAPE = get_node("HouseRooms/R_Up")
+onready var SQUARESPACE_SW_E = get_node("HouseRooms/SquareSpace_SW-E")
+onready var ZIG_NW_S = get_node("HouseRooms/Zig_NW-S")
 
 var rooms = 0
 var max_rooms = 2

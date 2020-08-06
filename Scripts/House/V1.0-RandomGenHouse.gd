@@ -1,10 +1,10 @@
 extends Node2D
 
-onready var CROSS_SHAPE = get_node("HouseShapes/Cross")
-onready var L_DOWN_SHAPE = get_node("HouseShapes/L_Down")
-onready var L_UP_SHAPE = get_node("HouseShapes/L_Up")
-onready var R_DOWN_SHAPE = get_node("HouseShapes/R_Down")
-onready var R_UP_SHAPE = get_node("HouseShapes/R_Up")
+onready var CROSS_SHAPE = get_node("HouseRooms/Cross")
+onready var L_DOWN_SHAPE = get_node("HouseRooms/L_Down")
+onready var L_UP_SHAPE = get_node("HouseRooms/L_Up")
+onready var R_DOWN_SHAPE = get_node("HouseRooms/R_Down")
+onready var R_UP_SHAPE = get_node("HouseRooms/R_Up")
 
 var rooms = 0
 var max_rooms = 2

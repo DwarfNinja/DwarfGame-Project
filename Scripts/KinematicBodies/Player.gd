@@ -44,8 +44,7 @@ func _ready():
 
 func _physics_process(delta):
 	if is_visible_in_tree():
-		var input_vector = Vector2.ZERO
-		
+		var input_vector = Vector2.ZERO 
 		if can_move == true:
 			input_vector.x = Input.get_action_strength("key_right") - Input.get_action_strength("key_left")
 			input_vector.y = Input.get_action_strength("key_down") - Input.get_action_strength("key_up")
@@ -61,7 +60,6 @@ func _physics_process(delta):
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		
 		velocity = move_and_slide(velocity)
-		
 		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
 			PlayerPickupArea.position = Vector2(19, 0) #RIGHT
 		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
@@ -102,3 +100,4 @@ func _on_entered_forge(_current_opened_forge):
 
 func _on_exited_forge():
 	can_move = true
+

@@ -14,7 +14,7 @@ signal craftingtable_opened()
 # Forge signals
 signal entered_forge(current_opened_forge)
 signal exited_forge()
-signal iron_amount_set(current_opened_forge, current_iron_amount)
+signal iron_amount_set(current_opened_forge, slider_iron_amount)
 
 # Mouse entered craftingtablebutton signal
 signal craftingbutton_mouse_entered()
@@ -22,6 +22,9 @@ signal craftingbutton_mouse_entered()
 # ----------------------
 signal exited_cave()
 signal entered_cave()
+
+# RandomGenHouse signals
+signal randomgenhouse_loaded()
 
 signal taxtimer_is_25_percent()
 signal taxtimer_restarted()

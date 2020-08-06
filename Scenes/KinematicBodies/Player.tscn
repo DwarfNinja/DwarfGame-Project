@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.99999
-height = 7.00002
+height = 9.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 7.0
@@ -207,13 +207,13 @@ script = ExtResource( 2 )
 static_camera = true
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-position = Vector2( 0, -4 )
+position = Vector2( 1, -8 )
 texture = ExtResource( 1 )
 hframes = 32
 frame = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.5, 4 )
+position = Vector2( 0.5, 0 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
@@ -221,7 +221,7 @@ shape = SubResource( 1 )
 "pickup_area",
 ]]
 show_behind_parent = true
-position = Vector2( 0, 13 )
+position = Vector2( 1, 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerPickupArea"]
 shape = SubResource( 2 )
@@ -250,4 +250,5 @@ parameters/Idle/blend_position = Vector2( 0, 0.1 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
-zoom = Vector2( 4, 4 )
+position = Vector2( 1, -4 )
+zoom = Vector2( 5, 5 )

@@ -15,24 +15,25 @@ radius = 9.99998
 height = 12.0
 
 [node name="WoodenLogs" type="StaticBody2D"]
-position = Vector2( 0, 4 )
 script = ExtResource( 2 )
 item_def = ExtResource( 4 )
 
 [node name="WoodShadow" type="Sprite" parent="."]
+position = Vector2( 0, -4 )
 texture = ExtResource( 3 )
 
 [node name="WoodSprite" type="Sprite" parent="."]
 material = ExtResource( 5 )
+position = Vector2( 0, -4 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 7 )
+position = Vector2( 0, 3 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="PickUpArea" type="Area2D" parent="."]
-position = Vector2( 0, 6 )
+position = Vector2( 0, 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
 position = Vector2( 0, -4 )

@@ -38,12 +38,14 @@ func interact():
 	if iron_in_forge > 0:
 		Events.emit_signal("item_picked_up", iron)
 		iron_in_forge -= 1
+	else:
+		print("Forge is still smelting!")
 				
-func _on_iron_amount_set(current_opened_forge, current_iron_amount):
+func _on_iron_amount_set(current_opened_forge, slider_iron_amount):
 	if self == current_opened_forge:
-		ForgeTimer.wait_time = forge_time * current_iron_amount
+		ForgeTimer.wait_time = forge_time * slider_iron_amount
 		ForgeTimer.start()
-		set_iron_amount = current_iron_amount
+		set_iron_amount = slider_iron_amount
 
 func _on_ForgeTimer_timeout():
 	if iron_in_forge < 20:

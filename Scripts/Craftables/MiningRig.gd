@@ -9,7 +9,6 @@ var gold_coins_1 = preload("res://Sprites/Craftables/MiningRig TopDown Coins1.pn
 var gold_coins_2 = preload("res://Sprites/Craftables/MiningRig TopDown Coins2.png")
 
 
-
 var miningTimer_timedout = false
 var goldcoins_in_mine = 0
 var goldcoins_count = gold_coins.item_count

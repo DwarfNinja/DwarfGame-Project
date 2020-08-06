@@ -4,7 +4,9 @@ onready var InventoryBar = $VBoxContainer/CenterContainer/InventoryBar
 onready var GoldCoins = $VBoxContainer/Labels/HBoxContainer/GoldCoins
 onready var CraftingTableHUD = $CraftingTableHUD
 onready var ForgeHUD = $ForgeHUD
+onready var TravelingScreen = $TravelingScreen
 onready var TaxTimer = $TaxTimer
+onready var ScreenTimer = $ScreenTimer
 onready var TaxTimerLabel = $VBoxContainer/Labels/HBoxContainer/TaxTimerLabel
 
 
@@ -21,6 +23,7 @@ var TaxKnight_instanced
 func _ready():
 	# Connect Signals
 	TaxTimer.connect("timeout", self, "_on_TaxTimer_timeout")
+	ScreenTimer.connect("timeout", self, "_on_ScreenTimer_timeout")
 	# Enter/Exit location signals
 	Events.connect("exited_cave", self, "_on_exited_cave")
 	# Item signals
@@ -32,6 +35,8 @@ func _ready():
 	# Forge signals
 	Events.connect("entered_forge", self, "_on_entered_forge")
 	Events.connect("exited_forge", self, "_on_exited_forge")
+	# RandomGenHouse signals
+	Events.connect("randomgenhouse_loaded", self, "_on_randomgenhouse_loaded")
 
 
 func _process(_delta):
@@ -98,4 +103,10 @@ func _on_exited_forge():
 func _on_exited_cave():
 	if TaxTimer.is_stopped():
 		TaxTimer.start()
+	TravelingScreen.visible = true
 
+func _on_randomgenhouse_loaded():
+	ScreenTimer.start()
+
+func _on_ScreenTimer_timeout():
+	TravelingScreen.visible = false

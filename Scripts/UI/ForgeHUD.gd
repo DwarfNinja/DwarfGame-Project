@@ -6,7 +6,7 @@ onready var IronAmountLabel = $IronAmountLabel
 
 var forge_opened = false
 var current_opened_forge = null
-var current_iron_amount = 1
+var slider_iron_amount = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,16 +19,16 @@ func _process(_delta):
 			insert_iron()
 
 func insert_iron():
-	if HUD.inventory_items["iron"] >= current_iron_amount:
-		Events.emit_signal("iron_amount_set", current_opened_forge, current_iron_amount)
+	if HUD.inventory_items["iron"] >= slider_iron_amount:
+		Events.emit_signal("iron_amount_set", current_opened_forge, slider_iron_amount)
 		IronAmountHSlider.editable = false
-		HUD.inventory_items["iron"] -= current_iron_amount
-		HUD.InventoryBar.remove_specific_resource(iron, current_iron_amount)
+		HUD.inventory_items["iron"] -= slider_iron_amount
+		HUD.InventoryBar.remove_specific_resource(iron, slider_iron_amount)
 	else:
 		print("NOT ENOUGH RESOURCES!")
 
 func _on_HSlider_value_changed(value):
-	current_iron_amount = IronAmountHSlider.value
+	slider_iron_amount = IronAmountHSlider.value
 	IronAmountLabel.text = str(IronAmountHSlider.value)
 
 func _on_entered_forge(_current_opened_forge):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/UI/InventoryBar/InventoryBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/UI/HUD.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingTableHUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/UI/ForgeHUD/ForgeHUD.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Sprites/HUD/King HUD Icon.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/HUD/Screens/Travelling1.1.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
@@ -14,7 +15,7 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 8
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -90,7 +91,7 @@ margin_right = 313.0
 margin_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "20 : 00"
 align = 1
 
@@ -121,6 +122,19 @@ margin_bottom = 135.0
 [node name="ForgeHUD" parent="." instance=ExtResource( 6 )]
 visible = false
 
+[node name="TravelingScreen" type="TextureRect" parent="."]
+visible = false
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TaxTimer" type="Timer" parent="."]
 wait_time = 900.0
+one_shot = true
+
+[node name="ScreenTimer" type="Timer" parent="."]
+wait_time = 1.2
 one_shot = true
