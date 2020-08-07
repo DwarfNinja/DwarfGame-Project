@@ -53,8 +53,9 @@ func _process(_delta):
 		update_allcell_bitmasks()
 		Events.emit_signal("randomgenhouse_loaded")
 		
+		
 func set_first_room():
-	var first_room = choose_random_room()
+	var first_room = select_random_room()
 	var first_room_walls = first_room.get_node("Walls")
 	var first_room_area = first_room.get_node("Area")
 	first_room_data = first_room.get_room_data()[0]
@@ -69,24 +70,24 @@ func set_first_room():
 	first_room_placed = true
 		
 		
-func set_random_room(random_room_walls, random_room_floor, random_room_area, new_random_room_location):
+func set_random_room(random_room_walls, random_room_floor, random_room_area,  random_room_location):
 	for cell in random_room_walls.get_used_cells():
-		$Walls.set_cell(cell.x + get("room_pos_" + str(new_random_room_location)).x, 
-		cell.y + get("room_pos_" + str(new_random_room_location)).y, random_room_walls.get_cellv(cell), 
+		$Walls.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
+		cell.y + get("room_pos_" + str(random_room_location)).y, random_room_walls.get_cellv(cell), 
 		false, false, false, random_room_walls.get_cell_autotile_coord(cell.x, cell.y))
 	for cell in random_room_floor.get_used_cells():
-		$Floor.set_cell(cell.x + get("room_pos_" + str(new_random_room_location)).x, 
-		cell.y + get("room_pos_" + str(new_random_room_location)).y, random_room_floor.get_cellv(cell), 
+		$Floor.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
+		cell.y + get("room_pos_" + str(random_room_location)).y, random_room_floor.get_cellv(cell), 
 		false, false, false, random_room_floor.get_cell_autotile_coord(cell.x, cell.y))
 	for cell in random_room_area.get_used_cells():
-		$Area.set_cell(cell.x + get("room_pos_" + str(new_random_room_location)).x, 
-		cell.y + get("room_pos_" + str(new_random_room_location)).y, random_room_area.get_cellv(cell), 
+		$Area.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
+		cell.y + get("room_pos_" + str(random_room_location)).y, random_room_area.get_cellv(cell), 
 		false, false, false, random_room_area.get_cell_autotile_coord(cell.x, cell.y))
 	rooms += 1
 	
 	
 func check_randomroom_viability():
-	var random_room = choose_random_room()
+	var random_room = select_random_room()
 	var random_room_walls = random_room.get_node("Walls")
 	var random_room_floor = random_room.get_node("Floor")
 	var random_room_area = random_room.get_node("Area")
@@ -102,22 +103,22 @@ func check_randomroom_viability():
 		if value1 == value2:
 			if value1 == true and value2 == true:
 				possible_new_room_locations.append(location_of_value(i))
-	
+				
 	if count == 11 and possible_new_room_locations != []:
-		var chosen_randomroom_location = choose_randomroom_location(possible_new_room_locations)
-		clear_needed_chunk(random_room_floor, chosen_randomroom_location)
-		set_random_room(random_room_walls, random_room_floor, random_room_area, chosen_randomroom_location)
+		var selected_randomroom_location = select_randomroom_location(possible_new_room_locations)
+		clear_needed_chunk(random_room_floor, selected_randomroom_location)
+		set_random_room(random_room_walls, random_room_floor, random_room_area, selected_randomroom_location)
 		all_rooms_placed = true
 	else:
 		checking_room = false
 		
 		
 func set_shape():
-	var random_shape = choose_random_shape()
+	var random_shape = select_random_shape()
 	var random_shape_width = random_shape.shape_width
 	var random_shape_height = random_shape.shape_height
 	var possible_shape_locations = []
-	var chosen_shape_location
+	var selected_shape_location
 	
 	for cell in $Area.get_used_cells():
 		var shape_width_extent = $Area.get_cell(cell.x + (random_shape_width -1), cell.y)
@@ -131,14 +132,14 @@ func set_shape():
 		if shape_width_extent == 11 and shape_height_extent == 11 and shape_rect_sw_corner == 11:
 			if walls_width_extent == -1 and walls_height_extent == -1 and walls_rect_sw_corner == -1:
 				possible_shape_locations.append(cell)
-	# Chooses a random shape location if there is at least 1 viable location
+	# Selects a random shape location if there is at least 1 viable location
 	if possible_shape_locations != []:
-		chosen_shape_location = choose_random_shape_location(possible_shape_locations)
+		selected_shape_location = select_random_shape_location(possible_shape_locations)
 	else:
 		set_shape()
 	# Sets the shape in $Walls
 	for cell in random_shape.get_used_cells():
-		$Walls.set_cell(chosen_shape_location.x + cell.x, chosen_shape_location.y + cell.y, random_shape.get_cellv(cell), 
+		$Walls.set_cell(selected_shape_location.x + cell.x, selected_shape_location.y + cell.y, random_shape.get_cellv(cell), 
 		false, false, false, random_shape.get_cell_autotile_coord(cell.x, cell.y))
 	shapes += 1
 	
@@ -149,10 +150,10 @@ func update_allcell_bitmasks():
 	bitmasks_updated = true
 
 
-func clear_needed_chunk(random_room_floor, new_random_room_location):
+func clear_needed_chunk(random_room_floor, random_room_location):
 	for cell in random_room_floor.get_used_cells():
-		$Walls.set_cell(cell.x + get("room_pos_" + str(new_random_room_location)).x, 
-		cell.y + get("room_pos_" + str(new_random_room_location)).y, -1, 
+		$Walls.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
+		cell.y + get("room_pos_" + str(random_room_location)).y, -1, 
 		false, false, false)
 
 func clear_used_area():
@@ -174,23 +175,23 @@ func location_of_value(value):
 	return value
 
 
-func choose_random_room():
+func select_random_room():
 	var room_list = [CROSS_ROOM, L_DOWN_ROOM, L_UP_ROOM, R_DOWN_ROOM, R_UP_ROOM, SQUARESPACE_SW_E, ZIG_NW_S]
 	room_list.shuffle()
 	return room_list.pop_front()
 	
 	
-func choose_random_shape():
+func select_random_shape():
 	var shape_list = [SQUARE_4x5]
 	shape_list.shuffle()
 	return shape_list.pop_front()
 	
 	
-func choose_randomroom_location(possible_new_room_locations):
+func select_randomroom_location(possible_new_room_locations):
 	possible_new_room_locations.shuffle()
 	return possible_new_room_locations.pop_front()
 	
 	
-func choose_random_shape_location(possible_shape_locations):
+func select_random_shape_location(possible_shape_locations):
 	possible_shape_locations.shuffle()
 	return possible_shape_locations.pop_front()

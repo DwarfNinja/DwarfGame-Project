@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Scripts/House/V.1.2-RandomGenHouse.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/House/V.1.3-RandomGenHouse.gd" type="Script" id=1]
 [ext_resource path="res://HouseTileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/House/HouseRooms/R_Down.tscn" type="PackedScene" id=4]
@@ -16,7 +16,7 @@
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
 
-[node name="ShapeArea" type="TileMap" parent="."]
+[node name="Area" type="TileMap" parent="."]
 visible = false
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
@@ -48,13 +48,15 @@ __meta__ = {
 
 [node name="Cross" parent="HouseRooms" instance=ExtResource( 6 )]
 
-[node name="L_Down" parent="HouseRooms" instance=ExtResource( 7 )]
+[node name="RightAngle" type="Node2D" parent="HouseRooms"]
 
-[node name="L_Up" parent="HouseRooms" instance=ExtResource( 8 )]
+[node name="L_Down" parent="HouseRooms/RightAngle" instance=ExtResource( 7 )]
 
-[node name="R_Down" parent="HouseRooms" instance=ExtResource( 4 )]
+[node name="L_Up" parent="HouseRooms/RightAngle" instance=ExtResource( 8 )]
 
-[node name="R_Up" parent="HouseRooms" instance=ExtResource( 9 )]
+[node name="R_Down" parent="HouseRooms/RightAngle" instance=ExtResource( 4 )]
+
+[node name="R_Up" parent="HouseRooms/RightAngle" instance=ExtResource( 9 )]
 
 [node name="SquareSpace_SW-E" parent="HouseRooms" instance=ExtResource( 10 )]
 
