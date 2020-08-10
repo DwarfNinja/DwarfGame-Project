@@ -14,7 +14,7 @@ onready var SQUARE_4x5 = get_node("HouseShapes/Square_4x5")
 
 
 var rooms = 0
-var max_rooms = 2
+var max_rooms = 3
 var shapes = 0
 var max_shapes = 4
 
@@ -23,6 +23,9 @@ var first_room_placed = false
 var all_rooms_placed = false
 var first_room_data
 var checking_room = false
+var last_room_data
+var random_room_hor_depth = 0
+var random_room_ver_depth = 0
 
 var first_room_pos = Vector2(0,0)
 var room_pos_0 = Vector2(0, -20)
@@ -33,28 +36,31 @@ var room_pos_3 = Vector2(-20, 0)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+	set_first_room()
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("key_r"):
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("key_e"):
-		set_shape()
-	if first_room_placed == false:
-		set_first_room()
-		
-	if first_room_placed == true and rooms < max_rooms and checking_room == false:
 		check_randomroom_viability()
+#		set_shape()
+#	if first_room_placed == false:
+#		set_first_room()
 		
-	if shapes < max_shapes:
-		set_shape()
+#	if first_room_placed == true and rooms < max_rooms and checking_room == false:
+#		check_randomroom_viability()
 		
-	if rooms == max_rooms and bitmasks_updated == false and all_rooms_placed == true and shapes == max_shapes:
-		clear_used_area()
-		update_allcell_bitmasks()
-		Events.emit_signal("randomgenhouse_loaded")
+#	if shapes < max_shapes:
+#		set_shape()
+#
+#	if rooms == max_rooms and bitmasks_updated == false and shapes == max_shapes:
+#		clear_used_area()
+#		update_allcell_bitmasks()
+#		Events.emit_signal("randomgenhouse_loaded")
 		
 		
 func set_first_room():
+
 	var first_room = select_random_room()
 	var first_room_walls = first_room.get_node("Walls")
 	var first_room_area = first_room.get_node("Area")
@@ -67,50 +73,75 @@ func set_first_room():
 		$Area.set_cell(cell.x + first_room_pos.x, cell.y + first_room_pos.y, first_room_area.get_cellv(cell), 
 		false, false, false)
 	rooms += 1
-	first_room_placed = true
+	check_randomroom_viability()
 		
 		
-func set_random_room(random_room_walls, random_room_floor, random_room_area,  random_room_location):
+func set_random_room(random_room_walls, random_room_floor, random_room_area, random_room_location):
+#	print(random_room_hor_depth, random_room_ver_depth)
 	for cell in random_room_walls.get_used_cells():
-		$Walls.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
-		cell.y + get("room_pos_" + str(random_room_location)).y, random_room_walls.get_cellv(cell), 
+		$Walls.set_cell(cell.x + (get("room_pos_" + str(random_room_location)).x * random_room_hor_depth), 
+		cell.y + (get("room_pos_" + str(random_room_location)).y * random_room_ver_depth), random_room_walls.get_cellv(cell), 
 		false, false, false, random_room_walls.get_cell_autotile_coord(cell.x, cell.y))
+	
 	for cell in random_room_floor.get_used_cells():
-		$Floor.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
-		cell.y + get("room_pos_" + str(random_room_location)).y, random_room_floor.get_cellv(cell), 
+		$Floor.set_cell(cell.x + (get("room_pos_" + str(random_room_location)).x * random_room_hor_depth), 
+		cell.y + (get("room_pos_" + str(random_room_location)).y * random_room_ver_depth), random_room_floor.get_cellv(cell), 
 		false, false, false, random_room_floor.get_cell_autotile_coord(cell.x, cell.y))
+	
 	for cell in random_room_area.get_used_cells():
-		$Area.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
-		cell.y + get("room_pos_" + str(random_room_location)).y, random_room_area.get_cellv(cell), 
+		$Area.set_cell(cell.x + (get("room_pos_" + str(random_room_location)).x * random_room_hor_depth), 
+		cell.y + (get("room_pos_" + str(random_room_location)).y * random_room_ver_depth), random_room_area.get_cellv(cell), 
 		false, false, false, random_room_area.get_cell_autotile_coord(cell.x, cell.y))
 	rooms += 1
-	
+	print((get("room_pos_" + str(random_room_location)).x * random_room_hor_depth))
+	print((get("room_pos_" + str(random_room_location)).y * random_room_ver_depth))
 	
 func check_randomroom_viability():
 	var random_room = select_random_room()
 	var random_room_walls = random_room.get_node("Walls")
 	var random_room_floor = random_room.get_node("Floor")
 	var random_room_area = random_room.get_node("Area")
-	var new_room_data = random_room.get_room_data()[1]
-	var possible_new_room_locations = []
+	var random_room_data = random_room.get_room_data()[1]
+#	var random_room_hor_depth = random_room.get_room_depth()[0]
+#	var random_room_ver_depth = random_room.get_room_depth()[1]
+	var possible_randomroom_values = []
 	
 	var count = 0
 	checking_room = true
+	print(last_room_data)
 	for i in range(0, 11):
 		count += 1
 		var value1 = first_room_data[i]
-		var value2 = new_room_data[i]
+		if last_room_data:
+			value1 = last_room_data[i]
+		var value2 = random_room_data[i]
 		if value1 == value2:
 			if value1 == true and value2 == true:
-				possible_new_room_locations.append(location_of_value(i))
+				possible_randomroom_values.append(i)
 				
-	if count == 11 and possible_new_room_locations != []:
-		var selected_randomroom_location = select_randomroom_location(possible_new_room_locations)
+
+	if count == 11 and possible_randomroom_values != []:
+		last_room_data = random_room.get_room_data()[0]
+		var selected_randomroom_value = select_randomroom_location(possible_randomroom_values)
+		if last_room_data:
+			last_room_data.remove(selected_randomroom_value)
+			last_room_data.insert(selected_randomroom_value, false)
+			print(last_room_data)
+		var selected_randomroom_location = location_of_value(selected_randomroom_value)
+		if selected_randomroom_location == 0 or selected_randomroom_location == 2:
+			random_room_ver_depth += 1
+		if selected_randomroom_location == 1 or selected_randomroom_location == 3:
+			random_room_hor_depth += 1
+#		print("cheese", random_room_hor_depth)
+#		print("beese ", random_room_ver_depth)
+		print(random_room.get_name())
 		clear_needed_chunk(random_room_floor, selected_randomroom_location)
 		set_random_room(random_room_walls, random_room_floor, random_room_area, selected_randomroom_location)
-		all_rooms_placed = true
+		
+	if rooms < max_rooms:
+		check_randomroom_viability()
 	else:
-		checking_room = false
+		set_shape()
 		
 		
 func set_shape():
@@ -143,26 +174,38 @@ func set_shape():
 		false, false, false, random_shape.get_cell_autotile_coord(cell.x, cell.y))
 	shapes += 1
 	
+	if shapes < max_shapes:
+		set_shape()
+	else:
+		finalize_random_gen()
+	
 
+func finalize_random_gen():
+	clear_used_area()
+	update_allcell_bitmasks()
+	Events.emit_signal("randomgenhouse_loaded")
+	
+	
 func update_allcell_bitmasks():
 	for cell in $Walls.get_used_cells():
 		$Walls.update_bitmask_area(cell)
 	bitmasks_updated = true
-
-
+	
+	
 func clear_needed_chunk(random_room_floor, random_room_location):
 	for cell in random_room_floor.get_used_cells():
-		$Walls.set_cell(cell.x + get("room_pos_" + str(random_room_location)).x, 
-		cell.y + get("room_pos_" + str(random_room_location)).y, -1, 
+		$Walls.set_cell(cell.x + (get("room_pos_" + str(random_room_location)).x * random_room_hor_depth), 
+		cell.y + (get("room_pos_" + str(random_room_location)).y * random_room_ver_depth), -1, 
 		false, false, false)
-
+	
+	
 func clear_used_area():
 	for cell in $Walls.get_used_cells():
 		if $Walls.get_cellv(cell) == 16:
 			$Area.set_cell(cell.x, cell.y, -1, 
 			false, false, false)
-
-
+	
+	
 func location_of_value(value):
 	if value in range(0,3):
 		value = 0
@@ -173,8 +216,8 @@ func location_of_value(value):
 	elif value in range(9,12):
 		value = 3
 	return value
-
-
+	
+	
 func select_random_room():
 	var room_list = [CROSS_ROOM, L_DOWN_ROOM, L_UP_ROOM, R_DOWN_ROOM, R_UP_ROOM, SQUARESPACE_SW_E, ZIG_NW_S]
 	room_list.shuffle()

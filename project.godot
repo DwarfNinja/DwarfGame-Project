@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "R_Item",
 "language": "GDScript",
 "path": "res://Scripts/Resources/R_Item.gd"
+}, {
+"base": "Resource",
+"class": "R_Shapes",
+"language": "GDScript",
+"path": "res://Scripts/Resources/R_Shapes.gd"
 } ]
 _global_script_class_icons={
 "Craftable_Item": "",
 "Pickable_Item": "",
 "R_Craftable": "",
-"R_Item": ""
+"R_Item": "",
+"R_Shapes": ""
 }
 
 [application]

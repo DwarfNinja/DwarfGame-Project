@@ -13,6 +13,9 @@ export (bool) var opening_southwest_west
 export (bool) var opening_west
 export (bool) var opening_northwest_west
 
+#var hor_depth = 0
+#var ver_depth = 0
+
 var connect_northwest_north
 var connect_north
 var connect_northeast_north
@@ -74,3 +77,6 @@ func get_room_data():
 		connect_southwest_west, connect_west, connect_northwest_west]
 	
 	return([shape_openings,viable_connections])
+	
+#func get_room_depth():
+#	return([hor_depth, ver_depth])

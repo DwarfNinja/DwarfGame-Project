@@ -251,4 +251,4 @@ parameters/Run/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 position = Vector2( 1, -4 )
-zoom = Vector2( 5, 5 )
+zoom = Vector2( 25, 25 )

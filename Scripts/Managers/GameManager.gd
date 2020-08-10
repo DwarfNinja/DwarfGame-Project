@@ -4,7 +4,7 @@ const WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
-const HOUSE_SCENE = preload("res://Scenes/House/RandomGenHouse.tscn")
+const HOUSE_SCENE = preload("res://Scenes/House/House.tscn")
 
 var saved_cave_scene 
 
