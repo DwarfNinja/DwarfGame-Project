@@ -27,7 +27,7 @@ func insert_iron():
 	else:
 		print("NOT ENOUGH RESOURCES!")
 
-func _on_HSlider_value_changed(value):
+func _on_HSlider_value_changed(_value):
 	slider_iron_amount = IronAmountHSlider.value
 	IronAmountLabel.text = str(IronAmountHSlider.value)
 

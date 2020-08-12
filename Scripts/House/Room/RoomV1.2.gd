@@ -80,3 +80,4 @@ func get_room_data():
 	
 #func get_room_depth():
 #	return([hor_depth, ver_depth])
+

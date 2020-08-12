@@ -30,16 +30,16 @@ _global_script_classes=[ {
 "path": "res://Scripts/Resources/R_Item.gd"
 }, {
 "base": "Resource",
-"class": "R_Shapes",
+"class": "R_Room",
 "language": "GDScript",
-"path": "res://Scripts/Resources/R_Shapes.gd"
+"path": "res://Scripts/Resources/R_Room.gd"
 } ]
 _global_script_class_icons={
 "Craftable_Item": "",
 "Pickable_Item": "",
 "R_Craftable": "",
 "R_Item": "",
-"R_Shapes": ""
+"R_Room": ""
 }
 
 [application]

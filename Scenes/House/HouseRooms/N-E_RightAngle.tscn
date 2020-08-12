@@ -1,13 +1,24 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://HouseTileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Scripts/House/Room/RoomV1.2.gd" type="Script" id=2]
-
+[ext_resource path="res://Scripts/House/Room/RoomV1.3.gd" type="Script" id=2]
 
 [node name="R_Up" type="Node2D"]
 script = ExtResource( 2 )
-opening_north = true
-opening_east = true
+openings = {
+"east": true,
+"north": true,
+"northeast_east": false,
+"northeast_north": false,
+"northwest_north": false,
+"northwest_west": false,
+"south": false,
+"southeast_east": false,
+"southeast_south": false,
+"southwest_south": false,
+"southwest_west": false,
+"west": false
+}
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
