@@ -1,7 +1,5 @@
 extends Node2D
 
-export(Resource) var room_def
-export(Resource) var shape_def
 
 onready var CROSS = get_node("HouseRooms/Cross")
 
@@ -23,13 +21,13 @@ var shapes = 0
 var max_shapes = 4
 
 var last_room
+var last_room_location
 var bitmasks_updated = false
 var first_room_placed = false
 var all_rooms_placed = false
 var checking_room = false
-var random_room_hor_depth = 0
-var random_room_ver_depth = 0
-
+var selected_randomroom_direction
+	
 var room_pos_start = Vector2(0,0)
 var room_pos_north = Vector2(0, -20)
 var room_pos_east = Vector2(20, 0)
@@ -39,65 +37,71 @@ var room_pos_west = Vector2(-20, 0)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-#	set_first_room()
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("key_r"):
 		get_tree().reload_current_scene()
+		print("___________________________________")
 	if Input.is_action_just_pressed("key_e"):
 		check_randomroom_viability()
+	if Input.is_action_just_pressed("ui_accept"):
+		check_extent_of_shape()
 		
-		
-func set_random_room(random_room, random_room_location):
+func set_random_room(random_room, random_room_location, last_room_location):
 	var random_room_walls = random_room.get_node("Walls")
 	var random_room_floor = random_room.get_node("Floor")
 	var random_room_area = random_room.get_node("Area")
-	
+#	print(last_room_location, " + ", random_room_location, "=", last_room_location + random_room_location)
 	for cell in random_room_walls.get_used_cells():
-		$Walls.set_cell(cell.x + (random_room_location.x * random_room_hor_depth), 
-		cell.y + (random_room_location.y * random_room_ver_depth), random_room_walls.get_cellv(cell), 
+		$Walls.set_cell(cell.x + (random_room_location.x + last_room_location.x), 
+		cell.y + (random_room_location.y + last_room_location.y), random_room_walls.get_cellv(cell), 
 		false, false, false, random_room_walls.get_cell_autotile_coord(cell.x, cell.y))
 	
 	for cell in random_room_floor.get_used_cells():
-		$Floor.set_cell(cell.x + (random_room_location.x * random_room_hor_depth), 
-		cell.y + (random_room_location.y * random_room_ver_depth), random_room_floor.get_cellv(cell), 
+		$Floor.set_cell(cell.x + (random_room_location.x + last_room_location.x), 
+		cell.y + (random_room_location.y + last_room_location.y), random_room_floor.get_cellv(cell), 
 		false, false, false, random_room_floor.get_cell_autotile_coord(cell.x, cell.y))
 	
 	for cell in random_room_area.get_used_cells():
-		$Area.set_cell(cell.x + (random_room_location.x * random_room_hor_depth), 
-		cell.y + (random_room_location.y * random_room_ver_depth), random_room_area.get_cellv(cell), 
+		$Area.set_cell(cell.x + (random_room_location.x + last_room_location.x), 
+		cell.y + (random_room_location.y + last_room_location.y), random_room_area.get_cellv(cell), 
 		false, false, false, random_room_area.get_cell_autotile_coord(cell.x, cell.y))
 	rooms += 1
-#	print((get("room_pos_" + str(random_room_location)).x * random_room_hor_depth))
-#	print((get("room_pos_" + str(random_room_location)).y * random_room_ver_depth))
 	
 	
 func check_randomroom_viability():
 	var new_room = select_random_room()
-	var possible_new_room_direction = []
+	var possible_new_room_directions = []
 	
 	if last_room:
 		for direction in last_room.openings.keys():
 			if last_room.openings[direction] == true and new_room.get_connection(direction):
-				possible_new_room_direction.append(direction)
-
-		if possible_new_room_direction != []:
-			var selected_randomroom_direction = select_randomroom_direction(possible_new_room_direction)
-			var converted_randomroom_location = location_of_value(selected_randomroom_direction)
-			if last_room:
-				last_room.openings[selected_randomroom_direction] = false
-			clear_needed_chunk(new_room, converted_randomroom_location)
-			set_random_room(new_room, converted_randomroom_location)
+				possible_new_room_directions.append(direction)
+				
+		if possible_new_room_directions != []:
+			selected_randomroom_direction = select_randomroom_direction(possible_new_room_directions)
+			var converted_randomroom_position = location_of_value(selected_randomroom_direction)
+			clear_needed_chunk(new_room, converted_randomroom_position, last_room_location)
+			set_random_room(new_room, converted_randomroom_position, last_room_location)
 			last_room = new_room
+			last_room_location = converted_randomroom_position
+#			print(last_room.get_name())
+#			print(last_room_location)
+			print("selected_randomroom_direction is:  ", selected_randomroom_direction)
+			last_room.openings[last_room.mapping[selected_randomroom_direction]] = false
+			print("last_room.openings is:  ", last_room.openings)
 			
 	else:
-		set_random_room(new_room, room_pos_start)
+		last_room_location = room_pos_start
+		set_random_room(new_room, room_pos_start, last_room_location)
 		last_room = new_room
+#		print(last_room.get_name())
+#		print(last_room_location)
 		
 	if rooms < max_rooms:
 		check_randomroom_viability()
-#	else:
-#		check_extent_of_shape()
+	else:
+		check_extent_of_shape()
 		
 		
 func check_extent_of_shape():
@@ -105,21 +109,20 @@ func check_extent_of_shape():
 	var random_shape_width = random_shape.shape_width
 	var random_shape_height = random_shape.shape_height
 	var possible_shape_locations = []
-	
+
 	for cell in $Area.get_used_cells():
 		var shape_width_extent = $Area.get_cell(cell.x + (random_shape_width -1), cell.y)
 		var shape_height_extent = $Area.get_cell(cell.x, cell.y + (random_shape_height -1))
 		var shape_rect_sw_corner = $Area.get_cell(cell.x + (random_shape_height -1), cell.y + (random_shape_height -1))
-		
+
 		var walls_width_extent = $Walls.get_cell(cell.x + (random_shape_width -1), cell.y)
 		var walls_height_extent = $Walls.get_cell(cell.x, cell.y + (random_shape_height -1))
 		var walls_rect_sw_corner = $Walls.get_cell(cell.x + (random_shape_height -1), cell.y + (random_shape_height -1))
-		
 		# Checks certain cells in $Area and $Walls if it is able the place the shape
 		if shape_width_extent == 11 and  shape_height_extent == 11 and shape_rect_sw_corner == 11:
-			if walls_width_extent == 11 and walls_height_extent == 11 and walls_rect_sw_corner == -1:
+			if walls_width_extent == -1 and walls_height_extent == -1 and walls_rect_sw_corner == -1:
 				possible_shape_locations.append(cell)
-				
+
 	# Selects a random shape location if there is at least 1 viable location
 	if possible_shape_locations != []:
 		var selected_shape_location = select_random_shape_location(possible_shape_locations)
@@ -154,12 +157,12 @@ func update_allcell_bitmasks():
 	bitmasks_updated = true
 	
 	
-func clear_needed_chunk(random_room, random_room_location):
+func clear_needed_chunk(random_room, random_room_location,  last_room_location):
 	var random_room_floor = random_room.get_node("Floor")
 	
 	for cell in random_room_floor.get_used_cells():
-		$Walls.set_cell(cell.x + (random_room_location.x * random_room_hor_depth), 
-		cell.y + (random_room_location.y * random_room_ver_depth), -1, 
+		$Walls.set_cell(cell.x + (random_room_location.x + last_room_location.x), 
+		cell.y + (random_room_location.y + last_room_location.y), -1, 
 		false, false, false)
 	
 	
@@ -204,9 +207,7 @@ func select_random_shape():
 	
 	
 func select_randomroom_direction(possible_new_room_locations):
-	print("kaas")
 	possible_new_room_locations.shuffle()
-	print(possible_new_room_locations[0])
 	return possible_new_room_locations.pop_front()
 	
 	

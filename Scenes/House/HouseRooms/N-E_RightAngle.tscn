@@ -3,7 +3,7 @@
 [ext_resource path="res://HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/House/Room/RoomV1.3.gd" type="Script" id=2]
 
-[node name="R_Up" type="Node2D"]
+[node name="N-E_RightAngle" type="Node2D"]
 script = ExtResource( 2 )
 openings = {
 "east": true,
