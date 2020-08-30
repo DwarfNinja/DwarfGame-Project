@@ -115,16 +115,18 @@ func check_extent_of_shape():
 	var possible_shape_locations = []
 
 	for cell in $Area.get_used_cells():
+		var shape_origin = $Area.get_cell(cell.x, cell.y)
 		var shape_width_extent = $Area.get_cell(cell.x + (random_shape_width -1), cell.y)
 		var shape_height_extent = $Area.get_cell(cell.x, cell.y + (random_shape_height -1))
 		var shape_rect_sw_corner = $Area.get_cell(cell.x + (random_shape_height -1), cell.y + (random_shape_height -1))
-
+		
+		var walls_origin = $Walls.get_cell(cell.x, cell.y)
 		var walls_width_extent = $Walls.get_cell(cell.x + (random_shape_width -1), cell.y)
 		var walls_height_extent = $Walls.get_cell(cell.x, cell.y + (random_shape_height -1))
 		var walls_rect_sw_corner = $Walls.get_cell(cell.x + (random_shape_height -1), cell.y + (random_shape_height -1))
 		# Checks certain cells in $Area and $Walls if it is able the place the shape
-		if shape_width_extent == 11 and  shape_height_extent == 11 and shape_rect_sw_corner == 11:
-			if walls_width_extent == -1 and walls_height_extent == -1 and walls_rect_sw_corner == -1:
+		if shape_origin == 11 and shape_width_extent == 11 and  shape_height_extent == 11 and shape_rect_sw_corner == 11:
+			if walls_origin == -1 and walls_width_extent == -1 and walls_height_extent == -1 and walls_rect_sw_corner == -1:
 				possible_shape_locations.append(cell)
 
 	# Selects a random shape location if there is at least 1 viable location
@@ -149,26 +151,36 @@ func set_shape(random_shape, selected_shape_location):
 
 func fill_outer_walls():
 	var perimiter_cells = []
-	for cell in $Floor.get_used_cells():
-		if $Floor.get_cell(cell.x - 1, cell.y) == -1:
-			for index in range(1,20):
-				perimiter_cells.append(Vector2(cell.x, cell.y))
-		elif $Floor.get_cell(cell.x + 1, cell.y) == -1:
-			for index in range(1,20):
-				perimiter_cells.append(Vector2(cell.x, cell.y))
-		elif $Floor.get_cell(cell.x, cell.y - 1) == -1:
-			for index in range(1,20):
-				perimiter_cells.append(Vector2(cell.x, cell.y))
-		elif $Floor.get_cell(cell.x, cell.y + 1) == -1:
-			for index in range(1,20):
-				perimiter_cells.append(Vector2(cell.x, cell.y))
+	for cycles in range(0,2):
+		for cell in $Floor.get_used_cells():
+			if $Floor.get_cell(cell.x - 1, cell.y) == -1:
+				for index in range(1,21):
+					perimiter_cells.append(Vector2(cell.x - 1 * index, cell.y))
+					
+			if $Floor.get_cell(cell.x + 1, cell.y) == -1:
+				for index in range(1,21):
+					perimiter_cells.append(Vector2(cell.x + 1 * index, cell.y))
+					
+			if $Floor.get_cell(cell.x, cell.y - 1) == -1:
+				for index in range(1,21):
+					perimiter_cells.append(Vector2(cell.x, cell.y - 1 * index))
+					
+			if $Floor.get_cell(cell.x, cell.y + 1) == -1:
+				for index in range(1,21):
+					perimiter_cells.append(Vector2(cell.x, cell.y + 1 * index))
+					
+		
+		for cell in perimiter_cells:
+			$Walls.set_cell(cell.x, cell.y, 0, 
+			false, false, false, $Walls.get_cell_autotile_coord(cell.x, cell.y))
+			$Floor.set_cell(cell.x, cell.y, 9, 
+			false, false, false, $Walls.get_cell_autotile_coord(cell.x, cell.y))
+		
 	
-	for cell in perimiter_cells:
-		$Walls.set_cell(cell.x, cell.y, 0, 
-		false, false, false, $Walls.get_cell_autotile_coord(cell.x, cell.y))
-
+	
 func finalize_random_gen():
 	clear_used_area()
+	fill_outer_walls()
 	update_allcell_bitmasks()
 	Events.emit_signal("randomgenhouse_loaded")
 	

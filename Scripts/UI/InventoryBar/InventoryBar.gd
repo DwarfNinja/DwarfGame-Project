@@ -8,6 +8,7 @@ var count_3 = preload("res://Sprites/Count_3.png")
 var count_4 = preload("res://Sprites/Count_4.png")
 
 var selector_position = 0
+var item_in_selected_slot = null
 var ui_menu_opened = false
 
 func _ready():
@@ -30,13 +31,15 @@ func _process(_delta):
 	# Determines Selector position based on scroll wheel movement
 	if ui_menu_opened == false:
 		if Input.is_action_just_released("scroll_up"):
-				selector_position += 1
-				if selector_position > 5:
-					selector_position = 5
+			clear_item_selection()
+			selector_position += 1
+			if selector_position > 5:
+				selector_position = 0
 		elif Input.is_action_just_released("scroll_down"):
-				selector_position -= 1
-				if selector_position < 0:
-					selector_position = 0
+			clear_item_selection()
+			selector_position -= 1
+			if selector_position < 0:
+				selector_position = 5
 				
 				
 	var selected_slot = get_node("HBoxContainer/Slot_" + str(selector_position))
@@ -58,13 +61,15 @@ func _process(_delta):
 
 
 func get_item_in_slot(selected_slot):
-	var item_in_selected_slot = null
 	if selected_slot.item_def:
 		item_in_selected_slot = selected_slot.item_def
 	Events.emit_signal("item_selected", item_in_selected_slot)
 	return selected_slot
 	
-
+func clear_item_selection():
+	item_in_selected_slot = null
+	Events.emit_signal("item_selected", item_in_selected_slot)
+	
 # If the slot is empty, set the item definition. If the is not full but the item is the same, add the item
 func add_item(item_def):
 	for slot in HboxContainer.get_children():

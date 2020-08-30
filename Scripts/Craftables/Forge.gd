@@ -35,7 +35,7 @@ func _process(_delta):
 func interact():
 	if iron_in_forge == 0:
 		Events.emit_signal("entered_forge", self)
-	if iron_in_forge > 0:
+	elif iron_in_forge > 0:
 		Events.emit_signal("item_picked_up", iron)
 		iron_in_forge -= 1
 	else:
