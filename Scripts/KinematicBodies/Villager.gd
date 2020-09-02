@@ -164,7 +164,7 @@ func aim_raycasts():
 				
 func randomize_roamingidle_timer():
 	RoamingIdleDurationTimer.wait_time = rand_range(7, 20)
-	print("RoamingIdleDurationTimer Wait Time is Randomized")
+#	print("RoamingIdleDurationTimer Wait Time is Randomized")
 
 func choose_random_state(state_list):
 	state_list.shuffle()

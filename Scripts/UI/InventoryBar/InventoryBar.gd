@@ -48,6 +48,8 @@ func _process(_delta):
 		if Input.is_action_just_pressed("key_leftclick"):
 			get_item_in_slot(selected_slot)
 		if selected_slot.item_count_in_slot == 0:
+			selected_slot.clear()
+			clear_item_selection()
 			get_item_in_slot(selected_slot)
 					
 		# Iterates over all the slots and determines if it is the slot selected,

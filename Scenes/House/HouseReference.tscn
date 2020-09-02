@@ -40,6 +40,7 @@ polygon = PoolVector2Array( -320, -144, -96, -144, -96, -48, -56, -48, -56, -96,
 polygon = PoolVector2Array( -320, -144, -192, -144, -192, 48, -96, 48, -96, 144, -64, 144, -64, 160, -32, 160, -32, 144, 0, 144, 0, -48, -40, -48, -40, -96, 16, -96, 16, 32, 208, 32, 208, 256, -320, 256 )
 
 [node name="YSort" type="YSort" parent="."]
+visible = false
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -47, 133 )
