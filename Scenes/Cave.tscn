@@ -1,0 +1,92 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Shaders/outline.shader" type="Shader" id=1]
+[ext_resource path="res://Scenes/Resources/GoldCoins.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Resources/WoodenLogs.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Resources/Iron.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Craftables/Forge.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Craftables/MiningRig.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/GoldCoins.tres" type="Resource" id=7]
+[ext_resource path="res://Scripts/Worlds/Cave.gd" type="Script" id=8]
+[ext_resource path="res://Tilesets/FloorTileCaveDark.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/CraftingTable.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Shop/Shop.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/KinematicBodies/BlackMarket.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Props/Rock.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Ladder.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=16]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/Smooth = false
+shader_param/width = 1.0
+shader_param/outline_color = Color( 0.941176, 0.941176, 0.941176, 0 )
+shader_param/pixel_size = 1
+
+[node name="Cave" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 160, 90 )
+texture = ExtResource( 9 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 576, 352 )
+
+[node name="PlayerPosition" type="Position2D" parent="."]
+position = Vector2( 283, 89 )
+
+[node name="TaxKnightPosition" type="Position2D" parent="."]
+position = Vector2( 284, 129 )
+
+[node name="CaveCamera" type="Camera2D" parent="."]
+position = Vector2( 160, 90 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 16 )]
+position = Vector2( 139, 79 )
+static_camera = false
+
+[node name="Rock" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( 103, 58 )
+
+[node name="CraftingTable" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( 30, 112 )
+
+[node name="MiningRig" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 194, 80 )
+
+[node name="Forge" parent="YSort" instance=ExtResource( 5 )]
+material = SubResource( 1 )
+position = Vector2( 164, 126 )
+
+[node name="GoldCoins" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 255, 95 )
+item_def = ExtResource( 7 )
+
+[node name="WoodenLogs" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 78, 97 )
+
+[node name="WoodenLogs2" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 126, 106 )
+
+[node name="WoodenLogs3" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 218, 128 )
+
+[node name="Iron" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 250, 45 )
+
+[node name="Iron2" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 160, 42 )
+
+[node name="Iron3" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 209, 27 )
+
+[node name="Ladder" parent="YSort" instance=ExtResource( 14 )]
+position = Vector2( 292, 68 )
+
+[node name="BlackMarket" parent="YSort" instance=ExtResource( 12 )]
+position = Vector2( 26, 39 )
+
+[node name="Shop" parent="YSort" instance=ExtResource( 11 )]
