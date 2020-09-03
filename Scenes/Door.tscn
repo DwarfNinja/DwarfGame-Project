@@ -3,10 +3,10 @@
 [ext_resource path="res://Scripts/Door.gd" type="Script" id=1]
 [ext_resource path="res://HouseTileset.tres" type="TileSet" id=2]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 8 )
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 8 )
 
 [node name="Door" type="StaticBody2D"]
@@ -23,7 +23,7 @@ tile_data = PoolIntArray( 0, 17, 0, 1, 17, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 16, 8 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 disabled = true
 
 [node name="InteractArea" type="Area2D" parent="."]
@@ -31,4 +31,4 @@ position = Vector2( 16, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 position = Vector2( 0, 8 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )

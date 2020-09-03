@@ -11,7 +11,7 @@ onready var S_W_RIGHTANGLE = get_node("HouseRooms/RightAngle/S-W_RightAngle")
 onready var SQUARESPACE_SW_E = get_node("HouseRooms/SquareSpace_SW-E")
 onready var ZIG_NW_S = get_node("HouseRooms/Zig_NW-S")
 
-onready var SQUARE_4x5 = get_node("HouseShapes/Square_2x4")
+onready var SQUARE_4x5 = get_node("HouseShapes/Square_4x5")
 
 onready var IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 onready var WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
@@ -26,7 +26,7 @@ var rooms = 0
 var max_rooms = 3
 
 var shapes = 0
-var max_shapes = 6
+var max_shapes = 5
 
 var max_items = 4
 var max_enemies = 3
@@ -217,7 +217,7 @@ func update_allcell_bitmasks():
 	
 func clear_used_area():
 	for cell in $Walls.get_used_cells():
-		if $Walls.get_cellv(cell) == 18:
+		if $Walls.get_cellv(cell) == 16:
 			$Area.set_cell(cell.x, cell.y, -1, 
 			false, false, false)
 	
@@ -245,7 +245,7 @@ func place_items():
 	
 func place_enemies():
 	var enemy_tile_array = $Indexes.get_used_cells_by_id(12)
-		
+	
 	for i in range(0, select_random_enemy_positions(enemy_tile_array).size()):
 		var villager = VILLAGER_SCENE.instance()
 		var random_enemy = select_random_enemy(villager)
@@ -319,7 +319,6 @@ func select_random_item_positions(item_tile_array):
 	var random_item_positions = []
 	for _items in range(0, max_items):
 		item_tile_array.shuffle()
-		item_tile_array.pop_front()
 		random_item_positions.append(item_tile_array.pop_front())
 	return random_item_positions
 	
@@ -337,7 +336,6 @@ func select_random_enemy_positions(enemy_tile_array):
 	var random_enemy_positions = []
 	for _enemy in range(0, max_enemies):
 		enemy_tile_array.shuffle()
-		enemy_tile_array.pop_front()
 		random_enemy_positions.append(enemy_tile_array.pop_front())
 	return random_enemy_positions
 	
