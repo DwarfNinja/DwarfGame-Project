@@ -11,7 +11,9 @@ onready var S_W_RIGHTANGLE = get_node("HouseRooms/RightAngle/S-W_RightAngle")
 onready var SQUARESPACE_SW_E = get_node("HouseRooms/SquareSpace_SW-E")
 onready var ZIG_NW_S = get_node("HouseRooms/Zig_NW-S")
 
-onready var SQUARE_4x5 = get_node("HouseShapes/Square_4x5")
+onready var SQUARE_4x5 = get_node("HouseShapes/Square_4x2")
+onready var SE_5x2 = get_node("HouseShapes/SE_3x2")
+onready var Hor_4x1 = get_node("HouseShapes/Hor_4x1")
 
 onready var IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 onready var WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
@@ -26,7 +28,7 @@ var rooms = 0
 var max_rooms = 3
 
 var shapes = 0
-var max_shapes = 5
+var max_shapes = 6
 
 var max_items = 4
 var max_enemies = 3
@@ -137,13 +139,13 @@ func check_extent_of_shape():
 	for cell in $Area.get_used_cells():
 		var shape_origin = $Area.get_cell(cell.x, cell.y)
 		var shape_origin_left = $Area.get_cell(cell.x - 1, cell.y)
-		var shape_width_extent = $Area.get_cell(cell.x + (random_shape_width -1), cell.y)
+		var shape_width_extent = $Area.get_cell(cell.x + (random_shape_width), cell.y)
 		var shape_height_extent = $Area.get_cell(cell.x, cell.y + (random_shape_height -1))
 		var shape_rect_se_corner = $Area.get_cell(cell.x + (random_shape_height -1), cell.y + (random_shape_height -1))
 		
 		var walls_origin = $Walls.get_cell(cell.x, cell.y)
 		var walls_origin_left = $Walls.get_cell(cell.x - 1, cell.y)
-		var walls_width_extent = $Walls.get_cell(cell.x + (random_shape_width -1), cell.y)
+		var walls_width_extent = $Walls.get_cell(cell.x + (random_shape_width), cell.y)
 		var walls_height_extent = $Walls.get_cell(cell.x, cell.y + (random_shape_height -1))
 		var walls_rect_se_corner = $Walls.get_cell(cell.x + (random_shape_height -1), cell.y + (random_shape_height -1))
 		# Checks certain cells in $Area and $Walls if it is able the place the shape
@@ -162,7 +164,7 @@ func check_extent_of_shape():
 		finalize_random_gen()
 		clear_index_tile_conflict()
 		place_items()
-		place_enemies()
+#		place_enemies()
 		place_player_spawn()
 		
 		
@@ -172,8 +174,8 @@ func set_shape(random_shape, selected_shape_location):
 		$Walls.set_cell(selected_shape_location.x + cell.x, selected_shape_location.y + cell.y, random_shape.get_cellv(cell), 
 		false, false, false, random_shape.get_cell_autotile_coord(cell.x, cell.y))
 	shapes += 1
-
-
+	
+	 
 func fill_outer_walls():
 	var perimiter_cells = []
 	for _cycles in range(0,2):
@@ -217,7 +219,7 @@ func update_allcell_bitmasks():
 	
 func clear_used_area():
 	for cell in $Walls.get_used_cells():
-		if $Walls.get_cellv(cell) == 16:
+		if $Walls.get_cellv(cell) == 16 or $Walls.get_cellv(cell) == 3:
 			$Area.set_cell(cell.x, cell.y, -1, 
 			false, false, false)
 	
@@ -231,33 +233,32 @@ func clear_index_tile_conflict():
 			
 func place_items():
 	var item_tile_array = $Indexes.get_used_cells_by_id(13)
-			
-	for i in range(0, select_random_item_positions(item_tile_array).size()):
+	var random_item_positions = select_random_item_positions(item_tile_array)
+	for i in range(0, random_item_positions.size()):
 		var iron = IRON_SCENE.instance()
 		var wood = WOOD_SCENE.instance()
 		var goldcoins = GOLDCOINS_SCENE.instance()
 		var random_item = select_random_item(iron, wood, goldcoins)
-		var tilepos = $Walls.map_to_world(item_tile_array[i])
+		var tilepos = $Walls.map_to_world(random_item_positions[i])
 		random_item.set_position(tilepos + Vector2(8,8))
-		$Indexes.set_cell(item_tile_array[i].x, item_tile_array[i].y, -1)
+		$Indexes.set_cell(random_item_positions[i].x, random_item_positions[i].y, -1)
 		$Walls.add_child(random_item)
 	
 	
 func place_enemies():
 	var enemy_tile_array = $Indexes.get_used_cells_by_id(12)
-	
-	for i in range(0, select_random_enemy_positions(enemy_tile_array).size()):
+	var random_enemy_positions = select_random_enemy_positions(enemy_tile_array)
+	for i in range(0, random_enemy_positions.size()):
 		var villager = VILLAGER_SCENE.instance()
 		var random_enemy = select_random_enemy(villager)
-		var tilepos = $Walls.map_to_world(enemy_tile_array[i])
+		var tilepos = $Walls.map_to_world(random_enemy_positions[i])
 		random_enemy.set_position(tilepos + Vector2(8,8))
-		$Indexes.set_cell(enemy_tile_array[i].x, enemy_tile_array[i].y, -1)
+		$Indexes.set_cell(random_enemy_positions[i].x, random_enemy_positions[i].y, -1)
 		$Walls.add_child(random_enemy)
 		
 		
 func place_player_spawn():
 	var spawn_tile_array = $Indexes.get_used_cells_by_id(14)
-	print("SPAWN TILE ARRAY = ",spawn_tile_array)
 	var random_spawn_position = select_random_spawn_position(spawn_tile_array)
 	var door = DOOR_SCENE.instance()
 	var player = PLAYER_SCENE.instance()
@@ -306,7 +307,7 @@ func select_randomroom_direction(possible_new_room_locations):
 	
 	
 func select_random_shape():
-	var shape_list = [SQUARE_4x5]
+	var shape_list = [SQUARE_4x5, SE_5x2, Hor_4x1]
 	shape_list.shuffle()
 	return shape_list.pop_front()
 	

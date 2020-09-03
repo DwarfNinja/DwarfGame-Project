@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Cross.png-d80351596a7c30614e21b05edffada1b.stex"
+path="res://.import/Count_3.png-ed4c8bcd12cf7b35d0bd99ed65ba2839.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Cross.png"
-dest_files=[ "res://.import/Cross.png-d80351596a7c30614e21b05edffada1b.stex" ]
+source_file="res://Sprites/HUD/InventoryBar/Count_3.png"
+dest_files=[ "res://.import/Count_3.png-ed4c8bcd12cf7b35d0bd99ed65ba2839.stex" ]
 
 [params]
 

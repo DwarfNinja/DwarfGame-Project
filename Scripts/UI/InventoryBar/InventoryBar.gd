@@ -2,10 +2,10 @@ extends TextureRect
 
 onready var HboxContainer = $HBoxContainer
 
-var count_1 = preload("res://Sprites/Count_1.png")
-var count_2 = preload("res://Sprites/Count_2.png")
-var count_3 = preload("res://Sprites/Count_3.png")
-var count_4 = preload("res://Sprites/Count_4.png")
+var count_1 = preload("res://Sprites/HUD/InventoryBar/Count_1.png")
+var count_2 = preload("res://Sprites/HUD/InventoryBar/Count_2.png")
+var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
+var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
 
 var selector_position = 0
 var item_in_selected_slot = null

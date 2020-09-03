@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Count_1.png-e9a64e1c79bc0c767fc1be65edbc0206.stex"
+path="res://.import/TilesetWall Split4.png-7afef50ff94d0e8e6226fca54fc1c287.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Count_1.png"
-dest_files=[ "res://.import/Count_1.png-e9a64e1c79bc0c767fc1be65edbc0206.stex" ]
+source_file="res://Tilesets/TilesetWall Split4.png"
+dest_files=[ "res://.import/TilesetWall Split4.png-7afef50ff94d0e8e6226fca54fc1c287.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Count_2.png-9de4ce335d7e5c7644c8cb8fed2084ca.stex"
+path="res://.import/Count_4.png-9385b955c8507daf253638251416e935.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Count_2.png"
-dest_files=[ "res://.import/Count_2.png-9de4ce335d7e5c7644c8cb8fed2084ca.stex" ]
+source_file="res://Sprites/HUD/InventoryBar/Count_4.png"
+dest_files=[ "res://.import/Count_4.png-9385b955c8507daf253638251416e935.stex" ]
 
 [params]
 

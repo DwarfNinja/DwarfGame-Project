@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Count_3.png-844587802b16b336fa12ed894152e723.stex"
+path="res://.import/Door.png-d2764298bdbae800290ac8789742be6b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Count_3.png"
-dest_files=[ "res://.import/Count_3.png-844587802b16b336fa12ed894152e723.stex" ]
+source_file="res://Sprites/House/Door.png"
+dest_files=[ "res://.import/Door.png-d2764298bdbae800290ac8789742be6b.stex" ]
 
 [params]
 
