@@ -3,8 +3,11 @@
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableSelector.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton.png" type="Texture" id=2]
 [ext_resource path="res://Resources/Craftables/MiningRig.tres" type="Resource" id=3]
-[ext_resource path="res://Scripts/CraftingButton.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/UI/CraftingTable/CraftingButton.gd" type="Script" id=4]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableSelectorExpand.png" type="Texture" id=5]
+
+
+
 
 [sub_resource type="StyleBoxEmpty" id=1]
 

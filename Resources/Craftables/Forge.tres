@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/R_Craftable.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton Forge.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Craftables/Forge.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/HUD/InventoryBar/HUD Forge.png" type="Texture" id=4]

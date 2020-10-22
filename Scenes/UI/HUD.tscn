@@ -1,21 +1,32 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/UI/InventoryBar/InventoryBar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/HUD.gd" type="Script" id=2]
-[ext_resource path="res://Sprites/HUD/HUDGoldCoin.png" type="Texture" id=3]
-[ext_resource path="res://Fonts/kenney_fontpackage/Fonts/Kenney Mini Square.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Scripts/UI/HUD.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/HUD/HUDGoldCoinBig.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Tres FontData/Mini Square fontdata.tres" type="DynamicFontData" id=4]
 [ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingTableHUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/UI/ForgeHUD/ForgeHUD.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sprites/HUD/King HUD Icon.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/HUD/Screens/Travelling1.1.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
+outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = 1
 font_data = ExtResource( 4 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 margin_right = 320.0
 margin_bottom = 180.0
 __meta__ = {
@@ -24,72 +35,80 @@ __meta__ = {
 
 [node name="Icons" type="MarginContainer" parent="VBoxContainer"]
 margin_right = 320.0
-margin_bottom = 17.0
-custom_constants/margin_top = 2
+margin_bottom = 19.0
+custom_constants/margin_top = 3
 custom_constants/margin_left = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Icons"]
 margin_left = 5.0
-margin_top = 2.0
+margin_top = 3.0
 margin_right = 320.0
-margin_bottom = 17.0
-custom_constants/separation = 280
+margin_bottom = 19.0
+custom_constants/separation = 272
 
 [node name="GoldCoin" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
-margin_right = 15.0
-margin_bottom = 15.0
+margin_right = 14.0
+margin_bottom = 16.0
 texture = ExtResource( 3 )
 
-[node name="Clock" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
-visible = false
-margin_left = 295.0
-margin_right = 310.0
-margin_bottom = 15.0
-texture = ExtResource( 3 )
+[node name="KingSprite" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
+margin_left = 286.0
+margin_right = 302.0
+margin_bottom = 16.0
+texture = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Labels" type="MarginContainer" parent="VBoxContainer"]
-margin_top = 21.0
+margin_top = 23.0
 margin_right = 320.0
-margin_bottom = 25.0
+margin_bottom = 28.0
 custom_constants/margin_top = -6
-custom_constants/margin_left = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Labels"]
-margin_left = 1.0
 margin_top = -6.0
 margin_right = 320.0
-margin_bottom = 4.0
+margin_bottom = 5.0
 rect_min_size = Vector2( 100, 0 )
-custom_constants/separation = 280
+custom_constants/separation = 262
 
 [node name="GoldCoins" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
 margin_right = 25.0
-margin_bottom = 10.0
+margin_bottom = 11.0
 rect_min_size = Vector2( 25, 0 )
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_as_outline = 1
 text = "0"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TaxTimerLabel" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
+margin_left = 287.0
+margin_right = 313.0
+margin_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 2 )
+text = "20 : 00"
+align = 1
+
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 29.0
+margin_top = 32.0
 margin_right = 320.0
 margin_bottom = 147.0
-custom_constants/separation = 118
+custom_constants/separation = 115
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 151.0
 margin_right = 320.0
 margin_bottom = 177.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="InventoryBar" parent="VBoxContainer/CenterContainer" instance=ExtResource( 1 )]
 
@@ -102,3 +121,20 @@ margin_bottom = 135.0
 
 [node name="ForgeHUD" parent="." instance=ExtResource( 6 )]
 visible = false
+
+[node name="TravelingScreen" type="TextureRect" parent="."]
+visible = false
+margin_right = 320.0
+margin_bottom = 180.0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TaxTimer" type="Timer" parent="."]
+wait_time = 900.0
+one_shot = true
+
+[node name="ScreenTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
