@@ -28,3 +28,5 @@ signal randomgenhouse_loaded()
 
 signal taxtimer_is_25_percent()
 signal taxtimer_restarted()
+
+signal request_roamcell()

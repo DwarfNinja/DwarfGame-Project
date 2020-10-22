@@ -4,7 +4,7 @@ onready var Gridcontainer = $GridContainer
 
 var crafting_selector_position = 0
 var craftingtable_opened = false
-onready var selected_button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
+onready var Selected_Button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 
 func _ready():
 	# Craftingtable signals
@@ -54,11 +54,11 @@ func _process(_delta):
 #				crafting_selector_position = 0
 					
 				
-	selected_button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
+	Selected_Button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 	
 	if Input.is_action_just_pressed("key_e"):
 		if craftingtable_opened == true:
-				selected_button.craft_item()
+				Selected_Button.craft_item()
 
 	# Iterates over all buttons and determines if it the button is selected,
 	# all other button's selectors are turned off
@@ -74,7 +74,7 @@ func _on_craftingbutton_mouse_entered(crafting_button):
 	
 	
 func update_resourcebar():
-	var item_def_in_craftingbutton = selected_button.craftable_def
+	var item_def_in_craftingbutton = Selected_Button.craftable_def
 	$ResouceBar/WoodCostLabel.text = str(item_def_in_craftingbutton.wood_cost)
 	$ResouceBar/IronCostLabel.text = str(item_def_in_craftingbutton.iron_cost)
 	

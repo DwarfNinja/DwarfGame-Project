@@ -3,7 +3,7 @@ extends KinematicBody2D
 # Movement variables
 const ACCELERATION = 800
 const MAX_SPEED = 80
-const FRICTION = 600
+const FRICTION = 800 #was 600
 var velocity = Vector2.ZERO
 
 var can_move = true
@@ -77,6 +77,7 @@ func _process(_delta):
 func _on_item_selected(item_in_selected_slot):
 	if item_in_selected_slot:
 		SelectedItemSprite.texture = item_in_selected_slot.item_texture
+		print(item_in_selected_slot.item_texture)
 	else:
 		SelectedItemSprite.texture = null
 	selected_item = item_in_selected_slot

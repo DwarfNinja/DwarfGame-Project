@@ -3,10 +3,10 @@ extends Node2D
 
 onready var CROSS = get_node("HouseRooms/Cross")
 
-onready var N_E_RIGHTANGLE = get_node("HouseRooms/RightAngle/N-E_RightAngle")
-onready var S_E_RIGHTANGLE = get_node("HouseRooms/RightAngle/S-E_RightAngle")
-onready var N_W_RIGHTANGLE = get_node("HouseRooms/RightAngle/N-W_RightAngle")
-onready var S_W_RIGHTANGLE = get_node("HouseRooms/RightAngle/S-W_RightAngle")
+onready var NE_RIGHTANGLE = get_node("HouseRooms/RightAngle/N-E_RightAngle")
+onready var SE_RIGHTANGLE = get_node("HouseRooms/RightAngle/S-E_RightAngle")
+onready var NW_RIGHTANGLE = get_node("HouseRooms/RightAngle/N-W_RightAngle")
+onready var SW_RIGHTANGLE = get_node("HouseRooms/RightAngle/S-W_RightAngle")
 
 onready var SQUARESPACE_SW_E = get_node("HouseRooms/SquareSpace_SW-E")
 onready var ZIG_NW_S = get_node("HouseRooms/Zig_NW-S")
@@ -28,11 +28,12 @@ var rooms = 0
 var max_rooms = 3
 
 var shapes = 0
-var max_shapes = 6
+var max_shapes
 
-var max_items = 4
-var max_enemies = 3
+var max_items
+var max_enemies
 
+var countcheese = 0
 var last_room
 var last_room_location
 var selected_randomroom_direction
@@ -47,9 +48,20 @@ var room_pos_west = Vector2(-20, 0)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+	
+	if max_rooms == 2:
+		max_shapes = 4
+		max_items = 3
+		max_enemies = 3
+	if max_rooms == 3:
+		max_shapes = 6
+		max_items = 4
+		max_enemies = 3
+		
 	check_randomroom_viability()
-	
-	
+	Events.connect("request_roamcell", self, "_on_request_roamcell")
+
+
 func _process(_delta):
 	if Input.is_action_just_pressed("key_r"):
 		get_tree().reload_current_scene()
@@ -105,8 +117,6 @@ func check_randomroom_viability():
 			var converted_randomroom_position = location_of_value(selected_randomroom_direction)
 			if (last_room_location + converted_randomroom_position) in current_occupied_room_locations:
 				get_tree().reload_current_scene()
-#				check_randomroom_viability()
-#				return
 					
 			set_random_room(new_room, converted_randomroom_position, last_room_location)
 			print("OCCUPIED ROOMS = ", current_occupied_room_locations)
@@ -162,10 +172,9 @@ func check_extent_of_shape():
 		check_extent_of_shape()
 	else:
 		finalize_random_gen()
-		clear_index_tile_conflict()
-		place_items()
-#		place_enemies()
 		place_player_spawn()
+		place_items()
+		place_enemies()
 		
 		
 func set_shape(random_shape, selected_shape_location):
@@ -175,7 +184,15 @@ func set_shape(random_shape, selected_shape_location):
 		false, false, false, random_shape.get_cell_autotile_coord(cell.x, cell.y))
 	shapes += 1
 	
-	 
+	
+func finalize_random_gen():
+	fill_outer_walls()
+	clear_used_cells()
+	clear_index_tile_conflict()
+	update_allcell_bitmasks()
+	Events.emit_signal("randomgenhouse_loaded")
+	
+	
 func fill_outer_walls():
 	var perimiter_cells = []
 	for _cycles in range(0,2):
@@ -202,35 +219,41 @@ func fill_outer_walls():
 			false, false, false, $Walls.get_cell_autotile_coord(cell.x, cell.y))
 			$Floor.set_cell(cell.x, cell.y, 9, 
 			false, false, false, $Walls.get_cell_autotile_coord(cell.x, cell.y))
-		
 	
 	
-func finalize_random_gen():
-	clear_used_area()
-	fill_outer_walls()
-	update_allcell_bitmasks()
-	Events.emit_signal("randomgenhouse_loaded")
+func clear_used_cells():
+	for cell in $Walls.get_used_cells():
+		if $Walls.get_cellv(cell) == 16 or $Walls.get_cellv(cell) == 3:
+			# Clear cells in Area used in $Walls
+			$Area.set_cell(cell.x, cell.y, -1)
+			# Clear cells in Indexes used in $Walls
+			$Indexes.set_cell(cell.x, cell.y, -1)
 	
+	
+func clear_index_tile_conflict():
+	for cell in $Indexes.get_used_cells():
+		if $Area.get_cellv(cell) == -1:
+			# If index tile is not equal to a player spawn tile
+			if $Indexes.get_cellv(cell) != 14:
+				$Indexes.set_cell(cell.x, cell.y, -1)
 	
 func update_allcell_bitmasks():
 	for cell in $Walls.get_used_cells():
 		$Walls.update_bitmask_area(cell)
 	
 	
-func clear_used_area():
-	for cell in $Walls.get_used_cells():
-		if $Walls.get_cellv(cell) == 16 or $Walls.get_cellv(cell) == 3:
-			$Area.set_cell(cell.x, cell.y, -1, 
-			false, false, false)
+func get_tiles_in_rectangle(node_pos, rect_width, rect_height):
+	# Rect sides must be of uneven numbers
+	var rect_tiles = []
+	var top_left = node_pos - (Vector2(floor(rect_width / 2), floor(rect_height / 2)))
+	var bottom_right = node_pos + (Vector2(floor(rect_width / 2), floor(rect_height / 2))) 
+	for x in range(top_left.x, bottom_right.x + 1):
+		for y in range(top_left.y, bottom_right.y + 1):
+			rect_tiles.append(Vector2(x, y)) # or get_cell(x, y) or however you want it represented
+	print("RECT_TILES = ", rect_tiles)
+	return rect_tiles
 	
 	
-func clear_index_tile_conflict():
-	for cell in $Indexes.get_used_cells():
-		if $Area.get_cellv(cell) == -1:
-			if $Indexes.get_cellv(cell) != 14:
-				$Indexes.set_cell(cell.x, cell.y, -1)
-			
-			
 func place_items():
 	var item_tile_array = $Indexes.get_used_cells_by_id(13)
 	var random_item_positions = select_random_item_positions(item_tile_array)
@@ -248,6 +271,7 @@ func place_items():
 func place_enemies():
 	var enemy_tile_array = $Indexes.get_used_cells_by_id(12)
 	var random_enemy_positions = select_random_enemy_positions(enemy_tile_array)
+	print("random_enemy_positions = ", random_enemy_positions)
 	for i in range(0, random_enemy_positions.size()):
 		var villager = VILLAGER_SCENE.instance()
 		var random_enemy = select_random_enemy(villager)
@@ -260,20 +284,33 @@ func place_enemies():
 func place_player_spawn():
 	var spawn_tile_array = $Indexes.get_used_cells_by_id(14)
 	var random_spawn_position = select_random_spawn_position(spawn_tile_array)
-	var door = DOOR_SCENE.instance()
 	var player = PLAYER_SCENE.instance()
 	var tilepos = $Walls.map_to_world(random_spawn_position)
-	$Walls.set_cell(random_spawn_position.x, random_spawn_position.y, -1)
-	$Walls.set_cell(random_spawn_position.x + 1 , random_spawn_position.y, -1)
-	door.set_position(tilepos)
-	$Walls.add_child(door)
-	player.set_position(tilepos + Vector2(16,-8))
+	place_door(random_spawn_position, tilepos)
 	$Walls.add_child(player)
+	player.set_position(tilepos + Vector2(16,-8))
 	$Walls/Player/AnimationTree.set("parameters/Idle/blend_position", Vector2(0,-0.1))
 	for i in range(0, spawn_tile_array.size()):
 		$Indexes.set_cell(spawn_tile_array[i].x, spawn_tile_array[i].y, -1)
 		
+func place_door(random_spawn_position, tilepos):
+	var door = DOOR_SCENE.instance()
+	$Walls.set_cell(random_spawn_position.x, random_spawn_position.y, -1)
+	$Walls.set_cell(random_spawn_position.x + 1 , random_spawn_position.y, -1)
+	$Walls.add_child(door)
+	door.set_position(tilepos)
+	var spawn_zone_width = 15
+	var spawn_zone_height = 8
+	# Door position offset to compensate so the zone isn't in the wall
+	var spawn_zone = get_tiles_in_rectangle(
+		$Walls.world_to_map(door.position) - 
+		Vector2(0,ceil(spawn_zone_height/2) + 1), spawn_zone_width, spawn_zone_height)
+	
+	for cell in spawn_zone:
+		if $Indexes.get_cellv(cell) != -1:
+			$Indexes.set_cell(cell.x, cell.y, -1)
 		
+
 func location_of_value(converted_randomroom_location):
 	var locations = {
 	"northwest_north": room_pos_north,
@@ -296,15 +333,14 @@ func location_of_value(converted_randomroom_location):
 	
 	
 func select_random_room():
-	var room_list = [CROSS, N_E_RIGHTANGLE, S_E_RIGHTANGLE, N_W_RIGHTANGLE,
-	 S_W_RIGHTANGLE, SQUARESPACE_SW_E, ZIG_NW_S]
+	var room_list = [CROSS, NE_RIGHTANGLE, SE_RIGHTANGLE, NW_RIGHTANGLE,
+	 SW_RIGHTANGLE, SQUARESPACE_SW_E, ZIG_NW_S]
 	room_list.shuffle()
 	return room_list.pop_front()
 	
 func select_randomroom_direction(possible_new_room_locations):
 	possible_new_room_locations.shuffle()
 	return possible_new_room_locations.pop_front()
-	
 	
 func select_random_shape():
 	var shape_list = [SQUARE_4x5, SE_5x2, Hor_4x1]
@@ -318,9 +354,12 @@ func select_random_shape_location(possible_shape_locations):
 	
 func select_random_item_positions(item_tile_array):
 	var random_item_positions = []
+	if item_tile_array.size() < max_items:
+		max_items = item_tile_array.size()
 	for _items in range(0, max_items):
 		item_tile_array.shuffle()
-		random_item_positions.append(item_tile_array.pop_front())
+		if item_tile_array[0] != null:
+			random_item_positions.append(item_tile_array.pop_front())
 	return random_item_positions
 	
 func select_random_item(iron, wood, goldcoins):
@@ -331,10 +370,12 @@ func select_random_item(iron, wood, goldcoins):
 		return wood
 	elif random_number <= 100:
 		return goldcoins
-
-
+	
+	
 func select_random_enemy_positions(enemy_tile_array):
 	var random_enemy_positions = []
+	if enemy_tile_array.size() < max_enemies:
+		max_enemies = enemy_tile_array.size()
 	for _enemy in range(0, max_enemies):
 		enemy_tile_array.shuffle()
 		random_enemy_positions.append(enemy_tile_array.pop_front())
@@ -363,3 +404,41 @@ func select_random_spawn_position(spawn_tile_array):
 	return possible_player_spawns.pop_front()
 		
 		
+func _on_request_roamcell(villager_id):
+	var Villager = get_node("Walls/" + villager_id)
+	var villager_spawn_position = $Walls.world_to_map(Villager.spawned_cell)
+	var north_wall_found = false
+	var east_wall_found = false
+	var south_wall_found = false
+	var west_wall_found = false
+	print(villager_spawn_position)
+	var villager_roam_destinations = []
+	for index in range(1, 26):
+		if north_wall_found == false:
+			if $Walls.get_cellv(villager_spawn_position + Vector2(0, index)) == -1:
+				villager_roam_destinations.append($Walls.map_to_world(villager_spawn_position + Vector2(0, index)))
+			else:
+				north_wall_found = true
+				
+		if east_wall_found == false:
+			if $Walls.get_cellv(villager_spawn_position + Vector2(0, -index)) == -1:
+				villager_roam_destinations.append($Walls.map_to_world(villager_spawn_position + Vector2(0, -index)))
+			else:
+				east_wall_found = true
+		
+		if south_wall_found == false:
+			if $Walls.get_cellv(villager_spawn_position + Vector2(index, 0)) == -1:
+				villager_roam_destinations.append($Walls.map_to_world(villager_spawn_position + Vector2(index, 0)))
+			else:
+				south_wall_found = true
+				
+		if west_wall_found == false:
+			if $Walls.get_cellv(villager_spawn_position + Vector2(-index, 0)) == -1:
+				villager_roam_destinations.append($Walls.map_to_world(villager_spawn_position + Vector2(-index, 0)))
+			else:
+				west_wall_found = true
+				
+	villager_roam_destinations.shuffle()
+	Villager.random_cell = (villager_roam_destinations.pop_front() + Vector2(8,8))
+	
+	

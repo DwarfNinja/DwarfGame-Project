@@ -174,3 +174,7 @@ position = Vector2( 640, 0 )
 
 [node name="Hor_4x1" parent="HouseShapes" instance=ExtResource( 12 )]
 position = Vector2( 640, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 6, 6 )

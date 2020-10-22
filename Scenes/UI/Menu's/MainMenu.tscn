@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Fonts/Tres FontData/Big Square fontdata.tres" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://Dwarf Ghost.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -121,13 +122,13 @@ flat = true
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
 margin_left = 220.0
-margin_right = 252.0
+margin_right = 284.0
 margin_bottom = 144.0
 
 [node name="TextureRect" type="TextureRect" parent="Menu/CenterRow/CenterContainer"]
-margin_top = 56.0
-margin_right = 32.0
-margin_bottom = 88.0
+margin_top = 40.0
+margin_right = 64.0
+margin_bottom = 104.0
 size_flags_horizontal = 3
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 [connection signal="pressed" from="Menu/CenterRow/Buttons/NewGame" to="." method="_on_NewGame_pressed"]
