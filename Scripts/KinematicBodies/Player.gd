@@ -72,7 +72,6 @@ func _physics_process(delta):
 func _process(_delta):
 	if Input.is_action_just_pressed("key_rightclick"):
 		place_item()
-	
 
 func _on_item_selected(item_in_selected_slot):
 	if item_in_selected_slot:

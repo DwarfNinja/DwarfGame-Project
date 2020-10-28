@@ -29,4 +29,5 @@ signal randomgenhouse_loaded()
 signal taxtimer_is_25_percent()
 signal taxtimer_restarted()
 
-signal request_roamcell()
+signal request_navpath()
+signal request_roamcell(villager_id)

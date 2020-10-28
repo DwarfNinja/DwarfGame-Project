@@ -5,16 +5,18 @@ onready var VisionConeArea = $VisionConeArea
 onready var DetectionTimer = $DetectionTimer
 onready var RoamingIdleDurationTimer = $RoamingIdleDurationTimer
 onready var ReactionTimer = $ReactionTimer
-
+onready var RayCast2DTimer = $RayCast2DTimer
+onready var RayCastN1 = $VisionConeArea/RayCast2DN1
+onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
 const ACCELERATION = 300
 const MAX_SPEED = 40
 const FRICTION = 300
 var velocity = Vector2.ZERO
 
-var random_roamcell
 var can_see_target = false
 var state
+var states = ['idle', 'roam', 'search', 'chase']
 
 enum{
 	IDLE,
@@ -22,7 +24,10 @@ enum{
 	SEARCH,
 	CHASE
 	}
+	
+var random_roamcell
 
+var raycast_invertion = 1
 var full_rotation_check = 0
 var collided_with_object = false
 var target_detected = false
@@ -35,6 +40,9 @@ var hit_pos
 var points
 var spawned_cell
 
+var path
+
+
 func _ready():
 	randomize()
 	VisionConeArea.connect("body_entered", self, "_on_VisionConeArea_body_entered")
@@ -44,45 +52,33 @@ func _ready():
 	RoamingIdleDurationTimer.connect("timeout", self, "_on_RoamingIdleDurationTimer_timeout")
 	ReactionTimer.connect("timeout", self, "_on_ReactionTimer_timeout")
 	
-
 	
 	spawned_cell = self.global_position
 #	$PlayerGhost.set_as_toplevel(true)
-	state = choose_random_state([IDLE, ROAM])
+	choose_random_state([IDLE, ROAM])
 	randomize_roamingidle_timer()
 
 func _physics_process(delta):
-	update()
-	
-	if target:
-		aim_raycasts()
-	else:
-		can_see_target = false
-		
 	match state:
 		
 		IDLE:
 #			print("Villager is Idling")
-			
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-#			rotate_vision_cone()
-			
-			
-			
-			
+			VisionConeArea.rotation += (0.015 * raycast_invertion)
+			if RayCast2DTimer.is_stopped():
+				if RayCastN1.is_colliding() or RayCastN2.is_colliding():
+					(raycast_invertion = raycast_invertion * -1)
+					RayCast2DTimer.start()
+					
 		ROAM:
 #			print("Villager is Roaming")
-
 			if random_roamcell == null:
 				get_random_roamcell()
-#			print(self.get_instance_id(), "=", random_roamcell)
-			move_to_target_location(delta, random_roamcell)
+			if random_roamcell != null and path == null:
+				get_navpath(random_roamcell)
+			if path != null:
+				move_along_path(delta)
 			
-			if can_see_target == true and DetectionTimer.is_stopped():
-				DetectionTimer.start()
-				
-			if can_see_target == false:
-				DetectionTimer.stop()
 				
 			if RoamingIdleDurationTimer.is_stopped():
 				RoamingIdleDurationTimer.start()
@@ -140,8 +136,24 @@ func _physics_process(delta):
 
 
 func _process(_delta):
+	update()
 	check_sight_on_target()
+	if target:
+		aim_raycasts()
+	else:
+		can_see_target = false
+		
+func idle():
+	state = IDLE
 	
+func roam():
+	state = ROAM
+	
+func search():
+	state = SEARCH
+	
+func chase():
+	state = CHASE
 
 func aim_raycasts():
 	hit_pos = []
@@ -162,46 +174,13 @@ func aim_raycasts():
 				can_see_target = false
 				
 				
-func randomize_roamingidle_timer():
-	RoamingIdleDurationTimer.wait_time = rand_range(7, 20)
-
-func choose_random_state(state_list):
-	state_list.shuffle()
-	return state_list.pop_front()
-
-func get_vision_cone_range():
-	var vision_cone_range
-	var current_collision = $VisionConeRayCast2D.get_collider()
-	var current_collider = current_collision
-	var new_collider
-	if $VisionConeRayCast2D.is_colliding():
-		if "TileMap" in current_collision.get_name():
-			new_collider = current_collision
-	else:
-		new_collider = null
-	if new_collider != current_collider:
-		vision_cone_range.append(new_collider)
-	$VisionConeRayCast2D.rotation_degrees += 1
-	if vision_cone_range.size() == 2:
-		return vision_cone_range
-	
-		
-			
-#func rotate_vision_cone():
-#	if vision_cone_range == [] or vision_cone_range == null:
-#		vision_cone_range = get_vision_cone_range()
-#	print("VISIONCONERANGE", vision_cone_range)
-#	var min_visioncone_range = vision_cone_range.min()
-#	var max_visioncone_range = vision_cone_range.max()
-	
-
-	
 func check_sight_on_target():
 	if can_see_target == true and DetectionTimer.is_stopped():
 		DetectionTimer.start()
 				
 	if can_see_target == false:
 		DetectionTimer.stop()
+		
 		
 func update_playerghost_sprite():
 	if can_see_target == false and reached_target_position == false:
@@ -223,24 +202,48 @@ func move_to_target_location(delta, target):
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		target = Vector2.ZERO
 		
+func move_along_path(delta):
+	if path.size() > 0:
+		var distance = global_position.distance_to(path[0])
+		if distance > 10:
+			direction = (path[0] - global_position).normalized()
+			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+		else:
+			path.remove(0)
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+
+
+func choose_random_state(state_list):
+	state_list.shuffle()
+	call(states[state_list.pop_front()])
+#	return state_list.pop_front()
+
+func get_navpath(target_cell):
+	var villager_id = self.get_name()
+	Events.emit_signal("request_navpath", villager_id, target_cell)
+	
 func get_random_roamcell():
 	var villager_id = self.get_name()
 	Events.emit_signal("request_roamcell", villager_id)
 
 func _on_DetectionTimer_timeout():
 	if can_see_target == true:
-		state = CHASE
+		chase()
 	elif can_see_target == false:
-		state = SEARCH
+		search()
 		
 
 func _on_ReactionTimer_timeout():
-	state = SEARCH
+	search()
 	
 func _on_RoamingIdleDurationTimer_timeout():
-	state = choose_random_state([IDLE, ROAM])
+	choose_random_state([IDLE, ROAM])
 	randomize_roamingidle_timer()
 	RoamingIdleDurationTimer.start()
+	
+func randomize_roamingidle_timer():
+	RoamingIdleDurationTimer.wait_time = rand_range(7, 20)
 	
 func _on_VisionConeArea_body_entered(body):
 	if body.get_name() == "Player":
@@ -255,4 +258,4 @@ func _draw():
 	if target:
 		for hit in hit_pos:
 			draw_circle((hit - position).rotated(-rotation), 1, laser_color)
-			draw_line($VisionConeArea.position, (hit - position).rotated(-rotation), laser_color)
+			draw_line(VisionConeArea.position, (hit - position).rotated(-rotation), laser_color)
