@@ -46,6 +46,9 @@ var room_pos_west = Vector2(-20, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Events.connect("request_roamcell", self, "_on_request_roamcell")
+	Events.connect("request_navpath", self, "_on_request_navpath")
+	
 	randomize()
 	
 	if max_rooms == 2:
@@ -58,8 +61,7 @@ func _ready():
 		max_enemies = 1
 		
 	check_randomroom_viability()
-	Events.connect("request_roamcell", self, "_on_request_roamcell")
-	Events.connect("request_navpath", self, "_on_request_navpath")
+		
 
 
 func _process(_delta):
@@ -71,7 +73,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("key_f"):
 		fill_outer_walls()
 #	var mouse_pos = get_global_mouse_position()
-#	var cell = $Nav2D/Walls.get_cellv($Nav2D/Walls.world_to_map(mouse_pos))
+#	var cell = $Nav2D/Walls.world_to_map(mouse_pos)
 #	print(cell)
 		
 func set_random_room(random_room, random_room_location, _last_room_location):
@@ -174,9 +176,9 @@ func check_extent_of_shape():
 		check_extent_of_shape()
 	else:
 		finalize_random_gen()
+		place_enemies()
 		place_player_spawn()
 		place_items()
-		place_enemies()
 		Events.emit_signal("randomgenhouse_loaded")
 		
 		
@@ -252,7 +254,7 @@ func get_tiles_in_rectangle(node_pos, rect_width, rect_height):
 	for x in range(top_left.x, bottom_right.x + 1):
 		for y in range(top_left.y, bottom_right.y + 1):
 			rect_tiles.append(Vector2(x, y)) # or get_cell(x, y) or however you want it represented
-	print("RECT_TILES = ", rect_tiles)
+#	print("RECT_TILES = ", rect_tiles)
 	return rect_tiles
 	
 	
@@ -266,8 +268,9 @@ func place_items():
 		var random_item = select_random_item(iron, wood, goldcoins)
 		var tilepos = $Nav2D/Walls.map_to_world(random_item_positions[i])
 		random_item.set_position(tilepos + Vector2(8,8))
-		$Nav2D/Indexes.set_cell(random_item_positions[i].x, random_item_positions[i].y, -1)
 		$Nav2D/Walls.add_child(random_item)
+		$Nav2D/Indexes.set_cellv(random_item_positions[i], -1)
+		$Nav2D/Area.set_cellv(random_item_positions[i], -1)
 	
 	
 func place_enemies():
@@ -279,8 +282,9 @@ func place_enemies():
 		var random_enemy = select_random_enemy(villager)
 		var tilepos = $Nav2D/Walls.map_to_world(random_enemy_positions[i])
 		random_enemy.set_position(tilepos + Vector2(8,8))
-		$Nav2D/Indexes.set_cell(random_enemy_positions[i].x, random_enemy_positions[i].y, -1)
 		$Nav2D/Walls.add_child(random_enemy)
+		$Nav2D/Indexes.set_cellv(random_enemy_positions[i], -1)
+		$Nav2D/Area.set_cellv(random_enemy_positions[i], -1)
 		
 		
 func place_player_spawn():
@@ -407,13 +411,13 @@ func select_random_spawn_position(spawn_tile_array):
 		
 		
 func _on_request_roamcell(villager_id):
-	var Villager = get_node("Nav2D/Walls/" + villager_id)
+	var Villager = villager_id
 	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawned_cell)
 	var villager_roam_destinations = []
 	for cell in $Nav2D/Area.get_used_cells():
-		print("Cell", cell)
-		print("Villager Spawn Position", villager_spawn_position)
-		print("Distance", cell.distance_to(villager_spawn_position))
+#		print("Cell", cell)
+#		print("Villager Spawn Position", villager_spawn_position)
+#		print("Distance", cell.distance_to(villager_spawn_position))
 		if cell.distance_to(villager_spawn_position) > 5:
 			villager_roam_destinations.append($Nav2D/Area.map_to_world(cell) + Vector2(8,8))
 				
@@ -421,8 +425,8 @@ func _on_request_roamcell(villager_id):
 	Villager.random_roamcell = (villager_roam_destinations.pop_front())
 
 func _on_request_navpath(villager_id, target_cell):
-	var Villager = get_node("Nav2D/Walls/" + villager_id)
+	var Villager = villager_id
 	var path = $Nav2D.get_simple_path(Villager.global_position, target_cell, false)
-	Villager.path = path
+	Villager.path = PoolVector2Array(path)
 	$Line2D.points = PoolVector2Array(path)
 	$Line2D.show()

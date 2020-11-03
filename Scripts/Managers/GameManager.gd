@@ -25,8 +25,8 @@ func _on_place_item(selected_item):
 		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/YSort/Player/PlayerPickupArea/Position2D").get_global_position())
 		get_tree().get_root().get_node(current_scene + "/YSort").add_child(item_scene_instance)
 	elif current_scene == "House":
-		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Walls/Player/PlayerPickupArea/Position2D").get_global_position())
-		get_tree().get_root().get_node(current_scene + "/Walls").add_child(item_scene_instance)
+		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Nav2D/Walls/Player/PlayerPickupArea/Position2D").get_global_position())
+		get_tree().get_root().get_node(current_scene + "/Nav2D/Walls").add_child(item_scene_instance)
 	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
 
 

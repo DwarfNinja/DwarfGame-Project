@@ -15,7 +15,6 @@ const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
 
-signal place_item
 
 export (bool) var static_camera = false
 var area_in_pickuparea = false
