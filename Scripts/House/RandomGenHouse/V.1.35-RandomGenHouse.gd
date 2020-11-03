@@ -412,7 +412,7 @@ func select_random_spawn_position(spawn_tile_array):
 		
 func _on_request_roamcell(villager_id):
 	var Villager = villager_id
-	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawned_cell)
+	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawn_position)
 	var villager_roam_destinations = []
 	for cell in $Nav2D/Area.get_used_cells():
 #		print("Cell", cell)
