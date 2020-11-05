@@ -61,7 +61,6 @@ func _ready():
 		max_enemies = 1
 		
 	check_randomroom_viability()
-		
 
 
 func _process(_delta):
@@ -93,7 +92,7 @@ func set_random_room(random_room, random_room_location, _last_room_location):
 		cell.y + (random_room_location.y + last_room_location.y), random_room_floor.get_cellv(cell), 
 		false, false, false, random_room_floor.get_cell_autotile_coord(cell.x, cell.y))
 	
-	for cell in random_room_area.get_used_cells():
+	for cell in random_room_area.get_used_cells(): 
 		$Nav2D/Area.set_cell(cell.x + (random_room_location.x + last_room_location.x), 
 		cell.y + (random_room_location.y + last_room_location.y), random_room_area.get_cellv(cell), 
 		false, false, false, random_room_area.get_cell_autotile_coord(cell.x, cell.y))
@@ -176,8 +175,8 @@ func check_extent_of_shape():
 		check_extent_of_shape()
 	else:
 		finalize_random_gen()
-		place_enemies()
 		place_player_spawn()
+		place_enemies()
 		place_items()
 		Events.emit_signal("randomgenhouse_loaded")
 		
@@ -412,7 +411,7 @@ func select_random_spawn_position(spawn_tile_array):
 		
 func _on_request_roamcell(villager_id):
 	var Villager = villager_id
-	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawn_position)
+	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawn_cell)
 	var villager_roam_destinations = []
 	for cell in $Nav2D/Area.get_used_cells():
 #		print("Cell", cell)
@@ -426,7 +425,15 @@ func _on_request_roamcell(villager_id):
 
 func _on_request_navpath(villager_id, target_cell):
 	var Villager = villager_id
+#	yield(get_tree().get_root().get_node("House"), "ready")
+#	yield(get_tree().get_root().get_node("House").get_node("Nav2D"), "ready")
+#	yield(get_tree().get_root().get_node("House").get_node("Nav2D").get_node("Area"), "ready")
 	var path = $Nav2D.get_simple_path(Villager.global_position, target_cell, false)
+	print(path)
+#	print("VILLAGER ID", villager_id)
+#	print("TARGET CELL", target_cell)
+#	print("PATH", path)
+#	var path = $Nav2D.call_deferred("get_simple_path", Villager.global_position, target_cell, false)
 	Villager.path = PoolVector2Array(path)
 	$Line2D.points = PoolVector2Array(path)
 	$Line2D.show()

@@ -4,6 +4,7 @@ onready var VisionConeArea = $VisionConeArea
 onready var DetectionTimer = $DetectionTimer
 onready var RoamingIdleDurationTimer = $RoamingIdleDurationTimer
 onready var ReactionTimer = $ReactionTimer
+onready var RoamDelayTimer = $RoamDelayTimer
 onready var RayCastN1 = $VisionConeArea/RayCast2DN1
 onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
@@ -20,12 +21,15 @@ var target
 var can_see_target
 var raycast_invertion = 1
 
-var spawn_position
+var spawn_cell
 var random_roamcell  
 
 var state
+var roam_state = "Roam_to_randomcell"
 
-var received_path
+var path = PoolVector2Array([])
+var reached_endof_path = false
+var path_inversion = 1
 
 func _ready():
 	randomize()
@@ -35,14 +39,16 @@ func _ready():
 	DetectionTimer.connect("timeout", self, "_on_DetectionTimer_timeout")
 	RoamingIdleDurationTimer.connect("timeout", self, "_on_RoamingIdleDurationTimer_timeout")
 	ReactionTimer.connect("timeout", self, "_on_ReactionTimer_timeout")
-	spawn_position = get_global_position()
+	RoamDelayTimer.connect("timeout", self, "_on_RoamDelayTimer_timeout")
+	
+	spawn_cell = get_global_position()
 	get_random_roamcell()
 	choose_random_state(["Idle", "Roam"])
 
 func _process(delta):
 	aim_raycasts()
 	update()
-
+	
 func _physics_process(delta):
 
 	match state:
@@ -56,14 +62,18 @@ func _physics_process(delta):
 				raycast_invertion = 1
 				
 		"Roam":
-#			if random_roamcell:
-#				get_navpath(random_roamcell)
-#				print(path)
-			move_along_path(delta, random_roamcell)
+			match roam_state:
+
+				"Roam_to_randomcell":
+									move_along_path(delta, random_roamcell)
+				"Roam_to_spawncell":
+									move_along_path(delta, spawn_cell)
+			pass
 		"Search":
 			pass
 		"Chase":
 			pass
+			
 	velocity = move_and_slide(velocity)
 	
 func Idle():
@@ -96,24 +106,30 @@ func aim_raycasts():
 				
 				
 func move_along_path(delta, target_cell):
-	if received_path == null:
-		received_path = get_parent().get_parent().get_simple_path(global_position, target_cell, false)
-	get_parent().get_parent().get_parent().get_node("Line2D").points = PoolVector2Array(received_path)
-	get_parent().get_parent().get_parent().get_node("Line2D").show()
-	
-	if received_path.size() > 0:
-		for point in range(received_path.size()):
-			var distance = global_position.distance_to(received_path[0])
-			print(distance)
-			if distance > 10:
-				var direction = (received_path[0] - global_position).normalized()
-				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-			else:
-				received_path.remove(0)
+#	if path == PoolVector2Array([]) and reached_endof_path == true:
+	if path == null:
+		get_navpath(target_cell)
+
+	if path.size() > 0:
+		var distance = global_position.distance_to(path[0])
+		if distance > 10:
+			var direction = (path[0] - global_position).normalized()
+			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+		else:
+			path.remove(0)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-
-
+		end_of_path_reached()
+		
+func end_of_path_reached():
+	if state == "Roam":
+		if roam_state == "Roam_to_randomcell":
+			roam_state = "Roam_to_spawncell"
+			
+		elif roam_state == "Roam_to_spawncell":
+			roam_state = "Roam_to_randomcell"
+		path = null
+		
 func get_random_roamcell():
 	var villager_id = self
 	Events.emit_signal("request_roamcell", villager_id)
@@ -135,7 +151,11 @@ func _on_VisionConeArea_body_entered(body):
 func _on_VisionConeArea_body_exited(body):
 	if body.get_name() == "Player":
 		target = null
-	
+
+func _on_RoamDelayTimer_timeout():
+	pass
+
+
 # FOR DEBUG PURPOSES
 func _draw():
 	var laser_color = Color(1.0, .329, .298)
