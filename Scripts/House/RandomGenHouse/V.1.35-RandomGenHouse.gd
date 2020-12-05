@@ -46,9 +46,9 @@ var room_pos_west = Vector2(-20, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Events.connect("request_roamcell", self, "_on_request_roamcell")
-	Events.connect("request_navpath", self, "_on_request_navpath")
-	
+#	Events.connect("request_roamcell", self, "_on_request_roamcell")
+#	Events.connect("request_navpath", self, "_on_request_navpath")
+
 	randomize()
 	
 	if max_rooms == 2:
@@ -409,31 +409,33 @@ func select_random_spawn_position(spawn_tile_array):
 	return possible_player_spawns.pop_front()
 		
 		
-func _on_request_roamcell(villager_id):
-	var Villager = villager_id
-	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawn_cell)
-	var villager_roam_destinations = []
-	for cell in $Nav2D/Area.get_used_cells():
-#		print("Cell", cell)
-#		print("Villager Spawn Position", villager_spawn_position)
-#		print("Distance", cell.distance_to(villager_spawn_position))
-		if cell.distance_to(villager_spawn_position) > 5:
-			villager_roam_destinations.append($Nav2D/Area.map_to_world(cell) + Vector2(8,8))
-				
-	villager_roam_destinations.shuffle()
-	Villager.random_roamcell = (villager_roam_destinations.pop_front())
-
-func _on_request_navpath(villager_id, target_cell):
-	var Villager = villager_id
-#	yield(get_tree().get_root().get_node("House"), "ready")
-#	yield(get_tree().get_root().get_node("House").get_node("Nav2D"), "ready")
-#	yield(get_tree().get_root().get_node("House").get_node("Nav2D").get_node("Area"), "ready")
-	var path = $Nav2D.get_simple_path(Villager.global_position, target_cell, false)
-	print(path)
-#	print("VILLAGER ID", villager_id)
-#	print("TARGET CELL", target_cell)
-#	print("PATH", path)
-#	var path = $Nav2D.call_deferred("get_simple_path", Villager.global_position, target_cell, false)
-	Villager.path = PoolVector2Array(path)
-	$Line2D.points = PoolVector2Array(path)
-	$Line2D.show()
+#func _on_request_roamcell(villager_id):
+#	var Villager = villager_id
+#	var villager_spawn_position = $Nav2D/Walls.world_to_map(Villager.spawn_cell)
+#	var villager_roam_destinations = []
+#	for cell in $Nav2D/Area.get_used_cells():
+##		print("Cell", cell)
+##		print("Villager Spawn Position", villager_spawn_position)
+##		print("Distance", cell.distance_to(villager_spawn_position))
+#		if cell.distance_to(villager_spawn_position) > 5:
+#			villager_roam_destinations.append($Nav2D/Area.map_to_world(cell) + Vector2(8,8))
+#
+#	villager_roam_destinations.shuffle()
+#	Villager.random_roamcell = (villager_roam_destinations.pop_front())
+#
+#func _on_request_navpath(villager_id, target_cell):
+#	var Villager = villager_id
+##	yield(get_tree().get_root().get_node("House"), "ready")
+##	yield(get_tree().get_root().get_node("House").get_node("Nav2D"), "ready")
+##	yield(get_tree().get_root().get_node("House").get_node("Nav2D").get_node("Area"), "ready")
+#	var path = $Nav2D.get_simple_path(Villager.global_position, target_cell, false)
+#	var inverse_path = path
+#	inverse_path.invert()
+##	print("VILLAGER ID", villager_id)
+##	print("TARGET CELL", target_cell)
+##	print("PATH", path)
+##	var path = $Nav2D.call_deferred("get_simple_path", Villager.global_position, target_cell, false)
+#	Villager.path = PoolVector2Array(path)
+#	Villager.inverse_path = PoolVector2Array(inverse_path)
+#	$Line2D.points = PoolVector2Array(path)
+#	$Line2D.show()

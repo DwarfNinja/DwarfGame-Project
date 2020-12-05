@@ -2,7 +2,6 @@ extends Craftable_Item
 
 var gold_coins = load("res://Resources/GoldCoins.tres")
 onready var MiningTimer = $MiningTimer
-onready var MiningRigDropArea = $MiningRigDropArea
 const GOLDCOINS_SCENE = preload("res://Scenes/Resources/GoldCoins.tscn")
 
 var gold_coins_1 = preload("res://Sprites/Craftables/MiningRig TopDown Coins1.png")

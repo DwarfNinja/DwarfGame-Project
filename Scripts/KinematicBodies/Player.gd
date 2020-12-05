@@ -15,6 +15,7 @@ const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
 
+var scent_trail = []
 
 export (bool) var static_camera = false
 var area_in_pickuparea = false
@@ -26,7 +27,6 @@ onready var PlayerPickupArea = $PlayerPickupArea
 onready var SelectedItemSprite = $PlayerPickupArea/SelectedItemSprite
 
 onready var animationState = animationTree.get("parameters/playback")
-#onready var woodenlogs = get_parent().get_node("WoodenLogs")
 
 func _ready():
 	# ___________________Connect Signals___________________
@@ -38,7 +38,7 @@ func _ready():
 	# Forge signals
 	Events.connect("entered_forge", self, "_on_entered_forge")
 	Events.connect("exited_forge", self, "_on_exited_forge")
-
+	
 	$PlayerCamera.current = static_camera
 
 func _physics_process(delta):

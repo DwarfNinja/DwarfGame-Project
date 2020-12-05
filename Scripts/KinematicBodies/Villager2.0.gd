@@ -28,6 +28,7 @@ var state
 var roam_state = "Roam_to_randomcell"
 
 var path = PoolVector2Array([])
+var inverse_path = PoolVector2Array([])
 var reached_endof_path = false
 var path_inversion = 1
 
@@ -48,7 +49,6 @@ func _ready():
 func _process(delta):
 	aim_raycasts()
 	update()
-	
 func _physics_process(delta):
 
 	match state:
@@ -62,12 +62,15 @@ func _physics_process(delta):
 				raycast_invertion = 1
 				
 		"Roam":
+			if path == PoolVector2Array([]) and inverse_path == PoolVector2Array([]):
+				get_navpath(random_roamcell)
+				inverse_path = path
+				inverse_path.invert()
 			match roam_state:
-
 				"Roam_to_randomcell":
-									move_along_path(delta, random_roamcell)
+					move_along_path(delta)
 				"Roam_to_spawncell":
-									move_along_path(delta, spawn_cell)
+					move_along_path(delta)
 			pass
 		"Search":
 			pass
@@ -105,10 +108,8 @@ func aim_raycasts():
 					can_see_target = false
 				
 				
-func move_along_path(delta, target_cell):
+func move_along_path(delta):
 #	if path == PoolVector2Array([]) and reached_endof_path == true:
-	if path == null:
-		get_navpath(target_cell)
 
 	if path.size() > 0:
 		var distance = global_position.distance_to(path[0])
@@ -122,13 +123,12 @@ func move_along_path(delta, target_cell):
 		end_of_path_reached()
 		
 func end_of_path_reached():
+	reached_endof_path = true
 	if state == "Roam":
-		if roam_state == "Roam_to_randomcell":
-			roam_state = "Roam_to_spawncell"
-			
-		elif roam_state == "Roam_to_spawncell":
-			roam_state = "Roam_to_randomcell"
-		path = null
+		if RoamDelayTimer.is_stopped() and reached_endof_path == true:
+			print("GASDWDASFWDAD")
+			RoamDelayTimer.start()
+			reached_endof_path = false
 		
 func get_random_roamcell():
 	var villager_id = self
@@ -153,7 +153,11 @@ func _on_VisionConeArea_body_exited(body):
 		target = null
 
 func _on_RoamDelayTimer_timeout():
-	pass
+	if roam_state == "Roam_to_randomcell":
+		roam_state = "Roam_to_spawncell"
+					
+	elif roam_state == "Roam_to_spawncell":
+		roam_state = "Roam_to_randomcell"
 
 
 # FOR DEBUG PURPOSES

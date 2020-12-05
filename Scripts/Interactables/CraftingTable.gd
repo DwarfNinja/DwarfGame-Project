@@ -19,13 +19,11 @@ func _process(_delta):
 
 
 func _on_InteractArea_area_entered(area):
-	if area.get_name() == "PlayerPickupArea":
-		can_interact = true
-		$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
+	can_interact = true
+	$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 		
 
 func _on_InteractArea_area_exited(area):
-	if area.get_name() == "PlayerPickupArea":
-		can_interact = false
-		$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
+	can_interact = false
+	$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 		

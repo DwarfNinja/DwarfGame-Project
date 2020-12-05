@@ -46,6 +46,7 @@ scale_random = 0.25
 color_ramp = SubResource( 5 )
 
 [node name="Forge" type="StaticBody2D"]
+collision_layer = 8
 script = ExtResource( 2 )
 item_def = ExtResource( 4 )
 
@@ -69,6 +70,7 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 position = Vector2( 4, -4 )
