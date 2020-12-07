@@ -42,6 +42,7 @@ position = Vector2( 284, 129 )
 
 [node name="CaveCamera" type="Camera2D" parent="."]
 position = Vector2( 160, 90 )
+current = true
 
 [node name="YSort" type="YSort" parent="."]
 

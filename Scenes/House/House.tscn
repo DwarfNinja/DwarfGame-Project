@@ -45,7 +45,6 @@ collision_mask = 0
 format = 1
 
 [node name="Indexes" type="TileMap" parent="Nav2D"]
-visible = false
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 0
@@ -56,7 +55,7 @@ format = 1
 width = 3.0
 
 [node name="ScentTimer" type="Timer" parent="Nav2D"]
-wait_time = 0.2
+wait_time = 0.1
 autostart = true
 
 [node name="HouseRooms" type="Node2D" parent="."]
