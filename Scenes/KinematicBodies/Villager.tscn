@@ -11,7 +11,9 @@ height = 3.00004
 [sub_resource type="CircleShape2D" id=2]
 radius = 20.0
 
-[node name="Villager" type="KinematicBody2D"]
+[node name="Villager" type="KinematicBody2D" groups=[
+"Villagers",
+]]
 collision_layer = 2
 collision_mask = 2147483689
 script = ExtResource( 2 )

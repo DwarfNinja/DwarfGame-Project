@@ -61,15 +61,13 @@ func _ready():
 func _process(_delta):
 	aim_raycasts()
 	update()
-	
-	if can_see_target == false:
-		DetectionTimer.stop()
 		
 #	if StateDurationTimer.is_stopped() and velocity == Vector2.ZERO:
 #		StateDurationTimer.start()
 
 func _physics_process(delta):
 	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
+	print(state)
 	
 	match state:
 		"Idle":
@@ -79,7 +77,7 @@ func _physics_process(delta):
 				raycast_invertion = 1
 			
 			if can_see_target == true:
-				state = "Detecting"
+				detect()
 		
 			VisionConeArea.rotation += (0.01 * raycast_invertion)
 			
@@ -95,14 +93,15 @@ func _physics_process(delta):
 
 			match roam_state:
 				"Roam_to_randomcell":
-#					print("Roam_to_randomcell")
 					move_along_path()
+					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 					if reached_endof_path == true:
 						RoamDelayTimer.start()
 						state = "Idle"
+						
 				"Roam_to_spawncell":
-#					print("Roam_to_spawncell")
 					move_along_inversepath()
+					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 					if reached_endof_inversepath == true:
 						RoamDelayTimer.start()
 						state = "Idle"
@@ -110,35 +109,30 @@ func _physics_process(delta):
 			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.1) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
 			
-			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 			
 			if can_see_target == true:
-				state = "Detecting"
+				detect()
+				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 				
 		"Search":
-			pass
+			Events.emit_signal("update_playerghost", last_known_playerposition)
+			get_navpath(last_known_playerposition)
+			
 			
 		"Chase":
 			if can_see_target == true:
 				direction = (Player.global_position - global_position).normalized()
-			else:
-				ReactionTimer.start()
-				#update ghost
+				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+				ReactionTimer.stop()
+				
+			elif can_see_target == false:
+				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+				if ReactionTimer.is_stopped():
+					ReactionTimer.start()
 				
 			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.4) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
 			
-			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-			
-		"Detecting":
-			if can_see_target == true:
-				visioncone_direction = visioncone_direction.slerp((Player.global_position - global_position).normalized(), 0.3) #where factor is 0.0 - 1.0
-				VisionConeArea.rotation = visioncone_direction.angle()
-				
-			if DetectionTimer.is_stopped():
-				DetectionTimer.start()
-				
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	
 	velocity = move_and_slide(velocity)
 	
@@ -190,14 +184,24 @@ func move_along_inversepath():
 		direction = Vector2.ZERO
 		reached_endof_inversepath = true
 	
+func detect():
+	if can_see_target == true:
+		visioncone_direction = visioncone_direction.slerp((Player.global_position - global_position).normalized(), 0.3) #where factor is 0.0 - 1.0
+		VisionConeArea.rotation = visioncone_direction.angle()
+		if DetectionTimer.is_stopped():
+			DetectionTimer.start()
+		
+	elif can_see_target == false:
+		DetectionTimer.stop()
+
 
 func get_random_roamcell():
 	var villager_id = self
 	Events.emit_signal("request_roamcell", villager_id)
 	
-func get_navpath(target_cell):
+func get_navpath(target):
 	var villager_id = self
-	Events.call_deferred("emit_signal", "request_navpath", villager_id, target_cell)
+	Events.call_deferred("emit_signal", "request_navpath", villager_id, target)
 #	Events.emit_signal("request_navpath", villager_id, target_cell)
 
 func _on_DetectionTimer_timeout():
