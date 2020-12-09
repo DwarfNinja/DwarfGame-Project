@@ -10,7 +10,7 @@ func _ready():
 	Events.connect("request_roamcell", self, "_on_request_roamcell")
 	Events.connect("request_navpath", self, "_on_request_navpath")
 	Events.connect("remove_scent", self, "_on_remove_scent")
-	$ScentTimer.connect("timeout", self, "place_player_scent")
+#	$ScentTimer.connect("timeout", self, "place_player_scent")
 
 #func _input(event: InputEvent): #DEBUG
 #	if event is InputEventMouseButton:
@@ -45,12 +45,12 @@ func _on_request_navpath(villager_id, target_cell):
 	$Line2D.points = PoolVector2Array(path)
 	$Line2D.show()
 	
-func place_player_scent():
-	var scent = scent_scene.instance()
-	scent.player = $Walls/Player
-	scent.position = $Walls/Player.position
-	$Walls.add_child(scent)
-	$Walls/Player.scent_trail.push_front(scent)
-	
-func _on_remove_scent(scent):
-	$Walls/Player.scent_trail.erase(scent)
+#func place_player_scent():
+#	var scent = scent_scene.instance()
+#	scent.player = $Walls/Player
+#	scent.position = $Walls/Player.position
+#	$Walls.add_child(scent)
+#	$Walls/Player.scent_trail.push_front(scent)
+#
+#func _on_remove_scent(scent):
+#	$Walls/Player.scent_trail.erase(scent)

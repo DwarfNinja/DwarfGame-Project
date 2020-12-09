@@ -62,26 +62,29 @@ func _process(_delta):
 	aim_raycasts()
 	update()
 	
-	if can_see_target == true and DetectionTimer.is_stopped():
-		DetectionTimer.start()
-				
 	if can_see_target == false:
 		DetectionTimer.stop()
 		
 #	if StateDurationTimer.is_stopped() and velocity == Vector2.ZERO:
 #		StateDurationTimer.start()
-		
+
 func _physics_process(delta):
+	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
+	
 	match state:
 		"Idle":
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-			VisionConeArea.rotation += (0.01 * raycast_invertion)
-			
 			if RayCastN1.is_colliding():
 				raycast_invertion = -1
 			elif RayCastN2.is_colliding():
 				raycast_invertion = 1
-				
+			
+			if can_see_target == true:
+				state = "Detecting"
+		
+			VisionConeArea.rotation += (0.01 * raycast_invertion)
+			
+			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+			
 		"Roam":
 			if full_roam_path == []:
 				full_roam_path = [path, inverse_path]
@@ -89,10 +92,7 @@ func _physics_process(delta):
 				roam_state = "Roam_to_randomcell"
 			elif !path and inverse_path:
 				roam_state = "Roam_to_spawncell"
-				
-			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.40) #where factor is 0.0 - 1.0
-			VisionConeArea.rotation = visioncone_direction.angle()
-			
+
 			match roam_state:
 				"Roam_to_randomcell":
 #					print("Roam_to_randomcell")
@@ -107,24 +107,41 @@ func _physics_process(delta):
 						RoamDelayTimer.start()
 						state = "Idle"
 						
+			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.1) #where factor is 0.0 - 1.0
+			VisionConeArea.rotation = visioncone_direction.angle()
+			
+			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+			
+			if can_see_target == true:
+				state = "Detecting"
+				
 		"Search":
 			pass
 			
 		"Chase":
 			if can_see_target == true:
-				chase_player()
-			elif can_see_target == false:
-				follow_scent()
+				direction = (Player.global_position - global_position).normalized()
 			else:
-				state = "Search"
+				ReactionTimer.start()
+				#update ghost
 				
 			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.4) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
-		
 			
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+			
+		"Detecting":
+			if can_see_target == true:
+				visioncone_direction = visioncone_direction.slerp((Player.global_position - global_position).normalized(), 0.3) #where factor is 0.0 - 1.0
+				VisionConeArea.rotation = visioncone_direction.angle()
+				
+			if DetectionTimer.is_stopped():
+				DetectionTimer.start()
+				
+			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	
 	velocity = move_and_slide(velocity)
+	
 	
 func aim_raycasts():
 	if target:
@@ -146,21 +163,7 @@ func aim_raycasts():
 					can_see_target = false
 	else:
 		can_see_target = false
-		
-		
-func chase_player():
-	direction = (Player.global_position - global_position).normalized()
 
-# or chase first scent we can see
-func follow_scent():
-	var space_state = get_world_2d().direct_space_state
-	for scent in Player.scent_trail:
-		var result = space_state.intersect_ray(global_position, scent.global_position, [self], 0b100100, true, true)
-
-		if result:
-			if "ScentArea2D" in result.collider.name and VisionConeArea.overlaps_area(scent.get_node("ScentArea2D")):
-				scent_hit = result.position
-				direction = (scent.global_position - global_position).normalized()
 		
 func move_along_path():
 	if path.size() > 0:
@@ -198,10 +201,11 @@ func get_navpath(target_cell):
 #	Events.emit_signal("request_navpath", villager_id, target_cell)
 
 func _on_DetectionTimer_timeout():
-	if can_see_target == true:
-		state = "Chase"
+	state = "Chase"
 		
-		
+func _on_ReactionTimer_timeout():
+	state = "Search"
+	
 func _on_RoamDelayTimer_timeout():
 	if path == PoolVector2Array([]) and inverse_path == PoolVector2Array([]):
 		path = full_roam_path[0]

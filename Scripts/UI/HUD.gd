@@ -2,9 +2,9 @@ extends CanvasLayer
 
 onready var InventoryBar = $VBoxContainer/CenterContainer/InventoryBar
 onready var GoldCoins = $VBoxContainer/Labels/HBoxContainer/GoldCoins
-onready var CraftingTableHUD = $CraftingTableHUD
-onready var ForgeHUD = $ForgeHUD
-onready var TravelingScreen = $TravelingScreen
+onready var CraftingTableHUD = $Control/CraftingTableHUD
+onready var ForgeHUD = $Control/ForgeHUD
+onready var TravelingScreen = $Control/TravelingScreen
 onready var TaxTimer = $TaxTimer
 onready var ScreenTimer = $ScreenTimer
 onready var TaxTimerLabel = $VBoxContainer/Labels/HBoxContainer/TaxTimerLabel

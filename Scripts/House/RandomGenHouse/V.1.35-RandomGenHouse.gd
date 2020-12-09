@@ -21,7 +21,7 @@ onready var GOLDCOINS_SCENE = preload("res://Scenes/Resources/GoldCoins.tscn")
 
 onready var VILLAGER_SCENE = preload("res://Scenes/KinematicBodies/Villager.tscn")
 
-onready var DOOR_SCENE = preload("res://Scenes/Door.tscn")
+onready var DOOR_SCENE = preload("res://Scenes/Objects/Door.tscn")
 onready var PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
 
 var rooms = 0
