@@ -41,6 +41,10 @@ func _ready():
 	
 	$PlayerCamera.current = static_camera
 
+func _process(_delta):
+	if Input.is_action_just_pressed("key_rightclick"):
+		place_item()
+
 func _physics_process(delta):
 	if is_visible_in_tree():
 		var input_vector = Vector2.ZERO 
@@ -67,11 +71,7 @@ func _physics_process(delta):
 			PlayerPickupArea.position = Vector2(-0.5, -14) #UP
 		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
 			PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
-	
-func _process(_delta):
-	if Input.is_action_just_pressed("key_rightclick"):
-		place_item()
-
+		
 func _on_item_selected(item_in_selected_slot):
 	if item_in_selected_slot:
 		SelectedItemSprite.texture = item_in_selected_slot.item_texture
