@@ -18,12 +18,12 @@ func _process(_delta):
 			Events.emit_signal("exited_craftingtable")
 
 
-func _on_InteractArea_area_entered(area):
+func _on_InteractArea_area_entered(_area):
 	can_interact = true
 	$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 		
 
-func _on_InteractArea_area_exited(area):
+func _on_InteractArea_area_exited(_area):
 	can_interact = false
 	$CraftingTableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 		

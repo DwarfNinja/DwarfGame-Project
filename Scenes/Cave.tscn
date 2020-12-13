@@ -9,12 +9,12 @@
 [ext_resource path="res://Resources/GoldCoins.tres" type="Resource" id=7]
 [ext_resource path="res://Scripts/Worlds/Cave.gd" type="Script" id=8]
 [ext_resource path="res://Tilesets/FloorTileCaveDark.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/CraftingTable.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Objects/CraftingTable.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Shop/Shop.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/KinematicBodies/BlackMarket.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scenes/Props/Rock.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scenes/Ladder.tscn" type="PackedScene" id=14]
-[ext_resource path="res://TwitchTest.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Objects/Rock.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Objects/Ladder.tscn" type="PackedScene" id=14]
+[ext_resource path="res://DemoSketch/TwitchTest.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=16]
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -42,6 +42,7 @@ position = Vector2( 284, 129 )
 
 [node name="CaveCamera" type="Camera2D" parent="."]
 position = Vector2( 160, 90 )
+current = true
 
 [node name="YSort" type="YSort" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/House/HouseShapes/SE_3x2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/House/RandomGenHouse/V.1.35-RandomGenHouse.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Scenes/House/HouseShapes/Square_4x2.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/House/HouseShapes/Hor_4x1.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scripts/House/Nav2D.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/PlayerGhost.tscn" type="PackedScene" id=14]
 
 [node name="House" type="Node2D"]
 script = ExtResource( 2 )
@@ -35,6 +36,9 @@ collision_layer = 32
 collision_mask = 3
 format = 1
 
+[node name="PlayerGhost" parent="Nav2D/Walls" instance=ExtResource( 14 )]
+visible = false
+
 [node name="Area" type="TileMap" parent="Nav2D"]
 visible = false
 tile_set = ExtResource( 3 )
@@ -56,7 +60,7 @@ format = 1
 width = 3.0
 
 [node name="ScentTimer" type="Timer" parent="Nav2D"]
-wait_time = 0.2
+wait_time = 0.1
 autostart = true
 
 [node name="HouseRooms" type="Node2D" parent="."]

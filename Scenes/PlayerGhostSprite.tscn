@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://Dwarf Ghost.png" type="Texture" id=1]
-
-[node name="PlayerGhostSprite" type="Sprite"]
-visible = false
-texture = ExtResource( 1 )

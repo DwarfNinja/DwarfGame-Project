@@ -1,6 +1,6 @@
-extends TextureRect
+extends MarginContainer
 
-onready var HboxContainer = $HBoxContainer
+onready var HboxContainer = $SlotContainer/HBoxContainer
 
 var count_1 = preload("res://Sprites/HUD/InventoryBar/Count_1.png")
 var count_2 = preload("res://Sprites/HUD/InventoryBar/Count_2.png")
@@ -42,7 +42,7 @@ func _process(_delta):
 				selector_position = 5
 				
 				
-	var Selected_Slot = get_node("HBoxContainer/Slot_" + str(selector_position))
+	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
 	
 	if ui_menu_opened == false:
 		if Input.is_action_just_pressed("key_leftclick"):

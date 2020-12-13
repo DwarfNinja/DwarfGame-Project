@@ -21,7 +21,7 @@ onready var GOLDCOINS_SCENE = preload("res://Scenes/Resources/GoldCoins.tscn")
 
 onready var VILLAGER_SCENE = preload("res://Scenes/KinematicBodies/Villager.tscn")
 
-onready var DOOR_SCENE = preload("res://Scenes/Door.tscn")
+onready var DOOR_SCENE = preload("res://Scenes/Objects/Door.tscn")
 onready var PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
 
 var rooms = 0
@@ -280,10 +280,9 @@ func place_enemies():
 		var villager = VILLAGER_SCENE.instance()
 		var random_enemy = select_random_enemy(villager)
 		var tilepos = $Nav2D/Walls.map_to_world(random_enemy_positions[i])
-		random_enemy.set_position(tilepos + Vector2(8,8))
+		random_enemy.set_position(tilepos + Vector2(7.99, 8.01)) #Bug in Nav2D where it rounds up ints?
 		$Nav2D/Walls.add_child(random_enemy)
 		$Nav2D/Indexes.set_cellv(random_enemy_positions[i], -1)
-		$Nav2D/Area.set_cellv(random_enemy_positions[i], -1)
 		
 		
 func place_player_spawn():
