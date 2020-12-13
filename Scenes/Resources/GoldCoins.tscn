@@ -23,6 +23,7 @@ height = 7.48729
 
 [node name="GoldCoins" type="StaticBody2D"]
 position = Vector2( 0, 4 )
+collision_layer = 8
 script = ExtResource( 1 )
 item_def = SubResource( 1 )
 
@@ -41,6 +42,7 @@ shape = SubResource( 2 )
 [node name="PickUpArea" type="Area2D" parent="."]
 position = Vector2( 0, 6 )
 scale = Vector2( 1.01868, 1 )
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
 position = Vector2( 0.981663, -6 )

@@ -12,6 +12,7 @@ radius = 12.5
 height = 15.0
 
 [node name="CraftingTable" type="StaticBody2D"]
+collision_layer = 16
 script = ExtResource( 3 )
 
 [node name="CraftingTableSprite" type="Sprite" parent="."]
@@ -23,6 +24,7 @@ position = Vector2( -0.5, 0.5 )
 shape = SubResource( 1 )
 
 [node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 position = Vector2( -0.5, 0 )

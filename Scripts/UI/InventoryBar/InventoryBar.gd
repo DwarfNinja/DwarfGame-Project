@@ -8,7 +8,7 @@ var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
 var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
 
 var selector_position = 0
-var item_in_selected_slot = null
+var item_in_Selected_Slot = null
 var ui_menu_opened = false
 
 func _ready():
@@ -42,15 +42,15 @@ func _process(_delta):
 				selector_position = 5
 				
 				
-	var selected_slot = get_node("HBoxContainer/Slot_" + str(selector_position))
+	var Selected_Slot = get_node("HBoxContainer/Slot_" + str(selector_position))
 	
 	if ui_menu_opened == false:
 		if Input.is_action_just_pressed("key_leftclick"):
-			get_item_in_slot(selected_slot)
-		if selected_slot.item_count_in_slot == 0:
-			selected_slot.clear()
+			get_item_in_slot(Selected_Slot)
+		if Selected_Slot.item_count_in_slot == 0:
+			Selected_Slot.clear()
 			clear_item_selection()
-			get_item_in_slot(selected_slot)
+			get_item_in_slot(Selected_Slot)
 					
 		# Iterates over all the slots and determines if it is the slot selected,
 		# all other slot's selectors are turned off
@@ -62,15 +62,15 @@ func _process(_delta):
 				slot.deactivate_selector()
 
 
-func get_item_in_slot(selected_slot):
-	if selected_slot.item_def:
-		item_in_selected_slot = selected_slot.item_def
-	Events.emit_signal("item_selected", item_in_selected_slot)
-	return selected_slot
+func get_item_in_slot(Selected_Slot):
+	if Selected_Slot.item_def:
+		item_in_Selected_Slot = Selected_Slot.item_def
+	Events.emit_signal("item_selected", item_in_Selected_Slot)
+	return Selected_Slot
 	
 func clear_item_selection():
-	item_in_selected_slot = null
-	Events.emit_signal("item_selected", item_in_selected_slot)
+	item_in_Selected_Slot = null
+	Events.emit_signal("item_selected", item_in_Selected_Slot)
 	
 # If the slot is empty, set the item definition. If the is not full but the item is the same, add the item
 func add_item(item_def):
