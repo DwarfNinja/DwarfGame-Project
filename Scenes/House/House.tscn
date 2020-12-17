@@ -39,6 +39,8 @@ format = 1
 [node name="PlayerGhost" parent="Nav2D/Walls" instance=ExtResource( 14 )]
 visible = false
 
+[node name="PathContainer" type="Node2D" parent="Nav2D/Walls"]
+
 [node name="Area" type="TileMap" parent="Nav2D"]
 visible = false
 tile_set = ExtResource( 3 )
@@ -58,10 +60,6 @@ format = 1
 
 [node name="Line2D" type="Line2D" parent="Nav2D"]
 width = 3.0
-
-[node name="ScentTimer" type="Timer" parent="Nav2D"]
-wait_time = 0.1
-autostart = true
 
 [node name="HouseRooms" type="Node2D" parent="."]
 visible = false

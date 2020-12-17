@@ -5,10 +5,13 @@ onready var DetectionTimer = $DetectionTimer
 onready var StateDurationTimer = $StateDurationTimer
 onready var ReactionTimer = $ReactionTimer
 onready var RoamDelayTimer = $RoamDelayTimer
+onready var PathUpdateTimer = $PathUpdateTimer
 onready var RayCastN1 = $VisionConeArea/RayCast2DN1
 onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
+onready var Nav2D = get_parent().get_parent()
 onready var Player = get_parent().get_node("Player")
+var PathStep = preload("res://Scenes/PathStep.tscn")
 
 const ACCELERATION = 300
 const MAX_SPEED = 40
@@ -21,11 +24,12 @@ var velocity = Vector2.ZERO
 var visioncone_direction = Vector2.RIGHT
 
 var hit_pos
-var scent_hit
 
 var last_known_playerposition
 
+var player_in_area
 var target
+var new_target
 var can_see_target
 var raycast_invertion = 1
 
@@ -35,9 +39,7 @@ var random_roamcell
 var state
 var roam_state = "Roam_to_randomcell"
 
-var path = PoolVector2Array([])
-var inverse_path = PoolVector2Array([])
-var full_roam_path = []
+var path = []
 var reached_endof_path = false
 var reached_endof_inversepath = false
 
@@ -50,22 +52,20 @@ func _ready():
 	StateDurationTimer.connect("timeout", self, "_on_StateDurationTimer_timeout")
 	ReactionTimer.connect("timeout", self, "_on_ReactionTimer_timeout")
 	RoamDelayTimer.connect("timeout", self, "_on_RoamDelayTimer_timeout")
+#	PathUpdateTimer.connect("timeout", self, "_on_PathUpdateTimer_timeout")
 	
 	spawn_position = get_global_position()
-	print("spawn_position", spawn_position)
 	get_random_roamcell()
-	get_navpath(random_roamcell)
 	choose_random_state(["Idle", "Roam"])
  
 
 func _process(_delta):
 	aim_raycasts()
 	update()
-	
 
 func _physics_process(delta):
 	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
-	print(state)
+#	print(state)
 	
 	match state:
 		"Idle":
@@ -82,31 +82,26 @@ func _physics_process(delta):
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			
 		"Roam":
-			if full_roam_path == []:
-				full_roam_path = [path, inverse_path]
-			if path and inverse_path:
-				roam_state = "Roam_to_randomcell"
-			elif !path and inverse_path:
-				roam_state = "Roam_to_spawncell"
-
+				
 			match roam_state:
 				"Roam_to_randomcell":
-					move_along_path()
+					set_target(random_roamcell)
+					move_along_path(delta)
 					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 					if reached_endof_path == true:
 						RoamDelayTimer.start()
 						state = "Idle"
 						
 				"Roam_to_spawncell":
-					move_along_inversepath()
+					set_target(spawn_position)
+					move_along_path(delta)
 					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-					if reached_endof_inversepath == true:
+					if reached_endof_path == true:
 						RoamDelayTimer.start()
 						state = "Idle"
 						
 			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.1) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
-			
 			
 			if can_see_target == true:
 				detect()
@@ -114,7 +109,7 @@ func _physics_process(delta):
 				
 		"Search":
 			Events.emit_signal("update_playerghost", last_known_playerposition)
-			get_navpath(last_known_playerposition)
+			set_target(last_known_playerposition)
 			
 			
 		"Chase":
@@ -133,55 +128,84 @@ func _physics_process(delta):
 			
 	
 	velocity = move_and_slide(velocity)
+
+func set_target(new_target):
+	if target:
+		if new_target != target:
+			target = new_target
+			update_path()
+	else:
+		target = new_target
+		update_path()
 	
+func update_path():
+	if PathUpdateTimer.is_stopped():
+		print("UPDATED PATH")
+		path = Nav2D.get_simple_path(global_position, target, false)
+		PathUpdateTimer.start()
 	
 func aim_raycasts():
-	if target:
+	if player_in_area:
 		hit_pos = []
 		var space_state = get_world_2d().direct_space_state
-		var target_extents = Vector2(target.get_node("CollisionShape2D").shape.radius, target.get_node("CollisionShape2D").shape.height) - Vector2(5, 5)
-		var nw = target.position - target_extents
-		var se = target.position + target_extents
-		var ne = target.position + Vector2(target_extents.x, -target_extents.y)
-		var sw = target.position + Vector2(-target_extents.x, target_extents.y)
-		for pos in [target.position, nw, ne, se, sw]:
+		var target_extents = Vector2(Player.get_node("CollisionShape2D").shape.radius, Player.get_node("CollisionShape2D").shape.height) - Vector2(5, 5)
+		var nw = Player.position - target_extents
+		var se = Player.position + target_extents
+		var ne = Player.position + Vector2(target_extents.x, -target_extents.y)
+		var sw = Player.position + Vector2(-target_extents.x, target_extents.y)
+		for pos in [Player.position, nw, ne, se, sw]:
 			var result = space_state.intersect_ray(VisionConeArea.global_position, pos, [self], 0b100001)
 			if result:
 				hit_pos.append(result.position)
 				if result.collider.name == "Player":
 					can_see_target = true
-					last_known_playerposition = target.global_position
+					last_known_playerposition = Player.global_position
 				else:
 					can_see_target = false
 	else:
 		can_see_target = false
 
 		
-func move_along_path():
-	if path.size() > 0:
-		reached_endof_path = false
-		var distance = global_position.distance_to(path[0])
-		if distance > 5:
-			direction = (path[0] - global_position).normalized()
-		else:
-			path.remove(0)
-	else:
-		direction = Vector2.ZERO
-		reached_endof_path = true
+#func move_along_path():
+#	if path.size() > 0:
+#		reached_endof_path = false
+#		var distance = global_position.distance_to(path[0])
+#		if distance > 5:
+#			direction = (path[0] - global_position).normalized()
+#		else:
+#			path.remove(0)
+#
+#	if get_global_position() == target:
+#		direction = Vector2.ZERO
+#		reached_endof_path = true
 		
 		
-func move_along_inversepath():
-	if inverse_path.size() > 0:
-		reached_endof_inversepath = false
-		var distance = global_position.distance_to(inverse_path[0])
-		if distance > 5:
-			direction = (inverse_path[0] - global_position).normalized()
-		else:
-			inverse_path.remove(0)
-	else:
-		direction = Vector2.ZERO
-		reached_endof_inversepath = true
+func move_along_path(delta):
+	var starting_point = get_global_position()
+	var move_distance = MAX_SPEED * delta
 	
+	for point in range(path.size()):
+		var distance_to_next_point = starting_point.distance_to(path[0])
+		if move_distance <= distance_to_next_point:
+			var move_rotation = get_angle_to(starting_point.linear_interpolate(path[0], move_distance / distance_to_next_point))
+#			var velocity = Vector2(MAX_SPEED, 0).rotated(move_rotation)
+#			move_and_slide(velocity)
+			direction = Vector2(cos(move_rotation), sin(move_rotation))
+			break
+		move_distance -= distance_to_next_point
+		starting_point = path[0]
+		path.remove(0)
+	
+	if path.size() == 0:
+		direction = Vector2.ZERO
+		
+		
+#func check_distance_to_waypoint() -> void:
+#	if path.size() > 0:
+#		var distance = global_position.distance_to(path[0])
+#		if distance < 20:
+#			path.remove(0)
+			
 func detect():
 	if can_see_target == true:
 		visioncone_direction = visioncone_direction.slerp((Player.global_position - global_position).normalized(), 0.3) #where factor is 0.0 - 1.0
@@ -196,11 +220,6 @@ func detect():
 func get_random_roamcell():
 	var villager_id = self
 	Events.emit_signal("request_roamcell", villager_id)
-	
-func get_navpath(target):
-	var villager_id = self
-	Events.call_deferred("emit_signal", "request_navpath", villager_id, target)
-#	Events.emit_signal("request_navpath", villager_id, target_cell)
 
 func _on_DetectionTimer_timeout():
 	state = "Chase"
@@ -209,10 +228,6 @@ func _on_ReactionTimer_timeout():
 	state = "Search"
 	
 func _on_RoamDelayTimer_timeout():
-	if path == PoolVector2Array([]) and inverse_path == PoolVector2Array([]):
-		path = full_roam_path[0]
-		inverse_path = full_roam_path[1]
-		
 	if roam_state == "Roam_to_randomcell":
 		roam_state = "Roam_to_spawncell"
 		
@@ -232,19 +247,31 @@ func choose_random_state(state_list):
 	
 func _on_VisionConeArea_body_entered(body):
 	if body.get_name() == "Player":
-		target = body
+		player_in_area = true
 		
 func _on_VisionConeArea_body_exited(body):
 	if body.get_name() == "Player":
-		target = null
+		player_in_area = false
+	
+#func _on_PathUpdateTimer_timeout():
+#	path = Nav2D.get_simple_path(global_position, target, false)
 	
 # FOR DEBUG PURPOSES
 func _draw():
 	var laser_color = Color(1.0, .329, .298)
-	if target:
+	
+	if player_in_area:
 		for hit in hit_pos:
 			draw_circle((hit - position).rotated(-rotation), 1, laser_color)
 			draw_line(VisionConeArea.position, (hit - position).rotated(-rotation), laser_color)
-	if scent_hit:
-		draw_circle((scent_hit - position).rotated(-rotation), 1, laser_color)
-		draw_line(VisionConeArea.position, (scent_hit - position).rotated(-rotation), laser_color, 3)
+	
+	for point in get_parent().get_node("PathContainer").get_children():
+			get_parent().get_node("PathContainer").remove_child(point)
+			point.queue_free()
+			
+	for point in path.size():
+		if point > 1:
+			var pathstep = PathStep.instance()
+			pathstep.position = path[point]
+			get_parent().get_node("PathContainer").add_child(pathstep)
+				

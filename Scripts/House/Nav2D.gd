@@ -28,15 +28,15 @@ func _on_request_roamcell(Villager):
 	$Indexes.set_cellv($Area.world_to_map(roam_cell), 14) #DEBUG
 	Villager.random_roamcell = roam_cell
 	
-func _on_request_navpath(Villager, target_cell):
-	var path = get_simple_path(Villager.global_position, target_cell, false)
-	print(path)
-	var inverse_path = path
-	inverse_path.invert()
-	Villager.path = PoolVector2Array(path)
-	Villager.inverse_path = PoolVector2Array(inverse_path)
-	$Line2D.points = PoolVector2Array(path)
-	$Line2D.show()
+#func _on_request_navpath(Villager, target_cell):
+#	var path = get_simple_path(Villager.global_position, target_cell, false)
+#	print(path)
+#	var inverse_path = path
+#	inverse_path.invert()
+#	Villager.path = PoolVector2Array(path)
+#	Villager.inverse_path = PoolVector2Array(inverse_path)
+#	$Line2D.points = PoolVector2Array(path)
+#	$Line2D.show()
 	
 func _on_update_lastknown_playerposition(received_playerposition):
 	if uptodate_last_known_playerpositon == null:
@@ -55,3 +55,7 @@ func _on_update_lastknown_playerposition(received_playerposition):
 
 func _on_PlayerGhostArea_body_entered(body):
 	PlayerGhost.visible = false
+
+
+func _on_PathUpdateTimer_timeout():
+	pass # Replace with function body.
