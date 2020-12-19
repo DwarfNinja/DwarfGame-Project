@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GoldCoinsResizeThin.png-2e905d603bc43d272fc41eb7148aed32.stex"
+path="res://.import/Knight.png-f2a902f19a43c9f2ee8d3cf70531c622.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/GoldCoinsResizeThin.png"
-dest_files=[ "res://.import/GoldCoinsResizeThin.png-2e905d603bc43d272fc41eb7148aed32.stex" ]
+source_file="res://Sprites/KinematicBodies/Knight.png"
+dest_files=[ "res://.import/Knight.png-f2a902f19a43c9f2ee8d3cf70531c622.stex" ]
 
 [params]
 

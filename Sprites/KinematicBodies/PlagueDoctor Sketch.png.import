@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/VillagerViewcone.png-324c0025d27c97aeb3ff7423ddd71037.stex"
+path="res://.import/PlagueDoctor Sketch.png-6077b9b3ea319807f4ea7703aa61a618.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://VillagerViewcone.png"
-dest_files=[ "res://.import/VillagerViewcone.png-324c0025d27c97aeb3ff7423ddd71037.stex" ]
+source_file="res://Sprites/KinematicBodies/PlagueDoctor Sketch.png"
+dest_files=[ "res://.import/PlagueDoctor Sketch.png-6077b9b3ea319807f4ea7703aa61a618.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HouseLevelDesignColourChange.png-73cda404c36acc17b965869e4e2b40af.stex"
+path="res://.import/Villager Sketch.png-655e3f5680508a1806b738299a370b82.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HouseLevelDesignColourChange.png"
-dest_files=[ "res://.import/HouseLevelDesignColourChange.png-73cda404c36acc17b965869e4e2b40af.stex" ]
+source_file="res://Sprites/KinematicBodies/Villager Sketch.png"
+dest_files=[ "res://.import/Villager Sketch.png-655e3f5680508a1806b738299a370b82.stex" ]
 
 [params]
 

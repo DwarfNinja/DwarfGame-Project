@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Knight.png-b65ab9a2ebf73946f6942d2d46cabe88.stex"
+path="res://.import/Crafting Table.png-0239c58f0c98535e42511783b8f5dff9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Knight.png"
-dest_files=[ "res://.import/Knight.png-b65ab9a2ebf73946f6942d2d46cabe88.stex" ]
+source_file="res://Sprites/Crafting Table.png"
+dest_files=[ "res://.import/Crafting Table.png-0239c58f0c98535e42511783b8f5dff9.stex" ]
 
 [params]
 

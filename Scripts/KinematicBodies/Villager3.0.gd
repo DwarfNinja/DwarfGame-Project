@@ -65,8 +65,8 @@ func _process(_delta):
 
 func _physics_process(delta):
 	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
-#	print(state)
-	
+	print(state)
+	print(roam_state)
 	match state:
 		"Idle":
 			if RayCastN1.is_colliding():
@@ -87,7 +87,6 @@ func _physics_process(delta):
 				"Roam_to_randomcell":
 					set_target(random_roamcell)
 					move_along_path(delta)
-					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 					if reached_endof_path == true:
 						RoamDelayTimer.start()
 						state = "Idle"
@@ -95,7 +94,6 @@ func _physics_process(delta):
 				"Roam_to_spawncell":
 					set_target(spawn_position)
 					move_along_path(delta)
-					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 					if reached_endof_path == true:
 						RoamDelayTimer.start()
 						state = "Idle"
@@ -116,23 +114,24 @@ func _physics_process(delta):
 			if can_see_target == true:
 				direction = (Player.global_position - global_position).normalized()
 				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-				ReactionTimer.stop()
+				move_and_slide(velocity)
+#				ReactionTimer.stop()
 				
 			elif can_see_target == false:
 				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 				if ReactionTimer.is_stopped():
 					ReactionTimer.start()
 				
-			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.4) #where factor is 0.0 - 1.0
+			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.6) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
 			
-	
-	velocity = move_and_slide(velocity)
 
 func set_target(new_target):
 	if target:
 		if new_target != target:
 			target = new_target
+			update_path()
+		if !path:
 			update_path()
 	else:
 		target = new_target
@@ -164,47 +163,30 @@ func aim_raycasts():
 					can_see_target = false
 	else:
 		can_see_target = false
-
-		
-#func move_along_path():
-#	if path.size() > 0:
-#		reached_endof_path = false
-#		var distance = global_position.distance_to(path[0])
-#		if distance > 5:
-#			direction = (path[0] - global_position).normalized()
-#		else:
-#			path.remove(0)
-#
-#	if get_global_position() == target:
-#		direction = Vector2.ZERO
-#		reached_endof_path = true
 		
 		
 func move_along_path(delta):
 	var starting_point = get_global_position()
 	var move_distance = MAX_SPEED * delta
 	
-	for point in range(path.size()):
-		var distance_to_next_point = starting_point.distance_to(path[0])
-		if move_distance <= distance_to_next_point:
-			var move_rotation = get_angle_to(starting_point.linear_interpolate(path[0], move_distance / distance_to_next_point))
-#			var velocity = Vector2(MAX_SPEED, 0).rotated(move_rotation)
-#			move_and_slide(velocity)
-			direction = Vector2(cos(move_rotation), sin(move_rotation))
-			break
-		move_distance -= distance_to_next_point
-		starting_point = path[0]
-		path.remove(0)
+	if path.size() > 0:
+		reached_endof_path = false
+		for point in range(path.size()):
+			var distance_to_next_point = starting_point.distance_to(path[0])
+			if move_distance <= distance_to_next_point:
+				var move_rotation = get_angle_to(starting_point.linear_interpolate(path[0], move_distance / distance_to_next_point))
+				direction = Vector2(cos(move_rotation), sin(move_rotation))
+	#			velocity = Vector2(MAX_SPEED, 0).rotated(move_rotation)
+				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+				move_and_slide(velocity)
+				break
+			move_distance -= distance_to_next_point
+			starting_point = path[0]
+			path.remove(0)
 	
-	if path.size() == 0:
-		direction = Vector2.ZERO
+	elif path.size() == 0:
+		reached_endof_path = true
 		
-		
-#func check_distance_to_waypoint() -> void:
-#	if path.size() > 0:
-#		var distance = global_position.distance_to(path[0])
-#		if distance < 20:
-#			path.remove(0)
 			
 func detect():
 	if can_see_target == true:
@@ -215,8 +197,8 @@ func detect():
 		
 	elif can_see_target == false:
 		DetectionTimer.stop()
-
-
+		
+		
 func get_random_roamcell():
 	var villager_id = self
 	Events.emit_signal("request_roamcell", villager_id)
