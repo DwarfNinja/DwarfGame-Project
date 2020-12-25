@@ -46,8 +46,6 @@ var room_pos_west = Vector2(-20, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	Events.connect("request_roamcell", self, "_on_request_roamcell")
-#	Events.connect("request_navpath", self, "_on_request_navpath")
 
 	randomize()
 	

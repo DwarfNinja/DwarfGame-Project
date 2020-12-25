@@ -42,16 +42,17 @@ func _on_update_lastknown_playerposition(received_playerposition):
 	if uptodate_last_known_playerpositon == null:
 		uptodate_last_known_playerpositon = received_playerposition
 	else:
-		if (received_playerposition - current_playerposition) < (uptodate_last_known_playerpositon - current_playerposition):
+		if received_playerposition.distance_to(current_playerposition) < uptodate_last_known_playerpositon.distance_to(current_playerposition):
 			uptodate_last_known_playerpositon = received_playerposition
 			
 	PlayerGhost.global_position = uptodate_last_known_playerpositon
 	PlayerGhost.visible = true
 	
 	for Villager in get_tree().get_nodes_in_group("Villager"):
-		if Villager.last_known_player_position != uptodate_last_known_playerpositon:
-			Villager.last_known_player_position = uptodate_last_known_playerpositon
-	
+#		if Villager.last_known_player_position != uptodate_last_known_playerpositon:
+#			Villager.last_known_player_position = uptodate_last_known_playerpositon
+		Villager.last_known_player_position = uptodate_last_known_playerpositon
+
 
 func _on_PlayerGhostArea_body_entered(body):
 	PlayerGhost.visible = false

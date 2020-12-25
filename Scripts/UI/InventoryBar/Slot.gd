@@ -32,26 +32,23 @@ func remove_item():
 		item_def = null
 	get_node("ItemCount").texture = get("count_" + str(item_count_in_slot))
 
-
 func has_resources(requested_resource):
 	if item_def.item_name == requested_resource.item_name:
 		return true
-	
 	
 func clear():
 	item_count_in_slot = 0
 	item_def = null
 	texture = null
 	get_node("ItemCount").texture = null
-	
+
 func activate_selector():
 	$Selector.show()
 	if item_count_in_slot > 0:
 		$Selector/AnimationPlayer.current_animation = "Selector Selecting"
 	else:
 		$Selector/AnimationPlayer.current_animation = "Selector Idle"
-	
+
 func deactivate_selector():
 	$Selector/AnimationPlayer.current_animation = "Selector Idle"
 	$Selector.hide()
-	
