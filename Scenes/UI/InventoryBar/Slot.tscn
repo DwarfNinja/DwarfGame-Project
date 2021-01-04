@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/UI/InventoryBar/Slot.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/HUD/InventoryBar/Selector.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/HUD/InventoryBar/SelectorExpand.png" type="Texture" id=3]
+
+
+
+
+
+[sub_resource type="Animation" id=3]
+resource_name = "Selector Idle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Selector Selecting"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1.8025 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 2 ) ]
+}
+
+[node name="Slot_0" type="TextureRect"]
+margin_right = 22.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 22, 20 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemCount" type="TextureRect" parent="."]
+margin_left = 15.0
+margin_top = 11.0
+margin_right = 21.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Selector" type="TextureRect" parent="."]
+margin_left = -2.0
+margin_top = -2.0
+margin_right = 24.0
+margin_bottom = 22.0
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
+autoplay = "Selector Idle"
+"anims/Selector Idle" = SubResource( 3 )
+"anims/Selector Selecting" = SubResource( 2 )
