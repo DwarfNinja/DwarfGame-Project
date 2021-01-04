@@ -11,13 +11,13 @@
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 8
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 8
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -109,7 +109,7 @@ margin_left = 7.0
 margin_top = 16.0
 margin_right = 13.0
 margin_bottom = 28.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -120,7 +120,7 @@ margin_left = 7.0
 margin_top = 37.0
 margin_right = 13.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false

@@ -11,7 +11,8 @@ onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
 onready var Nav2D = get_parent().get_parent()
 onready var Player = get_parent().get_node("Player")
-var PathStep = preload("res://Scenes/PathStep.tscn")
+var PathNode = preload("res://Scenes/UI/PathNode.tscn")
+var PathLine = preload("res://Scenes/UI/PathLine.tscn")
 
 const ACCELERATION = 300
 const MAX_SPEED = 40
@@ -41,7 +42,7 @@ var state
 var roam_state = "Roam_to_randomcell"
 
 var path = []
-var reached_endof_path = false
+var reached_endof_path = true
 
 func _ready():
 	randomize()
@@ -56,6 +57,8 @@ func _ready():
 	
 	spawn_position = get_global_position()
 	get_random_roamcell()
+	instance_pathvisuals()
+	
 	choose_random_state(["Idle", "Roam"])
  
 
@@ -65,9 +68,10 @@ func _process(_delta):
 
 func _physics_process(delta):
 	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
-	print(state)
+#	print(state)
 #	print(roam_state)
 #	print(reached_endof_path)
+
 	match state:
 		"Idle":
 			if RayCastN1.is_colliding():
@@ -178,6 +182,12 @@ func update_path():
 	if PathUpdateTimer.is_stopped():
 		path = Nav2D.get_simple_path(global_position, target, false)
 		PathUpdateTimer.start()
+#		if path:
+#			if target == random_roamcell or target == spawn_position:
+#				Nav2D.get_node("Walls/PathContainer/RoamPath_" + get_name()).points = PoolVector2Array(path)
+#				Nav2D.get_node("Walls/PathContainer/StartPoint_" + get_name()).global_position = path[0]
+#				Nav2D.get_node("Walls/PathContainer/EndPoint_" + get_name()).global_position = path[-1]
+		
 
 func aim_raycasts():
 	if player_in_area:
@@ -245,23 +255,26 @@ func get_random_roamcell():
 	Events.emit_signal("request_roamcell", villager_id)
 
 func _on_DetectionTimer_timeout():
-	call("Chase")
+	if can_see_target == true:
+		call("Chase")
 
 func _on_ReactionTimer_timeout():
 	call("Search")
 
 func _on_RoamDelayTimer_timeout():
-	if  state == "Roam":
-		if roam_state == "Roam_to_randomcell":
-			roam_state = "Roam_to_spawncell"
-			
-		elif roam_state == "Roam_to_spawncell":
-			roam_state = "Roam_to_randomcell"
-		call("Roam")
+	if roam_state == "Roam_to_randomcell":
+		roam_state = "Roam_to_spawncell"
+		
+	elif roam_state == "Roam_to_spawncell":
+		roam_state = "Roam_to_randomcell"
+	call("Roam")
 
 func _on_StateDurationTimer_timeout():
-	if state == "Idle" or state == "Roam":
+	if state == "Idle" or state == "Roam" and reached_endof_path == true:
 		choose_random_state(["Idle", "Roam"])
+		StateDurationTimer.wait_time = rand_range(8, 30)
+		StateDurationTimer.start()
+	else:
 		StateDurationTimer.wait_time = rand_range(8, 30)
 		StateDurationTimer.start()
 
@@ -278,6 +291,18 @@ func _on_VisionConeArea_body_exited(body):
 	if body.get_name() == "Player":
 		player_in_area = false
 
+func instance_pathvisuals():
+	var NewLine = PathLine.instance()
+#	NewLine.set_name("RoamPath_" + get_name())
+#	Nav2D.get_node("Walls/PathContainer").add_child(NewLine)
+#
+#	var Startpoint = PathNode.instance()
+#	Startpoint.set_name("StartPoint_" + get_name())
+#	Nav2D.get_node("Walls/PathContainer").add_child(Startpoint)
+#	var Endpoint = PathNode.instance()
+#	Endpoint.set_name("EndPoint_" + get_name())
+#	Nav2D.get_node("Walls/PathContainer").add_child(Endpoint)
+	
 
 # FOR DEBUG PURPOSES
 func _draw():
@@ -294,7 +319,13 @@ func _draw():
 			
 	for point in path.size():
 		if point > 1:
-			var pathstep = PathStep.instance()
-			pathstep.position = path[point]
-			get_parent().get_node("PathContainer").add_child(pathstep)
-				
+#			print(path[0].distance_to(path[1]))
+			if (path[0].distance_to(path[1])) > 9:
+				var pathstep = PathNode.instance()
+				pathstep.position = path[point]
+				get_parent().get_node("PathContainer").add_child(pathstep)
+#
+#	for point in range(0, path.size() - 1):
+#		draw_circle(path[0], 1, laser_color)
+#		draw_circle(path[-1], 1, laser_color)
+#		draw_line(path[point], path[point + 1] , laser_color)

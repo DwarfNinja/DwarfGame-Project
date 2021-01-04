@@ -129,7 +129,6 @@ margin_left = 86.0
 margin_top = 39.0
 margin_right = 86.0
 margin_bottom = 39.0
-expand = true
 stretch_mode = 6
 
 [node name="ForgeHUD" parent="Control" instance=ExtResource( 6 )]
