@@ -10,10 +10,10 @@ var can_move = true
 
 # Inventory varaibles
 var selected_item = null
-const WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
+const WOOD_SCENE = preload("res://Scenes/Resources/Wood.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
-const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
-const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
+const MININGRIG_SCENE = preload("res://Scenes/Interactables/MiningRig.tscn")
+const FORGE_SCENE = preload("res://Scenes/Interactables/Forge.tscn")
 
 var scent_trail = []
 

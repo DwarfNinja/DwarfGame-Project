@@ -1,10 +1,10 @@
 extends Node
 
-const WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
+const WOOD_SCENE = preload("res://Scenes/Resources/Wood.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
-const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
-const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
-const HOUSE_SCENE = preload("res://Scenes/House/House.tscn")
+const MININGRIG_SCENE = preload("res://Scenes/Interactables/MiningRig.tscn")
+const FORGE_SCENE = preload("res://Scenes/Interactables/Forge.tscn")
+const HOUSE_SCENE = preload("res://Scenes/Worlds/House/House.tscn")
 
 var saved_cave_scene 
 

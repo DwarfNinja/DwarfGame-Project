@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Resources/Pickable_Item.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Resources/R_Item.gd" type="Script" id=2]
-[ext_resource path="res://Sprites/GoldCoinsResizeThinSmall.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/GrabSprite.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Resources/GoldCoins.png" type="Texture" id=3]
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=5]
-[ext_resource path="res://Sprites/GoldCoinsResizeThinSmallShadow.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Resources/GoldCoins_Shadow.png" type="Texture" id=6]
+
+
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -48,8 +49,3 @@ collision_layer = 8
 position = Vector2( 0.981663, -6 )
 rotation = 1.5708
 shape = SubResource( 3 )
-
-[node name="GrabSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 1, 2 )
-texture = ExtResource( 4 )

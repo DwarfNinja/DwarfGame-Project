@@ -1,11 +1,11 @@
 [gd_scene load_steps=27 format=2]
 
-[ext_resource path="res://Sprites/Dwarf Run Animation 2.0-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/KinematicBodies/Dwarf Animation-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/KinematicBodies/Player.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.99999
-height = 9.0
+height = 7.00002
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 6.0
@@ -253,4 +253,3 @@ parameters/Run/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 position = Vector2( 1, -4 )
-zoom = Vector2( 2, 2 )
