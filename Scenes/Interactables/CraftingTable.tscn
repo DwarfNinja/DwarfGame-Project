@@ -4,7 +4,6 @@
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=2]
 [ext_resource path="res://Scripts/Interactables/CraftingTable.gd" type="Script" id=3]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10.5, 14.5 )
 
@@ -13,7 +12,7 @@ radius = 12.5
 height = 15.0
 
 [node name="CraftingTable" type="StaticBody2D"]
-collision_layer = 16
+collision_layer = 8
 script = ExtResource( 3 )
 
 [node name="CraftingTableSprite" type="Sprite" parent="."]

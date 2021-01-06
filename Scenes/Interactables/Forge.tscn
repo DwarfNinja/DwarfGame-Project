@@ -8,7 +8,6 @@
 [ext_resource path="res://Sprites/Interactables/Forge/Forge Iron2.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Interactables/Forge/ForgeShadow.png" type="Texture" id=7]
 
-
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
@@ -48,6 +47,7 @@ color_ramp = SubResource( 5 )
 
 [node name="Forge" type="StaticBody2D"]
 collision_layer = 8
+collision_mask = 2147483649
 script = ExtResource( 5 )
 item_def = ExtResource( 3 )
 

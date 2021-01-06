@@ -7,7 +7,6 @@
 [ext_resource path="res://Scripts/Interactables/MiningRig.gd" type="Script" id=5]
 [ext_resource path="res://Sprites/Interactables/MiningRig/MiningRig TopDownShadow.png" type="Texture" id=6]
 
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.99997
 height = 24.0001
@@ -57,6 +56,7 @@ anims/Mining = SubResource( 2 )
 
 [node name="InteractArea" type="Area2D" parent="."]
 collision_layer = 8
+collision_mask = 2147483649
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 position = Vector2( 0, -5 )

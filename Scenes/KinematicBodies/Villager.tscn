@@ -4,7 +4,6 @@
 [ext_resource path="res://Scripts/KinematicBodies/Villager3.0.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/HUD/Other/Villager Viewcone3.0.png" type="Texture" id=4]
 
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.99998
 height = 3.00004

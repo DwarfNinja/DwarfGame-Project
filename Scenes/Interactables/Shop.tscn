@@ -6,7 +6,6 @@
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=4]
 [ext_resource path="res://Scripts/Interactables/Shop.gd" type="Script" id=5]
 
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
 height = 27.0
@@ -17,6 +16,7 @@ height = 8.0
 
 [node name="Shop" type="StaticBody2D"]
 position = Vector2( 115, 26 )
+collision_layer = 8
 script = ExtResource( 5 )
 
 [node name="ShopShadow" type="Sprite" parent="."]
@@ -37,6 +37,7 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 position = Vector2( 0, 3 )

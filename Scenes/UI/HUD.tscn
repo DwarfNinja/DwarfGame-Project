@@ -9,11 +9,6 @@
 [ext_resource path="res://Sprites/HUD/Other/HUD King Icon.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/HUD/Screens/Travelling1.1.png" type="Texture" id=8]
 
-
-
-
-
-
 [sub_resource type="DynamicFont" id=1]
 size = 8
 outline_size = 1

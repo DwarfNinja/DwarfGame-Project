@@ -51,8 +51,8 @@ func _on_item_picked_up(item_def):
 	if item_def.item_name == "goldcoins":
 		add_to_inventory(item_def)
 		return
-	InventoryBar.add_item(item_def)
 	add_to_inventory(item_def)
+	InventoryBar.add_item(item_def)
 	
 
 func add_to_inventory(item_def):

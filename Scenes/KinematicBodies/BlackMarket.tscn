@@ -14,6 +14,7 @@ radius = 11.0
 height = 4.0
 
 [node name="BlackMarket" type="KinematicBody2D"]
+collision_layer = 8
 script = ExtResource( 2 )
 
 [node name="BlackMarketShadow" type="Sprite" parent="."]
@@ -29,6 +30,7 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 shape = SubResource( 2 )

@@ -1,0 +1,187 @@
+[gd_resource type="VisualShader" load_steps=12 format=2]
+
+[ext_resource path="res://Sprites/Resources/Shine.png" type="Texture" id=1]
+
+[sub_resource type="VisualShaderNodeVectorInterp" id=1]
+
+[sub_resource type="VisualShaderNodeExpression" id=2]
+size = Vector2( 407, 447 )
+expression = "// shader_type canvas_item;
+// render_mode unshaded;
+
+// uniform bool Smooth = false;
+// uniform float width : hint_range(0.0, 16) = 1.0;
+// uniform vec4 outline_color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
+// uniform int pixel_size : hint_range(1, 10) = 4;
+vec2 unit = (1.0/float(pixel_size) ) / vec2(textureSize(TEXTURE, 0));
+vec4 pixel_color = texture(TEXTURE, UV);
+if (pixel_color.a == 0.0) {
+	pixel_color = outline_color;
+	pixel_color.a = 0.0;
+	for (float x = -ceil(width); x <= ceil(width); x++) {
+		for (float y = -ceil(width); y <= ceil(width); y++) {
+			if (texture(TEXTURE, UV + vec2(x*unit.x, y*unit.y)).a == 0.0 || (x==0.0 && y==0.0)) {
+				continue;
+			}
+			if (Smooth) {
+				pixel_color.a += outline_color.a / (pow(x,2)+pow(y,2)) * (1.0-pow(2.0, -width));
+				if (pixel_color.a > 1.0) {
+					pixel_color.a = 1.0;
+				}
+			} else {
+				pixel_color.a = outline_color.a;
+				return
+			}
+		}
+	}
+}
+	COLOR = pixel_color;
+}
+"
+
+[sub_resource type="VisualShaderNodeInput" id=3]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeInput" id=4]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=5]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 0.5, 0.5, 0.5 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarOp" id=6]
+default_input_values = [ 0, 0.0, 1, -0.8 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=7]
+
+[sub_resource type="VisualShaderNodeVectorOp" id=8]
+
+[sub_resource type="VisualShaderNodeTexture" id=9]
+texture = ExtResource( 1 )
+
+[sub_resource type="VisualShaderNodeTexture" id=10]
+source = 2
+
+[resource]
+code = "shader_type canvas_item;
+uniform sampler2D tex_frg_8;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Texture:9
+	vec3 n_out9p0;
+	float n_out9p1;
+	{
+		vec4 _tex_read = texture(TEXTURE , UV.xy);
+		n_out9p0 = _tex_read.rgb;
+		n_out9p1 = _tex_read.a;
+	}
+
+// Input:3
+	float n_out3p0 = TIME;
+
+// ScalarOp:5
+	float n_in5p1 = -0.80000;
+	float n_out5p0 = n_out3p0 * n_in5p1;
+
+// VectorCompose:6
+	float n_in6p1 = 0.00000;
+	float n_in6p2 = 0.00000;
+	vec3 n_out6p0 = vec3(n_out5p0, n_in6p1, n_in6p2);
+
+// Input:2
+	vec3 n_out2p0 = vec3(UV, 0.0);
+
+// VectorOp:4
+	vec3 n_in4p1 = vec3(0.50000, 0.50000, 0.50000);
+	vec3 n_out4p0 = n_out2p0 * n_in4p1;
+
+// VectorOp:7
+	vec3 n_out7p0 = n_out6p0 + n_out4p0;
+
+// Texture:8
+	vec4 tex_frg_8_read = texture(tex_frg_8, n_out7p0.xy);
+	vec3 n_out8p0 = tex_frg_8_read.rgb;
+	float n_out8p1 = tex_frg_8_read.a;
+
+// VectorMix:10
+	vec3 n_out10p0 = mix(n_out9p0, vec3(n_out9p1), vec3(n_out8p1));
+
+// Output:0
+	COLOR.rgb = n_out10p0;
+	COLOR.a = n_out9p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -54.7588, 50.8468 )
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2( 1240, 100 )
+nodes/fragment/2/node = SubResource( 3 )
+nodes/fragment/2/position = Vector2( 100, 280 )
+nodes/fragment/3/node = SubResource( 4 )
+nodes/fragment/3/position = Vector2( 100, 120 )
+nodes/fragment/4/node = SubResource( 5 )
+nodes/fragment/4/position = Vector2( 260, 260 )
+nodes/fragment/5/node = SubResource( 6 )
+nodes/fragment/5/position = Vector2( 280, 100 )
+nodes/fragment/6/node = SubResource( 7 )
+nodes/fragment/6/position = Vector2( 460, 100 )
+nodes/fragment/7/node = SubResource( 8 )
+nodes/fragment/7/position = Vector2( 600, 260 )
+nodes/fragment/8/node = SubResource( 9 )
+nodes/fragment/8/position = Vector2( 780, 180 )
+nodes/fragment/9/node = SubResource( 10 )
+nodes/fragment/9/position = Vector2( 720, 0 )
+nodes/fragment/10/node = SubResource( 1 )
+nodes/fragment/10/position = Vector2( 1020, 0 )
+nodes/fragment/11/node = SubResource( 2 )
+nodes/fragment/11/position = Vector2( 960, 320 )
+nodes/fragment/11/size = Vector2( 407, 447 )
+nodes/fragment/11/input_ports = "0,2,smooth;1,0,width;2,1,outline_colour;3,0,pixel_size;4,4,tex_frg_8;"
+nodes/fragment/11/output_ports = ""
+nodes/fragment/11/expression = "// shader_type canvas_item;
+// render_mode unshaded;
+
+// uniform bool Smooth = false;
+// uniform float width : hint_range(0.0, 16) = 1.0;
+// uniform vec4 outline_color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
+// uniform int pixel_size : hint_range(1, 10) = 4;
+vec2 unit = (1.0/float(pixel_size) ) / vec2(textureSize(TEXTURE, 0));
+vec4 pixel_color = texture(TEXTURE, UV);
+if (pixel_color.a == 0.0) {
+	pixel_color = outline_color;
+	pixel_color.a = 0.0;
+	for (float x = -ceil(width); x <= ceil(width); x++) {
+		for (float y = -ceil(width); y <= ceil(width); y++) {
+			if (texture(TEXTURE, UV + vec2(x*unit.x, y*unit.y)).a == 0.0 || (x==0.0 && y==0.0)) {
+				continue;
+			}
+			if (Smooth) {
+				pixel_color.a += outline_color.a / (pow(x,2)+pow(y,2)) * (1.0-pow(2.0, -width));
+				if (pixel_color.a > 1.0) {
+					pixel_color.a = 1.0;
+				}
+			} else {
+				pixel_color.a = outline_color.a;
+				return
+			}
+		}
+	}
+}
+	COLOR = pixel_color;
+}
+"
+nodes/fragment/connections = PoolIntArray( 2, 0, 4, 0, 3, 0, 5, 0, 5, 0, 6, 0, 6, 0, 7, 0, 4, 0, 7, 1, 7, 0, 8, 0, 9, 1, 10, 1, 8, 1, 10, 2, 9, 0, 10, 0, 9, 1, 0, 1, 10, 0, 0, 0 )

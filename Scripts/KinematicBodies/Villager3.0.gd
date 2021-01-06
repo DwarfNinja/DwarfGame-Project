@@ -57,7 +57,7 @@ func _ready():
 	
 	spawn_position = get_global_position()
 	get_random_roamcell()
-	instance_pathvisuals()
+#	instance_pathvisuals()
 	
 	choose_random_state(["Idle", "Roam"])
  
@@ -215,7 +215,7 @@ func move_along_path(delta):
 	var move_distance = MAX_SPEED * delta
 	
 #	if path.size() > 0:
-	for point in range(path.size()):
+	for _point in range(path.size()):
 		reached_endof_path = false
 		var distance_to_next_point = starting_point.distance_to(path[0])
 		if move_distance <= distance_to_next_point:
@@ -291,8 +291,8 @@ func _on_VisionConeArea_body_exited(body):
 	if body.get_name() == "Player":
 		player_in_area = false
 
-func instance_pathvisuals():
-	var NewLine = PathLine.instance()
+#func instance_pathvisuals():
+#	var NewLine = PathLine.instance()
 #	NewLine.set_name("RoamPath_" + get_name())
 #	Nav2D.get_node("Walls/PathContainer").add_child(NewLine)
 #
@@ -306,7 +306,7 @@ func instance_pathvisuals():
 
 # FOR DEBUG PURPOSES
 func _draw():
-	var laser_color = Color(1.0, .329, .298)
+#	var laser_color = Color(1.0, .329, .298)
 	
 #	if player_in_area:
 #		for hit in hit_pos:

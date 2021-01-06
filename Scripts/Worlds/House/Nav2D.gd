@@ -54,6 +54,6 @@ func _on_update_lastknown_playerposition(received_playerposition):
 		Villager.last_known_player_position = uptodate_last_known_playerpositon
 
 
-func _on_PlayerGhostArea_body_entered(body):
+func _on_PlayerGhostArea_body_entered(_body):
 	PlayerGhost.visible = false
 

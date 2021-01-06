@@ -23,14 +23,18 @@ var area_in_pickuparea = false
 onready var PlayerSprite = $PlayerSprite
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
+onready var PlayerInteractArea = $PlayerInteractArea
+onready var SelectedItemSprite = $PlayerInteractArea/SelectedItemSprite
 onready var PlayerPickupArea = $PlayerPickupArea
-onready var SelectedItemSprite = $PlayerPickupArea/SelectedItemSprite
 
 onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
 	# ___________________Connect Signals___________________
+	#__Internal Signals__
+	PlayerPickupArea.connect("body_entered", self, "_on_PlayerPickupArea_body_entered")
 	
+	#__External Signals__
 	Events.connect("item_selected", self, "_on_item_selected")
 	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
@@ -63,14 +67,23 @@ func _physics_process(delta):
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		
 		velocity = move_and_slide(velocity)
+		
+		#impact normal? respond to collision with rigidbody
+		
+#		var collision = move_and_collide(velocity * delta)
+#		if collision:
+#			var reflect = collision.remainder.bounce(collision.normal)
+#			velocity = velocity.bounce(collision.normal)
+#			move_and_collide(reflect)
+		
 		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
-			PlayerPickupArea.position = Vector2(19, 0) #RIGHT
+			PlayerInteractArea.position = Vector2(19, 0) #RIGHT
 		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
-			PlayerPickupArea.position = Vector2(-19, 0) #LEFT
+			PlayerInteractArea.position = Vector2(-19, 0) #LEFT
 		if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
-			PlayerPickupArea.position = Vector2(-0.5, -14) #UP
+			PlayerInteractArea.position = Vector2(-0.5, -14) #UP
 		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
-			PlayerPickupArea.position = Vector2(-0.5, 14) #DOWN
+			PlayerInteractArea.position = Vector2(-0.5, 14) #DOWN
 		
 func _on_item_selected(item_in_selected_slot):
 	if item_in_selected_slot:
@@ -82,12 +95,16 @@ func _on_item_selected(item_in_selected_slot):
 	
 func place_item():
 	if selected_item != null:
-		if PlayerPickupArea.get_overlapping_bodies() == []:
+		if PlayerInteractArea.get_overlapping_bodies() == []:
 			Events.emit_signal("place_item", selected_item)
 			Events.emit_signal("item_placed", selected_item)
 		else:
 			print("CANT PLACE ITEM!")
-			
+
+func _on_PlayerPickupArea_body_entered(body):
+	Events.emit_signal("item_picked_up", body.item_def)
+	body.queue_free()
+
 func _on_entered_craftingtable():
 	can_move = false
 	

@@ -16,8 +16,6 @@
 [ext_resource path="res://Scenes/Objects/Ladder.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=16]
 
-
-
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
@@ -74,14 +72,11 @@ position = Vector2( 78, 97 )
 [node name="WoodenLogs2" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 126, 106 )
 
-[node name="WoodenLogs3" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 218, 128 )
-
 [node name="Iron" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 250, 45 )
 
 [node name="Iron2" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 160, 42 )
+position = Vector2( 158, 31 )
 
 [node name="Iron3" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 209, 27 )
@@ -93,3 +88,6 @@ position = Vector2( 292, 68 )
 position = Vector2( 26, 39 )
 
 [node name="Shop" parent="YSort" instance=ExtResource( 11 )]
+
+[node name="Wood" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 215, 126 )
