@@ -19,6 +19,8 @@ onready var IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 onready var WOOD_SCENE = preload("res://Scenes/Resources/Wood.tscn")
 onready var GOLDCOINS_SCENE = preload("res://Scenes/Resources/GoldCoins.tscn")
 
+onready var CHEST = preload("res://Scenes/Interactables/Chest.tscn")
+
 onready var VILLAGER_SCENE = preload("res://Scenes/KinematicBodies/Villager.tscn")
 
 onready var DOOR_SCENE = preload("res://Scenes/Objects/Door.tscn")
@@ -254,7 +256,7 @@ func get_tiles_in_rectangle(node_pos, rect_width, rect_height):
 #	print("RECT_TILES = ", rect_tiles)
 	return rect_tiles
 	
-	
+# Look at code, can be imporved line 262-265
 func place_items():
 	var item_tile_array = $Nav2D/Indexes.get_used_cells_by_id(13)
 	var random_item_positions = select_random_item_positions(item_tile_array)
@@ -262,7 +264,8 @@ func place_items():
 		var iron = IRON_SCENE.instance()
 		var wood = WOOD_SCENE.instance()
 		var goldcoins = GOLDCOINS_SCENE.instance()
-		var random_item = select_random_item(iron, wood, goldcoins)
+		var chest = CHEST.instance()
+		var random_item = select_random_lootable(chest)
 		var tilepos = $Nav2D/Walls.map_to_world(random_item_positions[i])
 		random_item.set_position(tilepos + Vector2(8,8))
 		$Nav2D/Walls.add_child(random_item)
@@ -364,14 +367,14 @@ func select_random_item_positions(item_tile_array):
 			random_item_positions.append(item_tile_array.pop_front())
 	return random_item_positions
 	
-func select_random_item(iron, wood, goldcoins):
+func select_random_lootable(chest):
 	var random_number = randi() % 100 + 1
 	if random_number <= 40:
-		return iron
+		return chest
 	elif random_number <= 80:
-		return wood
+		return chest
 	elif random_number <= 100:
-		return goldcoins
+		return chest
 	
 	
 func select_random_enemy_positions(enemy_tile_array):
