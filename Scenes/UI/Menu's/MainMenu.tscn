@@ -48,6 +48,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 480.0
+margin_bottom = 32.0
+texture = ExtResource( 3 )
+stretch_mode = 4
+
 [node name="Menu" type="VBoxContainer" parent="."]
 margin_right = 480.0
 margin_bottom = 270.0
@@ -56,16 +62,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="Menu"]
-margin_right = 480.0
-margin_bottom = 32.0
-texture = ExtResource( 3 )
-stretch_mode = 4
-
 [node name="CenterContainer" type="CenterContainer" parent="Menu"]
-margin_top = 82.0
 margin_right = 480.0
-margin_bottom = 202.0
+margin_bottom = 120.0
 
 [node name="CenterRow" type="HBoxContainer" parent="Menu/CenterContainer"]
 margin_left = 186.0
@@ -116,4 +115,3 @@ margin_bottom = 120.0
 custom_fonts/font = SubResource( 6 )
 text = "Quit"
 flat = true
-[connection signal="pressed" from="Menu/CenterContainer/CenterRow/Buttons/NewGame" to="." method="_on_NewGame_pressed"]

@@ -10,3 +10,4 @@ item_name = "iron"
 item_count = 1
 item_texture = ExtResource( 3 )
 hud_texture = ExtResource( 2 )
+packedscene_path = "res://Scenes/Resources/Iron.tscn"

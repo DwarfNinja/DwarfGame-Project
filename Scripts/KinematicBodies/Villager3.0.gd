@@ -316,14 +316,15 @@ func _draw():
 	for point in get_parent().get_node("PathContainer").get_children():
 			get_parent().get_node("PathContainer").remove_child(point)
 			point.queue_free()
-			
-	for point in path.size():
-		if point > 1:
-#			print(path[0].distance_to(path[1]))
-			if (path[0].distance_to(path[1])) > 9:
-				var pathstep = PathNode.instance()
-				pathstep.position = path[point]
-				get_parent().get_node("PathContainer").add_child(pathstep)
+	
+	if state == "Roam":
+		for point in path.size():
+			if point > 1:
+	#			print(path[0].distance_to(path[1]))
+				if (path[0].distance_to(path[1])) > 9:
+					var pathstep = PathNode.instance()
+					pathstep.position = path[point]
+					get_parent().get_node("PathContainer").add_child(pathstep)
 #
 #	for point in range(0, path.size() - 1):
 #		draw_circle(path[0], 1, laser_color)

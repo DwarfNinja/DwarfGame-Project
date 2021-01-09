@@ -6,9 +6,8 @@ var more_than_one = false
 var can_pickup = false
 export (Resource) var item_def
 onready var PickUpArea = $PickUpArea
-onready var ItemSprite = get_node(str(item_def.item_name.capitalize()) + "Sprite" )
+onready var ItemSprite = get_node(item_def.item_name.capitalize() + "Sprite")
 onready var TrailParticles2D = $TrailParticles2D
-#onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
 
 var direction = Vector2(0,0)
 var body_in_pickuparea = null
@@ -29,7 +28,7 @@ func _process(_delta):
 		if Input.is_action_just_pressed("key_e"):
 			Events.emit_signal("item_picked_up", item_def)
 			queue_free()
-
+			
 func _integrate_forces(_state):
 	if body_in_pickuparea != null:
 		direction = (global_position - body_in_pickuparea.global_position).normalized()

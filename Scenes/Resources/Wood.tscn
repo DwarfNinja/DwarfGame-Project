@@ -6,20 +6,20 @@
 [ext_resource path="res://Scripts/Resources/Pickable_Item.gd" type="Script" id=4]
 [ext_resource path="res://Shaders/Shine VisualShader.tres" type="Shader" id=5]
 
-[sub_resource type="ShaderMaterial" id=12]
+[sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 5 )
 shader_param/Speed = -0.9
 shader_param/Size = Vector3( 0.4, 0.4, 0.4 )
 shader_param/Texture = ExtResource( 2 )
 
-[sub_resource type="StreamTexture" id=13]
+[sub_resource type="StreamTexture" id=2]
 load_path = "res://.import/Wood.png-4de8812757fdc26b94fdba38b35ab777.stex"
 
-[sub_resource type="CapsuleShape2D" id=14]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 1.99996
 height = 9.0
 
-[sub_resource type="CapsuleShape2D" id=15]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 31.0
 height = 4.00002
 
@@ -47,7 +47,7 @@ anim_offset_random = 1.0
 [sub_resource type="StreamTexture" id=7]
 load_path = "res://.import/trail Smoke-Sheet.png-66b64cead1740b030744d5da2b9e5e26.stex"
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=8]
 resource_name = "Drop_centre"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -68,10 +68,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.6, 0.6 ]
+"values": [ 0.6 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("CollisionShape2D:disabled")
@@ -86,7 +86,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=9]
 resource_name = "Drop_left"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -107,10 +107,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.6, 0.6 ]
+"values": [ 0.6 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("CollisionShape2D:disabled")
@@ -125,7 +125,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=10]
 resource_name = "Drop_right"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -146,10 +146,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.6, 0.6 ]
+"values": [ 0.6 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("CollisionShape2D:disabled")
@@ -179,6 +179,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, -9 ), Vector2( 0, -10 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimationPlayer:playback_speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.25 ]
+}
 
 [node name="Wood" type="RigidBody2D"]
 collision_layer = 16
@@ -190,9 +202,9 @@ script = ExtResource( 4 )
 item_def = ExtResource( 3 )
 
 [node name="WoodSprite" type="Sprite" parent="."]
-material = SubResource( 12 )
+material = SubResource( 1 )
 position = Vector2( 0, -9 )
-texture = SubResource( 13 )
+texture = SubResource( 2 )
 offset = Vector2( 0, 4 )
 
 [node name="WoodShadow" type="Sprite" parent="."]
@@ -204,7 +216,7 @@ frame = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 2 )
 rotation = 1.5708
-shape = SubResource( 14 )
+shape = SubResource( 3 )
 
 [node name="PickUpArea" type="Area2D" parent="."]
 position = Vector2( 0, -3 )
@@ -216,7 +228,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
 position = Vector2( 0, -1 )
 rotation = 1.5708
-shape = SubResource( 15 )
+shape = SubResource( 4 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -240,8 +252,8 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hover"
-playback_speed = 0.6
-anims/Drop_centre = SubResource( 16 )
-anims/Drop_left = SubResource( 17 )
-anims/Drop_right = SubResource( 18 )
+playback_speed = 0.25
+anims/Drop_centre = SubResource( 8 )
+anims/Drop_left = SubResource( 9 )
+anims/Drop_right = SubResource( 10 )
 anims/Hover = SubResource( 11 )

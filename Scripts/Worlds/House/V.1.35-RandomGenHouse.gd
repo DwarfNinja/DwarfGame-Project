@@ -54,11 +54,11 @@ func _ready():
 	if max_rooms == 2:
 		max_shapes = 4
 		max_items = 3
-		max_enemies = 1
+		max_enemies = 3
 	if max_rooms == 3:
 		max_shapes = 6
 		max_items = 4
-		max_enemies = 1
+		max_enemies = 4
 		
 	check_randomroom_viability()
 

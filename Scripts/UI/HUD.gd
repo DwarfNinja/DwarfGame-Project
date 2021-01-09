@@ -79,7 +79,7 @@ func _on_item_placed(selected_item):
 
 func _on_TaxTimer_timeout():
 	if inventory_items["goldcoins"] > 0:
-		inventory_items["goldcoins"] -= 20
+		inventory_items["goldcoins"] -= tax
 		update_hud_coins()
 		TaxTimer.wait_time = TaxTimer.wait_time * 0.5
 		TaxTimer.start()

@@ -11,6 +11,7 @@ item_name = "miningrig"
 item_count = 1
 item_texture = ExtResource( 2 )
 hud_texture = ExtResource( 3 )
+packedscene_path = ""
 wood_cost = 2
 iron_cost = 2
 blueprint_icon = ExtResource( 4 )

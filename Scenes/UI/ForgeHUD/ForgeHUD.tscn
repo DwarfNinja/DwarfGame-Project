@@ -8,13 +8,13 @@
 
 [sub_resource type="ImageTexture" id=1]
 
-[sub_resource type="StyleBoxTexture" id=6]
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 1 )
 region_rect = Rect2( 0, 0, 50, 7 )
 
-[sub_resource type="StyleBoxEmpty" id=7]
+[sub_resource type="StyleBoxEmpty" id=3]
 
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=4]
 
 [sub_resource type="DynamicFont" id=5]
 size = 8
@@ -40,9 +40,9 @@ custom_icons/tick = SubResource( 1 )
 custom_icons/grabber_disabled = ExtResource( 4 )
 custom_icons/grabber_highlight = ExtResource( 4 )
 custom_icons/grabber = ExtResource( 4 )
-custom_styles/slider = SubResource( 6 )
-custom_styles/grabber_area_highlight = SubResource( 7 )
-custom_styles/grabber_area = SubResource( 8 )
+custom_styles/slider = SubResource( 2 )
+custom_styles/grabber_area_highlight = SubResource( 3 )
+custom_styles/grabber_area = SubResource( 4 )
 min_value = 1.0
 max_value = 10.0
 value = 1.0
