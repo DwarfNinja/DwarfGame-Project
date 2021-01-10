@@ -26,15 +26,16 @@ font_data = ExtResource( 4 )
 script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 158.0
+margin_bottom = 72.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Icons" type="MarginContainer" parent="VBoxContainer"]
-margin_right = 480.0
+margin_right = 478.0
 margin_bottom = 19.0
 custom_constants/margin_top = 3
 custom_constants/margin_left = 5
@@ -42,7 +43,7 @@ custom_constants/margin_left = 5
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Icons"]
 margin_left = 5.0
 margin_top = 3.0
-margin_right = 480.0
+margin_right = 478.0
 margin_bottom = 19.0
 custom_constants/separation = 438
 
@@ -62,13 +63,13 @@ __meta__ = {
 
 [node name="Labels" type="MarginContainer" parent="VBoxContainer"]
 margin_top = 23.0
-margin_right = 480.0
+margin_right = 478.0
 margin_bottom = 28.0
 custom_constants/margin_top = -6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Labels"]
 margin_top = -6.0
-margin_right = 480.0
+margin_right = 478.0
 margin_bottom = 5.0
 rect_min_size = Vector2( 100, 0 )
 custom_constants/separation = 427
@@ -98,21 +99,21 @@ align = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
 margin_top = 32.0
-margin_right = 480.0
+margin_right = 478.0
 margin_bottom = 222.0
 custom_constants/separation = 190
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 226.0
-margin_right = 480.0
+margin_right = 478.0
 margin_bottom = 252.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="InventoryBar" parent="VBoxContainer/CenterContainer" instance=ExtResource( 1 )]
-margin_left = 166.0
-margin_right = 314.0
+margin_left = 165.0
+margin_right = 313.0
 
 [node name="Control" type="Control" parent="."]
 margin_left = 2.0

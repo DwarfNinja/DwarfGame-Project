@@ -17,7 +17,6 @@ func _ready():
 	InteractArea.connect("area_exited", self, "_on_InteractArea_area_exited")
 
 func _process(_delta):
-	print(drop_table_def.get_name())
 	if can_interact == true:
 		if Input.is_action_just_pressed("key_e"):
 			if animationPlayer.assigned_animation == "Close":

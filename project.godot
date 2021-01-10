@@ -625,13 +625,17 @@ gdscript/warnings/return_value_discarded=false
 
 [display]
 
-window/size/width=480
-window/size/height=270
+window/size/width=320
+window/size/height=180
 window/size/resizable=false
 window/size/test_width=1440
 window/size/test_height=810
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "Todo_Manager" )
 
 [importer_defaults]
 
