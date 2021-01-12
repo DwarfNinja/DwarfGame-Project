@@ -1,10 +1,10 @@
 extends Node
 
-const WOOD_SCENE = preload("res://Scenes/Resources/WoodenLogs.tscn")
+const WOOD_SCENE = preload("res://Scenes/Resources/Wood.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
-const MININGRIG_SCENE = preload("res://Scenes/Craftables/MiningRig.tscn")
-const FORGE_SCENE = preload("res://Scenes/Craftables/Forge.tscn")
-const HOUSE_SCENE = preload("res://Scenes/House/House.tscn")
+const MININGRIG_SCENE = preload("res://Scenes/Interactables/MiningRig.tscn")
+const FORGE_SCENE = preload("res://Scenes/Interactables/Forge.tscn")
+const HOUSE_SCENE = preload("res://Scenes/Worlds/House/House.tscn")
 
 var saved_cave_scene 
 
@@ -22,10 +22,10 @@ func _on_place_item(selected_item):
 	var current_scene = str(get_tree().get_current_scene().get_name())
 	var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
 	if current_scene == "Cave":
-		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/YSort/Player/PlayerPickupArea/Position2D").get_global_position())
+		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/YSort/Player/PlayerInteractArea/Position2D").get_global_position())
 		get_tree().get_root().get_node(current_scene + "/YSort").add_child(item_scene_instance)
 	elif current_scene == "House":
-		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Nav2D/Walls/Player/PlayerPickupArea/Position2D").get_global_position())
+		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Nav2D/Walls/Player/PlayerInteractArea/Position2D").get_global_position())
 		get_tree().get_root().get_node(current_scene + "/Nav2D/Walls").add_child(item_scene_instance)
 	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
 

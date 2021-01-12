@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="PathLine" type="Line2D"]
+width = 3.0
+default_color = Color( 1, 1, 1, 1 )

@@ -16,6 +16,12 @@ signal entered_forge(current_opened_forge)
 signal exited_forge()
 signal iron_amount_set(current_opened_forge, slider_iron_amount)
 
+signal entered_shop()
+signal exited_shop()
+
+signal entered_blackmarket()
+signal exited_blackmarket()
+
 # Mouse entered craftingtablebutton signal
 signal craftingbutton_mouse_entered()
 
@@ -32,4 +38,4 @@ signal taxtimer_restarted()
 signal request_navpath()
 signal request_roamcell(villager_id)
 
-signal remove_scent()
+signal update_playerghost(last_known_playerposition)

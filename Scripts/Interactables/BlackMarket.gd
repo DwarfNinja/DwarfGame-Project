@@ -3,7 +3,7 @@ extends KinematicBody2D
 var can_interact = false
 onready var InteractArea = $InteractArea
 onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
-var one = preload("res://PlagueDoctor Sketch.png")
+#var one = preload("res://PlagueDoctor Sketch.png")
 
 
 
@@ -23,12 +23,12 @@ func _process(_delta):
 
 
 func _on_InteractArea_area_entered(area):
-	if area.get_name() == "PlayerPickupArea":
+	if area.get_name() == "PlayerInteractArea":
 		can_interact = true
 		$BlackMarketSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 
 func _on_InteractArea_area_exited(area):
-	if area.get_name() == "PlayerPickupArea":
+	if area.get_name() == "PlayerInteractArea":
 		can_interact = false
 		$BlackMarketSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 		

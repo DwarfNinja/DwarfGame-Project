@@ -58,7 +58,7 @@ func _process(_delta):
 	
 	if Input.is_action_just_pressed("key_e"):
 		if craftingtable_opened == true:
-				Selected_Button.craft_item()
+			Selected_Button.craft_item()
 
 	# Iterates over all buttons and determines if it the button is selected,
 	# all other button's selectors are turned off

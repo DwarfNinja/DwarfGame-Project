@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Sprites/Shop/Shop.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Shop/ShopShadow.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Shop/Shopkeeper.png" type="Texture" id=3]
+[ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=4]
+[ext_resource path="res://Scripts/Interactables/Shop.gd" type="Script" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 3.0
+height = 27.0
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 18.0
+height = 8.0
+
+[node name="Shop" type="StaticBody2D"]
+position = Vector2( 115, 26 )
+collision_layer = 8
+script = ExtResource( 5 )
+
+[node name="ShopShadow" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="ShopKeeperSprite" type="Sprite" parent="."]
+material = ExtResource( 4 )
+position = Vector2( 0, 3 )
+texture = ExtResource( 3 )
+
+[node name="ShopSprite" type="Sprite" parent="."]
+material = ExtResource( 4 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.5, 13 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2( 0, 3 )
+rotation = 1.5708
+shape = SubResource( 2 )

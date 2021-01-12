@@ -1,21 +1,13 @@
 [gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Resources/R_Room.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/House/HouseRooms/N-W_RightAngle.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/House/HouseRooms/S-E_RightAngle.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/House/HouseRooms/N-E_RightAngle.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/House/HouseRooms/SquareSpace_SW-E.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/House/HouseRooms/Zig_NW-S.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/House/HouseRooms/Cross.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/House/HouseRooms/S-W_RightAngle.tscn" type="PackedScene" id=8]
-
-
-
-
-
-
-
-
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/N-W_RightAngle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/S-E_RightAngle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/N-E_RightAngle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/SquareSpace_SW-E.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/Zig_NW-S.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/Cross.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/S-W_RightAngle.tscn" type="PackedScene" id=8]
 
 [resource]
 script = ExtResource( 1 )

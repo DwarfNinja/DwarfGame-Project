@@ -1,6 +1,6 @@
-extends TextureRect
+extends MarginContainer
 
-onready var HboxContainer = $HBoxContainer
+onready var HboxContainer = $SlotContainer/HBoxContainer
 
 var count_1 = preload("res://Sprites/HUD/InventoryBar/Count_1.png")
 var count_2 = preload("res://Sprites/HUD/InventoryBar/Count_2.png")
@@ -11,6 +11,14 @@ var selector_position = 0
 var item_in_Selected_Slot = null
 var ui_menu_opened = false
 
+var inventory_dic = {
+	"wood": 0,
+	"iron": 0,
+	"goldcoins": 0,
+	"miningrig": 0,
+	"forge": 0
+}
+
 func _ready():
 	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
@@ -18,6 +26,9 @@ func _ready():
 	# Forge signals
 	Events.connect("entered_forge", self, "_on_entered_forge")
 	Events.connect("exited_forge", self, "_on_exited_forge")
+	# Item signals
+	Events.connect("item_picked_up", self, "_on_item_picked_up")
+	Events.connect("item_placed", self, "_on_item_placed")
 
 func _process(_delta):
 	# Clears all items in inventory
@@ -42,7 +53,7 @@ func _process(_delta):
 				selector_position = 5
 				
 				
-	var Selected_Slot = get_node("HBoxContainer/Slot_" + str(selector_position))
+	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
 	
 	if ui_menu_opened == false:
 		if Input.is_action_just_pressed("key_leftclick"):
@@ -72,34 +83,76 @@ func clear_item_selection():
 	item_in_Selected_Slot = null
 	Events.emit_signal("item_selected", item_in_Selected_Slot)
 	
-# If the slot is empty, set the item definition. If the is not full but the item is the same, add the item
+	
+# If the slot is empty, set the item definition. If it is not full but the item is the same, add the item
+#Used to be add_item()
+func _on_item_picked_up(item_def):
+	add_item(item_def)
+
 func add_item(item_def):
+	if item_def.item_name == "goldcoins":
+		add_to_inventory_dic(item_def)
+		return
 	for slot in HboxContainer.get_children():
 		if slot.is_empty():
 			slot.set_item(item_def)
+			add_to_inventory_dic(item_def)
 			return
 		elif slot.is_full() == false:
-			if slot.item_def == item_def:
+			if slot.has_resource(item_def):
 				slot.set_item(item_def)
+				add_to_inventory_dic(item_def)
 				return
 				
+func can_fit_in_inventory(item_def):
+	if item_def.item_name == "goldcoins":
+		return true
+	for slot in HboxContainer.get_children():
+		if slot.is_empty():
+			return true
+		elif slot.is_full() == false:
+			if slot.has_resource(item_def):
+				return true
+	return false
 
-func remove_item():
-	for slot in HboxContainer.get_children():
-		if slot.get_name() == "Slot_" + str(selector_position):
-			slot.remove_item()
-			
-# Can be simplified I think
+#TODO: Should remove inventory_dic and replace with function that checks for free space
+func add_to_inventory_dic(item_def):
+	inventory_dic[item_def.item_name] += item_def.item_count
+	if item_def.item_name == "goldcoins":
+		HUD.update_hud_coins(inventory_dic["goldcoins"])
+
+#TODO: Should remove inventory_dic and replace with function that checks if it can remove items
+func remove_from_inventory_dic(item_def):
+	inventory_dic[item_def.item_name] -= item_def.item_count
+	if item_def.item_name == "goldcoins":
+		HUD.update_hud_coins(inventory_dic["goldcoins"])
+
+#Used to be remove_item()
+func _on_item_placed(selected_item):
+	if selected_item.item_name in inventory_dic:
+		inventory_dic[selected_item.item_name] -= 1
+		for slot in HboxContainer.get_children():
+			if slot.get_name() == "Slot_" + str(selector_position):
+				slot.remove_item()
+
+
+#Iterates through slots in Inventory backwards and removes resources == item_cost
+#TODO: Can be improved | Could be changed to use slot.has_resources
 func remove_required_resources(crafted_item):
-	for slot in HboxContainer.get_children():
+	var Slots = HboxContainer.get_children()
+	var Inverse_Slots = Slots.duplicate()
+	Inverse_Slots.invert()
+	for slot in Inverse_Slots:
 		if slot.item_def != null:
 			if slot.item_def.item_name == "wood":
 				for amount in crafted_item.wood_cost:
 					slot.remove_item()
+					crafted_item.wood_cost -= 1
 			elif slot.item_def.item_name == "iron":
 				for amount in crafted_item.iron_cost:
 					slot.remove_item()
-					
+					crafted_item.iron_cost -= 1
+
 
 func remove_specific_resource(_specific_resource, amount):
 	for slot in HboxContainer.get_children():
@@ -108,6 +161,7 @@ func remove_specific_resource(_specific_resource, amount):
 			if slot.has_resources(specific_resource):
 				for cycles in amount:
 					slot.remove_item()
+
 
 func _on_entered_craftingtable():
 	ui_menu_opened = true
