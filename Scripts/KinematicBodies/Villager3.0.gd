@@ -15,7 +15,7 @@ var PathNode = preload("res://Scenes/UI/PathNode.tscn")
 var PathLine = preload("res://Scenes/UI/PathLine.tscn")
 
 const ACCELERATION = 300
-const MAX_SPEED = 40
+const MAX_SPEED = 30
 const FRICTION = 300
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
@@ -152,7 +152,8 @@ func Idle():
 
 func Roam():
 	state = "Roam"
-
+	get_random_roamcell()
+	
 func Search():
 	Events.emit_signal("update_playerghost", last_known_playerposition)
 	state = "Search"

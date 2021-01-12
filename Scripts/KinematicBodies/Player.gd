@@ -102,8 +102,9 @@ func place_item():
 			print("CANT PLACE ITEM!")
 
 func _on_PlayerPickupArea_body_entered(body):
-	Events.emit_signal("item_picked_up", body.item_def)
-	body.queue_free()
+	if HUD.InventoryBar.can_fit_in_inventory(body.item_def):
+		Events.emit_signal("item_picked_up", body.item_def)
+		body.queue_free()
 
 func _on_entered_craftingtable():
 	can_move = false

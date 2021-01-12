@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/UI/CraftingTable/CraftingTableHUD.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingButton.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTable.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableResources.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton Forge.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton Miningrig.png" type="Texture" id=7]
 [ext_resource path="res://Resources/Craftables/Forge.tres" type="Resource" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -50,7 +49,6 @@ margin_top = 0.0
 margin_right = 37.0
 margin_bottom = 27.0
 custom_styles/focus = SubResource( 1 )
-icon = ExtResource( 7 )
 
 [node name="CraftingButton_2" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 27.0
@@ -76,7 +74,6 @@ margin_top = 29.0
 margin_right = 37.0
 margin_bottom = 56.0
 custom_styles/focus = SubResource( 1 )
-icon = ExtResource( 7 )
 
 [node name="CraftingButton_3" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 27.0
@@ -84,7 +81,6 @@ margin_top = 29.0
 margin_right = 64.0
 margin_bottom = 56.0
 custom_styles/focus = SubResource( 1 )
-icon = ExtResource( 7 )
 
 [node name="CraftingButton_5" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 54.0
@@ -92,7 +88,6 @@ margin_top = 29.0
 margin_right = 91.0
 margin_bottom = 56.0
 custom_styles/focus = SubResource( 1 )
-icon = ExtResource( 7 )
 
 [node name="ResouceBar" type="TextureRect" parent="."]
 margin_left = 148.0

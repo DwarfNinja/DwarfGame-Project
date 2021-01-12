@@ -4,7 +4,6 @@
 [ext_resource path="res://Sprites/HUD/InventoryBar/Inventorybar.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/UI/InventoryBar/InventoryBar.gd" type="Script" id=3]
 
-
 [node name="InventoryBar" type="MarginContainer"]
 margin_right = 148.0
 margin_bottom = 26.0

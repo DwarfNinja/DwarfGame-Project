@@ -19,10 +19,10 @@ func _process(_delta):
 			insert_iron()
 
 func insert_iron():
-	if HUD.inventory_items["iron"] >= slider_iron_amount:
+	if HUD.InventoryBar.inventory_dic["iron"] >= slider_iron_amount:
 		Events.emit_signal("iron_amount_set", current_opened_forge, slider_iron_amount)
 		IronAmountHSlider.editable = false
-		HUD.inventory_items["iron"] -= slider_iron_amount
+		HUD.InventoryBar.inventory_dic["iron"] -= slider_iron_amount
 		HUD.InventoryBar.remove_specific_resource(iron, slider_iron_amount)
 	else:
 		print("NOT ENOUGH RESOURCES!")

@@ -6,6 +6,7 @@ const PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
 var TaxKnight_instanced = false
 
 func _ready():
+	randomize()
 #	$YSort/Player.global_position = $PlayerPosition.global_position
 	Events.connect("taxtimer_is_25_percent", self, "_on_taxtimer_25_percent")
 	Events.connect("taxtimer_restarted", self, "_on_taxtimer_restarted")
