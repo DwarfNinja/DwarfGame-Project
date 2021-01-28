@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/SE_3x2.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/S-W_RightAngle.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Hor_4x1.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/UI/PlayerGhost.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/TestRoom.tscn" type="PackedScene" id=15]
 
 [node name="House" type="Node2D"]
 script = ExtResource( 3 )
@@ -166,6 +167,22 @@ openings = {
 [node name="Zig_NW-S" parent="HouseRooms" instance=ExtResource( 6 )]
 openings = {
 "east": false,
+"north": false,
+"northeast_east": false,
+"northeast_north": false,
+"northwest_north": true,
+"northwest_west": false,
+"south": true,
+"southeast_east": false,
+"southeast_south": false,
+"southwest_south": false,
+"southwest_west": false,
+"west": false
+}
+
+[node name="TestRoom" parent="HouseRooms" instance=ExtResource( 15 )]
+openings = {
+"east": true,
 "north": false,
 "northeast_east": false,
 "northeast_north": false,
