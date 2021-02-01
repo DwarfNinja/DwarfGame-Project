@@ -11,10 +11,10 @@ func _ready():
 	Events.connect("update_playerghost", self, "_on_update_lastknown_playerposition")
 	$Walls/PlayerGhost/PlayerGhostArea.connect("body_entered", self, "_on_PlayerGhostArea_body_entered")
 			
-			
-func _process(_delta):
-	if get_node("Walls/Player") != null:
-		current_playerposition = get_node("Walls/Player").get_global_position()
+#FIX: Make it unreliant on ("Walls/Player"), decoupling
+#func _process(_delta):
+#	if get_node("Walls/Player") != null:
+#		current_playerposition = get_node("Walls/Player").get_global_position()
 	
 func _on_request_roamcell(Villager):
 	var villager_spawn_position = $Area.world_to_map(Villager.spawn_position)
