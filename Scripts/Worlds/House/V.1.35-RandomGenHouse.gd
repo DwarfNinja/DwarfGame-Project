@@ -3,6 +3,9 @@ extends Node2D
 onready var HouseTileset = preload("res://HouseTileset.tres")
 onready var HouseRooms = get_node("HouseRooms")
 onready var HouseShapes = get_node("HouseShapes")
+onready var TopConnectionEnd = get_node("ConnectionEnds/TopConnectionEnd")
+onready var L_SideConnectionEnd = get_node("ConnectionEnds/L_ConnectionEnd")
+onready var R_SideConnectionEnd = get_node("ConnectionEnds/R_SideConnectionEnd")
 
 onready var Chest = preload("res://Scenes/Interactables/Chest.tscn")
 
@@ -13,14 +16,16 @@ onready var Player_Scene = preload("res://Scenes/KinematicBodies/Player.tscn")
 
 onready var floor_tile_id = HouseTileset.find_tile_by_name("Floor")
 onready var walls_tile_id = HouseTileset.find_tile_by_name("Walls")
-onready var nocol_walls_tile_id = HouseTileset.find_tile_by_name("NoCollision_Walls")
 onready var front_walls_tile_id = HouseTileset.find_tile_by_name("Walls_Wall")
+onready var wall_shadow_tile_id = HouseTileset.find_tile_by_name("WallShadow")
+
 onready var area_tile_id = HouseTileset.find_tile_by_name("Area")
 
 onready var loot_index_tile_id = HouseTileset.find_tile_by_name("ContainerIndex")
 onready var enemy_index_tile_id = HouseTileset.find_tile_by_name("EnemyIndex")
 onready var spawn_index_tile_id = HouseTileset.find_tile_by_name("SpawnIndex")
 
+var current_occupied_room_locations = []
 var rooms = 0
 var max_rooms = 2
 
@@ -64,12 +69,14 @@ func _process(_delta):
 
 	var mouse_pos = get_global_mouse_position()
 	var cell = $Nav2D/Walls.world_to_map(mouse_pos)
+	
 	if Input.is_action_just_pressed("key_f"):
-		var rect = get_tiles_in_rectangle(cell, 3, 3)
-		for _cell in rect:
-			if $Nav2D/Area.get_cellv(_cell) != -1:
-				if $Nav2D/Walls.get_cellv(_cell) == -1:
-					$Nav2D/Walls.set_cell(_cell.x, _cell.y, 6)
+#		var rect = get_tiles_in_rectangle(cell, 3, 3)
+#		for _cell in rect:
+#			if $Nav2D/Area.get_cellv(_cell) != -1:
+#				if $Nav2D/Walls.get_cellv(_cell) == -1:
+#					$Nav2D/Walls.set_cell(_cell.x, _cell.y, 6)
+		print(cell)
 
 
 func random_generation():
@@ -83,6 +90,7 @@ func random_generation():
 	
 func cleanup_random_gen():
 	fill_outer_walls()
+	check_unused_openings(current_occupied_room_locations)
 	clear_used_cells()
 	clear_index_tile_conflict()
 	update_allcell_bitmasks()
@@ -90,7 +98,6 @@ func cleanup_random_gen():
 
 func check_randomroom_viability():
 	var selected_randomroom_direction
-	var current_occupied_room_locations = []
 	
 	while rooms < max_rooms:
 		var new_room = select_random_room()
@@ -218,7 +225,7 @@ func fill_outer_walls():
 
 func clear_used_cells():
 	for cell in $Nav2D/Walls.get_used_cells():
-		if $Nav2D/Walls.get_cellv(cell) == nocol_walls_tile_id or $Nav2D/Walls.get_cellv(cell) == front_walls_tile_id:
+		if $Nav2D/Walls.get_cellv(cell) == front_walls_tile_id:
 			# Clear cells in Area used in $Nav2D/Walls
 			$Nav2D/Area.set_cell(cell.x, cell.y, -1)
 			# Clear cells in Indexes used in $Nav2D/Walls
@@ -235,8 +242,8 @@ func clear_index_tile_conflict():
 func update_allcell_bitmasks():
 	for cell in $Nav2D/Walls.get_used_cells():
 		$Nav2D/Walls.update_bitmask_area(cell)
-	
-	
+
+
 func get_tiles_in_rec_centre(node_pos, rect_width, rect_height):
 	# Rect sides must be of uneven numbers
 	var rect_tiles = []
@@ -277,7 +284,7 @@ func place_enemies():
 		var villager = Villager_Scene.instance()
 		var random_enemy = select_random_enemy(villager)
 		var tilepos = $Nav2D/Walls.map_to_world(random_enemy_positions[i])
-		random_enemy.set_position(tilepos + Vector2(7.99, 8.01)) #Bug in Nav2D where it rounds up ints?
+		random_enemy.set_position(tilepos + Vector2(7.99, 8.01)) #Somehow fixed a bug in Nav2D where it rounds up ints?
 		$Nav2D/Walls.add_child(random_enemy)
 		$Nav2D/Indexes.set_cellv(random_enemy_positions[i], -1)
 
@@ -403,11 +410,40 @@ func select_random_spawn_position(spawn_tile_array):
 		if tile.y > player_spawn.y:
 			player_spawn = tile
 	for tile in spawn_tile_array:
-		if tile.y == player_spawn.y:
+		if player_spawn.y - tile.y <= 4:
 			possible_player_spawns.append(tile)
 	possible_player_spawns.append(player_spawn)
 	
 	for spawn in possible_player_spawns:
 		possible_player_spawns.shuffle()
 	return possible_player_spawns.pop_front()
-		
+
+
+func check_unused_openings(room_positions):
+	var top_connections = [Vector2(2,0), Vector2(11,0), Vector2(20,0)]
+	var side_connections =[Vector2(0,11), Vector2(22,11)]
+	
+	for cell in room_positions:
+		for _cell in top_connections:
+			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(0,-1)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
+				set_connection_end((cell + _cell) + Vector2(-1,0), TopConnectionEnd)
+				
+				if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(-2,3)) == wall_shadow_tile_id:
+					$Nav2D/Walls.set_cell((cell.x + _cell.x + -2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
+					
+				if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(2,3)) == wall_shadow_tile_id:
+					$Nav2D/Walls.set_cell((cell.x + _cell.x + 2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
+
+	for cell in room_positions:
+		for _cell in side_connections:
+			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(-1,0)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
+				set_connection_end((cell + _cell) + Vector2(0,-4), L_SideConnectionEnd)
+				
+			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(1,0)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
+				set_connection_end((cell + _cell) + Vector2(0,-4), R_SideConnectionEnd)
+
+func set_connection_end(unused_opening_location, ConnectionEnd):
+	for cell in ConnectionEnd.get_used_cells():
+		$Nav2D/Walls.set_cell(unused_opening_location.x + cell.x, unused_opening_location.y + cell.y, ConnectionEnd.get_cellv(cell), 
+		false, false, false, ConnectionEnd.get_cell_autotile_coord(cell.x, cell.y))
+

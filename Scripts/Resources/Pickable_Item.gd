@@ -13,8 +13,6 @@ var body_in_pickuparea = null
 
 func _ready():
 	# Connect signals
-#	PickUpArea.connect("area_entered", self, "_on_PickUpArea_area_entered")
-#	PickUpArea.connect("area_exited", self, "_on_PickUpArea_area_exited")
 	
 	PickUpArea.connect("body_entered", self, "_on_PickUpArea_body_entered")
 	PickUpArea.connect("body_exited", self, "_on_PickUpArea_body_exited")

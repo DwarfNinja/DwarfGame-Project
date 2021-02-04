@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/SE_3x2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Square_4x2.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Hor_4x1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://HouseTileset.tres" type="TileSet" id=6]
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/TopConnectionEnd.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/R_ConnectionEnd.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/L_ConnectionEnd.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/UI/PlayerGhost.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_1.tscn" type="PackedScene" id=15]
 
@@ -55,11 +58,12 @@ format = 1
 
 [node name="Props" type="TileMap" parent="Nav2D"]
 visible = false
+tile_set = ExtResource( 6 )
 format = 1
 
 [node name="HouseRooms" type="Node2D" parent="."]
 visible = false
-position = Vector2( -640, 0 )
+position = Vector2( -2208, 0 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -82,7 +86,7 @@ openings = {
 
 [node name="Room_2" parent="HouseRooms" instance=ExtResource( 7 )]
 openings = {
-"east": true,
+"east": false,
 "north": true,
 "northeast_east": false,
 "northeast_north": false,
@@ -93,17 +97,29 @@ openings = {
 "southeast_south": false,
 "southwest_south": false,
 "southwest_west": false,
-"west": false
+"west": true
 }
 
 [node name="HouseShapes" type="Node2D" parent="."]
-visible = false
+position = Vector2( -2288, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Square_4x2" parent="HouseShapes" instance=ExtResource( 2 )]
-position = Vector2( 640, 0 )
 
 [node name="SE_3x2" parent="HouseShapes" instance=ExtResource( 1 )]
-position = Vector2( 640, 0 )
 
 [node name="Hor_4x1" parent="HouseShapes" instance=ExtResource( 5 )]
-position = Vector2( 640, 0 )
+
+[node name="ConnectionEnds" type="Node2D" parent="."]
+position = Vector2( -2288, 96 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TopConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 8 )]
+
+[node name="L_ConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 10 )]
+
+[node name="R_SideConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 9 )]
