@@ -8,7 +8,7 @@ var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
 var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
 
 var selector_position = 0
-var item_in_Selected_Slot = null
+var item_is_selected = false
 var ui_menu_opened = false
 
 var inventory_dic = {
@@ -42,27 +42,28 @@ func _process(_delta):
 	# Determines Selector position based on scroll wheel movement
 	if ui_menu_opened == false:
 		if Input.is_action_just_released("scroll_up"):
-			clear_item_selection()
 			selector_position += 1
 			if selector_position > 5:
 				selector_position = 0
-		elif Input.is_action_just_released("scroll_down"):
 			clear_item_selection()
+		elif Input.is_action_just_released("scroll_down"):
 			selector_position -= 1
 			if selector_position < 0:
 				selector_position = 5
-				
+			clear_item_selection()
 				
 	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
 	
 	if ui_menu_opened == false:
-		if Input.is_action_just_pressed("key_leftclick"):
-			get_item_in_slot(Selected_Slot)
-		if Selected_Slot.item_count_in_slot == 0:
-			Selected_Slot.clear()
-			clear_item_selection()
-			get_item_in_slot(Selected_Slot)
-					
+		if Input.is_action_just_pressed("f"):
+			if item_is_selected == false:
+				if get_item_in_slot(Selected_Slot).type_name == "craftable":
+					select_item(Selected_Slot)
+			elif item_is_selected == true:
+				clear_item_selection()
+		if item_is_selected == true:
+			select_item(Selected_Slot)
+
 		# Iterates over all the slots and determines if it is the slot selected,
 		# all other slot's selectors are turned off
 		for index in range(0, HboxContainer.get_children().size()):
@@ -73,16 +74,17 @@ func _process(_delta):
 				slot.deactivate_selector()
 
 
-func get_item_in_slot(Selected_Slot):
-	if Selected_Slot.item_def:
-		item_in_Selected_Slot = Selected_Slot.item_def
-	Events.emit_signal("item_selected", item_in_Selected_Slot)
-	return Selected_Slot
+func get_item_in_slot(slot):
+	return slot.item_def
+
+func select_item(Selected_Slot):
+	var item_in_Selected_Slot = get_item_in_slot(Selected_Slot)
+	item_is_selected = true
+	Events.emit_signal("item_selected", item_in_Selected_Slot, item_is_selected)
 	
 func clear_item_selection():
-	item_in_Selected_Slot = null
-	Events.emit_signal("item_selected", item_in_Selected_Slot)
-	
+	item_is_selected = false
+	Events.emit_signal("item_deselected", item_is_selected)
 	
 # If the slot is empty, set the item definition. If it is not full but the item is the same, add the item
 #Used to be add_item()

@@ -3,6 +3,9 @@ extends Node2D
 const TAXKNIGHT_SCENE = preload("res://Scenes/KinematicBodies/TaxKnight.tscn")
 const PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
 
+onready var Player = $YSort/Player
+onready var TileSelector = $Objects/TileSelector
+
 var TaxKnight_instanced = false
 
 func _ready():
@@ -12,6 +15,8 @@ func _ready():
 	Events.connect("taxtimer_restarted", self, "_on_taxtimer_restarted")
 	GameManager.connect("cave_scene_saved", self, "_on_cave_scene_saved")
 	GameManager.connect("cave_scene_loaded", self, "_on_cave_scene_loaded")
+	Player.connect("update_tileselector", self, "_on_update_tileselector")
+	
 	
 func _on_taxtimer_25_percent():
 	if TaxKnight_instanced == false:
@@ -35,3 +40,12 @@ func _on_cave_scene_loaded():
 	player_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
 #	$YSort/Player/PlayerCamera.current = false
 	$CaveCamera.current = true 
+
+func _on_update_tileselector(raycast_position, item_in_selected_slot, item_is_selected):
+	if item_is_selected == true:
+		if item_in_selected_slot:
+			TileSelector.visible = true
+			TileSelector.global_position = $Objects.map_to_world($Objects.world_to_map(raycast_position))
+	else:
+		TileSelector.visible = false
+	

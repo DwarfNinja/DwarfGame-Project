@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource( 1 )
+type_name = "resource"
 item_name = "wood"
 item_count = 1
 item_texture = ExtResource( 2 )

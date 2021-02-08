@@ -8,7 +8,7 @@ radius = 1.99999
 height = 7.00002
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 6.0
+radius = 4.0
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 9.5
@@ -223,17 +223,15 @@ shape = SubResource( 1 )
 
 [node name="PlayerInteractArea" type="Area2D" parent="."]
 show_behind_parent = true
-position = Vector2( 0.5, 9 )
-collision_layer = 0
+position = Vector2( 0.5, -4 )
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractArea"]
+position = Vector2( 0, 22 )
 shape = SubResource( 2 )
 
-[node name="SelectedItemSprite" type="Sprite" parent="PlayerInteractArea"]
-modulate = Color( 1, 1, 1, 0.470588 )
-
 [node name="Position2D" type="Position2D" parent="PlayerInteractArea"]
+position = Vector2( 0, 22 )
 
 [node name="PlayerPickupArea" type="Area2D" parent="."]
 position = Vector2( 0.5, 0 )
@@ -262,5 +260,5 @@ parameters/Idle/blend_position = Vector2( 0, 0.1 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
-position = Vector2( 1, -4 )
+position = Vector2( 0.5, -4 )
 zoom = Vector2( 4, 4 )

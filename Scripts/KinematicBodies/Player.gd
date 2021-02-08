@@ -24,10 +24,12 @@ onready var PlayerSprite = $PlayerSprite
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var PlayerInteractArea = $PlayerInteractArea
-onready var SelectedItemSprite = $PlayerInteractArea/SelectedItemSprite
+onready var PlayerInteractPosition2D = $PlayerInteractArea/Position2D
 onready var PlayerPickupArea = $PlayerPickupArea
 
 onready var animationState = animationTree.get("parameters/playback")
+
+signal update_tileselector(raycast_position, item_in_selected_slot)
 
 func _ready():
 	# ___________________Connect Signals___________________
@@ -36,6 +38,7 @@ func _ready():
 	
 	#__External Signals__
 	Events.connect("item_selected", self, "_on_item_selected")
+	Events.connect("item_deselected", self, "_on_item_deselected")
 	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
 	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
@@ -77,27 +80,30 @@ func _physics_process(delta):
 #			move_and_collide(reflect)
 		
 		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
-			PlayerInteractArea.position = Vector2(19, 0) #RIGHT
+			PlayerInteractArea.rotation_degrees = 270 #RIGHT
 		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
-			PlayerInteractArea.position = Vector2(-19, 0) #LEFT
+			PlayerInteractArea.rotation_degrees = 90 #LEFT
 		if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
-			PlayerInteractArea.position = Vector2(-0.5, -14) #UP
+			PlayerInteractArea.rotation_degrees = 180 #UP
 		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
-			PlayerInteractArea.position = Vector2(-0.5, 14) #DOWN
+			PlayerInteractArea.rotation_degrees = 0 #DOWN
 		
-func _on_item_selected(item_in_selected_slot):
+func _on_item_selected(item_in_selected_slot, item_is_selected):
 	if item_in_selected_slot:
-		SelectedItemSprite.texture = item_in_selected_slot.item_texture
-		print(item_in_selected_slot.item_texture)
-	else:
-		SelectedItemSprite.texture = null
+		if PlayerInteractArea.get_overlapping_bodies() == []:
+			emit_signal("update_tileselector", (PlayerInteractPosition2D.global_position + Vector2(8,8)) , item_in_selected_slot, item_is_selected)
+	else: 
+		Events.emit_signal("update_tileselector", null , null, item_is_selected)
 	selected_item = item_in_selected_slot
 	
+func _on_item_deselected(item_is_selected): 
+	emit_signal("update_tileselector", null , null, item_is_selected)
+	selected_item = null
+
 func place_item():
 	if selected_item != null:
 		if PlayerInteractArea.get_overlapping_bodies() == []:
 			Events.emit_signal("place_item", selected_item)
-			Events.emit_signal("item_placed", selected_item)
 		else:
 			print("CANT PLACE ITEM!")
 

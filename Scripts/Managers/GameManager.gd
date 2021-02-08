@@ -28,6 +28,8 @@ func _on_place_item(selected_item):
 		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Nav2D/Walls/Player/PlayerInteractArea/Position2D").get_global_position())
 		get_tree().get_root().get_node(current_scene + "/Nav2D/Walls").add_child(item_scene_instance)
 	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
+	
+	Events.emit_signal("item_placed", selected_item)
 
 
 func _on_exited_cave():

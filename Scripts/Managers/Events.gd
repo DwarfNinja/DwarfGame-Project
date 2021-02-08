@@ -3,6 +3,7 @@ extends Node
 # Item pickup/inventory signals
 signal item_picked_up(item_def)
 signal item_selected(item_in_selected_slot)
+signal item_deselected()
 signal place_item(selected_item)
 signal item_placed(selected_item)
 

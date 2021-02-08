@@ -20,9 +20,6 @@ func _ready():
 	ScreenTimer.connect("timeout", self, "_on_ScreenTimer_timeout")
 	# Enter/Exit location signals
 	Events.connect("exited_cave", self, "_on_exited_cave")
-	# Item signals
-#	Events.connect("item_picked_up", self, "_on_item_picked_up")
-#	Events.connect("item_placed", self, "_on_item_placed")
 	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
 	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
