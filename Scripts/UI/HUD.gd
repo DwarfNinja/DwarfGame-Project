@@ -9,8 +9,7 @@ onready var TaxTimer = $TaxTimer
 onready var ScreenTimer = $ScreenTimer
 onready var TaxTimerLabel = $VBoxContainer/Labels/HBoxContainer/TaxTimerLabel
 
-
-var craftingtable_opened = false
+var menu_open = false
 var tax = 200
 var TaxKnight_instanced
 
@@ -61,7 +60,9 @@ func _on_TaxTimer_timeout():
 	else:
 		print("Game Ended")
 
-# Crafting Table Code
+func open_interactable_menu(interactable):
+	pass
+	
 func _on_entered_craftingtable():
 	CraftingTableHUD.visible = true
 	

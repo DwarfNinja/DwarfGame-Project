@@ -8,8 +8,9 @@ var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
 var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
 
 var selector_position = 0
-var item_is_selected = false
+var selected_item = null
 var ui_menu_opened = false
+onready var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
 
 var inventory_dic = {
 	"wood": 0,
@@ -18,6 +19,8 @@ var inventory_dic = {
 	"miningrig": 0,
 	"forge": 0
 }
+
+signal update_tileselector(selected_item)
 
 func _ready():
 	# Craftingtable signals
@@ -32,37 +35,39 @@ func _ready():
 
 func _process(_delta):
 	# Clears all items in inventory
-	if Input.is_action_just_pressed("ui_accept"):
-		pass
+#	if Input.is_action_just_pressed("ui_accept"):
+#		pass
 #		for slot in HboxContainer.get_children():
 #			slot.clear()
 #			inventory_items["wood"] = 0
 #			inventory_items["iron"] = 0
-			
-	# Determines Selector position based on scroll wheel movement
-	if ui_menu_opened == false:
+
+	if HUD.menu_open == false:
+		emit_signal("update_tileselector", selected_item)
+
+		if Input.is_action_just_pressed("key_rightclick"):
+			if selected_item != null:
+				Events.emit_signal("place_item", selected_item)
+					
+		if Input.is_action_just_pressed("key_leftclick"):
+			if get_item_in_current_slot().type_name == "resource":
+				if selected_item == null:
+					selected_item = get_item_in_current_slot()
+				elif selected_item != null:
+					selected_item = deselect_item()
+
+		# Determines Selector position based on scroll wheel movement
 		if Input.is_action_just_released("scroll_up"):
 			selector_position += 1
 			if selector_position > 5:
 				selector_position = 0
-			clear_item_selection()
+			selected_item = deselect_item()
+			
 		elif Input.is_action_just_released("scroll_down"):
 			selector_position -= 1
 			if selector_position < 0:
 				selector_position = 5
-			clear_item_selection()
-				
-	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
-	
-	if ui_menu_opened == false:
-		if Input.is_action_just_pressed("f"):
-			if item_is_selected == false:
-				if get_item_in_slot(Selected_Slot).type_name == "craftable":
-					select_item(Selected_Slot)
-			elif item_is_selected == true:
-				clear_item_selection()
-		if item_is_selected == true:
-			select_item(Selected_Slot)
+			selected_item = deselect_item()
 
 		# Iterates over all the slots and determines if it is the slot selected,
 		# all other slot's selectors are turned off
@@ -73,18 +78,11 @@ func _process(_delta):
 			else:
 				slot.deactivate_selector()
 
+func get_item_in_current_slot():
+	return Selected_Slot.item_def
 
-func get_item_in_slot(slot):
-	return slot.item_def
-
-func select_item(Selected_Slot):
-	var item_in_Selected_Slot = get_item_in_slot(Selected_Slot)
-	item_is_selected = true
-	Events.emit_signal("item_selected", item_in_Selected_Slot, item_is_selected)
-	
-func clear_item_selection():
-	item_is_selected = false
-	Events.emit_signal("item_deselected", item_is_selected)
+func deselect_item():
+	return null
 	
 # If the slot is empty, set the item definition. If it is not full but the item is the same, add the item
 #Used to be add_item()

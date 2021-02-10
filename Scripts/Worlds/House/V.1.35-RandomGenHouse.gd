@@ -173,7 +173,7 @@ func check_extent_of_shape():
 		
 		for cell in $Nav2D/Area.get_used_cells():
 			var shape_footprint = get_tiles_in_rectangle(cell, random_shape_width, random_shape_height)
-			if shape_footprint_is_empty(cell, shape_footprint):
+			if shape_footprint_is_empty(shape_footprint):
 				possible_shape_locations.append(cell)
 	
 		# Selects a random shape location if there is at least 1 viable location
@@ -181,7 +181,7 @@ func check_extent_of_shape():
 			var selected_shape_location = select_random_shape_location(possible_shape_locations)
 			set_shape(random_shape, selected_shape_location)
 
-func shape_footprint_is_empty(cell, shape_footprint):
+func shape_footprint_is_empty(shape_footprint):
 	for cell in shape_footprint:
 		if $Nav2D/Area.get_cellv(cell) == -1 or $Nav2D/Walls.get_cellv(cell) != -1:
 			return false

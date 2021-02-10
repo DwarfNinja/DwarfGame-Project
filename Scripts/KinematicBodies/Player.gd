@@ -9,11 +9,11 @@ var velocity = Vector2.ZERO
 var can_move = true
 
 # Inventory varaibles
-var selected_item = null
 const WOOD_SCENE = preload("res://Scenes/Resources/Wood.tscn")
 const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
 const MININGRIG_SCENE = preload("res://Scenes/Interactables/MiningRig.tscn")
 const FORGE_SCENE = preload("res://Scenes/Interactables/Forge.tscn")
+var selected_item = null
 
 var scent_trail = []
 
@@ -29,16 +29,12 @@ onready var PlayerPickupArea = $PlayerPickupArea
 
 onready var animationState = animationTree.get("parameters/playback")
 
-signal update_tileselector(raycast_position, item_in_selected_slot)
-
 func _ready():
 	# ___________________Connect Signals___________________
 	#__Internal Signals__
 	PlayerPickupArea.connect("body_entered", self, "_on_PlayerPickupArea_body_entered")
 	
 	#__External Signals__
-	Events.connect("item_selected", self, "_on_item_selected")
-	Events.connect("item_deselected", self, "_on_item_deselected")
 	# Craftingtable signals
 	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
 	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
@@ -49,8 +45,7 @@ func _ready():
 	$PlayerCamera.current = static_camera
 
 func _process(_delta):
-	if Input.is_action_just_pressed("key_rightclick"):
-		place_item()
+	pass
 
 func _physics_process(delta):
 	if is_visible_in_tree():
@@ -71,14 +66,6 @@ func _physics_process(delta):
 		
 		velocity = move_and_slide(velocity)
 		
-		#impact normal? respond to collision with rigidbody
-		
-#		var collision = move_and_collide(velocity * delta)
-#		if collision:
-#			var reflect = collision.remainder.bounce(collision.normal)
-#			velocity = velocity.bounce(collision.normal)
-#			move_and_collide(reflect)
-		
 		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
 			PlayerInteractArea.rotation_degrees = 270 #RIGHT
 		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
@@ -87,25 +74,7 @@ func _physics_process(delta):
 			PlayerInteractArea.rotation_degrees = 180 #UP
 		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
 			PlayerInteractArea.rotation_degrees = 0 #DOWN
-		
-func _on_item_selected(item_in_selected_slot, item_is_selected):
-	if item_in_selected_slot:
-		if PlayerInteractArea.get_overlapping_bodies() == []:
-			emit_signal("update_tileselector", (PlayerInteractPosition2D.global_position + Vector2(8,8)) , item_in_selected_slot, item_is_selected)
-	else: 
-		Events.emit_signal("update_tileselector", null , null, item_is_selected)
-	selected_item = item_in_selected_slot
-	
-func _on_item_deselected(item_is_selected): 
-	emit_signal("update_tileselector", null , null, item_is_selected)
-	selected_item = null
 
-func place_item():
-	if selected_item != null:
-		if PlayerInteractArea.get_overlapping_bodies() == []:
-			Events.emit_signal("place_item", selected_item)
-		else:
-			print("CANT PLACE ITEM!")
 
 func _on_PlayerPickupArea_body_entered(body):
 	if HUD.InventoryBar.can_fit_in_inventory(body.item_def):

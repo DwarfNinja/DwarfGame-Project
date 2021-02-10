@@ -20,18 +20,18 @@ func _process(_delta):
 	if can_interact == true:
 		if Input.is_action_just_pressed("key_e"):
 			if animationPlayer.assigned_animation == "Close":
-				place_items()
+				drop_items()
 				animationPlayer.play("Open")
 			elif animationPlayer.assigned_animation == "Open":
 				animationPlayer.play("Close")
 			else:
-				place_items()
+				drop_items()
 				animationPlayer.play("Open")
 #			Events.emit_signal("entered_chest", self)
 		if Input.is_action_just_pressed("key_esc"):
 			Events.emit_signal("exited_chest", self)
 
-func place_items():
+func drop_items():
 	available_direction_list = ["Drop_left", "Drop_centre", "Drop_right"]
 	for item in range(1, select_random_itemamount()):
 		var RANDOM_ITEM = select_item_from_drop_table()

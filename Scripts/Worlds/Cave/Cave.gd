@@ -4,6 +4,8 @@ const TAXKNIGHT_SCENE = preload("res://Scenes/KinematicBodies/TaxKnight.tscn")
 const PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
 
 onready var Player = $YSort/Player
+onready var PlayerPosition2D = $YSort/Player.get_node("PlayerInteractArea/Position2D")
+onready var MapCoordOfPlayerPosition2D = $Objects.world_to_map(PlayerPosition2D.global_position + Vector2(8,8))
 onready var TileSelector = $Objects/TileSelector
 
 var TaxKnight_instanced = false
@@ -15,7 +17,7 @@ func _ready():
 	Events.connect("taxtimer_restarted", self, "_on_taxtimer_restarted")
 	GameManager.connect("cave_scene_saved", self, "_on_cave_scene_saved")
 	GameManager.connect("cave_scene_loaded", self, "_on_cave_scene_loaded")
-	Player.connect("update_tileselector", self, "_on_update_tileselector")
+	HUD.InventoryBar.connect("update_tileselector", self, "_on_update_tileselector")
 	
 	
 func _on_taxtimer_25_percent():
@@ -41,11 +43,18 @@ func _on_cave_scene_loaded():
 #	$YSort/Player/PlayerCamera.current = false
 	$CaveCamera.current = true 
 
-func _on_update_tileselector(raycast_position, item_in_selected_slot, item_is_selected):
-	if item_is_selected == true:
-		if item_in_selected_slot:
-			TileSelector.visible = true
-			TileSelector.global_position = $Objects.map_to_world($Objects.world_to_map(raycast_position))
+func _on_update_tileselector(selected_item):
+	if selected_item != null:
+		TileSelector.visible = true
+		TileSelector.global_position = $Objects.map_to_world(MapCoordOfPlayerPosition2D)
 	else:
 		TileSelector.visible = false
-	
+
+func place_item():
+	print("CANT PLACE ITEM!")
+
+func is_tile_empty():
+	if $Objects.get_cellv(MapCoordOfPlayerPosition2D) == -1:
+		return true
+	else:
+		return false
