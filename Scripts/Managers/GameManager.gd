@@ -15,21 +15,21 @@ signal cave_scene_loaded()
 func _ready():
 	Events.connect("exited_cave", self, "_on_exited_cave")
 	Events.connect("entered_cave", self, "_on_entered_cave")
-	Events.connect("place_item", self, "_on_place_item")
+#	Events.connect("place_item", self, "_on_place_item")
 
 
-func _on_place_item(selected_item):
-	var current_scene = str(get_tree().get_current_scene().get_name())
-	var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
-	if current_scene == "Cave":
-		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/YSort/Player/PlayerInteractArea/Position2D").get_global_position())
-		get_tree().get_root().get_node(current_scene + "/YSort").add_child(item_scene_instance)
-	elif current_scene == "House":
-		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Nav2D/Walls/Player/PlayerInteractArea/Position2D").get_global_position())
-		get_tree().get_root().get_node(current_scene + "/Nav2D/Walls").add_child(item_scene_instance)
-	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
-	
-	Events.emit_signal("item_placed", selected_item)
+#func _on_place_item(selected_item):
+#	var current_scene = str(get_tree().get_current_scene().get_name())
+#	var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
+#	if current_scene == "Cave":
+#		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/YSort/Player/PlayerInteractArea/Position2D").get_global_position())
+#		get_tree().get_root().get_node(current_scene + "/YSort").add_child(item_scene_instance)
+#	elif current_scene == "House":
+#		item_scene_instance.set_position(get_tree().get_root().get_node(current_scene + "/Nav2D/Walls/Player/PlayerInteractArea/Position2D").get_global_position())
+#		get_tree().get_root().get_node(current_scene + "/Nav2D/Walls").add_child(item_scene_instance)
+#	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
+#
+#	Events.emit_signal("item_placed", selected_item)
 
 
 func _on_exited_cave():

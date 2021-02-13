@@ -17,7 +17,6 @@ var selected_item = null
 
 var scent_trail = []
 
-export (bool) var static_camera = false
 var area_in_pickuparea = false
 
 onready var PlayerSprite = $PlayerSprite
@@ -34,23 +33,14 @@ func _ready():
 	#__Internal Signals__
 	PlayerPickupArea.connect("body_entered", self, "_on_PlayerPickupArea_body_entered")
 	
-	#__External Signals__
-	# Craftingtable signals
-	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
-	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
-	# Forge signals
-	Events.connect("entered_forge", self, "_on_entered_forge")
-	Events.connect("exited_forge", self, "_on_exited_forge")
-	
-	$PlayerCamera.current = static_camera
 
 func _process(_delta):
-	pass
+	 update()
 
 func _physics_process(delta):
 	if is_visible_in_tree():
 		var input_vector = Vector2.ZERO 
-		if can_move == true:
+		if HUD.menu_open == false:
 			input_vector.x = Input.get_action_strength("key_right") - Input.get_action_strength("key_left")
 			input_vector.y = Input.get_action_strength("key_down") - Input.get_action_strength("key_up")
 			input_vector = input_vector.normalized()
@@ -80,16 +70,4 @@ func _on_PlayerPickupArea_body_entered(body):
 	if HUD.InventoryBar.can_fit_in_inventory(body.item_def):
 		Events.emit_signal("item_picked_up", body.item_def)
 		body.queue_free()
-
-func _on_entered_craftingtable():
-	can_move = false
-	
-func _on_exited_craftingtable():
-	can_move = true
-	
-func _on_entered_forge(_current_opened_forge):
-	can_move = false
-
-func _on_exited_forge():
-	can_move = true
-
+		

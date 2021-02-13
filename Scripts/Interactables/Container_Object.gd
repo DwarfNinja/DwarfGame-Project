@@ -29,18 +29,17 @@ func _process(_delta):
 				animationPlayer.play("Open")
 #			Events.emit_signal("entered_chest", self)
 		if Input.is_action_just_pressed("key_esc"):
-			Events.emit_signal("exited_chest", self)
+			Events.emit_signal("exited_container", self)
 
 func drop_items():
 	available_direction_list = ["Drop_left", "Drop_centre", "Drop_right"]
 	for item in range(1, select_random_itemamount()):
 		var RANDOM_ITEM = select_item_from_drop_table()
 		var random_item = load(RANDOM_ITEM.packedscene_path).instance()
-		add_child(random_item)
+		add_child(random_item, true)
 		random_item.set_global_position(ItemSpawnPosition.global_position)
 		play_drop_animation(random_item)
-
-
+#TODO: add legible_unique_name to all add_child() calls
 
 func select_item_from_drop_table():
 	var drop_table = drop_table_def.drop_table

@@ -7,10 +7,9 @@ var craftingtable_opened = false
 onready var Selected_Button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 
 func _ready():
-	# Craftingtable signals
-	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
-	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
 	# Craftingbutton signal that signals if the mouse entered the button area
+	Events.connect("open_craftingtable", self, "_on_open_craftingtable")
+	Events.connect("close_craftingtable", self, "_on_close_craftingtable")
 	Events.connect("craftingbutton_mouse_entered", self, "_on_craftingbutton_mouse_entered")
 	
 
@@ -79,8 +78,12 @@ func update_resourcebar():
 	$ResouceBar/IronCostLabel.text = str(item_def_in_craftingbutton.iron_cost)
 	
 
-func _on_entered_craftingtable():
+func _on_open_craftingtable():
+	visible = true
 	craftingtable_opened = true
+	HUD.menu_open = true
 
-func _on_exited_craftingtable():
+func _on_close_craftingtable():
+	visible = false
 	craftingtable_opened = false
+	HUD.menu_open = false

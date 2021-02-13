@@ -5,7 +5,7 @@
 [sub_resource type="VisualShaderNodeVectorInterp" id=1]
 
 [sub_resource type="VisualShaderNodeExpression" id=2]
-size = Vector2( 407, 447 )
+size = Vector2( 990, 893 )
 expression = "// shader_type canvas_item;
 // render_mode unshaded;
 
@@ -125,7 +125,7 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -54.7588, 50.8468 )
+graph_offset = Vector2( 797, 499 )
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2( 1240, 100 )
@@ -149,7 +149,7 @@ nodes/fragment/10/node = SubResource( 1 )
 nodes/fragment/10/position = Vector2( 1020, 0 )
 nodes/fragment/11/node = SubResource( 2 )
 nodes/fragment/11/position = Vector2( 960, 320 )
-nodes/fragment/11/size = Vector2( 407, 447 )
+nodes/fragment/11/size = Vector2( 990, 893 )
 nodes/fragment/11/input_ports = "0,2,smooth;1,0,width;2,1,outline_colour;3,0,pixel_size;4,4,tex_frg_8;"
 nodes/fragment/11/output_ports = ""
 nodes/fragment/11/expression = "// shader_type canvas_item;

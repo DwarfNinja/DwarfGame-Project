@@ -8,13 +8,12 @@ signal place_item(selected_item)
 signal item_placed(selected_item)
 
 # Craftingtable signals
-signal entered_craftingtable()
-signal exited_craftingtable()
-signal craftingtable_opened()
+signal open_craftingtable()
+signal close_craftingtable()
 
 # Forge signals
-signal entered_forge(current_opened_forge)
-signal exited_forge()
+signal open_forge(current_opened_forge)
+signal close_forge()
 signal iron_amount_set(current_opened_forge, slider_iron_amount)
 
 signal entered_shop()

@@ -13,9 +13,9 @@ func _ready():
 func _process(_delta):
 	if can_interact == true:
 		if Input.is_action_just_pressed("key_e"):
-			Events.emit_signal("entered_craftingtable")
+			Events.emit_signal("open_craftingtable")
 		if Input.is_action_just_pressed("key_esc"):
-			Events.emit_signal("exited_craftingtable")
+			Events.emit_signal("close_craftingtable")
 
 
 func _on_InteractArea_area_entered(_area):

@@ -2,7 +2,7 @@ extends CanvasLayer
 
 onready var InventoryBar = $VBoxContainer/CenterContainer/InventoryBar
 onready var GoldCoins = $VBoxContainer/Labels/HBoxContainer/GoldCoins
-onready var CraftingTableHUD = $Control/CraftingTableHUD
+onready var CraftingtableHUD = $Control/CraftingTableHUD
 onready var ForgeHUD = $Control/ForgeHUD
 onready var TravelingScreen = $Control/TravelingScreen
 onready var TaxTimer = $TaxTimer
@@ -19,12 +19,6 @@ func _ready():
 	ScreenTimer.connect("timeout", self, "_on_ScreenTimer_timeout")
 	# Enter/Exit location signals
 	Events.connect("exited_cave", self, "_on_exited_cave")
-	# Craftingtable signals
-	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
-	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
-	# Forge signals
-	Events.connect("entered_forge", self, "_on_entered_forge")
-	Events.connect("exited_forge", self, "_on_exited_forge")
 	# RandomGenHouse signals
 	Events.connect("randomgenhouse_loaded", self, "_on_randomgenhouse_loaded")
 
@@ -59,21 +53,6 @@ func _on_TaxTimer_timeout():
 		Events.emit_signal("taxtimer_restarted")
 	else:
 		print("Game Ended")
-
-func open_interactable_menu(interactable):
-	pass
-	
-func _on_entered_craftingtable():
-	CraftingTableHUD.visible = true
-	
-func _on_exited_craftingtable():
-	CraftingTableHUD.visible = false
-
-func _on_entered_forge(_current_opened_forge):
-	ForgeHUD.visible = true
-
-func _on_exited_forge():
-	ForgeHUD.visible = false
 	
 func _on_exited_cave():
 	if TaxTimer.is_stopped():
