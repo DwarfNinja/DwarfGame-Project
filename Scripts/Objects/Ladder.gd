@@ -2,7 +2,6 @@ extends StaticBody2D
 
 var can_interact = false
 onready var InteractArea = $InteractArea
-onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
 onready var HouseScene = "res://Scenes/House.tscn"
 
 func _ready():

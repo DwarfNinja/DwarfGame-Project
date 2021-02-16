@@ -3,7 +3,7 @@
 [ext_resource path="res://Sprites/Resources/Wood_Shadow.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Resources/Shine.png" type="Texture" id=2]
 [ext_resource path="res://Resources/Resources/Wood.tres" type="Resource" id=3]
-[ext_resource path="res://Scripts/Resources/Pickable_Item.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Classes/Pickable_Item.gd" type="Script" id=4]
 [ext_resource path="res://Shaders/Shine VisualShader.tres" type="Shader" id=5]
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -222,6 +222,7 @@ shape = SubResource( 3 )
 position = Vector2( 0, -3 )
 collision_layer = 16
 __meta__ = {
+"_edit_group_": true,
 "_editor_description_": ""
 }
 

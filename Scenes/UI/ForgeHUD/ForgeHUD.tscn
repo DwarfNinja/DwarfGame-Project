@@ -21,10 +21,8 @@ size = 8
 font_data = ExtResource( 5 )
 
 [node name="ForgeHUD" type="TextureRect"]
-margin_left = 125.0
-margin_top = 61.0
-margin_right = 195.0
-margin_bottom = 115.0
+margin_right = 78.0
+margin_bottom = 58.0
 texture = ExtResource( 3 )
 script = ExtResource( 2 )
 __meta__ = {

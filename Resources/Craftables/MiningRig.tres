@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Interactables/MiningRig/MiningRig TopDown.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/HUD/InventoryBar/HUD MiningRig 2.0.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton Miningrig.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/Classes/Craftable_Object.gd" type="Script" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -12,7 +13,8 @@ item_name = "miningrig"
 item_count = 1
 item_texture = ExtResource( 2 )
 hud_texture = ExtResource( 3 )
-packedscene_path = "res://Scenes/Interactables/MiningRig.tscn"
+item_scenepath = "res://Scenes/Interactables/MiningRig.tscn"
+item_script = ExtResource( 5 )
 item_footprint = Vector2( 2, 1 )
 wood_cost = 2
 iron_cost = 2

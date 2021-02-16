@@ -2,7 +2,6 @@ extends RigidBody2D
 
 class_name Pickable_Item
 
-var more_than_one = false
 export (Resource) var item_def
 onready var PickUpArea = $PickUpArea
 onready var ItemSprite = get_node(item_def.item_name.capitalize() + "Sprite")

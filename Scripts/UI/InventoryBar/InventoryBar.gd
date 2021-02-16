@@ -40,30 +40,28 @@ func _process(_delta):
 		if get_tree().get_current_scene().get_name() == "Cave":
 			emit_signal("update_tileselector", selected_item)
 
+			if Input.is_action_just_pressed("key_leftclick"):
+				if selected_item != null:
+					var selected_item_script = selected_item.item_script.new()
+					selected_item_script.input_leftclick()
+					
 			if Input.is_action_just_pressed("key_rightclick"):
 				if selected_item != null:
 					Events.emit_signal("place_item", selected_item)
-						
-			if Input.is_action_just_pressed("key_leftclick"):
-				if get_item_in_slot(Selected_Slot):
-					if get_item_in_slot(Selected_Slot).type_name == "craftable":
-						if selected_item == null:
-							selected_item = get_item_in_slot(Selected_Slot)
-						elif selected_item != null:
-							selected_item = deselect_item()
+					selected_item = get_item_in_slot(Selected_Slot)
 
 		# Determines Selector position based on scroll wheel movement
 		if Input.is_action_just_released("scroll_up"):
 			selector_position += 1
 			if selector_position > 5:
 				selector_position = 0
-			selected_item = deselect_item()
+			selected_item = get_item_in_slot(Selected_Slot)
 			
 		elif Input.is_action_just_released("scroll_down"):
 			selector_position -= 1
 			if selector_position < 0:
 				selector_position = 5
-			selected_item = deselect_item()
+			selected_item = get_item_in_slot(Selected_Slot)
 
 
 func update_all_slot_selectors():
@@ -78,10 +76,8 @@ func update_all_slot_selectors():
 			
 func get_item_in_slot(Slot):
 	return Slot.item_def
-
-func deselect_item():
-	return null
 	
+
 # If the slot is empty, set the item definition. If it is not full but the item is the same, add the item
 #Used to be add_item()
 func _on_item_picked_up(item_def):

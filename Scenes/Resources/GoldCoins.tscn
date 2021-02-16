@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Scripts/Resources/Pickable_Item.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Classes/Pickable_Item.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Resources/GoldCoins.tres" type="Resource" id=2]
 [ext_resource path="res://Sprites/Resources/GoldCoins.png" type="Texture" id=3]
 [ext_resource path="res://Shaders/Shine Shader.tres" type="Material" id=5]
@@ -210,6 +210,9 @@ shape = SubResource( 1 )
 position = Vector2( 0, -2 )
 scale = Vector2( 1.01868, 1 )
 collision_layer = 16
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
 position = Vector2( 0, -0.0183372 )

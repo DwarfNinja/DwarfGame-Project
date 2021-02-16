@@ -17,6 +17,8 @@ func _process(_delta):
 	if forge_opened == true:
 		if Input.is_action_just_pressed("key_e"):
 			insert_iron()
+		elif Input.is_action_just_pressed("key_esc"):
+				Events.emit_signal("close_forge")
 
 func insert_iron():
 	if HUD.InventoryBar.inventory_dic["iron"] >= slider_iron_amount:

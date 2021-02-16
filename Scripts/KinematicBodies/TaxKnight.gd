@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 var can_interact = false
 onready var InteractArea = $InteractArea
-onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
 
 
 func _ready():

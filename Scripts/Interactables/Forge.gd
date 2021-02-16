@@ -1,4 +1,4 @@
-extends Craftable_Item
+extends Craftable_Object
 
 onready var ForgeTimer = $ForgeTimer
 
@@ -18,16 +18,13 @@ func _ready():
 func _process(_delta):
 	if can_interact == true:
 		if ForgeTimer.is_stopped() and iron_in_forge == 0:
-			CraftableSprite.material.set_shader_param("outline_color", Color(240,240,240,255)) #Visible
+			InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,255)) #Visible
 		elif iron_in_forge > 0:
-			CraftableSprite.material.set_shader_param("outline_color", Color(240,240,240,0)) #Visible
+			InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,0)) #Visible
 			$Iron.material.set_shader_param("outline_color", Color(240,240,240,255)) 
 		else:
-			CraftableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
+			InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 			$Iron.material.set_shader_param("outline_color", Color(240,240,240,0))
-		
-		if Input.is_action_just_pressed("key_esc"):
-				Events.emit_signal("close_forge")
 			
 	update_iron_sprite()
 
@@ -50,7 +47,7 @@ func _on_iron_amount_set(current_opened_forge, slider_iron_amount):
 func _on_ForgeTimer_timeout():
 	if iron_in_forge < 20:
 		iron_in_forge += 2 * set_iron_amount
-	
+
 func update_iron_sprite():
 	if iron_in_forge > 0:
 		if iron_in_forge <= 5:

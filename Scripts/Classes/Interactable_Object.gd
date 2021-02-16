@@ -1,11 +1,10 @@
 extends StaticBody2D
 
-class_name Craftable_Item
+class_name Interactable_Object
 
 var can_interact = false
-export (Resource) var item_def
 onready var InteractArea = $InteractArea
-onready var CraftableSprite = get_node(str(item_def.item_name.capitalize()) + "Sprite")
+onready var InteractableSprite = get_node(get_name() + "Sprite")
 
 
 func _ready():
@@ -21,13 +20,14 @@ func _process(_delta):
 
 func _on_InteractArea_area_entered(_area):
 	can_interact = true
-	CraftableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
+	InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 		
 
 func _on_InteractArea_area_exited(_area):
 	can_interact = false
-	CraftableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
+	InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 
 func interact():
-	# Declared in the specific craftable_item
+	# Declared in the specific Craftable_Object
 	pass
+

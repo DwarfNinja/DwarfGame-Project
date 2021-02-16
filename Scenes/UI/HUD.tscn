@@ -26,6 +26,7 @@ font_data = ExtResource( 4 )
 script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 margin_right = 320.0
 margin_bottom = 180.0
 __meta__ = {
@@ -132,8 +133,10 @@ stretch_mode = 6
 
 [node name="ForgeHUD" parent="Control" instance=ExtResource( 6 )]
 visible = false
-margin_right = 258.0
-margin_bottom = 135.0
+margin_left = 118.0
+margin_top = 55.0
+margin_right = 196.0
+margin_bottom = 113.0
 
 [node name="TravelingScreen" type="TextureRect" parent="Control"]
 visible = false

@@ -1,4 +1,4 @@
-extends Craftable_Item
+extends Craftable_Object
 
 var gold_coins = preload("res://Resources/Resources/GoldCoins.tres")
 onready var MiningTimer = $MiningTimer

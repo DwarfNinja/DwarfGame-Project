@@ -23,5 +23,5 @@ drop_rate = 20
 
 [resource]
 script = ExtResource( 1 )
-container_name = "Chest"
+container_name = "chest"
 drop_table = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]
