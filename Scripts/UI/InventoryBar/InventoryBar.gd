@@ -23,7 +23,7 @@ signal update_tileselector(selected_item)
 func _ready():
 	# Item signals
 	Events.connect("item_picked_up", self, "_on_item_picked_up")
-	Events.connect("item_placed", self, "_on_item_placed")
+	Events.connect("remove_item", self, "_on_remove_item")
 
 func _process(_delta):
 	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
@@ -47,7 +47,7 @@ func _process(_delta):
 					
 			if Input.is_action_just_pressed("key_rightclick"):
 				if selected_item != null:
-					Events.emit_signal("place_item", selected_item)
+					Events.emit_signal("place_object", selected_item)
 					selected_item = get_item_in_slot(Selected_Slot)
 
 		# Determines Selector position based on scroll wheel movement
@@ -122,7 +122,7 @@ func remove_from_inventory_dic(item_def):
 		HUD.update_hud_coins(inventory_dic["goldcoins"])
 
 #Used to be remove_item()
-func _on_item_placed(selected_item):
+func _on_remove_item(selected_item):
 	if selected_item.item_name in inventory_dic:
 		inventory_dic[selected_item.item_name] -= 1
 		for slot in HboxContainer.get_children():

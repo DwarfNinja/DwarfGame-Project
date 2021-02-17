@@ -20,7 +20,8 @@ func _ready():
 	GameManager.connect("cave_scene_saved", self, "_on_cave_scene_saved")
 	GameManager.connect("cave_scene_loaded", self, "_on_cave_scene_loaded")
 	HUD.InventoryBar.connect("update_tileselector", self, "_on_update_tileselector")
-	Events.connect("place_item", self, "_on_place_item")
+	Events.connect("place_object", self, "_on_place_object")
+	Events.connect("drop_item", self, "_on_drop_item")
 	
 func _process(delta):
 	MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
@@ -53,7 +54,7 @@ func _on_update_tileselector(selected_item):
 	else:
 		TileSelector.visible = false
 
-func _on_place_item(selected_item):
+func _on_place_object(selected_item):
 	if is_tile_empty(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET):
 		var item_scene_instance = load(selected_item.packedscene_path).instance()
 		item_scene_instance.set_global_position($Floor.map_to_world(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET))
@@ -61,11 +62,13 @@ func _on_place_item(selected_item):
 		for x in range(selected_item.item_footprint.x):
 			for y in range(selected_item.item_footprint.y):
 				occupied_tiles.append(Vector2(MapCoordOfPlayerPosition2D.x + x, MapCoordOfPlayerPosition2D.y + y) + TILEPOSITION_OFFSET)
-		Events.emit_signal("item_placed", selected_item)
+		Events.emit_signal("remove_item", selected_item)
 	else:
 		print("CANT PLACE ITEM!")
 
-
+func _on_drop_item(item, instance_pos):
+	pass
+	
 func is_tile_empty(tile):
 	if occupied_tiles.has(tile):
 		return false

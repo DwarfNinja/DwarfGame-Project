@@ -2,6 +2,7 @@ extends Interactable_Object
 
 export (Resource) var drop_table_def
 
+onready var ItemScene = preload("res://Scenes/Resources/Item.tscn")
 onready var animationPlayer = $AnimationPlayer
 onready var ItemSpawnPosition = $ItemSpawnPosition
 
@@ -28,8 +29,9 @@ func _process(_delta):
 func drop_items():
 	available_direction_list = ["Drop_left", "Drop_centre", "Drop_right"]
 	for item in range(1, select_random_itemamount()):
-		var RANDOM_ITEM = select_item_from_drop_table()
-		var random_item = load(RANDOM_ITEM.item_scenepath).instance()
+		var random_item_resource = select_item_from_drop_table()
+		var random_item = ItemScene.instance()
+		random_item.item_def = random_item_resource
 		add_child(random_item, true)
 		random_item.set_global_position(ItemSpawnPosition.global_position)
 		play_drop_animation(random_item)

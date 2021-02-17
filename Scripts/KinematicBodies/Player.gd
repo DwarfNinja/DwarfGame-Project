@@ -70,4 +70,4 @@ func _on_PlayerPickupArea_body_entered(body):
 	if HUD.InventoryBar.can_fit_in_inventory(body.item_def):
 		Events.emit_signal("item_picked_up", body.item_def)
 		body.queue_free()
-		
+

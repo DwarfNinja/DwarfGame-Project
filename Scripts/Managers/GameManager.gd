@@ -15,10 +15,10 @@ signal cave_scene_loaded()
 func _ready():
 	Events.connect("exited_cave", self, "_on_exited_cave")
 	Events.connect("entered_cave", self, "_on_entered_cave")
-#	Events.connect("place_item", self, "_on_place_item")
+#	Events.connect("place_object", self, "_on_place_object")
 
 
-#func _on_place_item(selected_item):
+#func _on_place_object(selected_item):
 #	var current_scene = str(get_tree().get_current_scene().get_name())
 #	var item_scene_instance = get((selected_item.item_name).to_upper() + "_SCENE").instance()
 #	if current_scene == "Cave":
@@ -29,7 +29,7 @@ func _ready():
 #		get_tree().get_root().get_node(current_scene + "/Nav2D/Walls").add_child(item_scene_instance)
 #	item_scene_instance.set_owner(get_tree().get_root().get_node(current_scene))
 #
-#	Events.emit_signal("item_placed", selected_item)
+#	Events.emit_signal("remove_item", selected_item)
 
 
 func _on_exited_cave():
