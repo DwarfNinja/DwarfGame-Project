@@ -8,11 +8,6 @@ var velocity = Vector2.ZERO
 
 var can_move = true
 
-# Inventory varaibles
-const WOOD_SCENE = preload("res://Scenes/Resources/Wood.tscn")
-const IRON_SCENE = preload("res://Scenes/Resources/Iron.tscn")
-const MININGRIG_SCENE = preload("res://Scenes/Interactables/MiningRig.tscn")
-const FORGE_SCENE = preload("res://Scenes/Interactables/Forge.tscn")
 var selected_item = null
 
 var scent_trail = []
@@ -67,7 +62,6 @@ func _physics_process(delta):
 
 
 func _on_PlayerPickupArea_body_entered(body):
-	if HUD.InventoryBar.can_fit_in_inventory(body.item_def):
-		Events.emit_signal("item_picked_up", body.item_def)
-		body.queue_free()
+	Events.emit_signal("entered_pickuparea", self)
+	
 

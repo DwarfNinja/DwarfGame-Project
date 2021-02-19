@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://addons/Todo_Manager/Dock.gd" type="Script" id=1]
-[ext_resource path="res://addons/Todo_Manager/Project.gd" type="Script" id=2]
-[ext_resource path="res://addons/Todo_Manager/Current.gd" type="Script" id=3]
+[ext_resource path="res://.addons/Todo_Manager/Current.gd" type="Script" id=1]
+[ext_resource path="res://.addons/Todo_Manager/Dock.gd" type="Script" id=2]
+[ext_resource path="res://.addons/Todo_Manager/Project.gd" type="Script" id=3]
 
 [sub_resource type="ButtonGroup" id=1]
 
@@ -12,7 +12,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 0, 200 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -78,7 +78,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -101,7 +101,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 
 [node name="Tree" type="Tree" parent="VBoxContainer/TabContainer/Current"]
 anchor_right = 1.0

@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Shaders/Shine VisualShader.tres" type="Shader" id=1]
 [ext_resource path="res://Sprites/Resources/Shine.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/Classes/Pickable_Item2.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Classes/Pickable_Item.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/Resources/Iron_Shadow-Sheet.png" type="Texture" id=6]
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -15,17 +15,13 @@ shader_param/Texture = ExtResource( 2 )
 radius = 1.99997
 height = 9.0
 
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 31.0
-height = 4.00002
-
-[sub_resource type="CanvasItemMaterial" id=4]
+[sub_resource type="CanvasItemMaterial" id=3]
 particles_animation = true
 particles_anim_h_frames = 4
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=4]
 emission_shape = 1
 emission_sphere_radius = 1.0
 flag_disable_z = true
@@ -40,10 +36,10 @@ scale_random = 0.5
 anim_offset = 1.0
 anim_offset_random = 1.0
 
-[sub_resource type="StreamTexture" id=6]
+[sub_resource type="StreamTexture" id=5]
 load_path = "res://.import/trail Smoke-Sheet.png-66b64cead1740b030744d5da2b9e5e26.stex"
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "Drop_centre"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -82,7 +78,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 resource_name = "Drop_left"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -121,7 +117,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -159,7 +155,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 length = 0.2
 loop = true
 tracks/0/type = "value"
@@ -213,25 +209,9 @@ position = Vector2( -0.5, 2 )
 rotation = 1.5708
 shape = SubResource( 2 )
 
-[node name="PickUpArea" type="Area2D" parent="."]
-position = Vector2( 0, -1 )
-monitoring = false
-monitorable = false
-collision_layer = 16
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
-rotation = 1.5708
-shape = SubResource( 3 )
-__meta__ = {
-"_editor_description_": ""
-}
-
 [node name="TrailParticles2D" type="Particles2D" parent="."]
 show_behind_parent = true
-material = SubResource( 4 )
+material = SubResource( 3 )
 position = Vector2( 0, -2 )
 rotation = 1.5708
 emitting = false
@@ -240,8 +220,8 @@ lifetime = 0.3
 speed_scale = 0.5
 randomness = 0.3
 local_coords = false
-process_material = SubResource( 5 )
-texture = SubResource( 6 )
+process_material = SubResource( 4 )
+texture = SubResource( 5 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -250,7 +230,9 @@ __meta__ = {
 autoplay = "Hover"
 playback_process_mode = 0
 playback_speed = 0.25
-anims/Drop_centre = SubResource( 7 )
-anims/Drop_left = SubResource( 8 )
-anims/Drop_right = SubResource( 9 )
-anims/Hover = SubResource( 10 )
+anims/Drop_centre = SubResource( 6 )
+anims/Drop_left = SubResource( 7 )
+anims/Drop_right = SubResource( 8 )
+anims/Hover = SubResource( 9 )
+
+[node name="Tween" type="Tween" parent="."]

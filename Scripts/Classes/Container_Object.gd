@@ -6,7 +6,11 @@ onready var ItemScene = preload("res://Scenes/Resources/Item.tscn")
 onready var animationPlayer = $AnimationPlayer
 onready var ItemSpawnPosition = $ItemSpawnPosition
 
-var available_direction_list = ["Drop_left", "Drop_centre", "Drop_right"]
+var direction_list = [
+	Vector2(22,-20), Vector2(0,-20), Vector2(-22,-20),
+	Vector2(22,0), Vector2(-22,0),
+	Vector2(-22,20), Vector2(0,20), Vector2(22,20)
+	]
 
 func _ready():
 	pass
@@ -26,15 +30,19 @@ func _process(_delta):
 		if Input.is_action_just_pressed("key_esc"):
 			Events.emit_signal("exited_container", self)
 
+func set_facing_direction():
+	pass
+
 func drop_items():
-	available_direction_list = ["Drop_left", "Drop_centre", "Drop_right"]
+	var available_direction_list = direction_list.duplicate()
+	
 	for item in range(1, select_random_itemamount()):
 		var random_item_resource = select_item_from_drop_table()
 		var random_item = ItemScene.instance()
 		random_item.item_def = random_item_resource
 		add_child(random_item, true)
 		random_item.set_global_position(ItemSpawnPosition.global_position)
-		play_drop_animation(random_item)
+		play_drop_animation(random_item, available_direction_list)
 #TODO: add legible_unique_name to all add_child() calls
 
 func select_item_from_drop_table():
@@ -54,10 +62,10 @@ func select_item_from_drop_table():
 	return null
 
 
-func play_drop_animation(random_item):
+func play_drop_animation(random_item, available_direction_list):
 	available_direction_list.shuffle()
 	var chosen_direction = available_direction_list.pop_front()
-	random_item.get_node("AnimationPlayer").play(chosen_direction)
+	random_item.play_drop_animation(chosen_direction)
 	available_direction_list.erase(chosen_direction)
 	
 

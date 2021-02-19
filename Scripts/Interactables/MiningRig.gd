@@ -2,7 +2,6 @@ extends Craftable_Object
 
 var gold_coins = preload("res://Resources/Resources/GoldCoins.tres")
 onready var MiningTimer = $MiningTimer
-const GOLDCOINS_SCENE = preload("res://Scenes/Resources/GoldCoins.tscn")
 
 var gold_coins_1 = preload("res://Sprites/Interactables/MiningRig/MiningRig TopDown Coins1.png")
 var gold_coins_2 = preload("res://Sprites/Interactables/MiningRig/MiningRig TopDown Coins2.png")

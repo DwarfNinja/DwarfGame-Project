@@ -24,11 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Classes/Pickable_Item.gd"
 }, {
-"base": "RigidBody2D",
-"class": "Pickable_Item2",
-"language": "GDScript",
-"path": "res://Scripts/Classes/Pickable_Item2.gd"
-}, {
 "base": "R_Item",
 "class": "R_Craftable",
 "language": "GDScript",
@@ -518,7 +513,6 @@ _global_script_class_icons={
 "Craftable_Object": "",
 "Interactable_Object": "",
 "Pickable_Item": "",
-"Pickable_Item2": "",
 "R_Craftable": "",
 "R_DropTable_Entry": "",
 "R_Item": "",
@@ -647,7 +641,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Todo_Manager" )
+enabled=PoolStringArray(  )
 
 [importer_defaults]
 

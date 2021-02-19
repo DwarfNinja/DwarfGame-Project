@@ -1,10 +1,9 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton Forge.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Interactables/Forge/Forge.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/HUD/InventoryBar/HUD Forge.png" type="Texture" id=4]
-[ext_resource path="res://Scripts/Interactables/Forge.gd" type="Script" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -14,7 +13,6 @@ item_count = 1
 item_texture = ExtResource( 3 )
 hud_texture = ExtResource( 4 )
 item_scenepath = "res://Scenes/Interactables/Forge.tscn"
-item_script = ExtResource( 5 )
 item_footprint = Vector2( 2, 0 )
 wood_cost = 1
 iron_cost = 3

@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Shaders/outline.shader" type="Shader" id=1]
-[ext_resource path="res://Scenes/Resources/Wood.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Interactables/Forge.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Interactables/MiningRig.tscn" type="PackedScene" id=6]
 [ext_resource path="res://CaveTileset.tres" type="TileSet" id=7]
@@ -72,6 +71,3 @@ position = Vector2( 88, 128 )
 visible = false
 z_index = 1
 texture = ExtResource( 9 )
-
-[node name="Wood" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 201, 118 )

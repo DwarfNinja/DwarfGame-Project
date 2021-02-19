@@ -73,7 +73,7 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="ItemSpawnPosition" type="Position2D" parent="."]
-position = Vector2( 0.5, -9 )
+position = Vector2( 0.5, -8.5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Close = SubResource( 3 )
