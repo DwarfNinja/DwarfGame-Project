@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Resources/R_Item.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/Resources/Wood.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Items/Wood.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/HUD/InventoryBar/HUDWood.png" type="Texture" id=3]
 
 [resource]
@@ -11,4 +11,3 @@ item_name = "wood"
 item_count = 1
 item_texture = ExtResource( 2 )
 hud_texture = ExtResource( 3 )
-item_scenepath = "res://Scenes/Resources/Wood.tscn"

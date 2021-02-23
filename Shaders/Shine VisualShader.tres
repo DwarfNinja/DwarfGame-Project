@@ -1,6 +1,6 @@
 [gd_resource type="VisualShader" load_steps=14 format=2]
 
-[ext_resource path="res://Sprites/Resources/Shine.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Items/Shine.png" type="Texture" id=1]
 
 [sub_resource type="VisualShaderNodeVectorInterp" id=1]
 

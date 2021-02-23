@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Shaders/Shine VisualShader.tres" type="Shader" id=1]
-[ext_resource path="res://Sprites/Resources/Shine.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Items/Shine.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Classes/Pickable_Item.gd" type="Script" id=3]
-[ext_resource path="res://Sprites/Resources/Iron_Shadow-Sheet.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Items/Iron_Shadow-Sheet.png" type="Texture" id=6]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
@@ -229,7 +229,7 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hover"
 playback_process_mode = 0
-playback_speed = 0.25
+playback_speed = 0.6
 anims/Drop_centre = SubResource( 6 )
 anims/Drop_left = SubResource( 7 )
 anims/Drop_right = SubResource( 8 )

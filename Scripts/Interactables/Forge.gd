@@ -1,4 +1,4 @@
-extends Craftable_Object
+extends Interactable_Object
 
 onready var ForgeTimer = $ForgeTimer
 
@@ -7,8 +7,8 @@ var forge_time = 5
 var iron_in_forge = 0
 var set_iron_amount = null
 
-var iron_1 = preload("res://Sprites/Interactables/Forge/Forge Iron1.png")
-var iron_2 = preload("res://Sprites/Interactables/Forge/Forge Iron2.png")
+var iron_1 = preload("res://Sprites/Interactables/Craftables/Forge/Forge Iron1.png")
+var iron_2 = preload("res://Sprites/Interactables/Craftables/Forge/Forge Iron2.png")
 
 func _ready():
 	# Connect signals

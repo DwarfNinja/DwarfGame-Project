@@ -4,7 +4,8 @@ class_name Interactable_Object
 
 var can_interact = false
 onready var InteractArea = $InteractArea
-onready var InteractableSprite = get_node(get_name() + "Sprite")
+onready var node_name = get_name().lstrip("@").split("@", false, 1)[0] + "Sprite"
+onready var InteractableSprite = get_node(node_name)
 
 
 func _ready():

@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=1]
-[ext_resource path="res://Sprites/Interactables/Forge/Forge.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Craftables/Forge.tres" type="Resource" id=3]
+[ext_resource path="res://Sprites/Interactables/Craftables/Forge/Forge.png" type="Texture" id=2]
 [ext_resource path="res://Shaders/outline.shader" type="Shader" id=4]
 [ext_resource path="res://Scripts/Interactables/Forge.gd" type="Script" id=5]
-[ext_resource path="res://Sprites/Interactables/Forge/Forge Iron2.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/Interactables/Forge/ForgeShadow.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Interactables/Craftables/Forge/Forge Iron2.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Interactables/Craftables/Forge/ForgeShadow.png" type="Texture" id=7]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -49,7 +48,6 @@ color_ramp = SubResource( 5 )
 collision_layer = 8
 collision_mask = 2147483649
 script = ExtResource( 5 )
-item_def = ExtResource( 3 )
 
 [node name="ForgeShadow" type="Sprite" parent="."]
 position = Vector2( 19, -16 )

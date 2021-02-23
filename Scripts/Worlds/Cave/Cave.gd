@@ -2,6 +2,7 @@ extends Node2D
 
 const TAXKNIGHT_SCENE = preload("res://Scenes/KinematicBodies/TaxKnight.tscn")
 const PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
+const ITEM_SCENE = preload("res://Scenes/Resources/Item.tscn")
 const TILEPOSITION_OFFSET = Vector2(0,1)
 
 onready var Player = $YSort/Player
@@ -56,18 +57,23 @@ func _on_update_tileselector(selected_item):
 
 func _on_place_object(selected_item):
 	if is_tile_empty(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET):
-		var item_scene_instance = load(selected_item.packedscene_path).instance()
-		item_scene_instance.set_global_position($Floor.map_to_world(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET))
-		$YSort.add_child(item_scene_instance)
-		for x in range(selected_item.item_footprint.x):
-			for y in range(selected_item.item_footprint.y):
+		var selected_item_scene_instance = selected_item.packedscene.instance()
+		selected_item_scene_instance.set_global_position($Floor.map_to_world(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET))
+		$YSort.add_child(selected_item_scene_instance)
+		for x in range(selected_item.footprint.x):
+			for y in range(selected_item.footprint.y):
 				occupied_tiles.append(Vector2(MapCoordOfPlayerPosition2D.x + x, MapCoordOfPlayerPosition2D.y + y) + TILEPOSITION_OFFSET)
 		Events.emit_signal("remove_item", selected_item)
 	else:
 		print("CANT PLACE ITEM!")
 
-func _on_drop_item(item, instance_pos):
-	pass
+func _on_drop_item(selected_item):
+	var item_scene_instance = ITEM_SCENE.instance()
+	item_scene_instance.item_def = selected_item
+	item_scene_instance.set_global_position(Player.global_position)
+	item_scene_instance.play_drop_animation()
+	$YSort.add_child(item_scene_instance)
+	Events.emit_signal("remove_item", selected_item)
 	
 func is_tile_empty(tile):
 	if occupied_tiles.has(tile):

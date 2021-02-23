@@ -39,29 +39,34 @@ func _process(_delta):
 	if HUD.menu_open == false:
 		if get_tree().get_current_scene().get_name() == "Cave":
 			emit_signal("update_tileselector", selected_item)
+			
+			if Input.is_action_just_pressed("key_q"):
+				if get_item_in_slot(Selected_Slot):
+					Events.emit_signal("drop_item", get_item_in_slot(Selected_Slot))
 
 			if Input.is_action_just_pressed("key_leftclick"):
-				if selected_item != null:
-					var selected_item_script = selected_item.item_script.new()
-					selected_item_script.input_leftclick()
+				if get_item_in_slot(Selected_Slot):
+					if get_item_in_slot(Selected_Slot).type_name == "craftable":
+						selected_item = get_item_in_slot(Selected_Slot)
 					
 			if Input.is_action_just_pressed("key_rightclick"):
-				if selected_item != null:
-					Events.emit_signal("place_object", selected_item)
-					selected_item = get_item_in_slot(Selected_Slot)
+				if selected_item:
+					if selected_item.type_name == "craftable":
+						Events.emit_signal("place_object", selected_item)
+						selected_item = get_item_in_slot(Selected_Slot)
 
 		# Determines Selector position based on scroll wheel movement
 		if Input.is_action_just_released("scroll_up"):
 			selector_position += 1
 			if selector_position > 5:
 				selector_position = 0
-			selected_item = get_item_in_slot(Selected_Slot)
+			selected_item = null
 			
 		elif Input.is_action_just_released("scroll_down"):
 			selector_position -= 1
 			if selector_position < 0:
 				selector_position = 5
-			selected_item = get_item_in_slot(Selected_Slot)
+			selected_item = null
 
 
 func update_all_slot_selectors():

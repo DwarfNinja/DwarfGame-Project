@@ -1,9 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Sprites/KinematicBodies/PlagueDoctor Sketch.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Interactables/BlackMarket/PlagueDoctor Sketch.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Interactables/BlackMarket.gd" type="Script" id=2]
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=3]
-[ext_resource path="res://Sprites/KinematicBodies/PlagueDoctor SketchShadow.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Interactables/BlackMarket/PlagueDoctor SketchShadow.png" type="Texture" id=4]
+
+
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.0

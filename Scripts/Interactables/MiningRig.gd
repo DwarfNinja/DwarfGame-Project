@@ -1,10 +1,10 @@
-extends Craftable_Object
+extends Interactable_Object
 
 var gold_coins = preload("res://Resources/Resources/GoldCoins.tres")
 onready var MiningTimer = $MiningTimer
 
-var gold_coins_1 = preload("res://Sprites/Interactables/MiningRig/MiningRig TopDown Coins1.png")
-var gold_coins_2 = preload("res://Sprites/Interactables/MiningRig/MiningRig TopDown Coins2.png")
+var gold_coins_1 = preload("res://Sprites/Interactables/Craftables/MiningRig/MiningRig TopDown Coins1.png")
+var gold_coins_2 = preload("res://Sprites/Interactables/Craftables/MiningRig/MiningRig TopDown Coins2.png")
 
 
 var miningTimer_timedout = false

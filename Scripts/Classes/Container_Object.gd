@@ -42,7 +42,8 @@ func drop_items():
 		random_item.item_def = random_item_resource
 		add_child(random_item, true)
 		random_item.set_global_position(ItemSpawnPosition.global_position)
-		play_drop_animation(random_item, available_direction_list)
+		var random_direction = choose_random_drop_direction(available_direction_list)
+		random_item.play_chestdrop_animation(random_direction)
 #TODO: add legible_unique_name to all add_child() calls
 
 func select_item_from_drop_table():
@@ -62,13 +63,10 @@ func select_item_from_drop_table():
 	return null
 
 
-func play_drop_animation(random_item, available_direction_list):
+func choose_random_drop_direction(available_direction_list):
 	available_direction_list.shuffle()
-	var chosen_direction = available_direction_list.pop_front()
-	random_item.play_drop_animation(chosen_direction)
-	available_direction_list.erase(chosen_direction)
+	return available_direction_list.pop_front()
 	
-
 func select_random_itemamount():
 	var numberof_items = randi() % 3 + 2
 	return numberof_items

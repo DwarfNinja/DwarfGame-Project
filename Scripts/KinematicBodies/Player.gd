@@ -6,6 +6,14 @@ const MAX_SPEED = 80
 const FRICTION = 800 #was 600
 var velocity = Vector2.ZERO
 
+var facing = "down"
+var direction_dic = {
+	"up": Vector2(0,-10),
+	"down": Vector2(0,10),
+	"left": Vector2(-10,0),
+	"right": Vector2(10,0),
+}
+
 var can_move = true
 
 var selected_item = null
@@ -53,12 +61,16 @@ func _physics_process(delta):
 		
 		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
 			PlayerInteractArea.rotation_degrees = 270 #RIGHT
+			facing = "right"
 		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
 			PlayerInteractArea.rotation_degrees = 90 #LEFT
+			facing = "left"
 		if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
 			PlayerInteractArea.rotation_degrees = 180 #UP
+			facing = "up"
 		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
 			PlayerInteractArea.rotation_degrees = 0 #DOWN
+			facing = "down"
 
 
 func _on_PlayerPickupArea_body_entered(body):

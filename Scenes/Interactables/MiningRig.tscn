@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=1]
-[ext_resource path="res://Sprites/Interactables/MiningRig/MiningRig TopDown Coins1.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Craftables/MiningRig.tres" type="Resource" id=3]
-[ext_resource path="res://Sprites/Interactables/MiningRig/MiningRig TopDown.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Interactables/Craftables/MiningRig/MiningRig TopDown Coins1.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Interactables/PlaceHolder.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Interactables/MiningRig.gd" type="Script" id=5]
-[ext_resource path="res://Sprites/Interactables/MiningRig/MiningRig TopDownShadow.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Interactables/Craftables/MiningRig/MiningRig TopDownShadow.png" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.99997
@@ -35,7 +34,6 @@ height = 14.0
 [node name="MiningRig" type="StaticBody2D"]
 collision_layer = 8
 script = ExtResource( 5 )
-item_def = ExtResource( 3 )
 
 [node name="MiningRigShadow" type="Sprite" parent="."]
 visible = false
