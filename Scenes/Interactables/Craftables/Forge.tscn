@@ -1,0 +1,91 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Shaders/outline.shader" type="Shader" id=1]
+[ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=2]
+[ext_resource path="res://Sprites/Interactables/Craftables/Forge/Forge.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Interactables/Craftables/Forge/ForgeShadow.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Interactables/Craftables/Forge/Forge Iron2.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/Interactables/Craftables/Forge.gd" type="Script" id=6]
+
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/Smooth = false
+shader_param/width = 1.0
+shader_param/outline_color = Color( 0.941176, 0.941176, 0.941176, 0 )
+shader_param/pixel_size = 1
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 30.0
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 15.0
+height = 20.0001
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0.118519, 0.296296, 0.481481, 0.940741 )
+colors = PoolColorArray( 0.796078, 0.305882, 0.172549, 1, 0.945098, 0.827451, 0.333333, 1, 0.882353, 0.490196, 0.172549, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+lifetime_randomness = 0.2
+emission_shape = 2
+emission_box_extents = Vector3( 5, 2, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, -40, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 50.0
+angle_random = 1.0
+scale = 2.0
+scale_random = 0.25
+color_ramp = SubResource( 5 )
+
+[node name="Forge" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 2147483649
+script = ExtResource( 6 )
+
+[node name="ForgeShadow" type="Sprite" parent="."]
+position = Vector2( 19, -16 )
+texture = ExtResource( 4 )
+
+[node name="ForgeSprite" type="Sprite" parent="."]
+material = ExtResource( 2 )
+position = Vector2( 19, -16 )
+texture = ExtResource( 3 )
+
+[node name="Iron" type="Sprite" parent="."]
+material = SubResource( 1 )
+position = Vector2( 20, -17 )
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 19, -4 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="InteractArea" type="Area2D" parent="."]
+position = Vector2( 15, -7 )
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2( 4, -4 )
+rotation = 1.5708
+shape = SubResource( 3 )
+
+[node name="ForgeTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Particles2D" type="Particles2D" parent="."]
+visible = false
+position = Vector2( -1, 1 )
+amount = 15
+lifetime = 0.85
+speed_scale = 0.8
+process_material = SubResource( 6 )

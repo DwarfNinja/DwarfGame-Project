@@ -11,8 +11,8 @@ onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
 onready var Nav2D = get_parent().get_parent()
 onready var Player = get_parent().get_node("Player")
-var PathNode = preload("res://Scenes/UI/PathNode.tscn")
-var PathLine = preload("res://Scenes/UI/PathLine.tscn")
+var PathNode = preload("res://Scenes/UI/Navigation/PathNode.tscn")
+var PathLine = preload("res://Scenes/UI/Navigation/PathLine.tscn")
 
 const ACCELERATION = 300
 const MAX_SPEED = 30
@@ -38,6 +38,7 @@ var raycast_invertion = 1
 var spawn_position
 var random_roamcell  
 
+#TODO: change state to enum
 var state
 var roam_state = "Roam_to_randomcell"
 
@@ -129,9 +130,8 @@ func _physics_process(delta):
 				
 			if can_see_target == true:
 				call("Chase")
-			
 
-			
+
 		"Chase":
 			StateDurationTimer.stop()
 			
@@ -270,14 +270,12 @@ func _on_RoamDelayTimer_timeout():
 		roam_state = "Roam_to_randomcell"
 	call("Roam")
 
+
 func _on_StateDurationTimer_timeout():
 	if state == "Idle" or state == "Roam" and reached_endof_path == true:
 		choose_random_state(["Idle", "Roam"])
-		StateDurationTimer.wait_time = rand_range(8, 30)
-		StateDurationTimer.start()
-	else:
-		StateDurationTimer.wait_time = rand_range(8, 30)
-		StateDurationTimer.start()
+	StateDurationTimer.wait_time = rand_range(8, 30)
+	StateDurationTimer.start()
 
 func choose_random_state(state_list):
 	state_list.shuffle()

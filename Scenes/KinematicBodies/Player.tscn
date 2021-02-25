@@ -1,17 +1,19 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Sprites/KinematicBodies/Dwarf Animation-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/KinematicBodies/Player.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Nodes/PlayerCamera.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Nodes/Inventory.gd" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 1.99999
 height = 7.00002
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 6.0
+radius = 4.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 9.5
+radius = 37.5
 
 [sub_resource type="Animation" id=4]
 length = 0.1
@@ -208,7 +210,6 @@ start_node = "Idle"
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 32
 script = ExtResource( 2 )
-static_camera = true
 
 [node name="PlayerSprite" type="Sprite" parent="."]
 position = Vector2( 1, -8 )
@@ -223,17 +224,15 @@ shape = SubResource( 1 )
 
 [node name="PlayerInteractArea" type="Area2D" parent="."]
 show_behind_parent = true
-position = Vector2( 0.5, 9 )
-collision_layer = 0
+position = Vector2( 0.5, -4 )
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractArea"]
+position = Vector2( 0, 22 )
 shape = SubResource( 2 )
 
-[node name="SelectedItemSprite" type="Sprite" parent="PlayerInteractArea"]
-modulate = Color( 1, 1, 1, 0.470588 )
-
 [node name="Position2D" type="Position2D" parent="PlayerInteractArea"]
+position = Vector2( 0, 22 )
 
 [node name="PlayerPickupArea" type="Area2D" parent="."]
 position = Vector2( 0.5, 0 )
@@ -261,6 +260,19 @@ parameters/playback = SubResource( 25 )
 parameters/Idle/blend_position = Vector2( 0, 0.1 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
+[node name="Inventory" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
 [node name="PlayerCamera" type="Camera2D" parent="."]
-position = Vector2( 1, -4 )
-zoom = Vector2( 4, 4 )
+position = Vector2( 0.5, -4 )
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+editor_draw_drag_margin = true
+script = ExtResource( 3 )
+camera_path = NodePath(".")
+draw_grid = false

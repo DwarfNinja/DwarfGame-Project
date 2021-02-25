@@ -2,14 +2,12 @@ extends StaticBody2D
 
 var can_interact = false
 onready var InteractArea = $InteractArea
-onready var WhiteOutlineShader = preload("res://Shaders/WhiteOutlineShader.tres")
 
 func _ready():
-	# Connect signals
+	# Connect *s
 	InteractArea.connect("area_entered", self, "_on_InteractArea_area_entered")
 	InteractArea.connect("area_exited", self, "_on_InteractArea_area_exited")
-	$ShopSprite.material.set_shader_param("Smooth", true)
-	
+
 
 func _process(_delta):
 	if can_interact == true:

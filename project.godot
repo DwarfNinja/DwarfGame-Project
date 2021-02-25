@@ -10,14 +10,14 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "StaticBody2D",
-"class": "Craftable_Item",
+"class": "Interactable_Object",
 "language": "GDScript",
-"path": "res://Scripts/Resources/Craftable_Item.gd"
+"path": "res://Scripts/Classes/Interactable_Object.gd"
 }, {
 "base": "RigidBody2D",
 "class": "Pickable_Item",
 "language": "GDScript",
-"path": "res://Scripts/Resources/Pickable_Item.gd"
+"path": "res://Scripts/Classes/Pickable_Item.gd"
 }, {
 "base": "R_Item",
 "class": "R_Craftable",
@@ -505,7 +505,7 @@ _global_script_classes=[ {
 "path": "res://Shaders/shaderV/tools/vec2Compose.gd"
 } ]
 _global_script_class_icons={
-"Craftable_Item": "",
+"Interactable_Object": "",
 "Pickable_Item": "",
 "R_Craftable": "",
 "R_DropTable_Entry": "",
@@ -754,6 +754,11 @@ key_esc={
 key_f={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
+ ]
+}
+key_q={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
  ]
 }
 

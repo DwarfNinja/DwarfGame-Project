@@ -57,7 +57,6 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Template_2" type="Node2D" parent="Templates"]
-visible = false
 
 [node name="Walls" type="TileMap" parent="Templates/Template_2"]
 tile_set = ExtResource( 3 )

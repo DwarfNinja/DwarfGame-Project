@@ -1,8 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Sprites/KinematicBodies/PlagueDoctor Sketch.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Interactables/BlackMarket/PlagueDoctor Sketch.png" type="Texture" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://.SketchProjects/TESTFORTWITCH.gd" type="Script" id=3]
+
+
 
 
 

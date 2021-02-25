@@ -2,14 +2,13 @@ extends MarginContainer
 
 onready var HboxContainer = $SlotContainer/HBoxContainer
 
-var count_1 = preload("res://Sprites/HUD/InventoryBar/Count_1.png")
-var count_2 = preload("res://Sprites/HUD/InventoryBar/Count_2.png")
-var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
-var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
+var count_1 = preload("res://Sprites/UI/InventoryBar/Count_1.png")
+var count_2 = preload("res://Sprites/UI/InventoryBar/Count_2.png")
+var count_3 = preload("res://Sprites/UI/InventoryBar/Count_3.png")
+var count_4 = preload("res://Sprites/UI/InventoryBar/Count_4.png")
 
 var selector_position = 0
-var item_in_Selected_Slot = null
-var ui_menu_opened = false
+var selected_item = null
 
 var inventory_dic = {
 	"wood": 0,
@@ -19,71 +18,71 @@ var inventory_dic = {
 	"forge": 0
 }
 
+signal update_tileselector(selected_item)
+#TODO: refresh selected item when resources are 0
 func _ready():
-	# Craftingtable signals
-	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
-	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
-	# Forge signals
-	Events.connect("entered_forge", self, "_on_entered_forge")
-	Events.connect("exited_forge", self, "_on_exited_forge")
 	# Item signals
 	Events.connect("item_picked_up", self, "_on_item_picked_up")
-	Events.connect("item_placed", self, "_on_item_placed")
+	Events.connect("remove_item", self, "_on_remove_item")
 
 func _process(_delta):
+	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
+	update_all_slot_selectors()
 	# Clears all items in inventory
-	if Input.is_action_just_pressed("ui_accept"):
-		pass
+#	if Input.is_action_just_pressed("ui_accept"):
+#		pass
 #		for slot in HboxContainer.get_children():
 #			slot.clear()
 #			inventory_items["wood"] = 0
 #			inventory_items["iron"] = 0
+
+	if HUD.menu_open == false:
+		if get_tree().get_current_scene().get_name() == "Cave":
+			emit_signal("update_tileselector", selected_item)
 			
-	# Determines Selector position based on scroll wheel movement
-	if ui_menu_opened == false:
+			if Input.is_action_just_pressed("key_q"):
+				if get_item_in_slot(Selected_Slot):
+					Events.emit_signal("drop_item", get_item_in_slot(Selected_Slot))
+
+			if Input.is_action_just_pressed("key_leftclick"):
+				if get_item_in_slot(Selected_Slot):
+					if get_item_in_slot(Selected_Slot).type_name == "craftable":
+						selected_item = get_item_in_slot(Selected_Slot)
+					
+			if Input.is_action_just_pressed("key_rightclick"):
+				if selected_item:
+					if selected_item.type_name == "craftable":
+						Events.emit_signal("place_object", selected_item)
+						selected_item = get_item_in_slot(Selected_Slot)
+
+		# Determines Selector position based on scroll wheel movement
 		if Input.is_action_just_released("scroll_up"):
-			clear_item_selection()
 			selector_position += 1
 			if selector_position > 5:
 				selector_position = 0
+			selected_item = null
+			
 		elif Input.is_action_just_released("scroll_down"):
-			clear_item_selection()
 			selector_position -= 1
 			if selector_position < 0:
 				selector_position = 5
-				
-				
-	var Selected_Slot = get_node("SlotContainer/HBoxContainer/Slot_" + str(selector_position))
-	
-	if ui_menu_opened == false:
-		if Input.is_action_just_pressed("key_leftclick"):
-			get_item_in_slot(Selected_Slot)
-		if Selected_Slot.item_count_in_slot == 0:
-			Selected_Slot.clear()
-			clear_item_selection()
-			get_item_in_slot(Selected_Slot)
-					
-		# Iterates over all the slots and determines if it is the slot selected,
-		# all other slot's selectors are turned off
-		for index in range(0, HboxContainer.get_children().size()):
-			var slot = HboxContainer.get_children()[index]
-			if index == selector_position:
-				slot.activate_selector()
-			else:
-				slot.deactivate_selector()
+			selected_item = null
 
 
-func get_item_in_slot(Selected_Slot):
-	if Selected_Slot.item_def:
-		item_in_Selected_Slot = Selected_Slot.item_def
-	Events.emit_signal("item_selected", item_in_Selected_Slot)
-	return Selected_Slot
+func update_all_slot_selectors():
+	# Iterates over all the slots and determines if it is the slot selected,
+	# all other slot's selectors are turned off
+	for index in range(0, HboxContainer.get_children().size()):
+		var slot = HboxContainer.get_children()[index]
+		if index == selector_position:
+			slot.activate_selector()
+		else:
+			slot.deactivate_selector()
+			
+func get_item_in_slot(Slot):
+	return Slot.item_def
 	
-func clear_item_selection():
-	item_in_Selected_Slot = null
-	Events.emit_signal("item_selected", item_in_Selected_Slot)
-	
-	
+
 # If the slot is empty, set the item definition. If it is not full but the item is the same, add the item
 #Used to be add_item()
 func _on_item_picked_up(item_def):
@@ -128,7 +127,7 @@ func remove_from_inventory_dic(item_def):
 		HUD.update_hud_coins(inventory_dic["goldcoins"])
 
 #Used to be remove_item()
-func _on_item_placed(selected_item):
+func _on_remove_item(selected_item):
 	if selected_item.item_name in inventory_dic:
 		inventory_dic[selected_item.item_name] -= 1
 		for slot in HboxContainer.get_children():
@@ -161,17 +160,4 @@ func remove_specific_resource(_specific_resource, amount):
 			if slot.has_resources(specific_resource):
 				for cycles in amount:
 					slot.remove_item()
-
-
-func _on_entered_craftingtable():
-	ui_menu_opened = true
-
-func _on_exited_craftingtable():
-	ui_menu_opened = false
-	
-func _on_entered_forge(_current_opened_forge):
-	ui_menu_opened = true
-
-func _on_exited_forge():
-	ui_menu_opened = false
 

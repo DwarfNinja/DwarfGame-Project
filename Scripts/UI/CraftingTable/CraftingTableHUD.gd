@@ -7,10 +7,9 @@ var craftingtable_opened = false
 onready var Selected_Button = get_node("GridContainer/CraftingButton_" + str(crafting_selector_position))
 
 func _ready():
-	# Craftingtable signals
-	Events.connect("entered_craftingtable", self, "_on_entered_craftingtable")
-	Events.connect("exited_craftingtable", self, "_on_exited_craftingtable")
 	# Craftingbutton signal that signals if the mouse entered the button area
+	Events.connect("open_craftingtable", self, "_on_open_craftingtable")
+	Events.connect("close_craftingtable", self, "_on_close_craftingtable")
 	Events.connect("craftingbutton_mouse_entered", self, "_on_craftingbutton_mouse_entered")
 	
 
@@ -74,13 +73,18 @@ func _on_craftingbutton_mouse_entered(crafting_button):
 	
 	
 func update_resourcebar():
+	#TODO: Dynamic Resourcebar depending on required_items sets sprite and text
 	var item_def_in_craftingbutton = Selected_Button.craftable_def
-	$ResouceBar/WoodCostLabel.text = str(item_def_in_craftingbutton.wood_cost)
-	$ResouceBar/IronCostLabel.text = str(item_def_in_craftingbutton.iron_cost)
+	$ResouceBar/WoodCostLabel.text = str(item_def_in_craftingbutton.required_items.values()[0])
+	$ResouceBar/IronCostLabel.text = str(item_def_in_craftingbutton.required_items.values()[1])
 	
 
-func _on_entered_craftingtable():
+func _on_open_craftingtable():
+	visible = true
 	craftingtable_opened = true
+	HUD.menu_open = true
 
-func _on_exited_craftingtable():
+func _on_close_craftingtable():
+	visible = false
 	craftingtable_opened = false
+	HUD.menu_open = false

@@ -173,7 +173,7 @@ func check_extent_of_shape():
 		
 		for cell in $Nav2D/Area.get_used_cells():
 			var shape_footprint = get_tiles_in_rectangle(cell, random_shape_width, random_shape_height)
-			if shape_footprint_is_empty(cell, shape_footprint):
+			if shape_footprint_is_empty(shape_footprint):
 				possible_shape_locations.append(cell)
 	
 		# Selects a random shape location if there is at least 1 viable location
@@ -181,7 +181,7 @@ func check_extent_of_shape():
 			var selected_shape_location = select_random_shape_location(possible_shape_locations)
 			set_shape(random_shape, selected_shape_location)
 
-func shape_footprint_is_empty(cell, shape_footprint):
+func shape_footprint_is_empty(shape_footprint):
 	for cell in shape_footprint:
 		if $Nav2D/Area.get_cellv(cell) == -1 or $Nav2D/Walls.get_cellv(cell) != -1:
 			return false
@@ -296,8 +296,8 @@ func place_player_spawn():
 	var tilepos = $Nav2D/Walls.map_to_world(random_spawn_position)
 	place_door(random_spawn_position, tilepos)
 	$Nav2D/Walls.add_child(player)
-	player.set_position(tilepos + Vector2(16,-8))
-	$Nav2D/Walls/Player/AnimationTree.set("parameters/Idle/blend_position", Vector2(0,-0.1))
+	player.set_position(tilepos + Vector2(23,-8))
+	player.get_node("AnimationTree").set("parameters/Idle/blend_position", Vector2(0,-0.1))
 	for i in range(0, spawn_tile_array.size()):
 		$Nav2D/Indexes.set_cell(spawn_tile_array[i].x, spawn_tile_array[i].y, -1)
 

@@ -29,6 +29,7 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
+	_dockUI.create_config_file()
 	remove_control_from_bottom_panel(_dockUI)
 	_dockUI.queue_free()
 
@@ -45,7 +46,6 @@ func find_tokens_from_path(scripts: Array) -> void:
 		file.open(script_path, File.READ)
 		var contents := file.get_as_text()
 		file.close()
-		
 		find_tokens(contents, script_path)
 
 func find_tokens_from_script(script: Resource) -> void:
@@ -190,13 +190,16 @@ func get_dir_contents(dir: Directory, scripts: Array, directory_queue: Array) ->
 	
 	while file_name != "":
 		if dir.current_is_dir():
-			if file_name == ".import": # Skip .import folder which should never have scripts
+			if file_name == ".import" or filename == ".mono": # Skip .import folder which should never have scripts
 				pass
 			else:
 				directory_queue.append(dir.get_current_dir() + "/" + file_name)
 		else:
 			if file_name.ends_with(".gd") or file_name.ends_with(".cs"):
-				scripts.append(dir.get_current_dir() + "/" + file_name)
+				if dir.get_current_dir() == "res://":
+					scripts.append(dir.get_current_dir() + file_name)
+				else:
+					scripts.append(dir.get_current_dir() + "/" + file_name)
 		file_name = dir.get_next()
 
 
@@ -249,5 +252,6 @@ func create_todo(todo_string: String, script_path: String) -> Todo:
 
 
 func _on_active_script_changed(script) -> void:
-	if _dockUI.tabs.current_tab == 1:
-		_dockUI.build_tree()
+	if _dockUI:
+		if _dockUI.tabs.current_tab == 1:
+			_dockUI.build_tree()

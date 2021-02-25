@@ -10,13 +10,15 @@ var slider_iron_amount = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Events.connect("entered_forge", self, "_on_entered_forge")
-	Events.connect("exited_forge", self, "_on_exited_forge")
+	Events.connect("open_forge", self, "_on_open_forge")
+	Events.connect("close_forge", self, "_on_close_forge")
 
 func _process(_delta):
 	if forge_opened == true:
 		if Input.is_action_just_pressed("key_e"):
 			insert_iron()
+		elif Input.is_action_just_pressed("key_esc"):
+				Events.emit_signal("close_forge")
 
 func insert_iron():
 	if HUD.InventoryBar.inventory_dic["iron"] >= slider_iron_amount:
@@ -31,11 +33,15 @@ func _on_HSlider_value_changed(_value):
 	slider_iron_amount = IronAmountHSlider.value
 	IronAmountLabel.text = str(IronAmountHSlider.value)
 
-func _on_entered_forge(_current_opened_forge):
-	forge_opened = true
+func _on_open_forge(_current_opened_forge):
+	visible = true
 	current_opened_forge = _current_opened_forge
 	IronAmountHSlider.editable = true
+	forge_opened = true
+	HUD.menu_open = true
 	
-func _on_exited_forge():
+func _on_close_forge():
+	visible = false
 	forge_opened = false
+	HUD.menu_open = false
 

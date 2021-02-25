@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Sprites/Interactables/Chest-Sheet.png" type="Texture" id=1]
-[ext_resource path="res://Sprites/Interactables/ChestShadow.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/Resources/Container_Object.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/Interactables/Chest/Chest-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Interactables/Chest/ChestShadow.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Classes/Container_Object.gd" type="Script" id=3]
 [ext_resource path="res://Shaders/WhiteOutlineShader.tres" type="Material" id=4]
 [ext_resource path="res://Resources/Drop_Tables/Chest_Drop_Table.tres" type="Resource" id=5]
 
@@ -73,7 +73,7 @@ rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="ItemSpawnPosition" type="Position2D" parent="."]
-position = Vector2( 0.5, -9 )
+position = Vector2( 0.5, -8.5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Close = SubResource( 3 )
