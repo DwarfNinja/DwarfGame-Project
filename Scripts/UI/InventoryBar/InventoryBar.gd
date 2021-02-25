@@ -2,10 +2,10 @@ extends MarginContainer
 
 onready var HboxContainer = $SlotContainer/HBoxContainer
 
-var count_1 = preload("res://Sprites/HUD/InventoryBar/Count_1.png")
-var count_2 = preload("res://Sprites/HUD/InventoryBar/Count_2.png")
-var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
-var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
+var count_1 = preload("res://Sprites/UI/InventoryBar/Count_1.png")
+var count_2 = preload("res://Sprites/UI/InventoryBar/Count_2.png")
+var count_3 = preload("res://Sprites/UI/InventoryBar/Count_3.png")
+var count_4 = preload("res://Sprites/UI/InventoryBar/Count_4.png")
 
 var selector_position = 0
 var selected_item = null

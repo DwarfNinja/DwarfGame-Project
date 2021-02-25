@@ -26,8 +26,8 @@ onready var PlayerSprite = $PlayerSprite
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var PlayerInteractArea = $PlayerInteractArea
-onready var PlayerInteractPosition2D = $PlayerInteractArea/Position2D
 onready var PlayerPickupArea = $PlayerPickupArea
+onready var Inventory = $Inventory
 
 onready var animationState = animationTree.get("parameters/playback")
 
@@ -74,6 +74,8 @@ func _physics_process(delta):
 
 
 func _on_PlayerPickupArea_body_entered(body):
-	Events.emit_signal("entered_pickuparea", self)
+	if Inventory.can_fit_in_inventory(body.item_def):
+		Events.emit_signal("entered_pickuparea", self)
+	
 	
 

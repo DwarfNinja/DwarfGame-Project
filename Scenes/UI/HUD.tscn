@@ -2,12 +2,12 @@
 
 [ext_resource path="res://Scenes/UI/InventoryBar/InventoryBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/UI/HUD.gd" type="Script" id=2]
-[ext_resource path="res://Sprites/HUD/Other/HUD GoldCoin.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/Other/HUD GoldCoin.png" type="Texture" id=3]
 [ext_resource path="res://Fonts/Tres FontData/Mini Square fontdata.tres" type="DynamicFontData" id=4]
 [ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingTableHUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/UI/ForgeHUD/ForgeHUD.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Sprites/HUD/Other/HUD King Icon.png" type="Texture" id=7]
-[ext_resource path="res://Sprites/HUD/Screens/Travelling1.1.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/UI/Other/HUD King Icon.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/UI/Screens/Travelling1.1.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 8
@@ -111,8 +111,11 @@ __meta__ = {
 }
 
 [node name="InventoryBar" parent="VBoxContainer/CenterContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 86.0
 margin_right = 234.0
+margin_bottom = 26.0
 
 [node name="Control" type="Control" parent="."]
 margin_left = 2.0

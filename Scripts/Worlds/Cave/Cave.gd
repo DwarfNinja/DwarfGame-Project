@@ -1,8 +1,8 @@
 extends Node2D
 
-const TAXKNIGHT_SCENE = preload("res://Scenes/KinematicBodies/TaxKnight.tscn")
+const TAXKNIGHT_SCENE = preload("res://Scenes/Interactables/TaxKnight.tscn")
 const PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
-const ITEM_SCENE = preload("res://Scenes/Resources/Item.tscn")
+const ITEM_SCENE = preload("res://Scenes/Items/Item.tscn")
 const TILEPOSITION_OFFSET = Vector2(0,1)
 
 onready var Player = $YSort/Player
@@ -20,12 +20,14 @@ func _ready():
 	Events.connect("taxtimer_restarted", self, "_on_taxtimer_restarted")
 	GameManager.connect("cave_scene_saved", self, "_on_cave_scene_saved")
 	GameManager.connect("cave_scene_loaded", self, "_on_cave_scene_loaded")
-	HUD.InventoryBar.connect("update_tileselector", self, "_on_update_tileselector")
 	Events.connect("place_object", self, "_on_place_object")
 	Events.connect("drop_item", self, "_on_drop_item")
 	
-func _process(delta):
+func _process(_delta):
 	MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
+	
+	update_tileselector()
+		
 
 func _on_taxtimer_25_percent():
 	if TaxKnight_instanced == false:
@@ -48,7 +50,8 @@ func _on_cave_scene_loaded():
 	player_scene_instance.set_position(get_tree().get_root().get_node("Cave/PlayerPosition").get_global_position())
 	player_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
 
-func _on_update_tileselector(selected_item):
+func update_tileselector():
+	var selected_item = Player.Inventory.selected_item
 	if selected_item != null:
 		TileSelector.visible = true
 		TileSelector.global_position = $Floor.map_to_world($Floor.world_to_map(PlayerPosition2D.global_position)) + Vector2(8,8)
