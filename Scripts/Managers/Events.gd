@@ -2,13 +2,15 @@ extends Node
 
 # Item pickup/inventory signals
 signal item_picked_up(item_def)
-signal item_selected(item_in_selected_slot)
-signal item_deselected()
 signal place_object(selected_item)
 signal remove_item(selected_item)
 signal drop_item(seleted_item)
 
+signal update_slot_selectors(selector_position, selected_slot)
+signal update_slot(slot, item_def, count)
+
 signal entered_pickuparea(target)
+signal exited_pickuparea(target)
 
 # Craftingtable signals
 signal open_craftingtable()

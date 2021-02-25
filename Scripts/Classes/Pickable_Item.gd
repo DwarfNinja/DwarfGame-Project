@@ -18,6 +18,7 @@ func _ready():
 	animationPlayer.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished")
 	TweenNode.connect("tween_all_completed", self, "_on_TweenNode_tween_all_completed")
 	Events.connect("entered_pickuparea", self, "_on_entered_pickuparea")
+	Events.connect("exited_pickuparea", self, "_on_exited_pickuparea")
 	
 	if not item_def:
 		ItemSprite.texture = null
@@ -27,12 +28,12 @@ func _ready():
 
 func _integrate_forces(_state):
 	if target:
-		if HUD.InventoryBar.can_fit_in_inventory(item_def):
+		if target.get_node("Inventory").can_fit_in_inventory(item_def):
 			direction = (global_position - target.global_position).normalized()
 			apply_central_impulse(-direction * 5)
 			
 		if global_position.distance_to(target.global_position) < 15:
-			if HUD.InventoryBar.can_fit_in_inventory(item_def):
+			if target.get_node("Inventory").can_fit_in_inventory(item_def):
 				Events.emit_signal("item_picked_up", item_def)
 				queue_free()
 			
@@ -46,11 +47,11 @@ func set_item(_itemdef):
 
 func _on_entered_pickuparea(_target):
 	target = _target
-#	TrailParticles2D.emitting = true
+	#TrailParticles2D.emitting = true
 
-func _on_exited_external_playerPickupArea(_body):
+func _on_exited_pickuparea(_body):
 	target = null
-#	TrailParticles2D.emitting = false
+	#TrailParticles2D.emitting = false
 
 
 func play_chestdrop_animation(direction):

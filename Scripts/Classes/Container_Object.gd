@@ -2,7 +2,7 @@ extends Interactable_Object
 
 export (Resource) var drop_table_def
 
-onready var ItemScene = preload("res://Scenes/Resources/Item.tscn")
+onready var ItemScene = preload("res://Scenes/Items/Item.tscn")
 onready var animationPlayer = $AnimationPlayer
 onready var ItemSpawnPosition = $ItemSpawnPosition
 

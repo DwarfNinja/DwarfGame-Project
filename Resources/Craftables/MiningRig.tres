@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Items/Placeholder-Item.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/HUD/InventoryBar/HUD MiningRig 2.0.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/HUD/CraftingTable/HUD CraftingTableButton Miningrig.png" type="Texture" id=4]
-[ext_resource path="res://Scenes/Interactables/MiningRig.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/UI/InventoryBar/HUD MiningRig 2.0.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/CraftingTable/HUD CraftingTableButton Miningrig.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Interactables/Craftables/MiningRig.tscn" type="PackedScene" id=5]
 
 [resource]
 script = ExtResource( 1 )
@@ -13,8 +13,10 @@ item_name = "miningrig"
 item_count = 1
 item_texture = ExtResource( 2 )
 hud_texture = ExtResource( 3 )
-wood_cost = 2
-iron_cost = 2
-footprint = Vector2( 0, 0 )
+required_items = {
+Resource( "res://Resources/Resources/Wood.tres" ): 2,
+Resource( "res://Resources/Resources/Iron.tres" ): 2
+}
+footprint = Vector2( 2, 0 )
 blueprint_icon = ExtResource( 4 )
 packedscene = ExtResource( 5 )

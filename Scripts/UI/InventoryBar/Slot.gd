@@ -3,10 +3,10 @@ extends TextureRect
 var item_count_in_slot = 0
 var item_def: R_Item
 
-var count_1 = preload("res://Sprites/HUD/InventoryBar/Count_1.png")
-var count_2 = preload("res://Sprites/HUD/InventoryBar/Count_2.png")
-var count_3 = preload("res://Sprites/HUD/InventoryBar/Count_3.png")
-var count_4 = preload("res://Sprites/HUD/InventoryBar/Count_4.png")
+var count_1 = preload("res://Sprites/UI/InventoryBar/Count_1.png")
+var count_2 = preload("res://Sprites/UI/InventoryBar/Count_2.png")
+var count_3 = preload("res://Sprites/UI/InventoryBar/Count_3.png")
+var count_4 = preload("res://Sprites/UI/InventoryBar/Count_4.png")
 
 
 func is_full():

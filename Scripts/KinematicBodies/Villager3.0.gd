@@ -11,8 +11,8 @@ onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
 onready var Nav2D = get_parent().get_parent()
 onready var Player = get_parent().get_node("Player")
-var PathNode = preload("res://Scenes/UI/PathNode.tscn")
-var PathLine = preload("res://Scenes/UI/PathLine.tscn")
+var PathNode = preload("res://Scenes/UI/Navigation/PathNode.tscn")
+var PathLine = preload("res://Scenes/UI/Navigation/PathLine.tscn")
 
 const ACCELERATION = 300
 const MAX_SPEED = 30

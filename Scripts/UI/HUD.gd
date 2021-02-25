@@ -31,17 +31,17 @@ func _process(_delta):
 		Events.emit_signal("taxtimer_restarted")
 
 
-func update_hud_coins(inventory_dic_goldcoins):
-	GoldCoins.text = str(inventory_dic_goldcoins)
+func update_hud_coins(inventory_goldcoins_amount):
+	GoldCoins.text = str(inventory_goldcoins_amount)
 
 func update_taxtimer():
-#	var hours = int(round(TaxTimer.time_left * 96)/3600)
-#	var minutes = int(round(TaxTimer.time_left))%60**
-	var minutes = int(round(TaxTimer.time_left))/60
-	var seconds = int(round(TaxTimer.time_left))%60
+	var hours = int(round(TaxTimer.time_left * 96)/3600)
+	var minutes = int(round(TaxTimer.time_left))%60
+#	var minutes = int(round(TaxTimer.time_left))/60
+#	var seconds = int(round(TaxTimer.time_left))%60
 	
-#	TaxTimerLabel.text = ("%02d : %02d" % [hours, minutes])
-	TaxTimerLabel.text = ("%02d : %02d" % [minutes, seconds])
+	TaxTimerLabel.text = ("%02d : %02d" % [hours, minutes])
+#	TaxTimerLabel.text = ("%02d : %02d" % [minutes, seconds])
 
 
 func _on_TaxTimer_timeout():

@@ -635,7 +635,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "Todo_Manager" )
 
 [importer_defaults]
 

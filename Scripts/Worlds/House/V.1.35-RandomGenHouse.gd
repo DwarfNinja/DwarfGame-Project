@@ -296,8 +296,8 @@ func place_player_spawn():
 	var tilepos = $Nav2D/Walls.map_to_world(random_spawn_position)
 	place_door(random_spawn_position, tilepos)
 	$Nav2D/Walls.add_child(player)
-	player.set_position(tilepos + Vector2(16,-8))
-	$Nav2D/Walls/Player/AnimationTree.set("parameters/Idle/blend_position", Vector2(0,-0.1))
+	player.set_position(tilepos + Vector2(23,-8))
+	player.get_node("AnimationTree").set("parameters/Idle/blend_position", Vector2(0,-0.1))
 	for i in range(0, spawn_tile_array.size()):
 		$Nav2D/Indexes.set_cell(spawn_tile_array[i].x, spawn_tile_array[i].y, -1)
 
