@@ -9,15 +9,6 @@
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Cross.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/S-W_RightAngle.tscn" type="PackedScene" id=8]
 
-
-
-
-
-
-
-
-
-
 [resource]
 script = ExtResource( 1 )
 northwest_north = [ ExtResource( 6 ) ]

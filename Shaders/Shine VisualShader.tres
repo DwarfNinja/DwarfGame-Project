@@ -1,0 +1,140 @@
+[gd_resource type="VisualShader" load_steps=14 format=2]
+
+[ext_resource path="res://Sprites/Items/Shine.png" type="Texture" id=1]
+
+[sub_resource type="VisualShaderNodeVectorInterp" id=1]
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=2]
+uniform_name = "Speed"
+
+[sub_resource type="VisualShaderNodeVec3Uniform" id=3]
+uniform_name = "Size"
+
+[sub_resource type="VisualShaderNodeTextureUniform" id=4]
+uniform_name = "Texture"
+
+[sub_resource type="VisualShaderNodeInput" id=5]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeInput" id=6]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=7]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 0.5, 0.5, 0.5 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeScalarOp" id=8]
+default_input_values = [ 0, 0.0, 1, -0.8 ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=9]
+
+[sub_resource type="VisualShaderNodeVectorOp" id=10]
+
+[sub_resource type="VisualShaderNodeTexture" id=11]
+texture = ExtResource( 1 )
+
+[sub_resource type="VisualShaderNodeTexture" id=12]
+source = 2
+
+[resource]
+code = "shader_type canvas_item;
+uniform float Speed;
+uniform vec3 Size;
+uniform sampler2D Texture;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Texture:9
+	vec3 n_out9p0;
+	float n_out9p1;
+	{
+		vec4 _tex_read = texture(TEXTURE , UV.xy);
+		n_out9p0 = _tex_read.rgb;
+		n_out9p1 = _tex_read.a;
+	}
+
+// Input:3
+	float n_out3p0 = TIME;
+
+// ScalarUniform:11
+	float n_out11p0 = Speed;
+
+// ScalarOp:5
+	float n_out5p0 = n_out3p0 * n_out11p0;
+
+// VectorCompose:6
+	float n_in6p1 = 0.00000;
+	float n_in6p2 = 0.00000;
+	vec3 n_out6p0 = vec3(n_out5p0, n_in6p1, n_in6p2);
+
+// Input:2
+	vec3 n_out2p0 = vec3(UV, 0.0);
+
+// VectorUniform:12
+	vec3 n_out12p0 = Size;
+
+// VectorOp:4
+	vec3 n_out4p0 = n_out2p0 * n_out12p0;
+
+// VectorOp:7
+	vec3 n_out7p0 = n_out6p0 + n_out4p0;
+
+// TextureUniform:13
+	vec3 n_out13p0;
+	float n_out13p1;
+	{
+		vec4 n_tex_read = texture(Texture, n_out7p0.xy);
+		n_out13p0 = n_tex_read.rgb;
+		n_out13p1 = n_tex_read.a;
+	}
+
+// VectorMix:10
+	vec3 n_out10p0 = mix(n_out9p0, vec3(n_out9p1), vec3(n_out13p1));
+
+// Output:0
+	COLOR.rgb = n_out10p0;
+	COLOR.a = n_out9p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -54.7588, 50.8468 )
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2( 1240, 100 )
+nodes/fragment/2/node = SubResource( 5 )
+nodes/fragment/2/position = Vector2( 100, 280 )
+nodes/fragment/3/node = SubResource( 6 )
+nodes/fragment/3/position = Vector2( 100, 120 )
+nodes/fragment/4/node = SubResource( 7 )
+nodes/fragment/4/position = Vector2( 260, 260 )
+nodes/fragment/5/node = SubResource( 8 )
+nodes/fragment/5/position = Vector2( 280, 100 )
+nodes/fragment/6/node = SubResource( 9 )
+nodes/fragment/6/position = Vector2( 460, 100 )
+nodes/fragment/7/node = SubResource( 10 )
+nodes/fragment/7/position = Vector2( 600, 260 )
+nodes/fragment/8/node = SubResource( 11 )
+nodes/fragment/8/position = Vector2( 780, 160 )
+nodes/fragment/9/node = SubResource( 12 )
+nodes/fragment/9/position = Vector2( 720, 0 )
+nodes/fragment/10/node = SubResource( 1 )
+nodes/fragment/10/position = Vector2( 1020, 0 )
+nodes/fragment/11/node = SubResource( 2 )
+nodes/fragment/11/position = Vector2( 40, 200 )
+nodes/fragment/12/node = SubResource( 3 )
+nodes/fragment/12/position = Vector2( 140, 420 )
+nodes/fragment/13/node = SubResource( 4 )
+nodes/fragment/13/position = Vector2( 780, 420 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 4, 0, 3, 0, 5, 0, 5, 0, 6, 0, 6, 0, 7, 0, 4, 0, 7, 1, 9, 1, 10, 1, 9, 0, 10, 0, 9, 1, 0, 1, 10, 0, 0, 0, 11, 0, 5, 1, 12, 0, 4, 1, 7, 0, 13, 0, 13, 1, 10, 2 )

@@ -5,7 +5,7 @@
 [resource]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
-shader_param/Smooth = false
+shader_param/Smooth = true
 shader_param/width = 1.0
-shader_param/outline_color = Color( 0.941176, 0.941176, 0.941176, 0 )
+shader_param/outline_color = Color( 1, 1, 1, 0 )
 shader_param/pixel_size = 1

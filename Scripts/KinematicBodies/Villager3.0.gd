@@ -11,11 +11,11 @@ onready var RayCastN2 = $VisionConeArea/RayCast2DN2
 
 onready var Nav2D = get_parent().get_parent()
 onready var Player = get_parent().get_node("Player")
-var PathNode = preload("res://Scenes/UI/PathNode.tscn")
-var PathLine = preload("res://Scenes/UI/PathLine.tscn")
+var PathNode = preload("res://Scenes/UI/Navigation/PathNode.tscn")
+var PathLine = preload("res://Scenes/UI/Navigation/PathLine.tscn")
 
 const ACCELERATION = 300
-const MAX_SPEED = 40
+const MAX_SPEED = 30
 const FRICTION = 300
 var direction = Vector2.ZERO
 var velocity = Vector2.ZERO
@@ -38,6 +38,7 @@ var raycast_invertion = 1
 var spawn_position
 var random_roamcell  
 
+#TODO: change state to enum
 var state
 var roam_state = "Roam_to_randomcell"
 
@@ -129,9 +130,8 @@ func _physics_process(delta):
 				
 			if can_see_target == true:
 				call("Chase")
-			
 
-			
+
 		"Chase":
 			StateDurationTimer.stop()
 			
@@ -152,7 +152,8 @@ func Idle():
 
 func Roam():
 	state = "Roam"
-
+	get_random_roamcell()
+	
 func Search():
 	Events.emit_signal("update_playerghost", last_known_playerposition)
 	state = "Search"
@@ -215,7 +216,7 @@ func move_along_path(delta):
 	var move_distance = MAX_SPEED * delta
 	
 #	if path.size() > 0:
-	for point in range(path.size()):
+	for _point in range(path.size()):
 		reached_endof_path = false
 		var distance_to_next_point = starting_point.distance_to(path[0])
 		if move_distance <= distance_to_next_point:
@@ -269,14 +270,12 @@ func _on_RoamDelayTimer_timeout():
 		roam_state = "Roam_to_randomcell"
 	call("Roam")
 
+
 func _on_StateDurationTimer_timeout():
 	if state == "Idle" or state == "Roam" and reached_endof_path == true:
 		choose_random_state(["Idle", "Roam"])
-		StateDurationTimer.wait_time = rand_range(8, 30)
-		StateDurationTimer.start()
-	else:
-		StateDurationTimer.wait_time = rand_range(8, 30)
-		StateDurationTimer.start()
+	StateDurationTimer.wait_time = rand_range(8, 30)
+	StateDurationTimer.start()
 
 func choose_random_state(state_list):
 	state_list.shuffle()
@@ -293,20 +292,20 @@ func _on_VisionConeArea_body_exited(body):
 
 func instance_pathvisuals():
 	var NewLine = PathLine.instance()
-#	NewLine.set_name("RoamPath_" + get_name())
-#	Nav2D.get_node("Walls/PathContainer").add_child(NewLine)
-#
-#	var Startpoint = PathNode.instance()
-#	Startpoint.set_name("StartPoint_" + get_name())
-#	Nav2D.get_node("Walls/PathContainer").add_child(Startpoint)
-#	var Endpoint = PathNode.instance()
-#	Endpoint.set_name("EndPoint_" + get_name())
-#	Nav2D.get_node("Walls/PathContainer").add_child(Endpoint)
+	NewLine.set_name("RoamPath_" + get_name())
+	Nav2D.get_node("Walls/PathContainer").add_child(NewLine)
+
+	var Startpoint = PathNode.instance()
+	Startpoint.set_name("StartPoint_" + get_name())
+	Nav2D.get_node("Walls/PathContainer").add_child(Startpoint)
+	var Endpoint = PathNode.instance()
+	Endpoint.set_name("EndPoint_" + get_name())
+	Nav2D.get_node("Walls/PathContainer").add_child(Endpoint)
 	
 
 # FOR DEBUG PURPOSES
 func _draw():
-	var laser_color = Color(1.0, .329, .298)
+#	var laser_color = Color(1.0, .329, .298)
 	
 #	if player_in_area:
 #		for hit in hit_pos:
@@ -316,14 +315,15 @@ func _draw():
 	for point in get_parent().get_node("PathContainer").get_children():
 			get_parent().get_node("PathContainer").remove_child(point)
 			point.queue_free()
-			
-	for point in path.size():
-		if point > 1:
-#			print(path[0].distance_to(path[1]))
-			if (path[0].distance_to(path[1])) > 9:
-				var pathstep = PathNode.instance()
-				pathstep.position = path[point]
-				get_parent().get_node("PathContainer").add_child(pathstep)
+	
+	if state == "Roam":
+		for point in path.size():
+			if point > 1:
+	#			print(path[0].distance_to(path[1]))
+				if (path[0].distance_to(path[1])) > 9:
+					var pathstep = PathNode.instance()
+					pathstep.position = path[point]
+					get_parent().get_node("PathContainer").add_child(pathstep)
 #
 #	for point in range(0, path.size() - 1):
 #		draw_circle(path[0], 1, laser_color)

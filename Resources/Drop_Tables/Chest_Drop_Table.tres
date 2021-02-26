@@ -1,0 +1,27 @@
+[gd_resource type="Resource" load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/Resources/R_DropTable.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Resources/Wood.tres" type="Resource" id=2]
+[ext_resource path="res://Resources/Resources/Iron.tres" type="Resource" id=3]
+[ext_resource path="res://Resources/Resources/GoldCoins.tres" type="Resource" id=4]
+[ext_resource path="res://Scripts/Resources/R_DropTable_Entry.gd" type="Script" id=5]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 5 )
+item = ExtResource( 3 )
+drop_rate = 50
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 5 )
+item = ExtResource( 2 )
+drop_rate = 50
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 5 )
+item = ExtResource( 4 )
+drop_rate = 20
+
+[resource]
+script = ExtResource( 1 )
+container_name = "chest"
+drop_table = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]

@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scripts/UI/InventoryBar/Slot.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/HUD/InventoryBar/Selector.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/HUD/InventoryBar/SelectorExpand.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Tres FontData/Mini Square fontdata.tres" type="DynamicFontData" id=1]
+[ext_resource path="res://Sprites/UI/InventoryBar/Selector.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/UI/InventoryBar/SelectorExpand.png" type="Texture" id=3]
 
+[sub_resource type="DynamicFont" id=1]
+size = 8
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
 
-
-
-
-[sub_resource type="Animation" id=3]
-resource_name = "Selector Idle"
+[sub_resource type="Animation" id=2]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:texture")
@@ -24,8 +25,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 2 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Selector Selecting"
+[sub_resource type="Animation" id=3]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:texture")
@@ -44,18 +44,20 @@ tracks/0/keys = {
 margin_right = 22.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 22, 20 )
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemCount" type="TextureRect" parent="."]
-margin_left = 15.0
-margin_top = 11.0
-margin_right = 21.0
-margin_bottom = 18.0
+[node name="ItemCount" type="Label" parent="."]
+margin_top = 9.0
+margin_right = 20.0
+margin_bottom = 19.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+align = 2
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": ""
 }
 
 [node name="Selector" type="TextureRect" parent="."]
@@ -71,5 +73,5 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
 autoplay = "Selector Idle"
-"anims/Selector Idle" = SubResource( 3 )
-"anims/Selector Selecting" = SubResource( 2 )
+"anims/Selector Idle" = SubResource( 2 )
+"anims/Selector Selecting" = SubResource( 3 )
