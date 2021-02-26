@@ -58,7 +58,7 @@ func _ready():
 	
 	spawn_position = get_global_position()
 	get_random_roamcell()
-#	instance_pathvisuals()
+	instance_pathvisuals()
 	
 	choose_random_state(["Idle", "Roam"])
  
@@ -290,17 +290,17 @@ func _on_VisionConeArea_body_exited(body):
 	if body.get_name() == "Player":
 		player_in_area = false
 
-#func instance_pathvisuals():
-#	var NewLine = PathLine.instance()
-#	NewLine.set_name("RoamPath_" + get_name())
-#	Nav2D.get_node("Walls/PathContainer").add_child(NewLine)
-#
-#	var Startpoint = PathNode.instance()
-#	Startpoint.set_name("StartPoint_" + get_name())
-#	Nav2D.get_node("Walls/PathContainer").add_child(Startpoint)
-#	var Endpoint = PathNode.instance()
-#	Endpoint.set_name("EndPoint_" + get_name())
-#	Nav2D.get_node("Walls/PathContainer").add_child(Endpoint)
+func instance_pathvisuals():
+	var NewLine = PathLine.instance()
+	NewLine.set_name("RoamPath_" + get_name())
+	Nav2D.get_node("Walls/PathContainer").add_child(NewLine)
+
+	var Startpoint = PathNode.instance()
+	Startpoint.set_name("StartPoint_" + get_name())
+	Nav2D.get_node("Walls/PathContainer").add_child(Startpoint)
+	var Endpoint = PathNode.instance()
+	Endpoint.set_name("EndPoint_" + get_name())
+	Nav2D.get_node("Walls/PathContainer").add_child(Endpoint)
 	
 
 # FOR DEBUG PURPOSES

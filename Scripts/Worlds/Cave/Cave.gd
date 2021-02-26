@@ -24,9 +24,9 @@ func _ready():
 	Events.connect("drop_item", self, "_on_drop_item")
 	
 func _process(_delta):
-	MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
-	
-	update_tileselector()
+	if Player:
+		MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
+		update_tileselector()
 		
 
 func _on_taxtimer_25_percent():

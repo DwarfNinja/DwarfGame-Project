@@ -25,7 +25,7 @@ func _on_request_roamcell(Villager):
 				
 	villager_roam_destinations.shuffle()
 	var roam_cell = (villager_roam_destinations.pop_front())
-	$Indexes.set_cellv($Area.world_to_map(roam_cell), 14) #DEBUG
+#	$Indexes.set_cellv($Area.world_to_map(roam_cell), 14) #DEBUG
 	Villager.random_roamcell = roam_cell
 	
 #func _on_request_navpath(Villager, target_cell):
