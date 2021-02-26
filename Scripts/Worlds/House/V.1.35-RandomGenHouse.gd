@@ -19,7 +19,7 @@ onready var walls_tile_id = HouseTileset.find_tile_by_name("Walls")
 onready var front_walls_tile_id = HouseTileset.find_tile_by_name("Walls_Wall")
 onready var wall_shadow_tile_id = HouseTileset.find_tile_by_name("WallShadow")
 
-onready var area_tile_id = HouseTileset.find_tile_by_name("Area")
+onready var area_tile_id = HouseTileset.find_tile_by_name("AreaIndex")
 
 onready var loot_index_tile_id = HouseTileset.find_tile_by_name("ContainerIndex")
 onready var enemy_index_tile_id = HouseTileset.find_tile_by_name("EnemyIndex")
@@ -231,6 +231,7 @@ func clear_used_cells():
 			# Clear cells in Indexes used in $Nav2D/Walls
 			$Nav2D/Indexes.set_cell(cell.x, cell.y, -1)
 
+
 #Clears Index tiles that are not in Area, ie stuck in Walls
 func clear_index_tile_conflict():
 	for cell in $Nav2D/Indexes.get_used_cells():
@@ -239,9 +240,39 @@ func clear_index_tile_conflict():
 			if $Nav2D/Indexes.get_cellv(cell) != spawn_index_tile_id:
 				$Nav2D/Indexes.set_cell(cell.x, cell.y, -1)
 
+
 func update_allcell_bitmasks():
 	for cell in $Nav2D/Walls.get_used_cells():
 		$Nav2D/Walls.update_bitmask_area(cell)
+
+
+func check_unused_openings(room_positions):
+	var top_connections = [Vector2(2,0), Vector2(11,0), Vector2(20,0)]
+	var side_connections =[Vector2(0,11), Vector2(22,11)]
+	
+	for cell in room_positions:
+		for _cell in top_connections:
+			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(0,-1)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
+				set_connection_end((cell + _cell) + Vector2(-1,0), TopConnectionEnd)
+				
+				if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(-2,3)) == wall_shadow_tile_id:
+					$Nav2D/Walls.set_cell((cell.x + _cell.x + -2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
+					
+				if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(2,3)) == wall_shadow_tile_id:
+					$Nav2D/Walls.set_cell((cell.x + _cell.x + 2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
+
+	for cell in room_positions:
+		for _cell in side_connections:
+			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(-1,0)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
+				set_connection_end((cell + _cell) + Vector2(0,-4), L_SideConnectionEnd)
+				
+			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(1,0)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
+				set_connection_end((cell + _cell) + Vector2(0,-4), R_SideConnectionEnd)
+
+func set_connection_end(unused_opening_location, ConnectionEnd):
+	for cell in ConnectionEnd.get_used_cells():
+		$Nav2D/Walls.set_cell(unused_opening_location.x + cell.x, unused_opening_location.y + cell.y, ConnectionEnd.get_cellv(cell), 
+		false, false, false, ConnectionEnd.get_cell_autotile_coord(cell.x, cell.y))
 
 
 func get_tiles_in_rec_centre(node_pos, rect_width, rect_height):
@@ -277,7 +308,8 @@ func place_loot():
 
 
 func place_enemies():
-	var enemy_tile_array = $Nav2D/Indexes.get_used_cells_by_id(enemy_index_tile_id)
+#	var enemy_tile_array = $Nav2D/Indexes.get_used_cells_by_id(enemy_index_tile_id)
+	var enemy_tile_array = $Nav2D/Area.get_used_cells_by_id(area_tile_id)
 	var random_enemy_positions = select_random_enemy_positions(enemy_tile_array)
 	print("random_enemy_positions = ", random_enemy_positions)
 	for i in range(0, random_enemy_positions.size()):
@@ -386,10 +418,17 @@ func select_random_lootable(chest):
 		return chest
 
 
+#func select_random_enemy_positions(enemy_tile_array):
+#	var random_enemy_positions = []
+#	if enemy_tile_array.size() < max_enemies:
+#		max_enemies = enemy_tile_array.size()
+#	for _enemy in range(0, max_enemies):
+#		enemy_tile_array.shuffle()
+#		random_enemy_positions.append(enemy_tile_array.pop_front())
+#	return random_enemy_positions
+	
 func select_random_enemy_positions(enemy_tile_array):
 	var random_enemy_positions = []
-	if enemy_tile_array.size() < max_enemies:
-		max_enemies = enemy_tile_array.size()
 	for _enemy in range(0, max_enemies):
 		enemy_tile_array.shuffle()
 		random_enemy_positions.append(enemy_tile_array.pop_front())
@@ -417,33 +456,4 @@ func select_random_spawn_position(spawn_tile_array):
 	for spawn in possible_player_spawns:
 		possible_player_spawns.shuffle()
 	return possible_player_spawns.pop_front()
-
-
-func check_unused_openings(room_positions):
-	var top_connections = [Vector2(2,0), Vector2(11,0), Vector2(20,0)]
-	var side_connections =[Vector2(0,11), Vector2(22,11)]
-	
-	for cell in room_positions:
-		for _cell in top_connections:
-			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(0,-1)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
-				set_connection_end((cell + _cell) + Vector2(-1,0), TopConnectionEnd)
-				
-				if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(-2,3)) == wall_shadow_tile_id:
-					$Nav2D/Walls.set_cell((cell.x + _cell.x + -2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
-					
-				if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(2,3)) == wall_shadow_tile_id:
-					$Nav2D/Walls.set_cell((cell.x + _cell.x + 2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
-
-	for cell in room_positions:
-		for _cell in side_connections:
-			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(-1,0)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
-				set_connection_end((cell + _cell) + Vector2(0,-4), L_SideConnectionEnd)
-				
-			if $Nav2D/Walls.get_cellv(cell + _cell + Vector2(1,0)) != -1 and $Nav2D/Walls.get_cellv(cell + _cell) == -1:
-				set_connection_end((cell + _cell) + Vector2(0,-4), R_SideConnectionEnd)
-
-func set_connection_end(unused_opening_location, ConnectionEnd):
-	for cell in ConnectionEnd.get_used_cells():
-		$Nav2D/Walls.set_cell(unused_opening_location.x + cell.x, unused_opening_location.y + cell.y, ConnectionEnd.get_cellv(cell), 
-		false, false, false, ConnectionEnd.get_cell_autotile_coord(cell.x, cell.y))
 
