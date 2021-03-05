@@ -45,4 +45,4 @@ signal randomgenhouse_loaded()
 signal request_navpath()
 signal request_roamcell(villager_id)
 
-signal update_playerghost(last_known_playerposition)
+signal update_lastknown_playerposition(last_known_playerposition)

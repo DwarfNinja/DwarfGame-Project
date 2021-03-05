@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/SE_3x2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Square_4x2.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/TopConnectionEnd.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/R_ConnectionEnd.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/L_ConnectionEnd.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/UI/PlayerGhost.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_1.tscn" type="PackedScene" id=15]
 
@@ -38,6 +39,8 @@ format = 1
 visible = false
 
 [node name="PathContainer" type="Node2D" parent="Nav2D/Walls"]
+
+[node name="Player" parent="Nav2D/Walls" instance=ExtResource( 11 )]
 
 [node name="Area" type="TileMap" parent="Nav2D"]
 visible = false

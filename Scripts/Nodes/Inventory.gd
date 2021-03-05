@@ -125,7 +125,7 @@ func remove_from_slot(slot, item_def):
 	if slot_is_empty(slot) == false:
 		inventory_slots[slot]["count"] -= item_def.item_count
 	if slot_is_empty(slot):
-		inventory_slots[slot]["item_def"] == null
+		inventory_slots[slot]["item_def"] = null
 	Events.emit_signal("update_slot", slot, item_def, slot["count"])
 
 
