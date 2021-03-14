@@ -23,6 +23,7 @@ func _ready():
 	if not item_def:
 		ItemSprite.texture = null
 		push_error("ERROR: No item_def defined in item " + str(self))
+		get_tree().quit()
 		return
 	set_item(item_def)
 
@@ -54,18 +55,15 @@ func _on_exited_pickuparea(_body):
 	#TrailParticles2D.emitting = false
 
 
-func play_chestdrop_animation(direction):
+func play_chestdrop_animation(drop_direction):
 	collisionShape2D.disabled = true
-	targetpos = global_position + direction
+	targetpos = global_position + drop_direction
 	var ITEM_JUMP_HEIGHT = 32
 	
 	TweenNode.interpolate_property(self, "global_position:x", global_position.x, targetpos.x, 0.5)
 	TweenNode.interpolate_property(self, "global_position:y", global_position.y, targetpos.y - ITEM_JUMP_HEIGHT, 0.25)
 	TweenNode.interpolate_property(self, "global_position:y", targetpos.y - ITEM_JUMP_HEIGHT, targetpos.y, 0.85, Tween.TRANS_BOUNCE, Tween.EASE_OUT, 0.6)
 	TweenNode.start()
-	
-func play_drop_animation(direction):
-	collisionShape2D.disabled = true
 	
 func _on_TweenNode_tween_all_completed():
 	collisionShape2D.disabled = false

@@ -36,7 +36,7 @@ func set_facing_direction():
 func drop_items():
 	var available_direction_list = direction_list.duplicate()
 	
-	for item in range(1, select_random_itemamount()):
+	for _item in range(1, select_random_itemamount()):
 		var random_item_resource = select_item_from_drop_table()
 		var random_item = ItemScene.instance()
 		random_item.item_def = random_item_resource

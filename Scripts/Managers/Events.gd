@@ -16,6 +16,8 @@ signal exited_pickuparea(target)
 signal open_craftingtable()
 signal close_craftingtable()
 
+signal craft_item(craftable_def)
+
 # Forge signals
 signal open_forge(current_opened_forge)
 signal close_forge()
@@ -45,4 +47,4 @@ signal randomgenhouse_loaded()
 signal request_navpath()
 signal request_roamcell(villager_id)
 
-signal update_playerghost(last_known_playerposition)
+signal update_lastknown_playerposition(last_known_playerposition)
