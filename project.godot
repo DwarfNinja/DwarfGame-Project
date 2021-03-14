@@ -629,6 +629,7 @@ config/icon="res://icon.png"
 Events="*res://Scripts/Managers/Events.gd"
 HUD="*res://Scenes/UI/HUD.tscn"
 GameManager="*res://Scripts/Managers/GameManager.gd"
+BTDebugServer="*res://addons/btree/script/bt_debug_server.gd"
 
 [debug]
 
@@ -647,7 +648,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Todo_Manager" )
+enabled=PoolStringArray( "Todo_Manager", "btree" )
 
 [importer_defaults]
 
@@ -783,6 +784,11 @@ key_q={
 2d_physics/layer_5="Pickable Object"
 2d_physics/layer_6="Static Object"
 2d_physics/layer_7="PlayerGhost"
+
+[network]
+
+limits/websocket_server/max_in_buffer_kb=4096
+limits/websocket_server/max_out_buffer_kb=4096
 
 [rendering]
 

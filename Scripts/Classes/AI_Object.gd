@@ -9,7 +9,7 @@ onready var VisionConeArea = get_node("VisionConeArea")
 
 var direction = Vector2.ZERO
 const ACCELERATION = 300
-const MAX_SPEED = 30
+const MAX_SPEED = 20 #was 30
 const FRICTION = 300
 var velocity = Vector2.ZERO
 

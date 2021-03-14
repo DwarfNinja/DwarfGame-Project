@@ -74,7 +74,7 @@ func _on_drop_item(selected_item):
 	var item_scene_instance = ITEM_SCENE.instance()
 	item_scene_instance.item_def = selected_item
 	item_scene_instance.set_global_position(Player.global_position)
-	item_scene_instance.play_drop_animation()
+#	item_scene_instance.play_drop_animation()
 	$YSort.add_child(item_scene_instance)
 	Events.emit_signal("remove_item", selected_item)
 	

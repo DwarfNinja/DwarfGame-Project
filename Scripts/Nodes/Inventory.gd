@@ -21,6 +21,7 @@ var selected_slot
 
 func _ready():
 	Events.connect("item_picked_up", self, "_on_item_picked_up")
+	Events.connect("craft_item", self, "_on_craft_item")
 	Events.emit_signal("update_slot_selectors", selector_position, selected_slot)
 
 func _process(_delta):
@@ -115,7 +116,20 @@ func _on_remove_item(item_def):
 		return
 	remove_from_slot(inventory_slots["slot_" + str(selector_position)], item_def)
 
-
+func _on_craft_item(craftable_def):
+	if has_items_in_inventory(craftable_def):
+		remove_required_items(craftable_def.required_items)
+	else:
+		print("NOT ENOUGH RESOURCES!")
+	
+#	if HUD.InventoryBar.can_fit_in_inventory(craftable_def):
+#		var crafted_item = craftable_def.duplicate()
+#		remove_required_items(crafted_item)
+#		HUD.InventoryBar.add_item(craftable_def)
+#
+#	else:
+#		print("NOT ENOUGH RESOURCES!")
+	
 func add_to_slot(slot, item_def):
 	inventory_slots[slot]["item_def"] = item_def
 	inventory_slots[slot]["count"] += item_def.item_count
@@ -126,7 +140,7 @@ func remove_from_slot(slot, item_def):
 		inventory_slots[slot]["count"] -= item_def.item_count
 	if slot_is_empty(slot):
 		inventory_slots[slot]["item_def"] = null
-	Events.emit_signal("update_slot", slot, item_def, slot["count"])
+	Events.emit_signal("update_slot", slot, item_def, inventory_slots[slot]["count"])
 
 
 func slot_has_item(slot, item_def):
@@ -140,25 +154,41 @@ func slot_is_empty(slot):
 	
 
 #Iterates through slots in Inventory backwards and removes resources == required_items.item_cost
-func remove_required_resources(crafted_item, required_items):
+func remove_required_items(required_items):
 	var slot_list = inventory_slots.keys()
 	var inverse_slot_list = slot_list.duplicate()
 	inverse_slot_list.invert()
-	
+	print(inverse_slot_list)
 	for slot in inverse_slot_list:
-		if inventory_slots[slot]["item_def"] == null:
-			return
+#		if inventory_slots[slot]["item_def"] == null:
+#			return
 		for item in required_items:
+			print(inventory_slots[slot]["item_def"], item)
 			if inventory_slots[slot]["item_def"] == item:
-				for amount in item:
-					slot.remove_item()
-					crafted_item.wood_cost -= 1
+				for amount in required_items[item]:
+					remove_from_slot(slot, item)
 
-
-func remove_specific_resource(_specific_resource, amount):
+func item_in_inventory(item):
 	for slot in inventory_slots:
 		if slot["item_def"]:
-			var specific_resource = _specific_resource
-			if slot_has_item(slot, specific_resource):
+			if slot_has_item(slot, item):
+				return true
+	return false
+
+func has_items_in_inventory(craftable_def):
+	for required_item in craftable_def.required_items:
+		for slot in inventory_slots:
+			if inventory_slots[slot]["item_def"] == required_item:
+				craftable_def.required_items[required_item] -= inventory_slots[slot]["count"]
+			if craftable_def.required_items[required_item] <= 0:
+				return true
+#			print(craftable_def.required_items)
+	return false
+
+func remove_specific_resource(_specific_item, amount):
+	for slot in inventory_slots:
+		if slot["item_def"]:
+			var specific_item = _specific_item
+			if slot_has_item(slot, specific_item):
 				for cycles in amount:
 					slot.remove_item()

@@ -1,7 +1,9 @@
 extends Navigation2D
 
+onready var PathNode = preload("res://Scenes/UI/Navigation/PathNode.tscn")
 onready var Player = get_node("Walls/Player")
 onready var PlayerGhost = get_node("Walls/PlayerGhost")
+
 var current_playerposition
 var uptodate_last_known_playerpositon
 

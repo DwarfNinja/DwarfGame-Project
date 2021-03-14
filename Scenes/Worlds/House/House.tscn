@@ -38,8 +38,6 @@ format = 1
 [node name="PlayerGhost" parent="Nav2D/Walls" instance=ExtResource( 14 )]
 visible = false
 
-[node name="PathContainer" type="Node2D" parent="Nav2D/Walls"]
-
 [node name="Player" parent="Nav2D/Walls" instance=ExtResource( 11 )]
 
 [node name="Area" type="TileMap" parent="Nav2D"]

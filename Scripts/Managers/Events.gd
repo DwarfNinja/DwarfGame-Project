@@ -16,6 +16,8 @@ signal exited_pickuparea(target)
 signal open_craftingtable()
 signal close_craftingtable()
 
+signal craft_item(craftable_def)
+
 # Forge signals
 signal open_forge(current_opened_forge)
 signal close_forge()
