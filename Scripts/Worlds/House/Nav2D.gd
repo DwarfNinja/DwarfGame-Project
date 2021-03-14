@@ -1,6 +1,8 @@
 extends Navigation2D
 
-onready var PlayerGhost = $Walls/PlayerGhost
+onready var PathNode = preload("res://Scenes/UI/Navigation/PathNode.tscn")
+onready var Player = get_node("Walls/Player")
+onready var PlayerGhost = get_node("Walls/PlayerGhost")
 
 var current_playerposition
 var uptodate_last_known_playerpositon
@@ -8,13 +10,13 @@ var uptodate_last_known_playerpositon
 func _ready():
 	Events.connect("request_roamcell", self, "_on_request_roamcell")
 	Events.connect("request_navpath", self, "_on_request_navpath")
-	Events.connect("update_playerghost", self, "_on_update_lastknown_playerposition")
+	Events.connect("update_lastknown_playerposition", self, "_on_update_lastknown_playerposition")
 	$Walls/PlayerGhost/PlayerGhostArea.connect("body_entered", self, "_on_PlayerGhostArea_body_entered")
-			
+
 #FIX: Make it unreliant on ("Walls/Player"), decoupling
-#func _process(_delta):
-#	if get_node("Walls/Player") != null:
-#		current_playerposition = get_node("Walls/Player").get_global_position()
+func _process(_delta):
+	if Player:
+		current_playerposition = Player.get_global_position()
 	
 func _on_request_roamcell(Villager):
 	var villager_spawn_position = $Area.world_to_map(Villager.spawn_position)
@@ -25,18 +27,12 @@ func _on_request_roamcell(Villager):
 				
 	villager_roam_destinations.shuffle()
 	var roam_cell = (villager_roam_destinations.pop_front())
-	$Indexes.set_cellv($Area.world_to_map(roam_cell), 14) #DEBUG
+#	$Indexes.set_cellv($Area.world_to_map(roam_cell), 14) #DEBUG
 	Villager.random_roamcell = roam_cell
 	
-#func _on_request_navpath(Villager, target_cell):
-#	var path = get_simple_path(Villager.global_position, target_cell, false)
-#	print(path)
-#	var inverse_path = path
-#	inverse_path.invert()
-#	Villager.path = PoolVector2Array(path)
-#	Villager.inverse_path = PoolVector2Array(inverse_path)
-#	$Line2D.points = PoolVector2Array(path)
-#	$Line2D.show()
+func _on_request_navpath(Villager, target_cell):
+	var path = get_simple_path(Villager.global_position, target_cell, false)
+	Villager.path = PoolVector2Array(path)
 	
 func _on_update_lastknown_playerposition(received_playerposition):
 	if uptodate_last_known_playerpositon == null:
