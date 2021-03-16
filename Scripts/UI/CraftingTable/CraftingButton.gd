@@ -23,16 +23,8 @@ func _on_mouse_entered():
 	Events.emit_signal("craftingbutton_mouse_entered", self)
 
 func craft_item():
-	var craftable_def_dupe = craftable_def.duplicate()
-	Events.emit_signal("craft_item", craftable_def_dupe)
-#	if HUD.InventoryBar.inventory_dic["wood"] >= craftable_def.wood_cost and HUD.InventoryBar.inventory_dic["iron"] >= craftable_def.iron_cost:
-#		if HUD.InventoryBar.can_fit_in_inventory(craftable_def):
-#			var crafted_item = craftable_def.duplicate()
-#			remove_required_resources(crafted_item)
-#			HUD.InventoryBar.add_item(craftable_def)
-#
-#	else:
-#		print("NOT ENOUGH RESOURCES!")
+	Events.emit_signal("craft_item", craftable_def)
+
 	
 func remove_required_resources(crafted_item):
 	HUD.InventoryBar.inventory_dic["wood"] -= crafted_item.wood_cost

@@ -35,7 +35,7 @@ func _on_update_slot(slot, item_def, count):
 func activate_selector(slot, selected_slot):
 	var slot_selector = slot.get_node("Selector")
 	slot_selector.show()
-	if slot == selected_slot:
+	if slot.get_name() == selected_slot:
 		slot_selector.get_node("AnimationPlayer").current_animation = "Selector Selecting"
 	else:
 		slot_selector.get_node("AnimationPlayer").current_animation = "Selector Idle"
