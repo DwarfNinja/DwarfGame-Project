@@ -224,7 +224,7 @@ shape = SubResource( 1 )
 
 [node name="PlayerInteractArea" type="Area2D" parent="."]
 show_behind_parent = true
-position = Vector2( 0.5, -4 )
+position = Vector2( 0.5, -3 )
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractArea"]

@@ -57,7 +57,9 @@ func _process(_delta):
 		if Input.is_action_just_pressed("key_q"):
 			if get_item_in_slot(current_slot):
 				Events.emit_signal("drop_item", get_item_in_slot(current_slot))
-
+				
+		if Input.is_action_just_pressed("key_f"):
+			print(inventory_slots)
 
 
 func select_slot(current_slot):
@@ -82,15 +84,14 @@ func add_item(item_def):
 		add_to_player_items(item_def)
 		return
 	for slot in inventory_slots:
+		if slot_has_item(slot, item_def) and not slot_is_full(slot):
+			add_to_slot(slot, item_def)
+			return
+	for slot in inventory_slots:
 		if slot_is_empty(slot):
 			add_to_slot(slot, item_def)
 			return
-		elif not slot_is_full(slot):
-			if slot_has_item(slot, item_def):
-				add_to_slot(slot, item_def)
-				return
-			
-				
+
 func can_fit_in_inventory(item_def):
 	if item_def in player_items:
 		return true
@@ -104,12 +105,11 @@ func can_fit_in_inventory(item_def):
 
 
 func add_to_player_items(item_def):
-	player_items[item_def] += item_def.item_count
+	player_items[item_def] += 1
 	if item_def == goldcoins:
 		HUD.update_hud_coins(player_items[goldcoins])
 
 
-#Used to be remove_item()
 func _on_remove_item(item_def):
 	if item_def in player_items:
 		player_items[item_def] -= 1
@@ -119,25 +119,18 @@ func _on_remove_item(item_def):
 func _on_craft_item(craftable_def):
 	if has_items_in_inventory(craftable_def):
 		remove_required_items(craftable_def.required_items)
+		add_item(craftable_def)
 	else:
 		print("NOT ENOUGH RESOURCES!")
 	
-#	if HUD.InventoryBar.can_fit_in_inventory(craftable_def):
-#		var crafted_item = craftable_def.duplicate()
-#		remove_required_items(crafted_item)
-#		HUD.InventoryBar.add_item(craftable_def)
-#
-#	else:
-#		print("NOT ENOUGH RESOURCES!")
-	
 func add_to_slot(slot, item_def):
 	inventory_slots[slot]["item_def"] = item_def
-	inventory_slots[slot]["count"] += item_def.item_count
+	inventory_slots[slot]["count"] += 1
 	Events.emit_signal("update_slot", slot, item_def, inventory_slots[slot]["count"])
 
 func remove_from_slot(slot, item_def):
 	if slot_is_empty(slot) == false:
-		inventory_slots[slot]["count"] -= item_def.item_count
+		inventory_slots[slot]["count"] -= 1
 	if slot_is_empty(slot):
 		inventory_slots[slot]["item_def"] = null
 	Events.emit_signal("update_slot", slot, item_def, inventory_slots[slot]["count"])
@@ -153,20 +146,22 @@ func slot_is_empty(slot):
 	return inventory_slots[slot]["count"] <= 0
 	
 
-#Iterates through slots in Inventory backwards and removes resources == required_items.item_cost
-func remove_required_items(required_items):
+func remove_required_items(_required_items):
+	var required_items = _required_items.duplicate()
+	
 	var slot_list = inventory_slots.keys()
 	var inverse_slot_list = slot_list.duplicate()
 	inverse_slot_list.invert()
-	print(inverse_slot_list)
+	
 	for slot in inverse_slot_list:
-#		if inventory_slots[slot]["item_def"] == null:
-#			return
-		for item in required_items:
-			print(inventory_slots[slot]["item_def"], item)
-			if inventory_slots[slot]["item_def"] == item:
-				for amount in required_items[item]:
-					remove_from_slot(slot, item)
+		if inventory_slots[slot]["item_def"] == null:
+			continue
+		for required_item in required_items:
+			if slot_has_item(slot, required_item):
+				for amount in required_items[required_item]:
+					if inventory_slots[slot]["count"] > 0:
+						remove_from_slot(slot, required_item)
+						required_items[required_item] -= 1
 
 func item_in_inventory(item):
 	for slot in inventory_slots:
@@ -175,15 +170,16 @@ func item_in_inventory(item):
 				return true
 	return false
 
-func has_items_in_inventory(craftable_def):
+func has_items_in_inventory(_craftable_def):
+	var craftable_def = _craftable_def.duplicate()
+	
 	for required_item in craftable_def.required_items:
 		for slot in inventory_slots:
-			if inventory_slots[slot]["item_def"] == required_item:
+			if slot_has_item(slot, required_item):
 				craftable_def.required_items[required_item] -= inventory_slots[slot]["count"]
-			if craftable_def.required_items[required_item] <= 0:
-				return true
-#			print(craftable_def.required_items)
-	return false
+		if craftable_def.required_items[required_item] > 0:
+			return false
+	return true
 
 func remove_specific_resource(_specific_item, amount):
 	for slot in inventory_slots:

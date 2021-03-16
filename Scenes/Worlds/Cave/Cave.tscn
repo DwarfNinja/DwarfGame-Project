@@ -68,6 +68,5 @@ position = Vector2( 80, 32 )
 position = Vector2( 88, 128 )
 
 [node name="TileSelector" type="Sprite" parent="YSort"]
-visible = false
 z_index = 1
 texture = ExtResource( 9 )

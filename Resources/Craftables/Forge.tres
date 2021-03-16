@@ -10,7 +10,6 @@
 script = ExtResource( 1 )
 type_name = "craftable"
 item_name = "forge"
-item_count = 1
 item_texture = ExtResource( 3 )
 hud_texture = ExtResource( 4 )
 required_items = {
