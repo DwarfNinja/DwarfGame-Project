@@ -31,8 +31,9 @@ signal exited_shop()
 signal entered_blackmarket()
 signal exited_blackmarket()
 
-signal taxtimer_is_25_percent()
-signal taxtimer_restarted()
+signal day_ending(tax)
+signal day_ended(tax)
+signal day_started()
 
 # Mouse entered craftingtablebutton signal
 signal craftingbutton_mouse_entered()

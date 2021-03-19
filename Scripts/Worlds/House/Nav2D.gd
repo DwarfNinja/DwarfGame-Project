@@ -34,15 +34,17 @@ func _on_request_navpath(Villager, target_cell):
 	var path = get_simple_path(Villager.global_position, target_cell, false)
 	Villager.path = PoolVector2Array(path)
 	
-func _on_update_lastknown_playerposition(received_playerposition):
+func _on_update_lastknown_playerposition(received_playerposition, can_see_target):
 	if uptodate_last_known_playerpositon == null:
 		uptodate_last_known_playerpositon = received_playerposition
 	else:
 		if received_playerposition.distance_to(current_playerposition) < uptodate_last_known_playerpositon.distance_to(current_playerposition):
 			uptodate_last_known_playerpositon = received_playerposition
-			
-	PlayerGhost.global_position = uptodate_last_known_playerpositon
-	PlayerGhost.visible = true
+	if can_see_target == false: 
+		PlayerGhost.global_position = uptodate_last_known_playerpositon
+		PlayerGhost.visible = true
+	else:
+		PlayerGhost.visible = false
 	
 	for Villager in get_tree().get_nodes_in_group("Villager"):
 #		if Villager.last_known_player_position != uptodate_last_known_playerpositon:

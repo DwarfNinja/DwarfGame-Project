@@ -85,14 +85,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TaxTimerLabel" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
+[node name="DayTimeLabel" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
 margin_left = 287.0
 margin_right = 313.0
 margin_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_fonts/font = SubResource( 2 )
-text = "20 : 00"
+text = "07 : 00"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
@@ -152,10 +152,6 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="TaxTimer" type="Timer" parent="."]
-wait_time = 900.0
-one_shot = true
 
 [node name="ScreenTimer" type="Timer" parent="."]
 wait_time = 1.2

@@ -20,7 +20,14 @@ var updated_playerghost = false
 var raycast_invertion = 1
 
 #TODO: change state to enum
+enum states {
+	IDLE, 
+	ROAM, 
+	SEARCH, 
+	CHASE
+}
 var state
+
 var roam_state = "Roam_to_randomcell"
 
 func _ready():
@@ -34,7 +41,7 @@ func _ready():
 	spawn_position = get_global_position()
 #	instance_pathvisuals()
 	
-	choose_random_state(["Idle", "Roam"])
+	choose_random_state([states.IDLE, states.ROAM])
  
 
 func _process(_delta):
@@ -43,8 +50,9 @@ func _process(_delta):
 
 func _physics_process(delta):
 	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
+	
 	match state:
-		"Idle":
+		states.IDLE:
 			if RayCastN1.is_colliding():
 				raycast_invertion = -1
 			elif RayCastN2.is_colliding():
@@ -57,7 +65,7 @@ func _physics_process(delta):
 			
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			
-		"Roam":
+		states.ROAM:
 			if not random_roamcell:
 				get_random_roamcell()
 				
@@ -65,25 +73,23 @@ func _physics_process(delta):
 				"Roam_to_randomcell":
 					set_target(random_roamcell)
 					move_along_path(delta)
-					if reached_endof_path == true:
-						RoamDelayTimer.start()
-						call("Idle")
 						
 				"Roam_to_spawncell":
 					set_target(spawn_position)
 					move_along_path(delta)
-					if reached_endof_path == true:
-						RoamDelayTimer.start()
-						call("Idle")
-						
+					
 			if can_see_target == true:
 				detect()
 				velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-
+				
+			if reached_endof_path == true:
+				RoamDelayTimer.start()
+				state = states.IDLE
+						
 			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.05) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
 			
-		"Search":
+		states.SEARCH:
 			StateDurationTimer.stop()
 			
 			set_target(last_known_playerposition)
@@ -95,17 +101,17 @@ func _physics_process(delta):
 					full_rotation_check += 0.015
 
 				elif full_rotation_check >= 2*PI:
-					choose_random_state(["Idle", "Roam"])
+					choose_random_state([states.IDLE, states.ROAM])
 					full_rotation_check = 0
 			else:
 				visioncone_direction = visioncone_direction.slerp(last_known_playerposition - global_position, 0.1) #where factor is 0.0 - 1.0
 				VisionConeArea.rotation = visioncone_direction.angle()
 				
 			if can_see_target == true:
-				call("Chase")
+				state = states.CHASE
 
 
-		"Chase":
+		states.CHASE:
 			StateDurationTimer.stop()
 			
 			if can_see_target == true:
@@ -119,20 +125,6 @@ func _physics_process(delta):
 				if ReactionTimer.is_stopped():
 					ReactionTimer.start()
 				
-
-func Idle():
-	state = "Idle"
-
-func Roam():
-	state = "Roam"
-	
-func Search():
-	Events.emit_signal("update_lastknown_playerposition", last_known_playerposition)
-	state = "Search"
-
-func Chase():
-	state = "Chase"
-
 
 func detect():
 	if target:
@@ -151,10 +143,10 @@ func get_random_roamcell():
 
 func _on_DetectionTimer_timeout():
 	if can_see_target == true:
-		call("Chase")
+		state = states.CHASE
 
 func _on_ReactionTimer_timeout():
-	call("Search")
+	state = states.SEARCH
 
 func _on_RoamDelayTimer_timeout():
 	if roam_state == "Roam_to_randomcell":
@@ -162,19 +154,18 @@ func _on_RoamDelayTimer_timeout():
 		
 	elif roam_state == "Roam_to_spawncell":
 		roam_state = "Roam_to_randomcell"
-	call("Roam")
+	state = states.ROAM
 
 
 func _on_StateDurationTimer_timeout():
-	if state == "Idle" or state == "Roam" and reached_endof_path == true:
-		choose_random_state(["Idle", "Roam"])
+	if state == states.IDLE or state == states.ROAM and reached_endof_path == true:
+		choose_random_state([states.IDLE, states.ROAM])
 		StateDurationTimer.wait_time = rand_range(8, 30)
 		StateDurationTimer.start()
 
 func choose_random_state(state_list):
 	state_list.shuffle()
-	var new_state = state_list.pop_front()
-	call(new_state)
+	state = state_list.pop_front()
 
 # FOR DEBUG PURPOSES
 func _draw():

@@ -71,6 +71,7 @@ func set_lastknown_playerposition(new_playerposition):
 			last_known_playerposition = new_playerposition
 	else:
 		last_known_playerposition = new_playerposition
+	Events.emit_signal("update_lastknown_playerposition", last_known_playerposition, can_see_target)
 
 func aim_raycasts():
 	if player_in_visioncone:

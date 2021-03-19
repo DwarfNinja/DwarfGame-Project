@@ -16,8 +16,8 @@ var occupied_tiles = []
 func _ready():
 	randomize()
 #	$YSort/Player.global_position = $PlayerPosition.global_position
-	Events.connect("taxtimer_is_25_percent", self, "_on_taxtimer_25_percent")
-	Events.connect("taxtimer_restarted", self, "_on_taxtimer_restarted")
+	Events.connect("day_ending", self, "_on_day_ending")
+	Events.connect("day_ended", self, "_on_day_ended")
 	GameManager.connect("cave_scene_saved", self, "_on_cave_scene_saved")
 	GameManager.connect("cave_scene_loaded", self, "_on_cave_scene_loaded")
 	Events.connect("place_object", self, "_on_place_object")
@@ -29,17 +29,15 @@ func _process(_delta):
 		update_tileselector()
 		
 
-func _on_taxtimer_25_percent():
-	if TaxKnight_instanced == false:
+func _on_day_ending():
+	if not get_node("YSort").get_childeren().has(TAXKNIGHT_SCENE):
 		var taxknight_instance = TAXKNIGHT_SCENE.instance()
 		taxknight_instance.set_position(get_node("TaxKnightPosition").get_global_position())
 		get_node("YSort").add_child(taxknight_instance)
-		TaxKnight_instanced = true
 
-func _on_taxtimer_restarted():
-	if TaxKnight_instanced == true:
+func _on_day_started():
+	if get_node("YSort").get_childeren().has(TAXKNIGHT_SCENE):
 		get_node("YSort/TaxKnight").queue_free()
-		TaxKnight_instanced = false
 
 func _on_cave_scene_saved():
 	$YSort/Player.queue_free()
