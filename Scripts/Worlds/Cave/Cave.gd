@@ -27,7 +27,6 @@ func _process(_delta):
 	if Player:
 		MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
 		update_tileselector()
-		
 
 func _on_day_ending():
 	if not get_node("YSort").get_childeren().has(TAXKNIGHT_SCENE):

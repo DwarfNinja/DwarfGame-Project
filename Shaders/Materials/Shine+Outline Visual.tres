@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/Items/Shine.png" type="Texture" id=1]
+[ext_resource path="res://Shaders/Shine+Outline Visual.tres" type="Shader" id=2]
+
+[resource]
+shader = ExtResource( 2 )
+shader_param/Speed = -0.9
+shader_param/Size = Vector3( 0.4, 0.4, 0.4 )
+shader_param/Texture = ExtResource( 1 )

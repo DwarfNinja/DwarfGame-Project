@@ -23,6 +23,7 @@ func _ready():
 	Events.connect("item_picked_up", self, "_on_item_picked_up")
 	Events.connect("craft_item", self, "_on_craft_item")
 	Events.emit_signal("update_slot_selectors", selector_position, selected_slot)
+	Events.connect("remove_item", self, "_on_remove_item")
 
 func _process(_delta):
 	var current_slot = "Slot_" + str(selector_position)
@@ -114,7 +115,7 @@ func _on_remove_item(item_def):
 	if item_def in player_items:
 		player_items[item_def] -= 1
 		return
-	remove_from_slot(inventory_slots["slot_" + str(selector_position)], item_def)
+	remove_from_slot("Slot_" + str(selector_position), item_def)
 
 func _on_craft_item(craftable_def):
 	if has_items_in_inventory(craftable_def):

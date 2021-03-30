@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var HouseTileset = preload("res://HouseTileset.tres")
+onready var HouseTileset = preload("res://TileSets/HouseTileset.tres")
 onready var HouseRooms = get_node("HouseRooms")
 onready var HouseShapes = get_node("HouseShapes")
 onready var TopConnectionEnd = get_node("ConnectionEnds/TopConnectionEnd")
@@ -54,11 +54,11 @@ func _ready():
 	if max_rooms == 2:
 		max_shapes = 3
 		max_items = 3
-		max_enemies = 3
+		max_enemies = 1 #3
 	if max_rooms == 3:
 		max_shapes = 5
 		max_items = 4
-		max_enemies = 4
+		max_enemies = 1 #4
 		
 	random_generation()
 

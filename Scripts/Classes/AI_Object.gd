@@ -13,6 +13,7 @@ const MAX_SPEED = 20 #was 30
 const FRICTION = 300
 var velocity = Vector2.ZERO
 
+var state
 
 var last_known_playerposition setget set_lastknown_playerposition
 var target 
@@ -71,7 +72,7 @@ func set_lastknown_playerposition(new_playerposition):
 			last_known_playerposition = new_playerposition
 	else:
 		last_known_playerposition = new_playerposition
-	Events.emit_signal("update_lastknown_playerposition", last_known_playerposition, can_see_target)
+	Events.emit_signal("update_lastknown_playerposition", last_known_playerposition, state)
 
 func aim_raycasts():
 	if player_in_visioncone:
@@ -92,7 +93,7 @@ func aim_raycasts():
 					can_see_target = false
 	else:
 		can_see_target = false
-
+	
 func move_along_path(delta):
 	var starting_point = get_global_position()
 	var move_distance = MAX_SPEED * delta

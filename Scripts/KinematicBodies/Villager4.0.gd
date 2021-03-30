@@ -19,14 +19,12 @@ var updated_playerghost = false
 
 var raycast_invertion = 1
 
-#TODO: change state to enum
 enum states {
 	IDLE, 
 	ROAM, 
 	SEARCH, 
 	CHASE
 }
-var state
 
 var roam_state = "Roam_to_randomcell"
 
@@ -93,6 +91,7 @@ func _physics_process(delta):
 			StateDurationTimer.stop()
 			
 			set_target(last_known_playerposition)
+			set_lastknown_playerposition(last_known_playerposition)
 			move_along_path(delta)
 			
 			if reached_endof_path == true:
@@ -156,6 +155,8 @@ func _on_RoamDelayTimer_timeout():
 		roam_state = "Roam_to_randomcell"
 	state = states.ROAM
 
+func task_helloworld(task):
+	pass
 
 func _on_StateDurationTimer_timeout():
 	if state == states.IDLE or state == states.ROAM and reached_endof_path == true:
