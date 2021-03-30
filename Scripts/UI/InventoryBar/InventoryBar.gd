@@ -116,13 +116,13 @@ func can_fit_in_inventory(item_def):
 
 #TODO: Should remove inventory_dic and replace with function that checks for free space
 func add_to_inventory_dic(item_def):
-	inventory_dic[item_def.item_name] += item_def.item_count
+	inventory_dic[item_def.item_name] += 1
 	if item_def.item_name == "goldcoins":
 		HUD.update_hud_coins(inventory_dic["goldcoins"])
 
 #TODO: Should remove inventory_dic and replace with function that checks if it can remove items
 func remove_from_inventory_dic(item_def):
-	inventory_dic[item_def.item_name] -= item_def.item_count
+	inventory_dic[item_def.item_name] -= 1
 	if item_def.item_name == "goldcoins":
 		HUD.update_hud_coins(inventory_dic["goldcoins"])
 

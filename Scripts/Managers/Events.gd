@@ -16,6 +16,8 @@ signal exited_pickuparea(target)
 signal open_craftingtable()
 signal close_craftingtable()
 
+signal craft_item(craftable_def)
+
 # Forge signals
 signal open_forge(current_opened_forge)
 signal close_forge()
@@ -29,8 +31,9 @@ signal exited_shop()
 signal entered_blackmarket()
 signal exited_blackmarket()
 
-signal taxtimer_is_25_percent()
-signal taxtimer_restarted()
+signal day_ending(tax)
+signal day_ended(tax)
+signal day_started()
 
 # Mouse entered craftingtablebutton signal
 signal craftingbutton_mouse_entered()
@@ -45,4 +48,4 @@ signal randomgenhouse_loaded()
 signal request_navpath()
 signal request_roamcell(villager_id)
 
-signal update_playerghost(last_known_playerposition)
+signal update_lastknown_playerposition(last_known_playerposition, state)

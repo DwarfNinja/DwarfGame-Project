@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var HouseTileset = preload("res://HouseTileset.tres")
+onready var HouseTileset = preload("res://TileSets/HouseTileset.tres")
 onready var HouseRooms = get_node("HouseRooms")
 onready var HouseShapes = get_node("HouseShapes")
 onready var TopConnectionEnd = get_node("ConnectionEnds/TopConnectionEnd")
@@ -12,7 +12,8 @@ onready var Chest = preload("res://Scenes/Interactables/Chest.tscn")
 onready var Villager_Scene = preload("res://Scenes/KinematicBodies/Villager.tscn")
 
 onready var Door_Scene = preload("res://Scenes/Objects/Door.tscn")
-onready var Player_Scene = preload("res://Scenes/KinematicBodies/Player.tscn")
+onready var Player = get_node("Nav2D/Walls/Player")
+onready var PlayerGhost = get_node("Nav2D/Walls/PlayerGhost")
 
 onready var floor_tile_id = HouseTileset.find_tile_by_name("Floor")
 onready var walls_tile_id = HouseTileset.find_tile_by_name("Walls")
@@ -35,6 +36,8 @@ var last_room_location
 var shapes = 0
 var max_shapes = 0
 
+var spawn_zone
+
 var max_items
 var max_enemies
 
@@ -51,11 +54,11 @@ func _ready():
 	if max_rooms == 2:
 		max_shapes = 3
 		max_items = 3
-		max_enemies = 3
+		max_enemies = 1 #3
 	if max_rooms == 3:
 		max_shapes = 5
 		max_items = 4
-		max_enemies = 4
+		max_enemies = 1 #4
 		
 	random_generation()
 
@@ -240,6 +243,12 @@ func clear_index_tile_conflict():
 			if $Nav2D/Indexes.get_cellv(cell) != spawn_index_tile_id:
 				$Nav2D/Indexes.set_cell(cell.x, cell.y, -1)
 
+func clear_spawn_zone(spawn_zone):
+	for cell in spawn_zone:
+		if $Nav2D/Area.get_cellv(cell) == -1:
+			# If index tile is not equal to a player spawn tile
+			if $Nav2D/Indexes.get_cellv(cell) != spawn_index_tile_id:
+				$Nav2D/Indexes.set_cell(cell.x, cell.y, -1)
 
 func update_allcell_bitmasks():
 	for cell in $Nav2D/Walls.get_used_cells():
@@ -273,6 +282,8 @@ func set_connection_end(unused_opening_location, ConnectionEnd):
 	for cell in ConnectionEnd.get_used_cells():
 		$Nav2D/Walls.set_cell(unused_opening_location.x + cell.x, unused_opening_location.y + cell.y, ConnectionEnd.get_cellv(cell), 
 		false, false, false, ConnectionEnd.get_cell_autotile_coord(cell.x, cell.y))
+		#Clear Area cells in connection end
+		$Nav2D/Area.set_cell(unused_opening_location.x + cell.x, unused_opening_location.y + cell.y, -1)
 
 
 func get_tiles_in_rec_centre(node_pos, rect_width, rect_height):
@@ -290,7 +301,7 @@ func get_tiles_in_rectangle(top_left, rect_width, rect_height):
 	var bottom_right = top_left + Vector2(rect_width, rect_height)
 	for x in range(top_left.x, bottom_right.x + 1):
 		for y in range(top_left.y, bottom_right.y + 1):
-			rect_tiles.append( Vector2(x, y) )
+			rect_tiles.append(Vector2(x, y))
 	return rect_tiles
 
 #TODO: Look at code, can be improved line 262-265
@@ -309,7 +320,12 @@ func place_loot():
 
 func place_enemies():
 #	var enemy_tile_array = $Nav2D/Indexes.get_used_cells_by_id(enemy_index_tile_id)
-	var enemy_tile_array = $Nav2D/Area.get_used_cells_by_id(area_tile_id)
+	var enemy_tile_array = $Nav2D/Area.get_used_cells_by_id(area_tile_id).duplicate()
+	for _cell in spawn_zone:
+		for cell in enemy_tile_array:
+			if cell == _cell:
+				enemy_tile_array.erase(cell)
+				
 	var random_enemy_positions = select_random_enemy_positions(enemy_tile_array)
 	print("random_enemy_positions = ", random_enemy_positions)
 	for i in range(0, random_enemy_positions.size()):
@@ -324,12 +340,10 @@ func place_enemies():
 func place_player_spawn():
 	var spawn_tile_array = $Nav2D/Indexes.get_used_cells_by_id(spawn_index_tile_id)
 	var random_spawn_position = select_random_spawn_position(spawn_tile_array)
-	var player = Player_Scene.instance()
 	var tilepos = $Nav2D/Walls.map_to_world(random_spawn_position)
 	place_door(random_spawn_position, tilepos)
-	$Nav2D/Walls.add_child(player)
-	player.set_position(tilepos + Vector2(23,-8))
-	player.get_node("AnimationTree").set("parameters/Idle/blend_position", Vector2(0,-0.1))
+	Player.set_position(tilepos + Vector2(23,-8))
+	Player.get_node("AnimationTree").set("parameters/Idle/blend_position", Vector2(0,-0.1))
 	for i in range(0, spawn_tile_array.size()):
 		$Nav2D/Indexes.set_cell(spawn_tile_array[i].x, spawn_tile_array[i].y, -1)
 
@@ -348,9 +362,9 @@ func place_spawn_zone(door):
 	# Position offset to compensate so the zone isn't in the wall
 	var spawn_zone_width = 15
 	var spawn_zone_height = 8
-	var spawn_zone = get_tiles_in_rec_centre(
+	spawn_zone = get_tiles_in_rec_centre(
 		$Nav2D/Walls.world_to_map(door.position) - 
-		Vector2(0,ceil(spawn_zone_height/2) + 1), spawn_zone_width, spawn_zone_height)
+		Vector2(-1,ceil(spawn_zone_height/2) + 1), spawn_zone_width, spawn_zone_height)
 	
 	for cell in spawn_zone:
 		if $Nav2D/Indexes.get_cellv(cell) != -1:
@@ -418,15 +432,6 @@ func select_random_lootable(chest):
 		return chest
 
 
-#func select_random_enemy_positions(enemy_tile_array):
-#	var random_enemy_positions = []
-#	if enemy_tile_array.size() < max_enemies:
-#		max_enemies = enemy_tile_array.size()
-#	for _enemy in range(0, max_enemies):
-#		enemy_tile_array.shuffle()
-#		random_enemy_positions.append(enemy_tile_array.pop_front())
-#	return random_enemy_positions
-	
 func select_random_enemy_positions(enemy_tile_array):
 	var random_enemy_positions = []
 	for _enemy in range(0, max_enemies):

@@ -212,13 +212,13 @@ collision_mask = 32
 script = ExtResource( 2 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-position = Vector2( 1, -8 )
+position = Vector2( 1, -9 )
 texture = ExtResource( 1 )
 hframes = 32
 frame = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.5, 0 )
+position = Vector2( 0.5, -1 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
@@ -235,7 +235,7 @@ shape = SubResource( 2 )
 position = Vector2( 0, 22 )
 
 [node name="PlayerPickupArea" type="Area2D" parent="."]
-position = Vector2( 0.5, 0 )
+position = Vector2( 0.5, -1 )
 collision_layer = 0
 collision_mask = 16
 
@@ -264,7 +264,7 @@ parameters/Run/blend_position = Vector2( 0, 0 )
 script = ExtResource( 4 )
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
-position = Vector2( 0.5, -4 )
+position = Vector2( 0.5, -5 )
 current = true
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true

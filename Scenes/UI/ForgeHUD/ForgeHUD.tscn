@@ -6,7 +6,6 @@
 [ext_resource path="res://Sprites/UI/Forge/HUD Forge Knob.png" type="Texture" id=4]
 [ext_resource path="res://Fonts/kenney_fontpackage/Fonts/Kenney Mini Square.ttf" type="DynamicFontData" id=5]
 
-
 [sub_resource type="ImageTexture" id=1]
 
 [sub_resource type="StyleBoxTexture" id=2]

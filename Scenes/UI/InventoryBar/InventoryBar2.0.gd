@@ -9,7 +9,7 @@ func _ready():
 
 
 func _on_update_slot_selectors(selector_position, selected_slot):
-		# Iterates over all the slots and determines if it is the slot selected,
+	# Iterates over all the slots and determines if it is the slot selected,
 	# all other slot's selectors are turned off
 	for index in range(0, HboxContainer.get_children().size()):
 		var slot = HboxContainer.get_children()[index]
@@ -24,15 +24,18 @@ func _on_update_slot(slot, item_def, count):
 	if item_def:
 		Slot.texture = item_def.hud_texture
 		Slot.get_node("ItemCount").text = str(count)
+		if Slot.get_node("ItemCount").text == "0":
+			Slot.texture = null
+			Slot.get_node("ItemCount").text = ""
 	else:
 		Slot.texture = null
-		Slot.get_node("ItemCount").text = null
+		Slot.get_node("ItemCount").text = ""
 	
 
 func activate_selector(slot, selected_slot):
 	var slot_selector = slot.get_node("Selector")
 	slot_selector.show()
-	if slot == selected_slot:
+	if slot.get_name() == selected_slot:
 		slot_selector.get_node("AnimationPlayer").current_animation = "Selector Selecting"
 	else:
 		slot_selector.get_node("AnimationPlayer").current_animation = "Selector Idle"

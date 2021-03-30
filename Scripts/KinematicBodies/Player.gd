@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 # Movement variables
 const ACCELERATION = 800
-const MAX_SPEED = 80
+const MAX_SPEED = 60 #was 80 #was 70
 const FRICTION = 800 #was 600
 var velocity = Vector2.ZERO
 
@@ -29,6 +29,7 @@ onready var PlayerInteractArea = $PlayerInteractArea
 onready var PlayerPickupArea = $PlayerPickupArea
 onready var Inventory = $Inventory
 
+onready var goldcoins = preload("res://Resources/Resources/GoldCoins.tres")
 onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():
@@ -77,5 +78,10 @@ func _on_PlayerPickupArea_body_entered(body):
 	if Inventory.can_fit_in_inventory(body.item_def):
 		Events.emit_signal("entered_pickuparea", self)
 	
-	
+func _on_day_ended(tax):
+	if Inventory.player_items[goldcoins] > 0:
+			Inventory.player_items[goldcoins] -= tax
+			HUD.update_hud_coins(Inventory.player_items[goldcoins])
+	else:
+		print("Game Ended")
 

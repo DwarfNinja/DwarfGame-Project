@@ -9,7 +9,6 @@ var gold_coins_2 = preload("res://Sprites/Interactables/Craftables/MiningRig/Min
 
 var miningTimer_timedout = false
 var goldcoins_in_mine = 0
-var goldcoins_count = gold_coins.item_count
 
 func _ready():
 	# Connect signals

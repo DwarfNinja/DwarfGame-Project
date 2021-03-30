@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Scripts/Classes/Pickable_Item.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Items/Shine.png" type="Texture" id=2]
-[ext_resource path="res://Shaders/Shine VisualShader.tres" type="Shader" id=3]
-[ext_resource path="res://Sprites/Items/Iron_Shadow-Sheet.png" type="Texture" id=4]
+[ext_resource path="res://Shaders/Shine+Outline Visual.tres" type="Shader" id=3]
+[ext_resource path="res://Sprites/Items/Item_Shadow.png" type="Texture" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
@@ -198,10 +198,8 @@ material = SubResource( 1 )
 position = Vector2( -1, -5 )
 
 [node name="ItemShadow" type="Sprite" parent="."]
-position = Vector2( -1, -5 )
+position = Vector2( 0, 2 )
 texture = ExtResource( 4 )
-hframes = 5
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 2 )

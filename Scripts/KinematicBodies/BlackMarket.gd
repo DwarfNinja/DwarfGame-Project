@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 var can_interact = false
 onready var InteractArea = $InteractArea
-var one = preload("res://PlagueDoctor Sketch.png")
 
 
 
