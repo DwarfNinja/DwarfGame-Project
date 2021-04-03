@@ -38,7 +38,6 @@ var raycast_invertion = 1
 var spawn_position
 var random_roamcell  
 
-#TODO: change state to enum
 var state
 var roam_state = "Roam_to_randomcell"
 

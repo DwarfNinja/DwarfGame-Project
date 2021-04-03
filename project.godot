@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/Resources/R_Craftable.gd"
 }, {
 "base": "Resource",
+"class": "R_DropTable",
+"language": "GDScript",
+"path": "res://Scripts/Resources/R_DropTable.gd"
+}, {
+"base": "Resource",
 "class": "R_DropTable_Entry",
 "language": "GDScript",
 "path": "res://Scripts/Resources/R_DropTable_Entry.gd"
@@ -43,11 +48,6 @@ _global_script_classes=[ {
 "class": "R_Item",
 "language": "GDScript",
 "path": "res://Scripts/Resources/R_Item.gd"
-}, {
-"base": "Resource",
-"class": "R_LootTable",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_DropTable.gd"
 }, {
 "base": "Resource",
 "class": "R_Room",
@@ -520,9 +520,9 @@ _global_script_class_icons={
 "Pickable_Item": "",
 "R_AI": "",
 "R_Craftable": "",
+"R_DropTable": "",
 "R_DropTable_Entry": "",
 "R_Item": "",
-"R_LootTable": "",
 "R_Room": "",
 "VisualShaderNodeNoiseGeneric2d": "",
 "VisualShaderNodeNoiseGeneric2dFractal": "",
@@ -629,7 +629,6 @@ config/icon="res://icon.png"
 Events="*res://Scripts/Managers/Events.gd"
 HUD="*res://Scenes/UI/HUD.tscn"
 GameManager="*res://Scripts/Managers/GameManager.gd"
-BTDebugServer="*res://addons/btree/script/bt_debug_server.gd"
 
 [debug]
 
@@ -649,7 +648,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Todo_Manager", "btree" )
+enabled=PoolStringArray( "Todo_Manager" )
 
 [importer_defaults]
 
@@ -785,11 +784,6 @@ key_q={
 2d_physics/layer_5="Pickable Object"
 2d_physics/layer_6="Static Object"
 2d_physics/layer_7="PlayerGhost"
-
-[network]
-
-limits/websocket_server/max_in_buffer_kb=4096
-limits/websocket_server/max_out_buffer_kb=4096
 
 [rendering]
 

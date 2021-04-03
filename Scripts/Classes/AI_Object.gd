@@ -38,12 +38,6 @@ func _ready():
 		push_error("ERROR: No ai_def defined in AI: " + str(self))
 		return
 	set_ai(ai_def)
-
-
-
-func _process(delta):
-	pass
-#	print(VisionConeArea.get_overlapping_bodies())
 	
 func set_ai(_ai_def):
 	ai_def = _ai_def

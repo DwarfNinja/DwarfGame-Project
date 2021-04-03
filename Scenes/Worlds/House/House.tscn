@@ -40,8 +40,7 @@ visible = false
 
 [node name="Player" parent="Nav2D/Walls" instance=ExtResource( 12 )]
 
-[node name="Area" type="TileMap" parent="Nav2D"]
-visible = false
+[node name="Areas" type="TileMap" parent="Nav2D"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )

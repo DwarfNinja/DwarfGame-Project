@@ -19,7 +19,6 @@ var updated_playerghost = false
 
 var raycast_invertion = 1
 
-#TODO: change state to enum
 var state
 var roam_state = "Roam_to_randomcell"
 

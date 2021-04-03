@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/KinematicBodies/Villager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Resources/R_DropTable.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Resources/R_DropTable_Entry.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+item = ExtResource( 1 )
+drop_rate = 100
+
+[resource]
+script = ExtResource( 2 )
+droptable_name = "Enemies"
+drop_table = [ SubResource( 1 ) ]

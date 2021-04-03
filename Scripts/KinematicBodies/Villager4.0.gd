@@ -155,9 +155,6 @@ func _on_RoamDelayTimer_timeout():
 		roam_state = "Roam_to_randomcell"
 	state = states.ROAM
 
-func task_helloworld(task):
-	pass
-
 func _on_StateDurationTimer_timeout():
 	if state == states.IDLE or state == states.ROAM and reached_endof_path == true:
 		choose_random_state([states.IDLE, states.ROAM])

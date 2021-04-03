@@ -266,6 +266,7 @@ script = ExtResource( 4 )
 [node name="PlayerCamera" type="Camera2D" parent="."]
 position = Vector2( 0.5, -5 )
 current = true
+zoom = Vector2( 5, 5 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 drag_margin_left = 0.1

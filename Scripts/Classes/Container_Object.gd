@@ -12,9 +12,6 @@ var direction_list = [
 	Vector2(-22,20), Vector2(0,20), Vector2(22,20)
 	]
 
-func _ready():
-	pass
-
 func _process(_delta):
 	if can_interact == true:
 		if Input.is_action_just_pressed("key_e"):
