@@ -114,6 +114,7 @@ func cleanup_random_gen() -> void:
 	fill_outer_walls()
 	check_unused_openings(current_occupied_room_locations)
 	clear_tile_conflict()
+	add_areas_to_top_of_wall()
 	update_allcell_bitmasks()
 
 
@@ -155,7 +156,7 @@ func set_random_room(random_room: Node2D, random_room_location: Vector2, _last_r
 	var random_room_template := select_random_from_array(random_room.get_node("Templates").get_children()) as Node2D
 	var random_room_floor := random_room.get_node("Floor") as TileMap
 	var random_room_walls := random_room_template.get_node("Walls") as TileMap
-	var random_room_area := random_room_template.get_node("Area") as TileMap
+	var random_room_area := random_room_template.get_node("Areas") as TileMap
 	var random_room_indexes := random_room_template.get_node("Indexes") as TileMap
 	
 	print("ROOM = ", random_room.get_name())
@@ -171,7 +172,7 @@ func set_random_room(random_room: Node2D, random_room_location: Vector2, _last_r
 
 func check_extent_of_shape() -> void:
 	while shapes < max_shapes:
-		var random_shape: TileMap = select_random_from_array(HouseShapes.get_children())
+		var random_shape: Node2D = select_random_from_array(HouseShapes.get_children())
 		var random_shape_width: int = random_shape.shape_width
 		var random_shape_height: int = random_shape.shape_height
 		var possible_shape_locations: Array = []
@@ -192,9 +193,10 @@ func shape_footprint_is_empty(shape_footprint: Array) -> bool:
 			return false
 	return true
 
-func set_shape(random_shape: TileMap, selected_shape_location: Vector2) -> void:
+func set_shape(random_shape: Node2D, selected_shape_location: Vector2) -> void:
+	var random_shape_walls := random_shape.get_node("Walls") as TileMap
 	# Sets the shape in Walls
-	copy_tilemap(Walls, random_shape, selected_shape_location)
+	copy_tilemap(Walls, random_shape_walls, selected_shape_location)
 	shapes += 1
 
 func fill_outer_walls() -> void:
@@ -225,12 +227,13 @@ func fill_outer_walls() -> void:
 
 
 func clear_tile_conflict() -> void:
-	for cell in Walls.get_used_cells_by_id(front_walls_tile_id):
-		# Clear cells in Area used in Walls
-		Areas.set_cell(cell.x, cell.y, -1)
-		# Clear cells in Indexes used in Walls
-		if Indexes.get_cellv(cell) != spawn_index_tile_id:
-			Indexes.set_cell(cell.x, cell.y, -1)
+	for cell in Walls.get_used_cells():
+		if Walls.get_cellv(cell) == front_walls_tile_id or Walls.get_cellv(cell) == walls_tile_id:
+			# Clear cells in Area used in Walls
+			Areas.set_cell(cell.x, cell.y, -1)
+			# Clear cells in Indexes used in Walls
+			if Indexes.get_cellv(cell) != spawn_index_tile_id:
+				Indexes.set_cell(cell.x, cell.y, -1)
 
 #FIX: Not used
 func clear_spawn_zone(spawn_zone: Array) -> void:
@@ -239,6 +242,12 @@ func clear_spawn_zone(spawn_zone: Array) -> void:
 			# If index tile is not equal to a player spawn tile
 			if Indexes.get_cellv(cell) != spawn_index_tile_id:
 				Indexes.set_cell(cell.x, cell.y, -1)
+
+
+func add_areas_to_top_of_wall():
+	for cell in Walls.get_used_cells_by_id(walls_tile_id):
+		if Walls.get_cellv(cell + Vector2(0,-1)) == -1 or Walls.get_cellv(cell + Vector2(0,-1)) == wall_shadow_tile_id:
+			Areas.set_cellv(cell, Areas.get_cellv(cell + Vector2(0,-1)))
 
 func update_allcell_bitmasks() -> void:
 	for cell in Walls.get_used_cells():
@@ -259,15 +268,27 @@ func check_unused_openings(current_occupied_room_locations: Array) -> void:
 					
 				if Walls.get_cellv(cell + _cell + Vector2(2,3)) == wall_shadow_tile_id:
 					Walls.set_cell((cell.x + _cell.x + 2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
-	
+					
+				#Set areas based on touching area
+				Areas.set_cellv(cell + _cell + Vector2(-1,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
+				Areas.set_cellv(cell + _cell + Vector2(0,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
+				Areas.set_cellv(cell + _cell + Vector2(1,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
+				
 	for cell in current_occupied_room_locations:
 		for _cell in side_connections:
 			if Walls.get_cellv(cell + _cell + Vector2(-1,0)) != -1 and Walls.get_cellv(cell + _cell) == -1:
 				set_connection_end((cell + _cell) + Vector2(0,-4), L_SideConnectionEnd)
 				
+				#Set area based on touching area
+				Areas.set_cellv(cell + _cell + Vector2(0,-1), Areas.get_cellv(cell + _cell))
+				
+				
 			if Walls.get_cellv(cell + _cell + Vector2(1,0)) != -1 and Walls.get_cellv(cell + _cell) == -1:
 				set_connection_end((cell + _cell) + Vector2(0,-4), R_SideConnectionEnd)
-
+				
+				#Set area based on touching area
+				Areas.set_cellv(cell + _cell + Vector2(0,-1), Areas.get_cellv(cell + _cell))
+				
 
 func set_connection_end(unused_opening_location: Vector2, ConnectionEnd: TileMap) -> void:
 	copy_tilemap(Walls, ConnectionEnd, unused_opening_location)
@@ -338,7 +359,6 @@ func place_door(random_spawn_position: Vector2, tilepos: Vector2) -> void:
 	Walls.add_child(door)
 	door.set_position(tilepos)
 	place_spawn_zone(door)
-	clear_tile_conflict()
 
 
 func place_spawn_zone(door: Node2D) -> void:

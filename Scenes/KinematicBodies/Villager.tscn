@@ -45,14 +45,16 @@ __meta__ = {
 }
 
 [node name="Light2D" type="Light2D" parent="VisionConeArea"]
+light_mask = 2
 position = Vector2( -3, 0 )
-z_index = 1
 texture = ExtResource( 5 )
 offset = Vector2( 70, 0 )
 color = Color( 0.682353, 0, 0, 1 )
 energy = 1.1
 range_z_max = -1
+range_item_cull_mask = 2
 shadow_enabled = true
+shadow_item_cull_mask = 2
 
 [node name="VillagerViewcone" type="Sprite" parent="VisionConeArea"]
 visible = false
