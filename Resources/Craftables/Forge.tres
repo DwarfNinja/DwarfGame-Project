@@ -13,8 +13,8 @@ item_name = "forge"
 item_texture = ExtResource( 4 )
 hud_texture = ExtResource( 3 )
 required_items = {
-Resource( "res://Resources/Resources/Wood.tres" ): 1,
-Resource( "res://Resources/Resources/Iron.tres" ): 3
+Resource( "res://Resources/Resources/Iron.tres" ): 3,
+Resource( "res://Resources/Resources/Wood.tres" ): 1
 }
 footprint = Vector2( 2, 0 )
 blueprint_icon = ExtResource( 2 )

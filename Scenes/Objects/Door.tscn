@@ -1,12 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Objects/Door.gd" type="Script" id=1]
 [ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24, 8 )
-
-[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 24, 8 )
 
 [node name="Door" type="StaticBody2D"]
@@ -16,6 +13,8 @@ script = ExtResource( 1 )
 light_mask = 4
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
+collision_layer = 32
+collision_mask = 3
 occluder_light_mask = 2
 format = 1
 tile_data = PoolIntArray( 0, 11, 0, 1, 11, 1, 2, 11, 2 )
@@ -28,5 +27,5 @@ disabled = true
 [node name="InteractArea" type="Area2D" parent="."]
 position = Vector2( 24, 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
-shape = SubResource( 2 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InteractArea"]
+polygon = PoolVector2Array( -12, -8, -12, -2, -11, -2, -11, -1, -10, -1, -10, 0, -9, 0, -9, 1, -8, 1, -8, 2, -7, 2, -7, 3, -4, 3, -4, 4, 4, 4, 4, 3, 7, 3, 7, 2, 8, 2, 8, 1, 9, 1, 9, 0, 10, 0, 10, -1, 11, -1, 11, -2, 12, -2, 12, -8 )

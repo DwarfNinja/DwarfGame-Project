@@ -167,6 +167,7 @@ func set_random_room(random_room: Node2D, random_room_location: Vector2, _last_r
 	copy_tilemap(Areas, random_room_area, (random_room_location + last_room_location))
 	copy_tilemap(Indexes,random_room_indexes, (random_room_location + last_room_location))
 	
+	copy_nodes(Props, random_room_template.get_node("Props"), Walls.map_to_world(random_room_location + last_room_location))
 	rooms += 1
 
 
@@ -236,12 +237,18 @@ func clear_tile_conflict() -> void:
 				Indexes.set_cell(cell.x, cell.y, -1)
 
 #FIX: Not used
-func clear_spawn_zone(spawn_zone: Array) -> void:
-	for cell in spawn_zone:
-		if Areas.get_cellv(cell) == -1:
-			# If index tile is not equal to a player spawn tile
-			if Indexes.get_cellv(cell) != spawn_index_tile_id:
-				Indexes.set_cell(cell.x, cell.y, -1)
+#func clear_spawn_zone(spawn_zone: Array) -> void:
+#	for cell in spawn_zone:
+#		if Areas.get_cellv(cell) == -1:
+#			# If index tile is not equal to a player spawn tile
+#			if Indexes.get_cellv(cell) != spawn_index_tile_id:
+#				Indexes.set_cell(cell.x, cell.y, -1)
+
+func copy_nodes(recipient_node: Node2D, donor_node: Node2D, node_offset: Vector2) -> void:
+	for node in donor_node.get_children():
+		var node_copy = node.duplicate()
+		recipient_node.add_child(node_copy)
+		node_copy.set_global_position(node_copy.get_global_position() + node_offset)
 
 
 func add_areas_to_top_of_wall():
@@ -252,7 +259,6 @@ func add_areas_to_top_of_wall():
 func update_allcell_bitmasks() -> void:
 	for cell in Walls.get_used_cells():
 		Walls.update_bitmask_area(cell)
-
 
 func check_unused_openings(current_occupied_room_locations: Array) -> void:
 	var top_connections: Array = [Vector2(2,0), Vector2(11,0), Vector2(20,0)]
@@ -314,7 +320,6 @@ func get_tiles_in_rectangle(top_left: Vector2, rect_width: int, rect_height: int
 		for y in range(top_left.y, bottom_right.y + 1):
 			rect_tiles.append(Vector2(x, y))
 	return rect_tiles
-
 
 func place_loot() -> void:
 	var loot_tile_array: Array = Indexes.get_used_cells_by_id(loot_index_tile_id)
@@ -441,11 +446,9 @@ func select_random_spawn_position(spawn_tile_array: Array) -> Vector2:
 		if tile.y > player_spawn.y:
 			player_spawn = tile
 	for tile in spawn_tile_array:
-		if player_spawn.y - tile.y <= 4:
+		if player_spawn.y - tile.y <= 7:
 			possible_player_spawns.append(tile)
 	possible_player_spawns.append(player_spawn)
 	
-	for spawn in possible_player_spawns:
-		possible_player_spawns.shuffle()
-	return possible_player_spawns.pop_front()
+	return select_random_from_array(possible_player_spawns)
 

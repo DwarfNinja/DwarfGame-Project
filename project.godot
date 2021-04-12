@@ -777,8 +777,10 @@ key_q={
 
 [layer_names]
 
+2d_render/layer_1="Player"
 2d_physics/layer_1="Player"
 2d_physics/layer_2="AI"
+2d_render/layer_3="Walls"
 2d_physics/layer_3="Scent"
 2d_physics/layer_4="Interactable Object"
 2d_physics/layer_5="Pickable Object"
