@@ -31,7 +31,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 1, 2, 0, 0, 3, 0, 1, 4, 0, 0, 5, 0, 1, 
 [node name="Templates" type="Node2D" parent="."]
 
 [node name="Template_1" type="Node2D" parent="Templates"]
-visible = false
 
 [node name="Walls" type="TileMap" parent="Templates/Template_1"]
 tile_set = ExtResource( 1 )
@@ -72,6 +71,7 @@ position = Vector2( 320, 16 )
 position = Vector2( 240, 16 )
 
 [node name="Template_2" type="Node2D" parent="Templates"]
+visible = false
 
 [node name="Walls" type="TileMap" parent="Templates/Template_2"]
 tile_set = ExtResource( 1 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/R_ConnectionEnd.tscn" type="PackedScene" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_1.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Square_3x2.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Ver_1x4.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_3.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Worlds/House/HouseShapes/TShape_3x3.tscn" type="PackedScene" id=17]
 
 [node name="House" type="Node2D"]
 script = ExtResource( 9 )
@@ -105,6 +107,22 @@ openings = {
 "west": true
 }
 
+[node name="Room_3" parent="HouseRooms" instance=ExtResource( 16 )]
+openings = {
+"east": false,
+"north": true,
+"northeast_east": false,
+"northeast_north": false,
+"northwest_north": false,
+"northwest_west": false,
+"south": true,
+"southeast_east": false,
+"southeast_south": false,
+"southwest_south": false,
+"southwest_west": false,
+"west": true
+}
+
 [node name="HouseShapes" type="Node2D" parent="."]
 position = Vector2( -2288, 0 )
 __meta__ = {
@@ -120,6 +138,8 @@ __meta__ = {
 [node name="Square_3x2" parent="HouseShapes" instance=ExtResource( 14 )]
 
 [node name="Ver_1x4" parent="HouseShapes" instance=ExtResource( 15 )]
+
+[node name="TShape_3x2" parent="HouseShapes" instance=ExtResource( 17 )]
 
 [node name="ConnectionEnds" type="Node2D" parent="."]
 position = Vector2( -2288, 96 )

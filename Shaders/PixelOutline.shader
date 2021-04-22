@@ -1,5 +1,5 @@
 shader_type canvas_item;
-render_mode unshaded;
+render_mode blend_mix; //used to be unshaded
 
 uniform bool Enabled = true;
 uniform float width : hint_range(0.0, 16) = 1.0;

@@ -321,6 +321,10 @@ func get_tiles_in_rectangle(top_left: Vector2, rect_width: int, rect_height: int
 			rect_tiles.append(Vector2(x, y))
 	return rect_tiles
 
+func place_props() -> void:
+	for cell in Walls.get_used_cells_by_id(front_walls_tile_id):
+		pass
+
 func place_loot() -> void:
 	var loot_tile_array: Array = Indexes.get_used_cells_by_id(loot_index_tile_id)
 	var random_loot_positions: Array = select_random_node_positions(loot_tile_array, max_containers)

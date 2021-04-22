@@ -5,10 +5,15 @@ const PLAYER_SCENE = preload("res://Scenes/KinematicBodies/Player.tscn")
 const ITEM_SCENE = preload("res://Scenes/Items/Item.tscn")
 const TILEPOSITION_OFFSET = Vector2(0,1)
 
+const DAY_COLOR = Color("ffffff")
+const NIGHT_COLOR = Color("2d2246")
+
+
 onready var Player = $YSort/Player
 onready var PlayerPosition2D = $YSort/Player.get_node("PlayerInteractArea/Position2D")
 onready var MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
 onready var TileSelector = $YSort/TileSelector
+onready var CanvasModulater = $CanvasModulate
 
 var TaxKnight_instanced = false
 var occupied_tiles = []
@@ -27,6 +32,8 @@ func _process(_delta):
 	if Player:
 		MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
 		update_tileselector()
+	
+	CanvasModulater.color = DAY_COLOR.linear_interpolate(NIGHT_COLOR,  (sin(GameManager.seconds)+1)/2)
 
 func _on_day_ending():
 	if not get_node("YSort").get_childeren().has(TAXKNIGHT_SCENE):
