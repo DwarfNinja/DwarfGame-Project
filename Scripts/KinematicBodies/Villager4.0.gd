@@ -1,4 +1,4 @@
-extends AI_Object
+extends AI_Body
 
 onready var DetectionTimer = $DetectionTimer
 onready var StateDurationTimer = $StateDurationTimer
@@ -19,7 +19,7 @@ var updated_playerghost = false
 
 var raycast_invertion = 1
 
-enum states {
+enum STATES {
 	IDLE, 
 	ROAM, 
 	SEARCH, 
@@ -39,7 +39,7 @@ func _ready():
 	spawn_position = get_global_position()
 #	instance_pathvisuals()
 	
-	choose_random_state([states.IDLE, states.ROAM])
+	choose_random_state([STATES.IDLE, STATES.ROAM])
  
 
 func _process(_delta):
@@ -50,7 +50,7 @@ func _physics_process(delta):
 	visioncone_direction = Vector2(cos(VisionConeArea.rotation), sin(VisionConeArea.rotation))
 	
 	match state:
-		states.IDLE:
+		STATES.IDLE:
 			if RayCastN1.is_colliding():
 				raycast_invertion = -1
 			elif RayCastN2.is_colliding():
@@ -63,7 +63,7 @@ func _physics_process(delta):
 			
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			
-		states.ROAM:
+		STATES.ROAM:
 			if not random_roamcell:
 				get_random_roamcell()
 				
@@ -82,12 +82,12 @@ func _physics_process(delta):
 				
 			if reached_endof_path == true:
 				RoamDelayTimer.start()
-				state = states.IDLE
+				state = STATES.IDLE
 						
 			visioncone_direction = visioncone_direction.slerp(velocity.normalized(), 0.05) #where factor is 0.0 - 1.0
 			VisionConeArea.rotation = visioncone_direction.angle()
 			
-		states.SEARCH:
+		STATES.SEARCH:
 			StateDurationTimer.stop()
 			
 			set_target(last_known_playerposition)
@@ -100,17 +100,17 @@ func _physics_process(delta):
 					full_rotation_check += 0.015
 
 				elif full_rotation_check >= 2*PI:
-					choose_random_state([states.IDLE, states.ROAM])
+					choose_random_state([STATES.IDLE, STATES.ROAM])
 					full_rotation_check = 0
 			else:
 				visioncone_direction = visioncone_direction.slerp(last_known_playerposition - global_position, 0.1) #where factor is 0.0 - 1.0
 				VisionConeArea.rotation = visioncone_direction.angle()
 				
 			if can_see_target == true:
-				state = states.CHASE
+				state = STATES.CHASE
 
 
-		states.CHASE:
+		STATES.CHASE:
 			StateDurationTimer.stop()
 			
 			if can_see_target == true:
@@ -142,10 +142,10 @@ func get_random_roamcell():
 
 func _on_DetectionTimer_timeout():
 	if can_see_target == true:
-		state = states.CHASE
+		state = STATES.CHASE
 
 func _on_ReactionTimer_timeout():
-	state = states.SEARCH
+	state = STATES.SEARCH
 
 func _on_RoamDelayTimer_timeout():
 	if roam_state == "Roam_to_randomcell":
@@ -153,14 +153,11 @@ func _on_RoamDelayTimer_timeout():
 		
 	elif roam_state == "Roam_to_spawncell":
 		roam_state = "Roam_to_randomcell"
-	state = states.ROAM
-
-func task_helloworld(task):
-	pass
+	state = STATES.ROAM
 
 func _on_StateDurationTimer_timeout():
-	if state == states.IDLE or state == states.ROAM and reached_endof_path == true:
-		choose_random_state([states.IDLE, states.ROAM])
+	if state == STATES.IDLE or state == STATES.ROAM and reached_endof_path == true:
+		choose_random_state([STATES.IDLE, STATES.ROAM])
 		StateDurationTimer.wait_time = rand_range(8, 30)
 		StateDurationTimer.start()
 

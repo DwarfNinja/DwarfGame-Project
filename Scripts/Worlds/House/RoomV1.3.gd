@@ -1,7 +1,7 @@
 extends Node
 
 
-const mapping = {
+const mapping: Dictionary = {
 	"northwest_north": "southwest_south",
 	"north": "south",
 	"northeast_north": "southeast_south",
@@ -20,7 +20,7 @@ const mapping = {
 	}
 
 
-export var openings = {
+export var openings: Dictionary = {
 	"northwest_north": false,
 	"north": false,
 	"northeast_north": false,
@@ -38,5 +38,5 @@ export var openings = {
 	"northwest_west": false
 	}
 
-func get_connection(complementary_opening):
+func get_connection(complementary_opening) -> String:
 	return openings[mapping[complementary_opening]]

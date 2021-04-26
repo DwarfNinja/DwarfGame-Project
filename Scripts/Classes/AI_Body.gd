@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name AI_Object
+class_name AI_Body
 
 export (Resource) var ai_def
 onready var node_name = get_name().lstrip("@").split("@", false, 1)[0]
@@ -38,12 +38,6 @@ func _ready():
 		push_error("ERROR: No ai_def defined in AI: " + str(self))
 		return
 	set_ai(ai_def)
-
-
-
-func _process(delta):
-	pass
-#	print(VisionConeArea.get_overlapping_bodies())
 	
 func set_ai(_ai_def):
 	ai_def = _ai_def

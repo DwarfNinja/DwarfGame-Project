@@ -19,7 +19,7 @@ var inventory_dic = {
 }
 
 signal update_tileselector(selected_item)
-#TODO: refresh selected item when resources are 0
+# TODO: refresh selected item when resources are 0
 func _ready():
 	# Item signals
 	Events.connect("item_picked_up", self, "_on_item_picked_up")
@@ -114,19 +114,19 @@ func can_fit_in_inventory(item_def):
 				return true
 	return false
 
-#TODO: Should remove inventory_dic and replace with function that checks for free space
+# TODO: Should remove inventory_dic and replace with function that checks for free space
 func add_to_inventory_dic(item_def):
 	inventory_dic[item_def.item_name] += 1
 	if item_def.item_name == "goldcoins":
 		HUD.update_hud_coins(inventory_dic["goldcoins"])
 
-#TODO: Should remove inventory_dic and replace with function that checks if it can remove items
+# TODO: Should remove inventory_dic and replace with function that checks if it can remove items
 func remove_from_inventory_dic(item_def):
 	inventory_dic[item_def.item_name] -= 1
 	if item_def.item_name == "goldcoins":
 		HUD.update_hud_coins(inventory_dic["goldcoins"])
 
-#Used to be remove_item()
+# Used to be remove_item()
 func _on_remove_item(selected_item):
 	if selected_item.item_name in inventory_dic:
 		inventory_dic[selected_item.item_name] -= 1
@@ -135,8 +135,8 @@ func _on_remove_item(selected_item):
 				slot.remove_item()
 
 
-#Iterates through slots in Inventory backwards and removes resources == item_cost
-#TODO: Can be improved | Could be changed to use slot.has_resources
+# Iterates through slots in Inventory backwards and removes resources == item_cost
+# TODO: Can be improved | Could be changed to use slot.has_resources
 func remove_required_resources(crafted_item):
 	var Slots = HboxContainer.get_children()
 	var Inverse_Slots = Slots.duplicate()

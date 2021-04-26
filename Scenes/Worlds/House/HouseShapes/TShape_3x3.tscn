@@ -3,7 +3,7 @@
 [ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Worlds/House/Shape.gd" type="Script" id=2]
 
-[node name="SE_3x2" type="Node2D"]
+[node name="TShape_3x2" type="Node2D"]
 script = ExtResource( 2 )
 shape_width = 3
 shape_height = 5
@@ -12,4 +12,4 @@ shape_height = 5
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 0, 1, 4, 1, 1, 196609, 2, 1, 196610, 65536, 1, 131075, 65537, 2, 131074, 65538, 2, 3, 131072, 2, 131072, 131073, 2, 196609, 131074, 2, 65539, 196608, 2, 196608, 196609, 3, 2, 196610, 3, 3, 262144, 3, 0 )
+tile_data = PoolIntArray( 0, 1, 196608, 1, 1, 131080, 2, 1, 196610, 65536, 2, 0, 65537, 1, 131075, 65538, 2, 3, 131072, 2, 65536, 131073, 2, 131072, 131074, 2, 65539, 196608, 3, 1, 196609, 2, 196608, 196610, 3, 3, 262145, 3, 0 )

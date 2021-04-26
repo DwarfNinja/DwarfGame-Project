@@ -12,9 +12,6 @@ var direction_list = [
 	Vector2(-22,20), Vector2(0,20), Vector2(22,20)
 	]
 
-func _ready():
-	pass
-
 func _process(_delta):
 	if can_interact == true:
 		if Input.is_action_just_pressed("key_e"):
@@ -44,7 +41,7 @@ func drop_items():
 		random_item.set_global_position(ItemSpawnPosition.global_position)
 		var random_direction = choose_random_drop_direction(available_direction_list)
 		random_item.play_chestdrop_animation(random_direction)
-#TODO: add legible_unique_name to all add_child() calls
+# TODO: add legible_unique_name to all add_child() calls
 
 func select_item_from_drop_table():
 	var drop_table = drop_table_def.drop_table

@@ -1,5 +1,5 @@
 extends Resource
-class_name R_LootTable
+class_name R_DropTable
 
-export (String) var container_name
+export (String) var droptable_name
 export (Array) var drop_table

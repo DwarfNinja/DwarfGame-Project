@@ -10,3 +10,4 @@ func _on_NewGameButton_pressed():
 	get_tree().change_scene("res://Scenes/Worlds/Cave/Cave.tscn")
 	HUD.get_node("VBoxContainer").visible = true
 	HUD.menu_open = false
+

@@ -19,15 +19,15 @@ func _process(_delta):
 		current_playerposition = Player.get_global_position()
 	
 func _on_request_roamcell(Villager):
-	var villager_spawn_position = $Area.world_to_map(Villager.spawn_position)
+	var villager_spawn_position = $Areas.world_to_map(Villager.spawn_position)
 	var villager_roam_destinations = []
-	for cell in $Area.get_used_cells():
+	for cell in $Areas.get_used_cells():
 		if cell.distance_to(villager_spawn_position) > 10:
-			villager_roam_destinations.append($Area.map_to_world(cell) + Vector2(7.99, 8.01)) #Bug in Nav2D where it rounds up ints?
+			villager_roam_destinations.append($Areas.map_to_world(cell) + Vector2(7.99, 8.01)) #Bug in Nav2D where it rounds up ints?
 				
 	villager_roam_destinations.shuffle()
 	var roam_cell = (villager_roam_destinations.pop_front())
-#	$Indexes.set_cellv($Area.world_to_map(roam_cell), 14) #DEBUG
+#	$Indexes.set_cellv($Areas.world_to_map(roam_cell), 14) #DEBUG
 	Villager.random_roamcell = roam_cell
 	
 func _on_request_navpath(Villager, target_cell):

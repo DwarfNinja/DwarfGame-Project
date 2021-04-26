@@ -73,7 +73,7 @@ func _on_craftingbutton_mouse_entered(crafting_button):
 	
 	
 func update_resourcebar():
-	#TODO: Dynamic Resourcebar depending on required_items sets sprite and text
+	# TODO: Dynamic Resourcebar depending on required_items sets sprite and text
 	var item_def_in_craftingbutton = Selected_Button.craftable_def
 	$ResouceBar/WoodCostLabel.text = str(item_def_in_craftingbutton.required_items.values()[0])
 	$ResouceBar/IronCostLabel.text = str(item_def_in_craftingbutton.required_items.values()[1])

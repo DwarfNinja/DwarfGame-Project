@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://light.png" type="Texture" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+[node name="Lamp" type="Node2D"]
+light_mask = 0
+material = SubResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 0, 11, 3, 65536, 11, 65539, 131072, 11, 131075 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 8, 11 )
+texture = ExtResource( 2 )
+texture_scale = 0.4
+color = Color( 0.929412, 0.462745, 0.0784314, 1 )
+energy = 0.85
+range_item_cull_mask = 7
+shadow_enabled = true
+
+[node name="Light2D2" type="Light2D" parent="."]
+visible = false
+position = Vector2( 8, 11 )
+texture = ExtResource( 2 )
+texture_scale = 0.4
+color = Color( 0.929412, 0.462745, 0.0784314, 1 )
+energy = 0.85
+range_item_cull_mask = 4
+shadow_item_cull_mask = 0
