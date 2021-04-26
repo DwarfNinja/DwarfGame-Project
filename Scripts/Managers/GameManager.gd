@@ -34,7 +34,7 @@ func _on_entered_cave():
 	# Loading Cave and freeing House Scene
 	load_scene()
 
-#TODO: change to be dynamic, take Scene as argument
+# TODO: change to be dynamic, take Scene as argument
 func switch_scene():
 	# save cave scene and remove it from the tree
 	emit_signal("cave_scene_saved")

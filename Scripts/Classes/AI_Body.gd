@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name AI_Object
+class_name AI_Body
 
 export (Resource) var ai_def
 onready var node_name = get_name().lstrip("@").split("@", false, 1)[0]

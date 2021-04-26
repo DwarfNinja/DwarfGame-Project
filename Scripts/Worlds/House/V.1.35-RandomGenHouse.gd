@@ -236,7 +236,7 @@ func clear_tile_conflict() -> void:
 			if Indexes.get_cellv(cell) != spawn_index_tile_id:
 				Indexes.set_cell(cell.x, cell.y, -1)
 
-#FIX: Not used
+# FIXME: Not used
 #func clear_spawn_zone(spawn_zone: Array) -> void:
 #	for cell in spawn_zone:
 #		if Areas.get_cellv(cell) == -1:
@@ -285,21 +285,21 @@ func check_unused_openings(current_occupied_room_locations: Array) -> void:
 			if Walls.get_cellv(cell + _cell + Vector2(-1,0)) != -1 and Walls.get_cellv(cell + _cell) == -1:
 				set_connection_end((cell + _cell) + Vector2(0,-4), L_SideConnectionEnd)
 				
-				#Set area based on touching area
+				# Set area based on touching area
 				Areas.set_cellv(cell + _cell + Vector2(0,-1), Areas.get_cellv(cell + _cell))
 				
 				
 			if Walls.get_cellv(cell + _cell + Vector2(1,0)) != -1 and Walls.get_cellv(cell + _cell) == -1:
 				set_connection_end((cell + _cell) + Vector2(0,-4), R_SideConnectionEnd)
 				
-				#Set area based on touching area
+				# Set area based on touching area
 				Areas.set_cellv(cell + _cell + Vector2(0,-1), Areas.get_cellv(cell + _cell))
 				
 
 func set_connection_end(unused_opening_location: Vector2, ConnectionEnd: TileMap) -> void:
 	copy_tilemap(Walls, ConnectionEnd, unused_opening_location)
 	for cell in ConnectionEnd.get_used_cells():
-#		#Clear Area cells in connection end
+		# Clear Area cells in connection end
 		Areas.set_cell(unused_opening_location.x + cell.x, unused_opening_location.y + cell.y, -1)
 
 
@@ -425,7 +425,7 @@ func select_item_from_drop_table(drop_table_def) -> Resource:
 	var rng = randi() % total_drop_chance
 	for drop_table_entry in drop_table:
 		cumulative_drop_chance += drop_table_entry.drop_rate
-	# if the RNG is <= item cumulated total_drop_chance then drop that item
+#		if the RNG is <= item cumulated total_drop_chance then drop that item
 		if rng <= cumulative_drop_chance:
 			return drop_table_entry.item
 	return null
