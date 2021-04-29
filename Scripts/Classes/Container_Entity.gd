@@ -1,4 +1,4 @@
-extends Interactable_Object
+extends Interactable_Entity
 
 export (Resource) var drop_table_def
 

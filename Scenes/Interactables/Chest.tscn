@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Sprites/Interactables/Chest/Chest-Sheet.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/Classes/Container_Object.gd" type="Script" id=3]
+[ext_resource path="res://Resources/Entities/Lootables/Chest.tres" type="Resource" id=2]
+[ext_resource path="res://Scripts/Classes/Container_Entity.gd" type="Script" id=3]
 [ext_resource path="res://Shaders/Materials/Outline.tres" type="Material" id=4]
 [ext_resource path="res://Resources/Drop_Tables/Chest_Drop_Table.tres" type="Resource" id=5]
 
@@ -46,6 +47,7 @@ tracks/0/keys = {
 [node name="Chest" type="StaticBody2D"]
 collision_layer = 8
 script = ExtResource( 3 )
+entity_def = ExtResource( 2 )
 drop_table_def = ExtResource( 5 )
 
 [node name="ChestSprite" type="Sprite" parent="."]

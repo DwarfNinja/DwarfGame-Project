@@ -1,7 +1,6 @@
-extends R_Item
+extends R_Entity
 class_name R_Craftable
 
 export (Dictionary) var required_items
-export (Vector2) var footprint
 export (Texture) var blueprint_icon
-export (PackedScene) var packedscene
+export (String) var packedscene_string

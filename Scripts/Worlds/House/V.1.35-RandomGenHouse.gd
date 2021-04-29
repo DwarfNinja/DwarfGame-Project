@@ -25,7 +25,7 @@ onready var Villager_Scene: PackedScene = preload("res://Scenes/KinematicBodies/
 onready var Player: KinematicBody2D = get_node("Nav2D/Walls/Player") as KinematicBody2D
 
 # Objects
-onready var Door_Scene: PackedScene = preload("res://Scenes/Objects/Door.tscn")
+onready var Door_Scene: PackedScene = preload("res://Scenes/Entities/Door.tscn")
 onready var PlayerGhost: Node2D = get_node("Nav2D/Walls/PlayerGhost") as Node2D
 
 # TileIDs Tiles
@@ -269,16 +269,16 @@ func check_unused_openings(current_occupied_room_locations: Array) -> void:
 			if Walls.get_cellv(cell + _cell + Vector2(0,-1)) != -1 and Walls.get_cellv(cell + _cell) == -1:
 				set_connection_end((cell + _cell) + Vector2(-1,0), TopConnectionEnd)
 				
-				if Walls.get_cellv(cell + _cell + Vector2(-2,3)) == wall_shadow_tile_id:
-					Walls.set_cell((cell.x + _cell.x + -2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
-					
-				if Walls.get_cellv(cell + _cell + Vector2(2,3)) == wall_shadow_tile_id:
-					Walls.set_cell((cell.x + _cell.x + 2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
-					
-				#Set areas based on touching area
-				Areas.set_cellv(cell + _cell + Vector2(-1,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
-				Areas.set_cellv(cell + _cell + Vector2(0,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
-				Areas.set_cellv(cell + _cell + Vector2(1,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
+			if Walls.get_cellv(cell + _cell + Vector2(-2,3)) == wall_shadow_tile_id:
+				Walls.set_cell((cell.x + _cell.x + -2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
+				
+			if Walls.get_cellv(cell + _cell + Vector2(2,3)) == wall_shadow_tile_id:
+				Walls.set_cell((cell.x + _cell.x + 2), (cell.y + _cell.y + 3), wall_shadow_tile_id, false, false, false, Vector2(2,0))
+				
+			#Set areas based on touching area
+			Areas.set_cellv(cell + _cell + Vector2(-1,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
+			Areas.set_cellv(cell + _cell + Vector2(0,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
+			Areas.set_cellv(cell + _cell + Vector2(1,3), Areas.get_cellv(cell + _cell + Vector2(0,4)))
 				
 	for cell in current_occupied_room_locations:
 		for _cell in side_connections:

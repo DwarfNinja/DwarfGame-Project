@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Interactables/Chest/Chest-Sheet.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+type_name = "lootable"
+entity_name = "chest"
+footprint = Vector2( 1, 1 )
+entity_texture = ExtResource( 2 )

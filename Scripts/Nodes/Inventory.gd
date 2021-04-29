@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var goldcoins = preload("res://Resources/Resources/GoldCoins.tres")
+onready var goldcoins = preload("res://Resources/Entities/Resources/GoldCoins.tres")
 
 onready var inventory_slots = {
 	"Slot_0": {"item_def": null, "count": 0},

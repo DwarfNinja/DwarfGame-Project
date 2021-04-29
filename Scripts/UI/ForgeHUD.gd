@@ -1,6 +1,6 @@
 extends TextureRect
 
-var iron = preload("res://Resources/Resources/Iron.tres")
+var iron = preload("res://Resources/Entities/Resources/Iron.tres")
 onready var IronAmountHSlider = $IronAmountHSlider
 onready var IronAmountLabel = $IronAmountLabel
 

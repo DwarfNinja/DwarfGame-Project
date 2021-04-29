@@ -1,11 +1,9 @@
-extends StaticBody2D
+extends Entity
 
-class_name Interactable_Object
+class_name Interactable_Entity
 
 var can_interact = false
 onready var InteractArea = $InteractArea
-onready var node_name = get_name().lstrip("@").split("@", false, 1)[0]
-onready var InteractableSprite = get_node(node_name + "Sprite")
 
 
 func _ready():
@@ -21,12 +19,12 @@ func _process(_delta):
 
 func _on_InteractArea_area_entered(_area):
 	can_interact = true
-	InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,255))
+	EntitySprite.material.set_shader_param("outline_color", Color(240,240,240,255))
 		
 
 func _on_InteractArea_area_exited(_area):
 	can_interact = false
-	InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
+	EntitySprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 
 func interact():
 	# Declared in the specific Craftable_Object

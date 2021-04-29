@@ -29,7 +29,7 @@ onready var PlayerInteractArea = $PlayerInteractArea
 onready var PlayerPickupArea = $PlayerPickupArea
 onready var Inventory = $Inventory
 
-onready var goldcoins = preload("res://Resources/Resources/GoldCoins.tres")
+onready var goldcoins = preload("res://Resources/Entities/Resources/GoldCoins.tres")
 onready var animationState = animationTree.get("parameters/playback")
 
 func _ready():

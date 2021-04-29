@@ -1,8 +1,8 @@
-extends Interactable_Object
+extends Interactable_Entity
 
 onready var ForgeTimer = $ForgeTimer
 
-var iron = preload("res://Resources/Resources/Iron.tres")
+var iron = preload("res://Resources/Entities/Resources/Iron.tres")
 var forge_time = 5
 var iron_in_forge = 0
 var set_iron_amount = null
@@ -18,12 +18,12 @@ func _ready():
 func _process(_delta):
 	if can_interact == true:
 		if ForgeTimer.is_stopped() and iron_in_forge == 0:
-			InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,255)) #Visible
+			EntitySprite.material.set_shader_param("outline_color", Color(240,240,240,255)) #Visible
 		elif iron_in_forge > 0:
-			InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,0)) #Visible
+			EntitySprite.material.set_shader_param("outline_color", Color(240,240,240,0)) #Visible
 			$Iron.material.set_shader_param("outline_color", Color(240,240,240,255)) 
 		else:
-			InteractableSprite.material.set_shader_param("outline_color", Color(240,240,240,0))
+			EntitySprite.material.set_shader_param("outline_color", Color(240,240,240,0))
 			$Iron.material.set_shader_param("outline_color", Color(240,240,240,0))
 			
 	update_iron_sprite()

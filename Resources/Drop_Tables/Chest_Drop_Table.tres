@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Resources/R_DropTable.gd" type="Script" id=1]
-[ext_resource path="res://Resources/Resources/Wood.tres" type="Resource" id=2]
-[ext_resource path="res://Resources/Resources/Iron.tres" type="Resource" id=3]
-[ext_resource path="res://Resources/Resources/GoldCoins.tres" type="Resource" id=4]
+[ext_resource path="res://Resources/Entities/Resources/Wood.tres" type="Resource" id=2]
+[ext_resource path="res://Resources/Entities/Resources/Iron.tres" type="Resource" id=3]
+[ext_resource path="res://Resources/Entities/Resources/GoldCoins.tres" type="Resource" id=4]
 [ext_resource path="res://Scripts/Resources/R_DropTable_Entry.gd" type="Script" id=5]
 
 [sub_resource type="Resource" id=1]

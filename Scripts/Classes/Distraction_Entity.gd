@@ -1,12 +1,10 @@
-extends Node2D
+extends Interactable_Entity
 
-export (Resource) var object_def
-
-onready var ObjectSprite = $Distraction_Object_Sprite
+onready var Distraction_Object_Sprite = $Distraction_Object_Sprite
 
 func _ready() -> void:
 	if not object_def:
-		ObjectSprite.texture = null
+		Distraction_Object_Sprite.texture = null
 		push_error("ERROR: No object_def defined in object " + str(self))
 		get_tree().quit()
 		return
@@ -19,6 +17,6 @@ func interact():
 
 func set_object(_object_def):
 	object_def = _object_def
-	if not ObjectSprite:
+	if not Distraction_Object_Sprite:
 		return
-	ObjectSprite.texture = object_def.object_texture
+	Distraction_Object_Sprite.texture = object_def.object_texture

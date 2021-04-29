@@ -1,6 +1,5 @@
-extends Interactable_Object
-
-var gold_coins = preload("res://Resources/Resources/GoldCoins.tres")
+extends Interactable_Entity
+var gold_coins = preload("res://Resources/Entities/Resources/GoldCoins.tres")
 onready var MiningTimer = $MiningTimer
 
 var gold_coins_1 = preload("res://Sprites/Interactables/Craftables/MiningRig/MiningRig TopDown Coins1.png")

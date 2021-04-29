@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Items/Placeholder-Item.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Interactables/PlaceHolder.png" type="Texture" id=5]
+
+[resource]
+script = ExtResource( 1 )
+type_name = "craftable"
+entity_name = "miningrig"
+item_texture = ExtResource( 4 )
+footprint = Vector2( 2, 1 )
+entity_texture = ExtResource( 5 )
+required_items = {
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2,
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2
+}
+packedscene_string = ""
