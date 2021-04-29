@@ -15,8 +15,8 @@ hud_texture = ExtResource( 2 )
 footprint = Vector2( 2, 1 )
 entity_texture = ExtResource( 5 )
 required_items = {
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3,
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1,
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3
 }
 blueprint_icon = ExtResource( 4 )
 packedscene_string = "res://Scenes/Interactables/Craftables/Forge.tscn"
