@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Entities/Kitchen_Counter.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+type_name = "prop"
+entity_name = "kitchen_counter"
+footprint = Vector2( 3, 1 )
+entity_texture = ExtResource( 2 )

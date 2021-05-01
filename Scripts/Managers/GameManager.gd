@@ -58,6 +58,13 @@ func load_scene():
 	else: 
 		load_scene()
 
+# TODO: Method of saving a scene
+func save_scene(Node_to_save):
+	var file_path = "res://your_scene.tscn"
+	var scene = PackedScene.new()
+	scene.pack(Node_to_save)
+	ResourceSaver.save(file_path,scene)
+	
 func run_time(delta):
 	var minutes = seconds/60
 	

@@ -1,8 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Classes/Entity.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Entities/Props/Kitchen_Counter.tres" type="Resource" id=2]
 
-[node name="Entity" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 8 )
+
+[node name="Entity" type="StaticBody2D"]
 script = ExtResource( 1 )
+entity_def = ExtResource( 2 )
 
 [node name="EntitySprite" type="Sprite" parent="."]
+position = Vector2( 24, 8 )
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 16, 8 )
+shape = SubResource( 1 )
