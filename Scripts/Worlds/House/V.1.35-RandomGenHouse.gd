@@ -167,7 +167,7 @@ func set_random_room(random_room: Node2D, random_room_location: Vector2, _last_r
 	copy_tilemap(Areas, random_room_area, (random_room_location + last_room_location))
 	copy_tilemap(Indexes,random_room_indexes, (random_room_location + last_room_location))
 	
-	copy_nodes(Props, random_room_template.get_node("Props"), Walls.map_to_world(random_room_location + last_room_location))
+	copy_nodes(Walls, random_room_template.get_node("Props"), Walls.map_to_world(random_room_location + last_room_location))
 	rooms += 1
 
 

@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/Entities/Kitchen_Counter.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 19 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 18, 7 )
+
+[node name="Kitchen_Counter" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Horizontal" type="Node2D" parent="."]
+
+[node name="Kitchen_CounterSprite" type="Sprite" parent="Horizontal"]
+position = Vector2( 24, 8 )
+texture = ExtResource( 1 )
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Horizontal"]
+position = Vector2( 24, 12 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Vertical" type="Node2D" parent="."]
+
+[node name="Kitchen_CounterSprite" type="Sprite" parent="Vertical"]
+position = Vector2( 24, 8 )
+texture = ExtResource( 1 )
+vframes = 4
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vertical"]
+position = Vector2( 8, 12 )
+rotation = 1.5708
+shape = SubResource( 2 )

@@ -21,18 +21,37 @@ func set_object(_object_def):
 	if not EntitySprite:
 		return
 	EntitySprite.texture = entity_def.entity_texture
-	
+	var converted_rect_dimensions = get_rect_dimensions(get_horizontal_sprite()) / 2
+	var converted_rect_position = get_rect_position(get_horizontal_sprite())
+	collisionShape2D.shape.extents = converted_rect_dimensions
+	collisionShape2D.position = (converted_rect_position + converted_rect_dimensions) + EntitySprite.position - Vector2(24, 32)
+							   
 	match entity_def.type_name:
-
 		"prop":
 			EntitySprite.hframes = 1
 			EntitySprite.vframes = 4
-			collisionShape2D.shape.extents = Vector2(8,8) * entity_def.footprint 
-			collisionShape2D.position = Vector2(8,8) * entity_def.footprint 
 		"lootable":
 			EntitySprite.hframes = 3
 			EntitySprite.vframes = 1
 			
 		"craftable":
 			return
+	
 
+func get_horizontal_sprite() -> Image:                   
+	var image_data: Image = EntitySprite.texture.get_data()
+	return image_data.get_rect(Rect2(Vector2(0, 0), Vector2(48, 64)))
+
+func get_vertical_sprite() -> Image:
+	var image_data: Image = EntitySprite.texture.get_data()
+	return image_data.get_rect(Rect2(Vector2(0, 0), Vector2(48, 240)))
+	
+func get_rect_dimensions(image: Image) -> Vector2:
+	var image_rect = image.get_used_rect()
+	return image_rect.size
+	# Should subtract shadow size when shadows are added
+
+func get_rect_position(image: Image) -> Vector2:
+	var image_rect: Rect2 = image.get_used_rect()
+	return image_rect.position
+	

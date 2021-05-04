@@ -1,15 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Scripts/Classes/Distraction_Entity.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=2]
-
-[sub_resource type="Resource" id=1]
-script = ExtResource( 2 )
-object_name = "kitchen_counter"
-footprint = Vector2( 3, 1 )
 
 [node name="Distraction_Object" type="Node2D"]
 script = ExtResource( 1 )
-object_def = SubResource( 1 )
 
 [node name="Distraction_ObjectSprite" type="Sprite" parent="."]
