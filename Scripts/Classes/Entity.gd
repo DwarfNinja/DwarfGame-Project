@@ -7,25 +7,30 @@ onready var node_name = get_name().lstrip("@").split("@", false, 1)[0]
 onready var EntitySprite = get_node(node_name + "Sprite")
 onready var collisionShape2D = get_node("CollisionShape2D")
 
+onready var facing: int = 3
+
+enum {FRONT = 0, BACK = 1, LEFT = 2, RIGHT = 3}
+
 func _ready() -> void:
 	if not entity_def:
 		EntitySprite.texture = null
-		push_error("ERROR: No entity_def defined in object " + str(self))
+		push_error("ERROR: No entity_def defined in entity " + str(self))
 		get_tree().quit()
 		return
-	set_object(entity_def)
+		
+	set_entity(entity_def)
 
 
-func set_object(_object_def):
-	entity_def = _object_def
-	if not EntitySprite:
-		return
+func set_entity(_entity_def):
+	entity_def = _entity_def
 	EntitySprite.texture = entity_def.entity_texture
-	var converted_rect_dimensions = get_rect_dimensions(get_horizontal_sprite()) / 2
-	var converted_rect_position = get_rect_position(get_horizontal_sprite())
+	EntitySprite.frame_coords.y = facing 
+	
+	var converted_rect_dimensions = get_usedrect_dimensions(get_last_frame()) / 2
+	var converted_rect_position = get_usedrect_position(get_last_frame())
 	collisionShape2D.shape.extents = converted_rect_dimensions
 	collisionShape2D.position = (converted_rect_position + converted_rect_dimensions) + EntitySprite.position - Vector2(24, 32)
-							   
+	
 	match entity_def.type_name:
 		"prop":
 			EntitySprite.hframes = 1
@@ -38,20 +43,26 @@ func set_object(_object_def):
 			return
 	
 
-func get_horizontal_sprite() -> Image:                   
+func get_sprite_frame(image_data) -> Image:
+	var texture_size: Vector2 = EntitySprite.texture.get_size()
+	var individual_frame_size: Vector2 = Vector2((texture_size.x / EntitySprite.hframes), (texture_size.y / EntitySprite.vframes))
+	
+	return image_data.get_rect(Rect2(Vector2(0, 0), Vector2(individual_frame_size.x, individual_frame_size.y  * (facing + 1))))
+
+func get_first_frame() -> Image:                   
 	var image_data: Image = EntitySprite.texture.get_data()
 	return image_data.get_rect(Rect2(Vector2(0, 0), Vector2(48, 64)))
 
-func get_vertical_sprite() -> Image:
+func get_last_frame() -> Image:
 	var image_data: Image = EntitySprite.texture.get_data()
-	return image_data.get_rect(Rect2(Vector2(0, 0), Vector2(48, 240)))
+	return image_data.get_rect(Rect2(Vector2(0, 192), Vector2(48, 64)))
 	
-func get_rect_dimensions(image: Image) -> Vector2:
-	var image_rect = image.get_used_rect()
+func get_usedrect_dimensions(image: Image) -> Vector2:
+	var image_rect: Rect2 = image.get_used_rect()
 	return image_rect.size
 	# Should subtract shadow size when shadows are added
 
-func get_rect_position(image: Image) -> Vector2:
+func get_usedrect_position(image: Image) -> Vector2:
 	var image_rect: Rect2 = image.get_used_rect()
 	return image_rect.position
 	
