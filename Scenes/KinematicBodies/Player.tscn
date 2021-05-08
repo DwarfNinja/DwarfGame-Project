@@ -223,6 +223,11 @@ position = Vector2( 0.5, -1 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
+[node name="InteractRayCast" type="RayCast2D" parent="."]
+position = Vector2( 0.5, -1 )
+enabled = true
+cast_to = Vector2( 0, 12 )
+
 [node name="PlayerInteractArea" type="Area2D" parent="."]
 show_behind_parent = true
 position = Vector2( 0.5, -4 )

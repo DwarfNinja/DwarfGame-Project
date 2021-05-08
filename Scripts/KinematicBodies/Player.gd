@@ -26,6 +26,7 @@ onready var PlayerSprite = $PlayerSprite
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var PlayerInteractArea = $PlayerInteractArea
+onready var InteractRayCast = $InteractRayCast
 onready var PlayerPickupArea = $PlayerPickupArea
 onready var Inventory = $Inventory
 
@@ -62,19 +63,23 @@ func _physics_process(delta):
 		
 		if PlayerSprite.frame >= 0 and PlayerSprite.frame <= 7:
 			PlayerInteractArea.rotation_degrees = 270 #RIGHT
+			InteractRayCast.rotation_degrees = 270
 			facing = "right"
 		if PlayerSprite.frame >= 8 and PlayerSprite.frame <= 15:
 			PlayerInteractArea.rotation_degrees = 90 #LEFT
+			InteractRayCast.rotation_degrees = 90
 			facing = "left"
 		if PlayerSprite.frame >= 16 and PlayerSprite.frame <= 23:
 			PlayerInteractArea.rotation_degrees = 180 #UP
+			InteractRayCast.rotation_degrees = 180
 			facing = "up"
 		if PlayerSprite.frame >= 24 and PlayerSprite.frame <= 31:
 			PlayerInteractArea.rotation_degrees = 0 #DOWN
+			InteractRayCast.rotation_degrees = 0
 			facing = "down"
 
-
-func _on_PlayerPickupArea_body_entered(body):
+		
+func _on_PlayerPickupArea_body_entered(body) -> void:
 	if Inventory.can_fit_in_inventory(body.item_def):
 		Events.emit_signal("entered_pickuparea", self)
 	

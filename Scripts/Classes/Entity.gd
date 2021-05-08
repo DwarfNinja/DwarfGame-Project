@@ -53,13 +53,24 @@ func set_collision_shape():
 	var texture_size: Vector2 = EntitySprite.texture.get_size()
 	var individual_frame_size: Vector2 = Vector2((texture_size.x / EntitySprite.hframes), (texture_size.y / EntitySprite.vframes))
 	var current_sprite_frame: Image = get_sprite_frame(image_data, individual_frame_size)
+	
 	var shadow_length: int = get_shadow_length(current_sprite_frame)
 	
 	var converted_rect_dimensions: Vector2 = (get_usedrect_dimensions(current_sprite_frame) - Vector2(0, shadow_length)) / 2
 	var converted_rect_position: Vector2 = get_usedrect_position(current_sprite_frame)
 	
-	collisionShape2D.shape.extents = converted_rect_dimensions
-	collisionShape2D.position = (converted_rect_position + converted_rect_dimensions) + EntitySprite.position - (individual_frame_size / 2)
+	var entitysprite_position_offset = EntitySprite.position - (individual_frame_size / 2)
+	
+	match facing:
+#			collisionShape2D.shape.extents = Vector2(converted_rect_dimensions.x, converted_rect_dimensions.y)
+#			collisionShape2D.position = (converted_rect_position + converted_rect_dimensions) + EntitySprite.position - (individual_frame_size / 2)
+		FRONT, BACK:
+			collisionShape2D.shape.extents = Vector2(converted_rect_dimensions.x, converted_rect_dimensions.y / 2)
+			collisionShape2D.position = ((converted_rect_position + converted_rect_dimensions) + entitysprite_position_offset) + Vector2(0, converted_rect_dimensions.y / 2)
+
+# TODO: Look at, middle of rect + EntitySpriteOffset + Offset to position on bottom half
+# collisionShape2D.position = ((converted_rect_position + converted_rect_dimensions) 
+# + EntitySprite.position - (individual_frame_size / 2)) + Vector2(0, converted_rect_dimensions.y / 2)
 
 
 func get_sprite_frame(image_data, individual_frame_size) -> Image:
@@ -69,6 +80,12 @@ func get_sprite_frame(image_data, individual_frame_size) -> Image:
 func get_usedrect_dimensions(image: Image) -> Vector2:
 	var image_rect: Rect2 = image.get_used_rect()
 	return image_rect.size
+
+#func get_bottom_usedrect(image: Image) -> Vector2:
+#	var sprite_image = image.get_rect(image.get_used_rect())
+#	sprite_image.crop(sprite_image.get_size().x, sprite_image.get_size().y - sprite_image.get_size().y - 1)
+#	var image_rect: Rect2 = sprite_image.get_used_rect()
+#	return image_rect.size
 
 func get_usedrect_position(image: Image) -> Vector2:
 	var image_rect: Rect2 = image.get_used_rect()
@@ -80,7 +97,6 @@ func get_shadow_length(image):
 	var shadow_length = 0
 	sprite_image.lock()
 	for pixel in range(sprite_dimensions.y - 1, 0, -1):
-		print("ALPHA", sprite_image.get_pixel(sprite_dimensions.x / 2, pixel).a)
 		if sprite_image.get_pixel(sprite_dimensions.x / 2, pixel).a < 1:
 			shadow_length += 1
 		else:

@@ -7,7 +7,7 @@
 [ext_resource path="res://Resources/Drop_Tables/Chest_Drop_Table.tres" type="Resource" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3.5, 8.5 )
+extents = Vector2( 8.5, 3.5 )
 
 [sub_resource type="CapsuleShape2D" id=2]
 height = 6.0
@@ -57,7 +57,6 @@ hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 8.5, -3.5 )
-rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="InteractArea" type="Area2D" parent="."]
@@ -65,6 +64,7 @@ position = Vector2( 8, 0 )
 collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+visible = false
 position = Vector2( 0.5, -7 )
 rotation = 1.5708
 shape = SubResource( 2 )
