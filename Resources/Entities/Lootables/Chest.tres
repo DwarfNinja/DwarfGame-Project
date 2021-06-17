@@ -7,5 +7,6 @@
 script = ExtResource( 1 )
 type_name = "lootable"
 entity_name = "chest"
-footprint = Vector2( 1, 1 )
+tile_footprint = Vector2( 0, 0 )
+collision_footprint = Vector2( 0, 0 )
 entity_texture = ExtResource( 2 )

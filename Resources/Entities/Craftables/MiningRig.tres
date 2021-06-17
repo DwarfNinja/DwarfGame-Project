@@ -9,10 +9,11 @@ script = ExtResource( 1 )
 type_name = "craftable"
 entity_name = "miningrig"
 item_texture = ExtResource( 4 )
-footprint = Vector2( 2, 1 )
+tile_footprint = Vector2( 2, 0 )
+collision_footprint = Vector2( 0, 0 )
 entity_texture = ExtResource( 5 )
 required_items = {
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2,
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2,
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2
 }
 packedscene_string = ""

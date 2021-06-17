@@ -31,7 +31,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 1, 2, 0, 0, 3, 0, 1, 4, 0, 0, 5, 0, 1, 
 [node name="Templates" type="Node2D" parent="."]
 
 [node name="Template_1" type="Node2D" parent="Templates"]
-visible = false
 
 [node name="Walls" type="TileMap" parent="Templates/Template_1"]
 tile_set = ExtResource( 1 )
@@ -59,24 +58,25 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Lamp" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 48, 224 )
+position = Vector2( 48, 272 )
 
 [node name="Lamp2" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 272, 192 )
+position = Vector2( 272, 240 )
 
 [node name="Lamp3" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 64, 128 )
+position = Vector2( 64, 176 )
 
 [node name="Lamp4" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 320, 16 )
+position = Vector2( 320, 64 )
 
 [node name="Lamp5" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 96, 16 )
+position = Vector2( 96, 64 )
 
 [node name="Lamp6" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 224, 16 )
+position = Vector2( 224, 64 )
 
 [node name="Template_2" type="Node2D" parent="Templates"]
+visible = false
 
 [node name="Walls" type="TileMap" parent="Templates/Template_2"]
 tile_set = ExtResource( 1 )
@@ -104,22 +104,22 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Lamp" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 48, 224 )
+position = Vector2( 48, 272 )
 
 [node name="Lamp2" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 272, 192 )
+position = Vector2( 272, 240 )
 
 [node name="Lamp3" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 64, 128 )
+position = Vector2( 64, 176 )
 
 [node name="Lamp4" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 320, 16 )
+position = Vector2( 320, 64 )
 
 [node name="Lamp5" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 96, 16 )
+position = Vector2( 96, 64 )
 
 [node name="Lamp6" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 224, 16 )
+position = Vector2( 224, 64 )
 
 [node name="Lamp7" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 176, 144 )
+position = Vector2( 176, 192 )

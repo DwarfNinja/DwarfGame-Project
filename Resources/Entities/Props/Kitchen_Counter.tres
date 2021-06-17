@@ -7,5 +7,6 @@
 script = ExtResource( 1 )
 type_name = "prop"
 entity_name = "kitchen_counter"
-footprint = Vector2( 3, 1 )
+tile_footprint = Vector2( 3, 0 )
+collision_footprint = Vector2( 38, 16 )
 entity_texture = ExtResource( 2 )

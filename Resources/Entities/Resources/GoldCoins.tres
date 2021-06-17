@@ -8,4 +8,5 @@ script = ExtResource( 1 )
 type_name = "resource"
 entity_name = "goldcoins"
 item_texture = ExtResource( 2 )
-footprint = Vector2( 0, 0 )
+tile_footprint = Vector2( 0, 0 )
+collision_footprint = Vector2( 0, 0 )
