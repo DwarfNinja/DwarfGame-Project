@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fonts/Tres FontData/Big Square fontdata.tres" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=2]
@@ -13,17 +13,29 @@ outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="DynamicFont" id=5]
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxEmpty" id=5]
 
 [sub_resource type="DynamicFont" id=6]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="DynamicFont" id=9]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="DynamicFont" id=12]
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
@@ -97,7 +109,9 @@ margin_top = 30.0
 margin_right = 108.0
 margin_bottom = 60.0
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "NEW GAME"
 flat = true
 
@@ -105,7 +119,9 @@ flat = true
 margin_top = 60.0
 margin_right = 108.0
 margin_bottom = 90.0
-custom_fonts/font = SubResource( 5 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Options"
 flat = true
 
@@ -113,6 +129,8 @@ flat = true
 margin_top = 90.0
 margin_right = 108.0
 margin_bottom = 120.0
-custom_fonts/font = SubResource( 6 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Quit"
 flat = true

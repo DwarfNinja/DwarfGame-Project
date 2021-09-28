@@ -60,11 +60,17 @@ var max_containers: int
 var max_enemies: int
 
 # Map offset coordinations for placement of rooms
-var room_pos_start: Vector2 = Vector2(0,0)
-var room_pos_north: Vector2 = Vector2(0, -23)
-var room_pos_east: Vector2 = Vector2(23, 0)
-var room_pos_south: Vector2 = Vector2(0, 23)
-var room_pos_west: Vector2 = Vector2(-23, 0)
+var room_pos_start: Vector2
+var room_pos_north: Vector2
+var room_pos_east: Vector2
+var room_pos_south: Vector2
+var room_pos_west: Vector2
+
+#var room_pos_start: Vector2 = Vector2(0,0)
+#var room_pos_north: Vector2 = Vector2(0, -23)
+#var room_pos_east: Vector2 = Vector2(23, 0)
+#var room_pos_south: Vector2 = Vector2(0, 23)
+#var room_pos_west: Vector2 = Vector2(-23, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -78,7 +84,8 @@ func _ready() -> void:
 		max_shapes = 5
 		max_containers = 4
 		max_enemies = 1 #4
-		
+	
+	setup()
 	random_generation()
 
 
@@ -100,6 +107,17 @@ func _process(_delta) -> void:
 #					Walls.set_cell(_cell.x, _cell.y, 6)
 		print(cell)
 
+
+func setup() -> void:
+	var tilemap_rect = Floor.get_used_rect()
+	var tilemap_rectsize_x = tilemap_rect.size.x
+	var tilemap_rectsize_y = tilemap_rect.size.y
+	
+	room_pos_start = Vector2(0,0)
+	room_pos_north = Vector2(0, -tilemap_rectsize_y)
+	room_pos_east = Vector2(tilemap_rectsize_x, 0)
+	room_pos_south = Vector2(0, tilemap_rectsize_y)
+	room_pos_west = Vector2(-tilemap_rectsize_x, 0)
 
 func random_generation() -> void:
 	check_randomroom_viability()
@@ -455,4 +473,4 @@ func select_random_spawn_position(spawn_tile_array: Array) -> Vector2:
 	possible_player_spawns.append(player_spawn)
 	
 	return select_random_from_array(possible_player_spawns)
-
+	

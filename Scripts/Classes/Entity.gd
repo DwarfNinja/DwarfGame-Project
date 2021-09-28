@@ -39,7 +39,6 @@ func set_entity(_entity_def):
 			set_entity_position()
 		"craftable":
 			return
-			
 
 
 func set_entity_position():

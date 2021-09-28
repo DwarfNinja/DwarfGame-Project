@@ -13,7 +13,7 @@ tile_footprint = Vector2( 2, 0 )
 collision_footprint = Vector2( 0, 0 )
 entity_texture = ExtResource( 5 )
 required_items = {
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2,
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2,
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2
 }
 packedscene_string = ""

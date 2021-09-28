@@ -37,7 +37,7 @@ func _ready():
 	# ___________________Connect Signals___________________
 	#__Internal Signals__
 	PlayerPickupArea.connect("body_entered", self, "_on_PlayerPickupArea_body_entered")
-	
+
 
 func _process(_delta):
 	 update()

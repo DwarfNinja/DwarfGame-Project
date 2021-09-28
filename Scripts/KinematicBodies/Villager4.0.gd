@@ -166,11 +166,11 @@ func choose_random_state(state_list):
 	state = state_list.pop_front()
 
 # FOR DEBUG PURPOSES
-func _draw():
+#func _draw():
 #	var laser_color = Color(1.0, .329, .298)
-	
+
 #	if player_in_visioncone:
 #		for hit in hit_pos:
 #			draw_circle((hit - position).rotated(-rotation), 1, laser_color)
 #			draw_line(VisionConeArea.position, (hit - position).rotated(-rotation), laser_color)
-	pass
+#	pass
