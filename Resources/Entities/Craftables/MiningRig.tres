@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/UI/CraftingTable/HUD CraftingTableButton Miningrig.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/Items/Placeholder-Item.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Interactables/PlaceHolder.png" type="Texture" id=5]
 
@@ -13,7 +14,8 @@ tile_footprint = Vector2( 2, 0 )
 collision_footprint = Vector2( 0, 0 )
 entity_texture = ExtResource( 5 )
 required_items = {
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2,
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2,
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2
 }
+blueprint_icon = ExtResource( 2 )
 packedscene_string = ""

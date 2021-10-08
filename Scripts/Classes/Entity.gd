@@ -1,25 +1,45 @@
+tool
+
 extends StaticBody2D
 class_name Entity
 
 export (Resource) var entity_def
 
-onready var node_name = get_name().lstrip("@").split("@", false, 1)[0]
-onready var EntitySprite = get_node(node_name + "Sprite")
+onready var node_name = get_name().lstrip("@").split("@", false, 1)[0].rstrip("0123456789")
+onready var EntitySprite = get_node("EntitySprite")
 onready var collisionShape2D = get_node("CollisionShape2D")
 
-onready var facing: int = 0
+export var facing: int = 0
+
+var sprite_data: Dictionary = {
+	"converted_rect_dimensions": null,
+	"absolute_sprite_position": null,
+	"shadow_height": null
+	}
 
 enum {FRONT = 0, BACK = 1, LEFT = 2, RIGHT = 3}
 
 func _ready() -> void:
+	set_node_name()
+	
 	if not entity_def:
 		EntitySprite.texture = null
 		push_error("ERROR: No entity_def defined in entity " + str(self))
-		get_tree().quit()
+#		get_tree().quit()
 		return
 		
 	set_entity(entity_def)
-
+	
+func _process(_delta: float) -> void:
+	if Engine.editor_hint:
+		if entity_def:
+			return
+			$EntitySprite.texture = entity_def.entity_texture
+			
+func set_node_name():
+	var formatted_entity_name = entity_def.entity_name.capitalize().replace(" ", "")
+	if get_name() != formatted_entity_name:
+		set_name(formatted_entity_name)
 
 func set_entity(_entity_def):
 	entity_def = _entity_def
@@ -44,8 +64,8 @@ func set_entity(_entity_def):
 func set_entity_position():
 	var collisionshape_height = collisionShape2D.shape.extents.y * 2
 	var collisionshape_floor_position = collisionShape2D.position + Vector2(0, collisionshape_height / 2)
-	EntitySprite.position -= Vector2(0, collisionshape_floor_position.y)
-	collisionShape2D.position -= Vector2(0, collisionshape_floor_position.y)
+	collisionShape2D.position = Vector2(collisionShape2D.shape.extents.x, -collisionShape2D.shape.extents.y)
+	EntitySprite.position = -sprite_data["absolute_sprite_position"] + Vector2(sprite_data["converted_rect_dimensions"].x, -sprite_data["converted_rect_dimensions"].y)
 
 func set_collision_shape():
 	var image_data: Image = EntitySprite.texture.get_data()
@@ -53,24 +73,21 @@ func set_collision_shape():
 	var individual_frame_size: Vector2 = Vector2((texture_size.x / EntitySprite.hframes), (texture_size.y / EntitySprite.vframes))
 	var current_sprite_frame: Image = get_sprite_frame(image_data, individual_frame_size)
 	
-	var shadow_length: int = get_shadow_length(current_sprite_frame)
+	var shadow_height: int = get_shadow_height(current_sprite_frame)
+	print(entity_def.entity_name, get_usedrect_dimensions(current_sprite_frame))
+	sprite_data["converted_rect_dimensions"] = (get_usedrect_dimensions(current_sprite_frame) - Vector2(0, shadow_height)) / 2
+	sprite_data["absolute_sprite_position"] = (get_usedrect_position(current_sprite_frame) - (individual_frame_size / 2)) + sprite_data["converted_rect_dimensions"]
 	
-	var converted_rect_dimensions: Vector2 = (get_usedrect_dimensions(current_sprite_frame) - Vector2(0, shadow_length)) / 2
-	var converted_rect_position: Vector2 = get_usedrect_position(current_sprite_frame)
-	
-	var entitysprite_position_offset = EntitySprite.position - (individual_frame_size / 2)
-	
+	var rectShape = RectangleShape2D.new()
 	match facing:
-#			collisionShape2D.shape.extents = Vector2(converted_rect_dimensions.x, converted_rect_dimensions.y)
-#			collisionShape2D.position = (converted_rect_position + converted_rect_dimensions) + EntitySprite.position - (individual_frame_size / 2)
+		LEFT,RIGHT:
+			if sprite_data["converted_rect_dimensions"].x != sprite_data["converted_rect_dimensions"].y:
+				rectShape.set_extents(Vector2(entity_def["collision_footprint"].y, entity_def["collision_footprint"].x) / 2)
+			else:
+				rectShape.set_extents(entity_def["collision_footprint"] / 2)
 		FRONT, BACK:
-			collisionShape2D.shape.extents = Vector2(converted_rect_dimensions.x, converted_rect_dimensions.y / 2)
-			collisionShape2D.position = ((converted_rect_position + converted_rect_dimensions) + entitysprite_position_offset) + Vector2(0, converted_rect_dimensions.y / 2)
-
-# TODO: Look at, middle of rect + EntitySpriteOffset + Offset to position on bottom half
-# collisionShape2D.position = ((converted_rect_position + converted_rect_dimensions) 
-# + EntitySprite.position - (individual_frame_size / 2)) + Vector2(0, converted_rect_dimensions.y / 2)
-
+			rectShape.set_extents(entity_def["collision_footprint"] / 2)
+	collisionShape2D.set_shape(rectShape)
 
 func get_sprite_frame(image_data, individual_frame_size) -> Image:
 	var frame = Rect2(Vector2(0, individual_frame_size.y * facing), individual_frame_size)
@@ -80,34 +97,19 @@ func get_usedrect_dimensions(image: Image) -> Vector2:
 	var image_rect: Rect2 = image.get_used_rect()
 	return image_rect.size
 
-#func get_bottom_usedrect(image: Image) -> Vector2:
-#	var sprite_image = image.get_rect(image.get_used_rect())
-#	sprite_image.crop(sprite_image.get_size().x, sprite_image.get_size().y - sprite_image.get_size().y - 1)
-#	var image_rect: Rect2 = sprite_image.get_used_rect()
-#	return image_rect.size
-
 func get_usedrect_position(image: Image) -> Vector2:
 	var image_rect: Rect2 = image.get_used_rect()
 	return image_rect.position
-	
-func get_shadow_length(image):
+
+func get_shadow_height(image):
 	var sprite_image = image.get_rect(image.get_used_rect())
 	var sprite_dimensions = get_usedrect_dimensions(sprite_image)
-	var shadow_length = 0
+	print(sprite_dimensions)
+	var shadow_height = 0
 	sprite_image.lock()
-	for pixel in range(sprite_dimensions.y - 1, 0, -1):
-		if sprite_image.get_pixel(sprite_dimensions.x / 2, pixel).a < 1:
-			shadow_length += 1
-		else:
-			break
-	return shadow_length
-		
+	for pixely in range(sprite_dimensions.y - 1, 0, -1):
+		for pixelx in range(0, sprite_dimensions.x):
+			if sprite_image.get_pixel(pixelx, pixely).a >= 1:
+				return shadow_height
+		shadow_height += 1
 	
-
-#func get_first_frame() -> Image:                   
-#	var image_data: Image = EntitySprite.texture.get_data()
-#	return image_data.get_rect(Rect2(Vector2(0, 0), Vector2(48, 64)))
-#
-#func get_last_frame() -> Image:
-#	var image_data: Image = EntitySprite.texture.get_data()
-#	return image_data.get_rect(Rect2(Vector2(0, 192), Vector2(48, 64)))

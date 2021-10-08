@@ -58,22 +58,22 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Lamp" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 48, 272 )
+position = Vector2( 48, 256 )
 
 [node name="Lamp2" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 272, 240 )
+position = Vector2( 272, 224 )
 
 [node name="Lamp3" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 64, 176 )
+position = Vector2( 64, 160 )
 
 [node name="Lamp4" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 320, 64 )
+position = Vector2( 320, 48 )
 
 [node name="Lamp5" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 96, 64 )
+position = Vector2( 96, 48 )
 
 [node name="Lamp6" parent="Templates/Template_1/Props" instance=ExtResource( 3 )]
-position = Vector2( 224, 64 )
+position = Vector2( 224, 48 )
 
 [node name="Template_2" type="Node2D" parent="Templates"]
 visible = false
@@ -104,22 +104,22 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Lamp" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 48, 272 )
+position = Vector2( 48, 256 )
 
 [node name="Lamp2" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 272, 240 )
+position = Vector2( 272, 224 )
 
 [node name="Lamp3" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 64, 176 )
+position = Vector2( 64, 160 )
 
 [node name="Lamp4" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 320, 64 )
+position = Vector2( 320, 48 )
 
 [node name="Lamp5" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 96, 64 )
+position = Vector2( 96, 48 )
 
 [node name="Lamp6" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 224, 64 )
+position = Vector2( 224, 48 )
 
 [node name="Lamp7" parent="Templates/Template_2/Props" instance=ExtResource( 3 )]
-position = Vector2( 176, 192 )
+position = Vector2( 176, 176 )

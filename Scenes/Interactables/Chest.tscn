@@ -16,7 +16,7 @@ height = 6.0
 resource_name = "Close"
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("ChestSprite:frame")
+tracks/0/path = NodePath("EntitySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -31,7 +31,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=4]
 length = 0.3
 tracks/0/type = "value"
-tracks/0/path = NodePath("ChestSprite:frame")
+tracks/0/path = NodePath("EntitySprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -49,7 +49,7 @@ script = ExtResource( 3 )
 entity_def = ExtResource( 2 )
 drop_table_def = ExtResource( 5 )
 
-[node name="ChestSprite" type="Sprite" parent="."]
+[node name="EntitySprite" type="Sprite" parent="."]
 material = ExtResource( 4 )
 position = Vector2( 9, -8 )
 texture = ExtResource( 1 )
