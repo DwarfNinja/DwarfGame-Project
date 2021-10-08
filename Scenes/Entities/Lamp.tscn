@@ -11,7 +11,7 @@ light_mask = 0
 material = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 8, -24 )
+position = Vector2( 8, -8 )
 texture = ExtResource( 3 )
 hframes = 3
 
@@ -24,6 +24,7 @@ tile_data = PoolIntArray( 0, 11, 3, 65536, 11, 65539, 131072, 11, 131075 )
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 8, -36 )
+position = Vector2( 8, -8 )
 texture = ExtResource( 2 )
 texture_scale = 0.4
 color = Color( 0.929412, 0.462745, 0.0784314, 1 )
@@ -33,7 +34,7 @@ shadow_enabled = true
 
 [node name="Light2D2" type="Light2D" parent="."]
 visible = false
-position = Vector2( 8, -36 )
+position = Vector2( 8, -8 )
 texture = ExtResource( 2 )
 texture_scale = 0.4
 color = Color( 0.929412, 0.462745, 0.0784314, 1 )
