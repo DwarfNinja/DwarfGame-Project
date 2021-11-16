@@ -1,4 +1,4 @@
-extends AI_Object
+extends KinematicBody2D
 
 onready var DetectionTimer = $DetectionTimer
 onready var StateDurationTimer = $StateDurationTimer

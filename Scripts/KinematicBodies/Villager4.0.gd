@@ -173,4 +173,3 @@ func choose_random_state(state_list):
 #		for hit in hit_pos:
 #			draw_circle((hit - position).rotated(-rotation), 1, laser_color)
 #			draw_line(VisionConeArea.position, (hit - position).rotated(-rotation), laser_color)
-#	pass

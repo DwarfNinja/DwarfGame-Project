@@ -64,7 +64,7 @@ func update_tileselector():
 
 func _on_place_object(selected_item):
 	if is_tile_empty(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET):
-		var selected_item_scene = load(selected_item.scene_path)
+		var selected_item_scene = load(selected_item.packedscene_string)
 		var selected_item_scene_instance = selected_item_scene.instance()
 		selected_item_scene_instance.set_global_position($Floor.map_to_world(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET))
 		$YSort.add_child(selected_item_scene_instance)

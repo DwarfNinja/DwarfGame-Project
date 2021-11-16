@@ -3,7 +3,7 @@ tool
 extends StaticBody2D
 class_name Entity
 
-export (Resource) var entity_def
+export (Resource) var entity_def setget set_entity_def
 
 onready var node_name = get_name().lstrip("@").split("@", false, 1)[0].rstrip("0123456789")
 onready var EntitySprite = get_node("EntitySprite")
@@ -20,20 +20,22 @@ var sprite_data: Dictionary = {
 enum {FRONT = 0, BACK = 1, LEFT = 2, RIGHT = 3}
 
 func _ready() -> void:
-	set_node_name()
-	
 	if not entity_def:
-		EntitySprite.texture = null
-		push_error("ERROR: No entity_def defined in entity " + str(self))
-#		get_tree().quit()
-		return
+		if not Engine.editor_hint:
+			EntitySprite.texture = null
+			push_error("ERROR: No entity_def defined in entity " + str(self))
+			get_tree().quit()
+			return
 		
+	set_node_name()
 	set_entity(entity_def)
+
+func set_entity_def(_entity_def):
+	entity_def = _entity_def
 	
 func _process(_delta: float) -> void:
 	if Engine.editor_hint:
 		if entity_def:
-			return
 			$EntitySprite.texture = entity_def.entity_texture
 			
 func set_node_name():
