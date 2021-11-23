@@ -47,19 +47,18 @@ func set_entity(_entity_def):
 	entity_def = _entity_def
 	EntitySprite.texture = entity_def.entity_texture
 	EntitySprite.frame_coords.y = facing
-	
-	match entity_def.type_name:
-		"prop":
+	match entity_def.TYPE.keys()[entity_def.type]:
+		"PROP":
 			EntitySprite.vframes = 4
 			EntitySprite.hframes = 1
 			set_collision_shape()
 			set_entity_position()
-		"lootable":
+		"LOOTABLE":
 			EntitySprite.vframes = 1
 			EntitySprite.hframes = 3
 			set_collision_shape()
 			set_entity_position()
-		"craftable":
+		"CRAFTABLE":
 			return
 
 

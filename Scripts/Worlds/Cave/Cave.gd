@@ -68,8 +68,8 @@ func _on_place_object(selected_item):
 		var selected_item_scene_instance = selected_item_scene.instance()
 		selected_item_scene_instance.set_global_position($Floor.map_to_world(MapCoordOfPlayerPosition2D + TILEPOSITION_OFFSET))
 		$YSort.add_child(selected_item_scene_instance)
-		for x in range(selected_item.footprint.x):
-			for y in range(selected_item.footprint.y):
+		for x in range(selected_item.tile_footprint.x):
+			for y in range(selected_item.tile_footprint.y):
 				occupied_tiles.append(Vector2(MapCoordOfPlayerPosition2D.x + x, MapCoordOfPlayerPosition2D.y + y) + TILEPOSITION_OFFSET)
 		Events.emit_signal("remove_item", selected_item)
 	else:

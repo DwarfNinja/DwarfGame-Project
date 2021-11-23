@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource( 3 )
-type_name = "resource"
+type = 0
 entity_name = "wood"
 item_texture = ExtResource( 2 )
 hud_texture = ExtResource( 1 )

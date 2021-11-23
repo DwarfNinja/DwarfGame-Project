@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource( 2 )
-type_name = "prop"
+type = 3
 entity_name = "wooden_drawer"
+theme = 0
 tile_footprint = Vector2( 1, 1 )
 collision_footprint = Vector2( 16, 13 )
 entity_texture = ExtResource( 1 )

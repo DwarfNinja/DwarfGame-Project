@@ -32,12 +32,12 @@ func _process(_delta):
 		if get_tree().get_current_scene().get_name() == "Cave":
 			if Input.is_action_just_pressed("key_leftclick"):
 				if get_item_in_slot(current_slot):
-					if get_item_in_slot(current_slot).type_name == "craftable":
+					if get_item_in_slot(current_slot).type == R_Item.TYPE.CRAFTABLE:
 						select_slot(current_slot)
 					
 			if Input.is_action_just_pressed("key_rightclick"):
 				if selected_item:
-					if selected_item.type_name == "craftable":
+					if selected_item.type == R_Item.TYPE.CRAFTABLE:
 						Events.emit_signal("place_object", selected_item)
 						select_slot(current_slot)
 			
@@ -116,9 +116,16 @@ func _on_remove_item(item_def):
 		player_items[item_def] -= 1
 		return
 	remove_from_slot("Slot_" + str(selector_position), item_def)
+	
+func _on_use_item(item_def):
+	if item_in_player_items(item_def):
+		remove_required_items(item_def.required_items)
+		add_item(item_def)
+	else:
+		print("DOES NOT HAVE" + item_def + "!")
 
 func _on_craft_item(craftable_def):
-	if has_items_in_inventory(craftable_def):
+	if has_required_items_in_inventory(craftable_def):
 		remove_required_items(craftable_def.required_items)
 		add_item(craftable_def)
 	else:
@@ -164,14 +171,20 @@ func remove_required_items(_required_items):
 						remove_from_slot(slot, required_item)
 						required_items[required_item] -= 1
 
-func item_in_inventory(item):
+func item_in_inventoryslots(item):
 	for slot in inventory_slots:
 		if slot["item_def"]:
 			if slot_has_item(slot, item):
 				return true
 	return false
+	
+func item_in_player_items(item):
+	for item in player_items:
+		if player_items.has(item):
+			return true
+	return false
 
-func has_items_in_inventory(_craftable_def):
+func has_required_items_in_inventory(_craftable_def):
 	var craftable_def = _craftable_def.duplicate()
 	
 	for required_item in craftable_def.required_items:
