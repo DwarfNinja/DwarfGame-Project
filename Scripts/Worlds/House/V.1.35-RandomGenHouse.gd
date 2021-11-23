@@ -132,7 +132,7 @@ func cleanup_random_gen() -> void:
 	fill_outer_walls()
 	check_unused_openings(current_occupied_room_locations)
 	clear_tile_conflict()
-	add_areas_to_top_of_wall()
+#	add_areas_to_top_of_wall()
 	update_allcell_bitmasks()
 
 

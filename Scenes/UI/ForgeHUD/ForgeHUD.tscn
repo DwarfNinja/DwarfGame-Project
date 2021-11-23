@@ -61,4 +61,5 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="value_changed" from="IronAmountHSlider" to="." method="_on_HSlider_value_changed"]

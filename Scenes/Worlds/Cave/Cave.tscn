@@ -74,7 +74,7 @@ position = Vector2( 88, 128 )
 z_index = 1
 texture = ExtResource( 9 )
 
-[node name="Entity" parent="YSort" instance=ExtResource( 3 )]
+[node name="KitchenCounter" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 192, 112 )
 entity_def = ExtResource( 2 )
 facing = 1

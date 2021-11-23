@@ -25,10 +25,7 @@ func _on_mouse_entered():
 func craft_item():
 	Events.emit_signal("craft_item", craftable_def)
 
-	
 func remove_required_resources(crafted_item):
-	HUD.InventoryBar.inventory_dic["wood"] -= crafted_item.wood_cost
-	HUD.InventoryBar.inventory_dic["iron"] -= crafted_item.iron_cost
 	HUD.InventoryBar.remove_required_resources(crafted_item)
 
 func activate_crafting_selector():
