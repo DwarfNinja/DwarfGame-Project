@@ -14,3 +14,5 @@ addons/Todo_Manager/todo.cfg
 
 # User-specific files
 *.user
+
+.idea/.idea.DwarfGame-Project/.idea/discord.xml

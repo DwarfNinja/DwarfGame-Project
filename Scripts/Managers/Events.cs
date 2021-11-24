@@ -14,18 +14,18 @@ public class Events : Node {
     
     //Item pickup/inventory signals
     [Signal]
-    private delegate void ItemPickedUp(Resource itemDef);
+    private delegate void ItemPickedUp(R_Item itemDef);
     [Signal]
-    private delegate void PlaceObject(Resource selectedItem);
+    private delegate void PlaceObject(R_Item selectedItem);
     [Signal]
-    private delegate void RemoveItem(Resource selectedItem);
+    private delegate void RemoveItem(R_Item selectedItem);
     [Signal]
-    private delegate void DropItem(Resource selectedItem);
+    private delegate void DropItem(R_Item selectedItem);
 
     [Signal]
     private delegate void UpdateSlotSelectors(int selectorPosition, Dictionary selectedSlot);
     [Signal]
-    private delegate void UpdateSlot(string slot, Resource itemDef, int count);
+    private delegate void UpdateSlot(string slot, R_Item itemDef, int count);
     
     [Signal]
     private delegate void EnteredPickupArea(Node target);
@@ -39,7 +39,7 @@ public class Events : Node {
     private delegate void CloseCraftingTable();
     
     [Signal]
-    private delegate void CraftItem(Resource craftableDef);
+    private delegate void CraftItem(R_Craftable craftableDef);
 
     //Forge signals
     [Signal]
