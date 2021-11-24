@@ -85,8 +85,8 @@ func _on_PlayerPickupArea_body_entered(body) -> void:
 	
 func _on_day_ended(tax):
 	if Inventory.player_items[goldcoins] > 0:
-			Inventory.player_items[goldcoins] -= tax
-			HUD.update_hud_coins(Inventory.player_items[goldcoins])
+		Inventory.player_items[goldcoins] -= tax
+		HUD.update_hud_coins(Inventory.player_items[goldcoins])
 	else:
 		print("Game Ended")
 
