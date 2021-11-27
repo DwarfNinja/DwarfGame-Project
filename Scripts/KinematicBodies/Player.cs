@@ -10,10 +10,7 @@ public class Player : KinematicBody2D {
 		
 	private string facing = "down";
 
-	private Node events;
-	
 	private Sprite playerSprite;
-	private AnimationPlayer animationPlayer; 
 	private AnimationTree animationTree;
 	private Area2D playerInteractArea;
 	private RayCast2D interactRayCast;
@@ -22,8 +19,10 @@ public class Player : KinematicBody2D {
 
 	private Resource goldcoins;
 	private AnimationNodeStateMachinePlayback animationState;
+	
+	private Vector2 inputVector = Vector2.Zero;
 
-	private Dictionary<string, Vector2> directionDic = new Dictionary<string, Vector2>() {
+	private Dictionary<string, Vector2> directionDic = new Dictionary<string, Vector2> {
 		{"up", new Vector2(0, -10)},
 		{"down", new Vector2(0, 10)},
 		{"left", new Vector2(-10, 0)},
@@ -33,7 +32,6 @@ public class Player : KinematicBody2D {
 	
 	public override void _Ready() {
 		playerSprite = (Sprite) GetNode("PlayerSprite");
-		animationPlayer = (AnimationPlayer) GetNode("AnimationPlayer"); 
 		animationTree = (AnimationTree) GetNode("AnimationTree");
 		playerInteractArea = (Area2D) GetNode("PlayerInteractArea");
 		interactRayCast = (RayCast2D) GetNode("InteractRayCast");
@@ -43,7 +41,13 @@ public class Player : KinematicBody2D {
 		goldcoins = ResourceLoader.Load("res://Resources/Entities/Resources/GoldCoins.tres");
 		animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
 		
-		playerPickupArea.Connect("body_entered", this, "_on_PlayerPickupArea_body_entered");
+		playerPickupArea.Connect("body_entered", this, nameof(OnPlayerPickupAreaBodyEntered));
+	}
+
+	public override void _UnhandledInput(InputEvent @event) {
+		inputVector.x = @event.GetActionStrength("key_right") - @event.GetActionStrength("key_left");
+		inputVector.y = @event.GetActionStrength("key_down") - @event.GetActionStrength("key_up");
+		inputVector = inputVector.Normalized();
 	}
 
 	public override void _Process(float delta) {
@@ -52,7 +56,6 @@ public class Player : KinematicBody2D {
 	
 	public override void _PhysicsProcess(float delta) {
 	  if (IsVisibleInTree()) {
-		  Vector2 inputVector = Vector2.Zero;
 		  //if HUD.menu_open == false:
 		  inputVector.x = Input.GetActionStrength("key_right") - Input.GetActionStrength("key_left");
 		  inputVector.y = Input.GetActionStrength("key_down") - Input.GetActionStrength("key_up");
@@ -94,9 +97,9 @@ public class Player : KinematicBody2D {
 	  }
 	}
 
-	private void _on_PlayerPickupArea_body_entered(Node body) {
+	private void OnPlayerPickupAreaBodyEntered(Node body) {
 		if ((bool) inventory.Call("can_fit_in_inventory")) {
-			Events.Emit("EnteredPickupArea", this);
+			Events.EmitEvent("EnteredPickupArea", this);
 		}
 	}
 	// func _on_day_ended(tax):

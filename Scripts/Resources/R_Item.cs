@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 public class R_Item : Resource {
-    private enum Type {
+    public enum Type {
         Resource,
         Lootable,
         Craftable,
@@ -10,14 +10,14 @@ public class R_Item : Resource {
     }
 
     [Export]
-    private Type entityType;
+    public Type EntityType;
     
     [Export]
-    private string entityName;
+    public string EntityName;
     
     [Export]
-    private Texture itemTexture;
+    public Texture ItemTexture;
     
     [Export]
-    private Texture hudTexture;
+    public Texture HudTexture;
 }

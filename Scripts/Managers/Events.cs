@@ -2,96 +2,101 @@ using Godot;
 using System;
 using System.Diagnostics;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 using Object = Godot.Object;
 
 public class Events : Node {
-    private static Events _instance;
+    private static Events instance;
 
-    public Events() {
-        Debug.Assert(_instance == null, "_instance == null");
-        _instance = this;
+    private Events() {
+        Debug.Assert(instance == null, "instance == null");
+        instance = this;
     }
-    
+
     //Item pickup/inventory signals
     [Signal]
-    private delegate void ItemPickedUp(R_Item itemDef);
+    public delegate void ItemPickedUp(R_Item itemDef);
     [Signal]
-    private delegate void PlaceObject(R_Item selectedItem);
+    public delegate void PlaceObject(R_Item selectedItem);
     [Signal]
-    private delegate void RemoveItem(R_Item selectedItem);
+    public delegate void RemoveItem(R_Item selectedItem);
     [Signal]
-    private delegate void DropItem(R_Item selectedItem);
+    public delegate void DropItem(R_Item selectedItem);
 
     [Signal]
-    private delegate void UpdateSlotSelectors(int selectorPosition, Dictionary selectedSlot);
+    public delegate void UpdateSlotSelectors(int selectorPosition, Dictionary selectedSlot);
     [Signal]
-    private delegate void UpdateSlot(string slot, R_Item itemDef, int count);
+    public delegate void UpdateSlot(string slot, R_Item itemDef, int count);
     
     [Signal]
-    private delegate void EnteredPickupArea(Node target);
+    public delegate void EnteredPickupArea(Node target);
     [Signal]
-    private delegate void ExitedPickupArea(Node target);
+    public delegate void ExitedPickupArea(Node target);
 
     //CraftingTable signals
     [Signal]
-    private delegate void OpenCraftingTable();
+    public delegate void OpenCraftingTable();
     [Signal]
-    private delegate void CloseCraftingTable();
+    public delegate void CloseCraftingTable();
     
     [Signal]
-    private delegate void CraftItem(R_Craftable craftableDef);
+    public delegate void CraftItem(R_Craftable craftableDef);
 
     //Forge signals
     [Signal]
-    private delegate void OpenForge(Node2D currentOpenedForge);
+    public delegate void OpenForge(Node2D currentOpenedForge);
     [Signal]
-    private delegate void CloseForge();
+    public delegate void CloseForge();
     [Signal]
-    private delegate void IronAmountSet(Node2D currentOpenedForge, int sliderIronAmount);
+    public delegate void IronAmountSet(Node2D currentOpenedForge, int sliderIronAmount);
     
     //Shop signals
     [Signal]
-    private delegate void EnteredShop();
+    public delegate void EnteredShop();
     [Signal]
-    private delegate void ExitedShop();
+    public delegate void ExitedShop();
     
     //BlackMarket signals
     [Signal]
-    private delegate void EnteredBlackMarket();
+    public delegate void EnteredBlackMarket();
     [Signal]
-    private delegate void ExitedBlackMarket();
+    public delegate void ExitedBlackMarket();
 
     //Day signals
     [Signal]
-    private delegate void DayStarted();
+    public delegate void DayStarted();
     [Signal]
-    private delegate void DayEnding();
+    public delegate void DayEnding();
     [Signal]
-    private delegate void DayEnded(int tax);
+    public delegate void DayEnded(int tax);
     
     //Mouse entered CraftingTableButton signal
     [Signal]
-    private delegate void CraftingButtonMouseEntered();
+    public delegate void CraftingButtonMouseEntered();
 
     //Cave signals
     [Signal]
-    private delegate void EnteredCave();
+    public delegate void EnteredCave();
     [Signal]
-    private delegate void ExitedCave();
+    public delegate void ExitedCave();
 
     //RandomGenHouse signals
     [Signal]
-    private delegate void RandomGenHouseLoaded();
+    public delegate void RandomGenHouseLoaded();
     
     [Signal]
-    private delegate void RequestNavPath(Node2D body, Vector2 target);
+    public delegate void RequestNavPath(Node2D body, Vector2 target);
     [Signal]
-    private delegate void RequestRoamCell(Node2D body);
+    public delegate void RequestRoamCell(Node2D body);
     
     [Signal]
-    private delegate void UpdateLastKnownPlayerPosition(Vector2 lastKnownPlayerPosition, int state);
+    public delegate void UpdateLastKnownPlayerPosition(Vector2 lastKnownPlayerPosition, int state);
 
-    public static void Emit(string signal, params object[] args) {
-        _instance.EmitSignal(signal, args);
+    public static void EmitEvent(string signal, params object[] args) {
+        instance.EmitSignal(signal, args);
+    }
+    
+    public static void ConnectEvent(string signal, Object target, string method, Array binds = null, uint flags = 0U) {
+        instance.Connect(signal, target, method, binds, flags);
     }
 }
