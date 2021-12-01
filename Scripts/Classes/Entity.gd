@@ -36,18 +36,18 @@ func set_entity_def(_entity_def):
 func _process(_delta: float) -> void:
 	if Engine.editor_hint:
 		if entity_def:
-			$EntitySprite.texture = entity_def.entity_texture
+			$EntitySprite.texture = entity_def.EntityTexture
 			
 func set_node_name():
-	var formatted_entity_name = entity_def.entity_name.capitalize().replace(" ", "")
+	var formatted_entity_name = entity_def.EntityName.capitalize().replace(" ", "")
 	if get_name() != formatted_entity_name:
 		set_name(formatted_entity_name)
 
 func set_entity(_entity_def):
 	entity_def = _entity_def
-	EntitySprite.texture = entity_def.entity_texture
+	EntitySprite.texture = entity_def.EntityTexture
 	EntitySprite.frame_coords.y = facing
-	match entity_def.type:
+	match entity_def.EntityType:
 		R_Item.TYPE.PROP:
 			EntitySprite.vframes = 4
 			EntitySprite.hframes = 1
@@ -75,7 +75,7 @@ func set_collision_shape():
 	var current_sprite_frame: Image = get_sprite_frame(image_data, individual_frame_size)
 	
 	var shadow_height: int = get_shadow_height(current_sprite_frame)
-	print(entity_def.entity_name, get_usedrect_dimensions(current_sprite_frame))
+	print(entity_def.EntityName, get_usedrect_dimensions(current_sprite_frame))
 	sprite_data["converted_rect_dimensions"] = (get_usedrect_dimensions(current_sprite_frame) - Vector2(0, shadow_height)) / 2
 	sprite_data["absolute_sprite_position"] = (get_usedrect_position(current_sprite_frame) - (individual_frame_size / 2)) + sprite_data["converted_rect_dimensions"]
 	
@@ -85,9 +85,9 @@ func set_collision_shape():
 			if sprite_data["converted_rect_dimensions"].x != sprite_data["converted_rect_dimensions"].y:
 				rectShape.set_extents(Vector2(entity_def["collision_footprint"].y, entity_def["collision_footprint"].x) / 2)
 			else:
-				rectShape.set_extents(entity_def["collision_footprint"] / 2)
+				rectShape.set_extents(entity_def.CollisionFootprint / 2)
 		FRONT, BACK:
-			rectShape.set_extents(entity_def["collision_footprint"] / 2)
+			rectShape.set_extents(entity_def.CollisionFootprint / 2)
 	collisionShape2D.set_shape(rectShape)
 
 func get_sprite_frame(image_data, individual_frame_size) -> Image:

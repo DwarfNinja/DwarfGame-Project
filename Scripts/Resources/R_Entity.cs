@@ -1,22 +1,22 @@
 using Godot;
 using System;
 
-public class R_Entity : Node {
-    private enum Theme {
+public class R_Entity : R_Item {
+    public enum Theme {
         General,
         Kitchen,
         Livingroom
     }
 
     [Export]
-    private Theme theme;
+    public Theme EntityTheme;
     
     [Export]
-    private Vector2 tileFootprint;
+    public Vector2 TileFootprint;
     
     [Export]
-    private Texture itemTexture;
+    public Vector2 CollisionFootprint;
     
     [Export]
-    private Texture hudTexture;
+    public Texture EntityTexture;
 }

@@ -1,13 +1,10 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Item.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Items/GoldCoins.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
-type = 0
-entity_name = "goldcoins"
-item_texture = ExtResource( 2 )
-theme = 0
-tile_footprint = Vector2( 0, 0 )
-collision_footprint = Vector2( 0, 0 )
+EntityType = 0
+EntityName = "goldcoins"
+ItemTexture = ExtResource( 2 )

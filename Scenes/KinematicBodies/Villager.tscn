@@ -1,15 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Sprites/KinematicBodies/Villager.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/KinematicBodies/Villager4.0.gd" type="Script" id=2]
-[ext_resource path="res://Scripts/Resources/R_AI.gd" type="Script" id=3]
+[ext_resource path="res://Resources/Villager.tres" type="Resource" id=3]
 [ext_resource path="res://Sprites/UI/Other/Villager Viewcone.png" type="Texture" id=5]
-
-[sub_resource type="Resource" id=1]
-script = ExtResource( 3 )
-type_name = "villager"
-role = "basic"
-ai_spritesheet = ExtResource( 1 )
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 1.99998
@@ -18,13 +12,11 @@ height = 3.00004
 [sub_resource type="CircleShape2D" id=3]
 radius = 18.0
 
-[node name="Villager" type="KinematicBody2D" groups=[
-"Villagers",
-]]
+[node name="Villager" type="KinematicBody2D" groups=["Villagers"]]
 collision_layer = 2
 collision_mask = 2147483689
 script = ExtResource( 2 )
-ai_def = SubResource( 1 )
+ai_def = ExtResource( 3 )
 
 [node name="VillagerSprite" type="Sprite" parent="."]
 light_mask = 3

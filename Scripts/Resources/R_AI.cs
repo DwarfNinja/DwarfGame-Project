@@ -2,15 +2,21 @@ using Godot;
 using System;
 
 public class R_AI : Resource {
-    private enum Type {
-        Villager,
+    public enum Type {
+        Villager
+    }
+    public enum Role {
+        General,
+        Kitchen,
+        Livingroom
+        
     }
     [Export]
-    private Type typeName;
+    public Type AiName;
     
     [Export]
-    private string role;
+    public Role AiRole;
     
     [Export]
-    private Texture aiSpritesheet;
+    public Texture AiSpriteSheet;
 }

@@ -1,13 +1,13 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Entity.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Interactables/Chest/Chest-Sheet.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
-type = 1
-entity_name = "chest"
-theme = 0
-tile_footprint = Vector2( 0, 0 )
-collision_footprint = Vector2( 0, 0 )
-entity_texture = ExtResource( 2 )
+EntityType = 1
+EntityName = "chest"
+EntityTheme = 0
+TileFootprint = Vector2( 1, 1 )
+CollisionFootprint = Vector2( 0, 0 )
+EntityTexture = ExtResource( 2 )

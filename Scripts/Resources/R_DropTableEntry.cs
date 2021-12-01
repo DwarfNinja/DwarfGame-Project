@@ -1,10 +1,10 @@
 using Godot;
 using System;
 
-public class R_DropTable_Entry : Resource {
+public class R_DropTableEntry : Resource {
     [Export]
-    private R_Item item;
+    public R_Item Item;
     
     [Export]
-    private int dropRate;
+    public int DropRate;
 }

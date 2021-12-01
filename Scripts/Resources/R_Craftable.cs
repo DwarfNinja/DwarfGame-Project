@@ -2,13 +2,13 @@ using Godot;
 using System;
 using Godot.Collections;
 
-public class R_Craftable : Resource {
+public class R_Craftable : R_Entity {
     [Export]
-    private Dictionary<R_Item, int> requiredItems;
+    public Dictionary<R_Item, int> RequiredItems;
     
     [Export]
-    private Texture blueprintIcon;
+    public Texture BlueprintIcon;
     
     [Export]
-    private string packedsceneString;
+    public string PackedsceneString;
 }

@@ -1,10 +1,12 @@
 using Godot;
 using System;
+using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 public class R_DropTable : Resource {
     [Export]
-    private string droptableName;
+    public string DroptableName;
     
     [Export]
-    private Array droptable;
+    public Array Droptable;
 }
