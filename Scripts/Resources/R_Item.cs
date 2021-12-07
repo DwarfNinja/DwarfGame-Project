@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using MonoCustomResourceRegistry;
 
+[RegisteredType(nameof(R_Item))] 
 public class R_Item : Resource {
     public enum Type {
         Resource,

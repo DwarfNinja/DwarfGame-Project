@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Entities/Lootables/Chest.tres" type="Resource" id=1]
+[ext_resource path="res://Scripts/Resources/R_DropTableEntry.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Resources/R_DropTable.cs" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+Item = ExtResource( 1 )
+DropRate = 100
+
+[resource]
+script = ExtResource( 3 )
+DropTableName = "ContainerDropTable"
+DropTable = [ SubResource( 1 ) ]

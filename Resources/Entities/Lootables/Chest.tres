@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 EntityType = 1
-EntityName = "chest"
+EntityName = "Chest"
 EntityTheme = 0
 TileFootprint = Vector2( 1, 1 )
 CollisionFootprint = Vector2( 0, 0 )

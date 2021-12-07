@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 EntityType = 3
-EntityName = "wooden_table"
+EntityName = "WoodenTable"
 EntityTheme = 0
 TileFootprint = Vector2( 2, 1 )
 CollisionFootprint = Vector2( 23, 40 )

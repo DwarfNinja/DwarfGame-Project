@@ -2,11 +2,13 @@ using Godot;
 using System;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
+using MonoCustomResourceRegistry;
 
+[RegisteredType(nameof(R_DropTable))] 
 public class R_DropTable : Resource {
     [Export]
-    public string DroptableName;
+    public string DropTableName;
     
     [Export]
-    public Array Droptable;
+    public Array DropTable;
 }

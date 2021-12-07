@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource( 3 )
 EntityType = 2
-EntityName = "forge"
+EntityName = "Forge"
 ItemTexture = ExtResource( 1 )
 HudTexture = ExtResource( 2 )
 EntityTheme = 0
@@ -17,8 +17,8 @@ TileFootprint = Vector2( 1, 2 )
 CollisionFootprint = Vector2( 0, 0 )
 EntityTexture = ExtResource( 5 )
 RequiredItems = {
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1,
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3,
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1
 }
 BlueprintIcon = ExtResource( 4 )
 PackedsceneString = "res://Scenes/Interactables/Craftables/Forge.tscn"

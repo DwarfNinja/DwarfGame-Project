@@ -1,6 +1,9 @@
 using Godot;
 using System;
+using MonoCustomResourceRegistry;
 
+[Tool]
+[RegisteredType(nameof(R_Entity))] 
 public class R_Entity : R_Item {
     public enum Theme {
         General,

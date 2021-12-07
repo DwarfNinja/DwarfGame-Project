@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using MonoCustomResourceRegistry;
 
+[RegisteredType(nameof(R_AI))] 
 public class R_AI : Resource {
     public enum Type {
         Villager
