@@ -3,7 +3,7 @@ using System;
 
 public class PickableItem : RigidBody2D {
     [Export] 
-    public R_Item itemDef;
+    private R_Item itemDef;
 
     private Sprite itemSprite;
     private Particles2D trailParticles2D;
@@ -14,7 +14,12 @@ public class PickableItem : RigidBody2D {
     private Vector2 direction = Vector2.Zero;
     private Node2D target = null;
     private Vector2 targetPos;
-    
+
+    public R_Item ItemDef {
+        get => itemDef;
+        set => itemDef = value;
+    }
+
     public override void _Ready() {
         // animationPlayer.Connect("animation_finished", this, nameof(OnAnimationPlayerAnimationFinished));
         itemSprite = (Sprite) GetNode("ItemSprite");
@@ -22,8 +27,8 @@ public class PickableItem : RigidBody2D {
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
         
         tween.Connect("tween_all_completed", this, nameof(OnTweenTweenAllCompleted));
-        Events.ConnectEvent(nameof(Events.EnteredPickupArea), this, nameof(OnEnteredPickupArea));
-        Events.ConnectEvent(nameof(Events.ExitedPickupArea), this, nameof(OnExitedPickupArea));
+        // Events.ConnectEvent(nameof(Events.EnteredPickupArea), this, nameof(OnEnteredPickupArea));
+        // Events.ConnectEvent(nameof(Events.ExitedPickupArea), this, nameof(OnExitedPickupArea));
 
         if (itemDef == null) {
             itemSprite.Texture = null;
@@ -57,7 +62,7 @@ public class PickableItem : RigidBody2D {
         itemSprite.Texture = this.itemDef.ItemTexture;
     }
 
-    private void play_chestdrop_animation(Vector2 dropDirection) {
+    public void PlayChestDropAnimation(Vector2 dropDirection) {
         collisionShape2D.Disabled = true;
         targetPos = GlobalPosition + dropDirection;
         const int itemJumpHeight = 32;
@@ -69,11 +74,11 @@ public class PickableItem : RigidBody2D {
         tween.Start();
     }
 
-    private void OnEnteredPickupArea(Node2D body) {
+    public void EnteredPickupArea(Node2D body) {
         target = body;
     }
     
-    private void OnExitedPickupArea(Node2D body) {
+    public void ExitedPickupArea(Node2D body) {
         target = null;
     }
 

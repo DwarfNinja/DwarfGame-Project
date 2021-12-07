@@ -15,7 +15,7 @@ public class Player : KinematicBody2D {
 	private Area2D playerInteractArea;
 	private RayCast2D interactRayCast;
 	private Area2D playerPickupArea;
-	private Node2D inventory;
+	private Inventory inventory;
 
 	private Resource goldcoins;
 	private AnimationNodeStateMachinePlayback animationState;
@@ -29,14 +29,13 @@ public class Player : KinematicBody2D {
 		{"right", new Vector2(10, 0)},
 	};
 	
-	
 	public override void _Ready() {
 		playerSprite = (Sprite) GetNode("PlayerSprite");
 		animationTree = (AnimationTree) GetNode("AnimationTree");
 		playerInteractArea = (Area2D) GetNode("PlayerInteractArea");
 		interactRayCast = (RayCast2D) GetNode("InteractRayCast");
 		playerPickupArea = (Area2D) GetNode("PlayerPickupArea");
-		inventory = (Node2D) GetNode("Inventory");
+		inventory = (Inventory) GetNode("Inventory");
 
 		goldcoins = ResourceLoader.Load("res://Resources/Entities/Resources/GoldCoins.tres");
 		animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
@@ -80,7 +79,7 @@ public class Player : KinematicBody2D {
 		  interactRayCast.RotationDegrees = 270;
 		  facing = "right";
 	  }
-	  if (playerSprite.Frame != 8 && playerSprite.Frame <= 15) {
+	  if (playerSprite.Frame >= 8 && playerSprite.Frame <= 15) {
 		  playerInteractArea.RotationDegrees = 90; //Left
 		  interactRayCast.RotationDegrees = 90;
 		  facing = "left";
@@ -97,9 +96,12 @@ public class Player : KinematicBody2D {
 	  }
 	}
 
-	private void OnPlayerPickupAreaBodyEntered(Node body) {
-		if ((bool) inventory.Call("can_fit_in_inventory")) {
-			Events.EmitEvent("EnteredPickupArea", this);
+	public Inventory Inventory => inventory;
+
+	private void OnPlayerPickupAreaBodyEntered(PickableItem item) {
+		if (inventory.CanFitInInventory(item.ItemDef)) {
+			item.EnteredPickupArea(this);
+			// Events.EmitEvent(nameof(Events.EnteredPickupArea), body, this);
 		}
 	}
 	// func _on_day_ended(tax):
