@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics;
 
 public class HUD : CanvasLayer {
-    private static HUD instance;
 
     private Label goldCoins;
     private TextureRect travelingScreen; 
@@ -11,11 +10,6 @@ public class HUD : CanvasLayer {
     private Label dayTimeLabel;
 
     public static bool MenuOpen = false;
-    
-    public HUD() {
-        Debug.Assert(instance == null, "instance == null");
-        instance = this;
-    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
@@ -26,16 +20,11 @@ public class HUD : CanvasLayer {
         
         //Connect Signals
         screenTimer.Connect("timeout", this, nameof(OnScreenTimerTimeout));
-        
+        Events.ConnectEvent(nameof(Events.UpdateHudCoins), this, nameof(OnUpdateHudCoins));
         //Enter/Exit location signals
         Events.ConnectEvent(nameof(Events.ExitedCave), this, nameof(OnExitedCave));
-        
         //RandomGenHouse signals
         Events.ConnectEvent(nameof(Events.RandomGenHouseLoaded), this, nameof(OnRandomgenhouseLoaded));
-    }
-
-    public static void UpdateHudCoins(int inventoryGoldcoinsAmount) {
-        instance.goldCoins.Text = inventoryGoldcoinsAmount.ToString();
     }
 
     private void OnExitedCave() {
@@ -49,5 +38,9 @@ public class HUD : CanvasLayer {
 
     private void OnScreenTimerTimeout() {
         travelingScreen.Visible = false;
+    }
+    
+    private void OnUpdateHudCoins(int inventoryGoldcoinsAmount) {
+        goldCoins.Text = inventoryGoldcoinsAmount.ToString();
     }
 }

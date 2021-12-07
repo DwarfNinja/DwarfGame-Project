@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using DwarfGameProject.Scripts.Nodes;
 using Godot.Collections;
 
 public class InventoryBar : MarginContainer {
@@ -14,6 +15,7 @@ public class InventoryBar : MarginContainer {
         Events.ConnectEvent(nameof(Events.UpdateSlotSelectors), this, nameof(OnUpdateSlotSelectors));
     }
 
+    //TODO: Could be improved + ActivateSelector
     public void OnUpdateSlotSelectors(int selectorPosition, string selectedSlot) {
     //Iterates over all the slots and determines if it is the slot selected,
     //all other slot's selectors are turned off
@@ -29,23 +31,26 @@ public class InventoryBar : MarginContainer {
         } 
     }
 
-    private void OnUpdateSlot(string slot, R_Item itemDef, int count) {
-        TextureRect inventoryBarSlot = (TextureRect) GetNode("SlotContainer/HBoxContainer/" + slot);
-        if (itemDef != null) {
-            inventoryBarSlot.Texture = itemDef.HudTexture;
-            Label itemCountLabel = (Label) inventoryBarSlot.GetNode("ItemCount");
-            itemCountLabel.Text = count.ToString();
-            if (itemCountLabel.Text == "0") {
-                inventoryBarSlot.Texture = null;
-                itemCountLabel.Text = "";
-            }
-            else {
-                inventoryBarSlot.Texture = null;
-                itemCountLabel.Text = "";
-            }
+    private void OnUpdateSlot(Slot slot) {
+        TextureRect inventoryBarSlot = (TextureRect) GetNode("SlotContainer/HBoxContainer/" + slot.SlotName);
+        Label itemCountLabel = (Label) inventoryBarSlot.GetNode("ItemCount");
+        R_Item itemDef = slot.ItemDef;
+        int amount = slot.Amount;
+        
+        if (itemDef == null) {
+            inventoryBarSlot.Texture = null;
+            itemCountLabel.Text = "";
+            return;
+        }
+        inventoryBarSlot.Texture = itemDef.HudTexture;
+        itemCountLabel.Text = amount.ToString();
+        
+        if (itemCountLabel.Text == "0") {
+            inventoryBarSlot.Texture = null;
+            itemCountLabel.Text = "";
         }
     }
-    
+
     private void ActivateSelector(TextureRect slot, string selectedSlot) {
         TextureRect slotSelector = (TextureRect) slot.GetNode("Selector");
         slotSelector.Show();

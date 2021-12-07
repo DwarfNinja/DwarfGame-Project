@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using DwarfGameProject.Scripts.Nodes;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
 using Object = Godot.Object;
@@ -19,19 +20,19 @@ public class Events : Node {
     [Signal]
     public delegate void PlaceObject(R_Item selectedItem);
     [Signal]
-    public delegate void RemoveItem(R_Item selectedItem);
+    public delegate void RemoveSelectedItem(R_Item selectedItem);
     [Signal]
-    public delegate void DropItem(R_Item selectedItem);
+    public delegate void DropSelectedItem(R_Item selectedItem);
 
     [Signal]
     public delegate void UpdateSlotSelectors(int selectorPosition, Dictionary selectedSlot);
     [Signal]
-    public delegate void UpdateSlot(string slot, R_Item itemDef, int count);
+    public delegate void UpdateSlot(Slot slot);
     
     [Signal]
-    public delegate void EnteredPickupArea(Node target);
+    public delegate void EnteredPickupArea(PickableItem item, Node2D target);
     [Signal]
-    public delegate void ExitedPickupArea(Node target);
+    public delegate void ExitedPickupArea(PickableItem item, Node2D target);
 
     //CraftingTable signals
     [Signal]
@@ -91,6 +92,9 @@ public class Events : Node {
     
     [Signal]
     public delegate void UpdateLastKnownPlayerPosition(Vector2 lastKnownPlayerPosition, int state);
+    
+    [Signal]
+    public delegate void UpdateHudCoins(int inventoryGoldcoinsAmount);
 
     public static void EmitEvent(string signal, params object[] args) {
         instance.EmitSignal(signal, args);
