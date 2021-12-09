@@ -1,27 +1,27 @@
 [gd_resource type="Resource" load_steps=9 format=2]
 
-[ext_resource path="res://Scripts/Resources/R_DropTableEntry.cs" type="Script" id=1]
-[ext_resource path="res://Resources/Entities/Resources/Wood.tres" type="Resource" id=2]
-[ext_resource path="res://Resources/Entities/Resources/GoldCoins.tres" type="Resource" id=3]
-[ext_resource path="res://Resources/Entities/Resources/Iron.tres" type="Resource" id=4]
-[ext_resource path="res://Scripts/Resources/R_DropTable.cs" type="Script" id=5]
+[ext_resource path="res://Scripts/Resources/R_DropTable.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_DropTableEntry.gd" type="Script" id=2]
+[ext_resource path="res://Resources/Entities/Resources/Wood.tres" type="Resource" id=3]
+[ext_resource path="res://Resources/Entities/Resources/GoldCoins.tres" type="Resource" id=4]
+[ext_resource path="res://Resources/Entities/Resources/Iron.tres" type="Resource" id=5]
 
 [sub_resource type="Resource" id=1]
-script = ExtResource( 1 )
-Item = ExtResource( 2 )
+script = ExtResource( 2 )
+Item = ExtResource( 3 )
 DropRate = 50
 
 [sub_resource type="Resource" id=2]
-script = ExtResource( 1 )
-Item = ExtResource( 4 )
+script = ExtResource( 2 )
+Item = ExtResource( 5 )
 DropRate = 50
 
 [sub_resource type="Resource" id=3]
-script = ExtResource( 1 )
-Item = ExtResource( 3 )
+script = ExtResource( 2 )
+Item = ExtResource( 4 )
 DropRate = 20
 
 [resource]
-script = ExtResource( 5 )
+script = ExtResource( 1 )
 DropTableName = "ChestDropTable"
 DropTable = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]

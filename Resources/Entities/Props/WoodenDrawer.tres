@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Resources/R_Entity.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Entities/Wooden_Drawer.png" type="Texture" id=2]
 
 [resource]
@@ -9,5 +9,5 @@ EntityType = 3
 EntityName = "WoodenDrawer"
 EntityTheme = 0
 TileFootprint = Vector2( 1, 1 )
-CollisionFootprint = Vector2( 16, 14 )
+CollisionFootprint = Vector2( 16, 13 )
 EntityTexture = ExtResource( 2 )
