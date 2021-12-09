@@ -3,7 +3,9 @@ using System;
 
 public class PickableItem : RigidBody2D {
     [Export] 
-    private R_Item itemDef;
+    private Resource itemDefResource;
+    
+    private RW_Item itemDef;
 
     private Sprite itemSprite;
     private Particles2D trailParticles2D;
@@ -15,13 +17,14 @@ public class PickableItem : RigidBody2D {
     private Node2D target = null;
     private Vector2 targetPos;
 
-    public R_Item ItemDef {
+    public RW_Item ItemDef {
         get => itemDef;
-        set => itemDef = value;
+        set => itemDefResource = value.R_Item;
     }
 
     public override void _Ready() {
         // animationPlayer.Connect("animation_finished", this, nameof(OnAnimationPlayerAnimationFinished));
+        itemDef = new RW_Item(itemDefResource);
         itemSprite = (Sprite) GetNode("ItemSprite");
         tween = (Tween) GetNode("Tween");
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
@@ -57,7 +60,7 @@ public class PickableItem : RigidBody2D {
         ApplyCentralImpulse(-direction * 5);
     }
 
-    private void SetItem(R_Item itemDef) {
+    private void SetItem(RW_Item itemDef) {
         this.itemDef = itemDef;
         itemSprite.Texture = this.itemDef.ItemTexture;
     }

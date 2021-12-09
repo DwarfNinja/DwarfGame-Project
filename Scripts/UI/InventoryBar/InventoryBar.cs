@@ -34,7 +34,7 @@ public class InventoryBar : MarginContainer {
     private void OnUpdateSlot(Slot slot) {
         TextureRect inventoryBarSlot = (TextureRect) GetNode("SlotContainer/HBoxContainer/" + slot.SlotName);
         Label itemCountLabel = (Label) inventoryBarSlot.GetNode("ItemCount");
-        R_Item itemDef = slot.ItemDef;
+        RW_Item itemDef = slot.ItemDef;
         int amount = slot.Amount;
         
         if (itemDef == null) {

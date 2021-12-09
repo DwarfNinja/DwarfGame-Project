@@ -76,7 +76,7 @@ texture = ExtResource( 9 )
 
 [node name="KitchenCounter" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 192, 112 )
-entityDef = ExtResource( 2 )
+entityDefResource = ExtResource( 2 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.176471, 0.133333, 0.27451, 1 )

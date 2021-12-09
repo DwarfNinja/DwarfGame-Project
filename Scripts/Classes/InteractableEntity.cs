@@ -24,7 +24,6 @@ public abstract class InteractableEntity : Entity {
 
     private void OnInteractAreaAreaEntered(Node2D area) {
         canInteract = true;
-        Console.WriteLine("NODENAME:" + nodename);
         ShaderMaterial entitySpriteMaterial = (ShaderMaterial) entitySprite.Material;
         entitySpriteMaterial.SetShaderParam("outline_color", new Color(240,240,240,255));
     } 

@@ -3,12 +3,13 @@ using System;
 using System.Collections;
 using System.Linq;
 using Godot.Collections;
-using Array = Godot.Collections.Array;
 
 public class ContainerEntity : InteractableEntity {
 
     [Export] 
-    private R_DropTable dropTableDef;
+    private Resource dropTableDefResource;
+    
+    private RW_DropTable dropTableDef;
 
     private PackedScene itemScene;
     private AnimationPlayer animationPlayer;
@@ -23,6 +24,8 @@ public class ContainerEntity : InteractableEntity {
     
     public override void _Ready() {
         base._Ready();
+
+        dropTableDef = new RW_DropTable(dropTableDefResource);
         itemScene = (PackedScene) ResourceLoader.Load("res://Scenes/Items/Item.tscn");
         animationPlayer = (AnimationPlayer) GetNode("AnimationPlayer");
         itemSpawnPosition = (Position2D) GetNode("ItemSpawnPosition");
@@ -51,9 +54,11 @@ public class ContainerEntity : InteractableEntity {
         Array<Vector2> availableDirections = directionList.Duplicate();
 
         foreach (int item in Enumerable.Range(1, GetRandomItemAmount())) {
-            R_Item randomItemResource = SelectItemFromDropTable();
+            RW_Item randomItemResource = SelectItemFromDropTable();
+
             PickableItem randomItem = (PickableItem) itemScene.Instance();
             randomItem.ItemDef = randomItemResource;
+            
             AddChild(randomItem, true);
             randomItem.GlobalPosition = itemSpawnPosition.GlobalPosition;
             Vector2 randomDirection = GetRandomDropDirection(availableDirections);
@@ -61,17 +66,17 @@ public class ContainerEntity : InteractableEntity {
         }
     }
 
-    private R_Item SelectItemFromDropTable() {
-        Array dropTable = dropTableDef.DropTable;
+    private RW_Item SelectItemFromDropTable() {
+        Array<RW_DropTableEntry> dropTable = dropTableDef.DropTable;
         int totalDropChance = 0;
         int cumulativeDropChance = 0;
         
-        foreach (R_DropTableEntry dropTableEntry in dropTable) {
+        foreach (RW_DropTableEntry dropTableEntry in dropTable) {
             totalDropChance += dropTableEntry.DropRate;
         }
-
+        
         int rng = (int) randomNumberGenerator.Randi() % totalDropChance;
-        foreach (R_DropTableEntry dropTableEntry in dropTable) {
+        foreach (RW_DropTableEntry dropTableEntry in dropTable) {
             cumulativeDropChance += dropTableEntry.DropRate;
             //if the RNG is <= item cumulated total_drop_chance then drop that item
             if (rng <= cumulativeDropChance) {

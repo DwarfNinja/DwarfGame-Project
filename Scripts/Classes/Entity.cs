@@ -1,13 +1,13 @@
 using Godot;
 using System;
-using System.Linq;
 using System.Text.RegularExpressions;
-using Godot.Collections;
 
-[Tool]
 public class Entity : StaticBody2D {
 
-    [Export] private R_Entity entityDef;
+    [Export] 
+    private Resource entityDefResource;
+    
+    private RW_Entity entityDef;
     
     private enum Direction { 
         FRONT = 0,
@@ -27,6 +27,7 @@ public class Entity : StaticBody2D {
     private Vector2 absoluteSpritePosition;
 
     public override void _Ready() {
+        entityDef = new RW_Entity(entityDefResource);
         nodename = Name.LStrip("@").Split("@")[0].RStrip("0123456789");
         // Regex regex = new Regex(@"/\w\D/gm");
         // Match regexMatch = regex.Match(Name);
@@ -44,13 +45,13 @@ public class Entity : StaticBody2D {
         SetEntity(entityDef);
     }
 
-    private void SetEntityDef(R_Entity entityDef) {
+    private void SetEntityDef(RW_Entity entityDef) {
         this.entityDef = entityDef;
     }
 
     public override void _Process(float delta) {
         if (Engine.EditorHint) {
-            if (IsInstanceValid(entityDef) && IsInstanceValid(GetNode("EntitySprite"))) {
+            if (IsInstanceValid(entityDef.R_Item) && IsInstanceValid(GetNode("EntitySprite"))) {
                 ((Sprite) GetNode("EntitySprite")).Texture = entityDef.EntityTexture;
             }
         }
@@ -64,23 +65,23 @@ public class Entity : StaticBody2D {
         Name = entityDef.EntityName;
     }
 
-    private void SetEntity(R_Entity entityDef) {
+    private void SetEntity(RW_Entity entityDef) {
         this.entityDef = entityDef;
         entitySprite.Texture = entityDef.EntityTexture;
         entitySprite.FrameCoords = new Vector2(entitySprite.FrameCoords.x, (float) facing);
 
         switch (entityDef.EntityType) {
-            case R_Item.Type.Prop:
+            case RW_Item.Type.Prop:
                 entitySprite.Hframes = 1;
                 entitySprite.Vframes = 4;
                 SetCollisionShape();
                 SetEntityPosition();
                 break;
-            case R_Item.Type.Lootable:
+            case RW_Item.Type.Lootable:
                 entitySprite.Hframes = 3;
                 entitySprite.Vframes = 1;
                 break;
-            case R_Item.Type.Craftable:
+            case RW_Item.Type.Craftable:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -83,17 +83,17 @@ position = Vector2( 336, 160 )
 
 [node name="KitchenCounter" parent="Templates/Template_1/Props" instance=ExtResource( 4 )]
 position = Vector2( 72, 341 )
-entityDef = ExtResource( 5 )
+entityDefResource = ExtResource( 5 )
 facing = 1
 
 [node name="KitchenDrawer" parent="Templates/Template_1/Props" instance=ExtResource( 4 )]
 position = Vector2( 53, 340 )
-entityDef = ExtResource( 6 )
+entityDefResource = ExtResource( 6 )
 facing = 1
 
 [node name="WoodenTable" parent="Templates/Template_1/Props" instance=ExtResource( 4 )]
 position = Vector2( 253, 135 )
-entityDef = ExtResource( 8 )
+entityDefResource = ExtResource( 8 )
 facing = 2
 
 [node name="Template_2" type="Node2D" parent="Templates"]
@@ -142,13 +142,13 @@ position = Vector2( 336, 160 )
 
 [node name="KitchenCounter" parent="Templates/Template_2/Props" instance=ExtResource( 4 )]
 position = Vector2( 224, 60 )
-entityDef = ExtResource( 5 )
+entityDefResource = ExtResource( 5 )
 
 [node name="KitchenDrawer" parent="Templates/Template_2/Props" instance=ExtResource( 4 )]
 position = Vector2( 302, 97 )
-entityDef = ExtResource( 6 )
+entityDefResource = ExtResource( 6 )
 facing = 2
 
 [node name="WoodenDrawer" parent="Templates/Template_2/Props" instance=ExtResource( 4 )]
 position = Vector2( 144, 58 )
-entityDef = ExtResource( 7 )
+entityDefResource = ExtResource( 7 )

@@ -41,8 +41,8 @@ onready var enemy_index_tile_id: int = HouseTileset.find_tile_by_name("EnemyInde
 onready var spawn_index_tile_id: int = HouseTileset.find_tile_by_name("SpawnIndex")
 
 # DropTables
-onready var Container_DropTable: Resource = preload("res://Resources/Drop_Tables/Container_DropTable.tres") as Resource
-onready var Enemies_DropTable: Resource = preload("res://Resources/Drop_Tables/Enemies_DropTable.tres") as Resource
+onready var Container_DropTable: Resource = preload("res://Resources/Drop_Tables/ContainerDropTable.tres") as Resource
+onready var Enemies_DropTable: Resource = preload("res://Resources/Drop_Tables/EnemiesDropTable.tres") as Resource
 
 var current_occupied_room_locations: Array = []
 var rooms: int = 0
