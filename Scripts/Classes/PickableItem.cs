@@ -19,7 +19,7 @@ public class PickableItem : RigidBody2D {
 
     public RW_Item ItemDef {
         get => itemDef;
-        set => itemDefResource = value.R_Item;
+        set => itemDefResource = value.Resource;
     }
 
     public override void _Ready() {

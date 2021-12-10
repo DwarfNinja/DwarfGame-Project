@@ -14,11 +14,11 @@ ItemTexture = ExtResource( 1 )
 HudTexture = ExtResource( 2 )
 EntityTheme = 0
 TileFootprint = Vector2( 2, 1 )
-CollisionFootprint = Vector2( 38, 8 )
+CollisionFootprint = Vector2( 38, 9 )
 EntityTexture = ExtResource( 5 )
 RequiredItems = {
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1,
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3,
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1
 }
 BlueprintIcon = ExtResource( 4 )
 PackedsceneString = "res://Scenes/Interactables/Craftables/Forge.tscn"

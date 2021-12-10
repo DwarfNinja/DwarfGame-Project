@@ -6,9 +6,9 @@ enum Type {
 }
 
 enum Role {
-		General,
-		Kitchen,
-		Livingroom
+	General,
+	Kitchen,
+	Livingroom
 }
 
 export(Type) var AiName;

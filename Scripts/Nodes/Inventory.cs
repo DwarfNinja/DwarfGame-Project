@@ -18,7 +18,7 @@ public class Inventory : Node2D {
 		new Slot("Slot_5", null, 0),
 	};
 
-	private System.Collections.Generic.Dictionary<Resource, int> playerItems;
+	private System.Collections.Generic.Dictionary<RW_Item, int> playerItems;
 
 	private int selectorPosition = 0;
 	private RW_Item selectedItem;
@@ -30,7 +30,7 @@ public class Inventory : Node2D {
 		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
 		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
 		
-		playerItems = new System.Collections.Generic.Dictionary<Resource, int>() {
+		playerItems = new System.Collections.Generic.Dictionary<RW_Item, int>() {
 			[goldcoins] =  0,
 		};
 	}

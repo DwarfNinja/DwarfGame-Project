@@ -2,9 +2,7 @@ using Godot;
 using System;
 
 public class RW_Entity : RW_Item {
-    
-    private Resource R_Entity;
-    
+
     public enum Theme {
         General,
         Kitchen,
@@ -12,7 +10,6 @@ public class RW_Entity : RW_Item {
     }
 
     public RW_Entity(Resource resource) : base(resource) {
-        R_Entity = resource;
     }
 
     public static RW_Entity LoadResource(string filePath) {
@@ -20,22 +17,22 @@ public class RW_Entity : RW_Item {
     }
 
     public Theme EntityTheme {
-        get => (Theme) R_Entity.Get("EntityTheme");
-        set => R_Entity.Set("EntityTheme", value);
+        get => (Theme) Resource.Get("EntityTheme");
+        set => Resource.Set("EntityTheme", value);
     }
     
     public Vector2 TileFootprint {
-        get => (Vector2) R_Entity.Get("TileFootprint");
-        set => R_Entity.Set("TileFootprint", value);
+        get => (Vector2) Resource.Get("TileFootprint");
+        set => Resource.Set("TileFootprint", value);
     }
     
     public Vector2 CollisionFootprint {
-        get => (Vector2) R_Entity.Get("CollisionFootprint");
-        set => R_Entity.Set("CollisionFootprint", value);
+        get => (Vector2) Resource.Get("CollisionFootprint");
+        set => Resource.Set("CollisionFootprint", value);
     }
     
     public Texture EntityTexture {
-        get => (Texture) R_Entity.Get("EntityTexture");
-        set => R_Entity.Set("EntityTexture", value);
+        get => (Texture) Resource.Get("EntityTexture");
+        set => Resource.Set("EntityTexture", value);
     }
 }

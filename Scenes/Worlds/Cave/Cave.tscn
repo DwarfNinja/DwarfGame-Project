@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Shaders/PixelOutline.shader" type="Shader" id=1]
-[ext_resource path="res://Resources/Entities/Props/KitchenCounter.tres" type="Resource" id=2]
-[ext_resource path="res://Scenes/Entities/Entity.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Entities/Lootables/Chest.tres" type="Resource" id=2]
+[ext_resource path="res://Resources/Entities/Props/KitchenCounter.tres" type="Resource" id=3]
+[ext_resource path="res://Scenes/Entities/Entity.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Interactables/Craftables/Forge.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Interactables/Craftables/MiningRig.tscn" type="PackedScene" id=6]
 [ext_resource path="res://TileSets/CaveTileset.tres" type="TileSet" id=7]
@@ -69,14 +70,15 @@ position = Vector2( 80, 32 )
 
 [node name="Chest" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 88, 128 )
+EntityDef = ExtResource( 2 )
 
 [node name="TileSelector" type="Sprite" parent="YSort"]
 z_index = 1
 texture = ExtResource( 9 )
 
-[node name="KitchenCounter" parent="YSort" instance=ExtResource( 3 )]
+[node name="KitchenCounter" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 192, 112 )
-entityDefResource = ExtResource( 2 )
+EntityDef = ExtResource( 3 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.176471, 0.133333, 0.27451, 1 )
