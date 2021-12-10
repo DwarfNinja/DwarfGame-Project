@@ -2,101 +2,88 @@ using Godot;
 using System;
 using System.Text.RegularExpressions;
 
+[Tool]
 public class Entity : StaticBody2D {
-
-    [Export] 
-    private Resource entityDefResource;
     
+    [Export] 
+    public Resource EntityDef {
+        get => entityDef?.Resource;
+        set {
+            entityDef = value switch {
+                null => null,
+                RW_Entity entity => entity,
+                _ => new RW_Entity(value)
+            };
+            if (entityDef != null) {
+                SetEntity();
+            }
+        } 
+    }
+
     private RW_Entity entityDef;
     
+    [Export] 
+    private Direction facing = Direction.Front;
+    
     private enum Direction { 
-        FRONT = 0,
-        BACK = 1,
-        LEFT = 2,
-        RIGHT = 3
+        Front = 0,
+        Back = 1,
+        Left = 2,
+        Right = 3
     }
     
-    [Export] 
-    private Direction facing = Direction.FRONT;
-
-    protected string nodename;
     protected Sprite entitySprite;
     private CollisionShape2D collisionShape2D;
 
     private Vector2 convertedRectDimensions;
     private Vector2 absoluteSpritePosition;
-
+    
     public override void _Ready() {
-        entityDef = new RW_Entity(entityDefResource);
-        nodename = Name.LStrip("@").Split("@")[0].RStrip("0123456789");
-        // Regex regex = new Regex(@"/\w\D/gm");
-        // Match regexMatch = regex.Match(Name);
-        // nodename = regexMatch.ToString();
         entitySprite = (Sprite) GetNode("EntitySprite");
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
-
+        
         if (!Engine.EditorHint) {
             if (entityDef == null) {
                 entitySprite.Texture = null;
                 throw new Exception("No entity_def defined in entity " + this + " with name: " + Name);
             }     
         }
+    }
+
+    private void SetEntity() {
+        entitySprite = (Sprite) GetNode("EntitySprite");
+        collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
         SetNodeName();
-        SetEntity(entityDef);
-    }
-
-    private void SetEntityDef(RW_Entity entityDef) {
-        this.entityDef = entityDef;
-    }
-
-    public override void _Process(float delta) {
-        if (Engine.EditorHint) {
-            if (IsInstanceValid(entityDef.R_Item) && IsInstanceValid(GetNode("EntitySprite"))) {
-                ((Sprite) GetNode("EntitySprite")).Texture = entityDef.EntityTexture;
-            }
-        }
-    }
-
-    private void SetNodeName() {
-        // string formattedEntityname = entityDef.EntityName.Capitalize().Replace(" ", "");
-        // if (Name != formattedEntityname) {
-        //     Name = formattedEntityname;
-        // }
-        Name = entityDef.EntityName;
-    }
-
-    private void SetEntity(RW_Entity entityDef) {
-        this.entityDef = entityDef;
-        entitySprite.Texture = entityDef.EntityTexture;
-        entitySprite.FrameCoords = new Vector2(entitySprite.FrameCoords.x, (float) facing);
+        SetSprite();
+        CalculateSpriteData();
 
         switch (entityDef.EntityType) {
             case RW_Item.Type.Prop:
-                entitySprite.Hframes = 1;
-                entitySprite.Vframes = 4;
-                SetCollisionShape();
-                SetEntityPosition();
+                SetSpriteFrames(1, 4);
                 break;
             case RW_Item.Type.Lootable:
-                entitySprite.Hframes = 3;
-                entitySprite.Vframes = 1;
+                SetSpriteFrames(3, 1);
                 break;
             case RW_Item.Type.Craftable:
-                break;
+                return;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        SetCollisionShape();
+        SetCollisionShapePosition();
+        SetSpritePosition();
+    }
+    
+    private void SetNodeName() {
+        Name = entityDef == null ? "Entity" : entityDef.EntityName;
+    }
+    
+    private void SetSprite() {
+        entitySprite.Texture = entityDef.EntityTexture;
+        entitySprite.FrameCoords = new Vector2(entitySprite.FrameCoords.x, (float) facing);
     }
 
-    private void SetEntityPosition() {
-        RectangleShape2D collisionRectangleShape = (RectangleShape2D) collisionShape2D.Shape;
-        float collisionShapeHeight = collisionRectangleShape.Extents.y * 2;
-        Vector2 collisionshapeFloorPosition = collisionShape2D.Position + new Vector2(0, collisionShapeHeight / 2);
-        collisionShape2D.Position = new Vector2(collisionRectangleShape.Extents.x, -collisionRectangleShape.Extents.y);
-        entitySprite.Position = -absoluteSpritePosition + new Vector2(convertedRectDimensions.x, -convertedRectDimensions.y);
-    }
-
-    private void SetCollisionShape() {
+    private void CalculateSpriteData() {
         Image imageData = entitySprite.Texture.GetData();
         Vector2 textureSize = entitySprite.Texture.GetSize();
         Vector2 individualFrameSize =
@@ -106,26 +93,50 @@ public class Entity : StaticBody2D {
         int shadowHeight = GetShadowHeight(currentSpriteFrame);
         convertedRectDimensions = (GetUsedRectDimensions(currentSpriteFrame) - new Vector2(0, shadowHeight)) / 2;
         absoluteSpritePosition = (GetUsedRectPosition(currentSpriteFrame) - (individualFrameSize / 2)) + convertedRectDimensions;
+    }
 
+    private void SetSpriteFrames(int hFrames, int vFrames) {
+        entitySprite.Hframes = hFrames;
+        entitySprite.Vframes = vFrames;
+    }
+
+    private void SetSpritePosition() {
+        entitySprite.Position = -absoluteSpritePosition + new Vector2(convertedRectDimensions.x, -convertedRectDimensions.y);
+    }
+
+    private void SetCollisionShapePosition() {
+        RectangleShape2D collisionRectangleShape = (RectangleShape2D) collisionShape2D.Shape;
+        float collisionShapeHeight = collisionRectangleShape.Extents.y * 2;
+        Vector2 collisionshapeFloorPosition = collisionShape2D.Position + new Vector2(0, collisionShapeHeight / 2);
+        collisionShape2D.Position = new Vector2(collisionRectangleShape.Extents.x, -collisionRectangleShape.Extents.y);
+    }
+
+    private void SetCollisionShape() {
         RectangleShape2D rectangleShape2D = new RectangleShape2D();
         
-        if (facing == Direction.LEFT || facing == Direction.RIGHT) {
-            if (convertedRectDimensions.x != convertedRectDimensions.y) {
-                rectangleShape2D.Extents = new Vector2(entityDef.CollisionFootprint.y, entityDef.CollisionFootprint.x) / 2;
+        switch (facing) {
+            case Direction.Left:
+            case Direction.Right: {
+                if ((int) Math.Round(convertedRectDimensions.x, 0) != (int) Math.Round(convertedRectDimensions.y, 0)) {
+                    rectangleShape2D.Extents = new Vector2(entityDef.CollisionFootprint.y, entityDef.CollisionFootprint.x) / 2;
+                }
+                else {
+                    rectangleShape2D.Extents = entityDef.CollisionFootprint / 2;
+                }
+
+                break;
             }
-            else {
+            case Direction.Front:
+            case Direction.Back:
                 rectangleShape2D.Extents = entityDef.CollisionFootprint / 2;
-            }
-        }
-        else if (facing == Direction.FRONT || facing == Direction.BACK) {
-            rectangleShape2D.Extents = entityDef.CollisionFootprint / 2;
+                break;
         }
 
         collisionShape2D.Shape = rectangleShape2D;
     }
 
     private Image GetSpriteFrame(Image imageData, Vector2 individualFrameSize) {
-        Rect2 frame = new Rect2(new Vector2(0, individualFrameSize.y * (float) facing), individualFrameSize);
+        Rect2 frame = new Rect2(new Vector2(0, (int) individualFrameSize.y * (int) facing), individualFrameSize);
         return imageData.GetRect(frame);
     }
 
