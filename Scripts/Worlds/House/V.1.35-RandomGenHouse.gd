@@ -433,19 +433,19 @@ func select_random_from_array(array: Array):
 	return array.pop_front()
 
 func select_item_from_drop_table(drop_table_def) -> Resource:
-	var drop_table = drop_table_def.drop_table
+	var drop_table = drop_table_def.DropTable
 	var total_drop_chance = 0
 	var cumulative_drop_chance = 0
 	
 	for drop_table_entry in drop_table:
-		total_drop_chance += drop_table_entry.drop_rate
+		total_drop_chance += drop_table_entry.DropRate
 		
 	var rng = randi() % total_drop_chance
 	for drop_table_entry in drop_table:
-		cumulative_drop_chance += drop_table_entry.drop_rate
+		cumulative_drop_chance += drop_table_entry.DropRate
 #		if the RNG is <= item cumulated total_drop_chance then drop that item
 		if rng <= cumulative_drop_chance:
-			return drop_table_entry.item
+			return drop_table_entry.Item
 	return null
 
 func select_random_node_positions(node_tile_array: Array, max_nodes: int) -> Array:

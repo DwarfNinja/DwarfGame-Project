@@ -43,7 +43,7 @@ func set_ai(_ai_def):
 	ai_def = _ai_def
 	if not AISprite:
 		return
-	AISprite.texture = ai_def.ai_spritesheet
+	AISprite.texture = ai_def.AiSpriteSheet
 
 
 func set_target(new_targetpos):
