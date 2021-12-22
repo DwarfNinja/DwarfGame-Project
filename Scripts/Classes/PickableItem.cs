@@ -30,8 +30,6 @@ public class PickableItem : RigidBody2D {
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
         
         tween.Connect("tween_all_completed", this, nameof(OnTweenTweenAllCompleted));
-        // Events.ConnectEvent(nameof(Events.EnteredPickupArea), this, nameof(OnEnteredPickupArea));
-        // Events.ConnectEvent(nameof(Events.ExitedPickupArea), this, nameof(OnExitedPickupArea));
 
         if (itemDef == null) {
             itemSprite.Texture = null;
@@ -41,21 +39,27 @@ public class PickableItem : RigidBody2D {
     }
 
     public override void _IntegrateForces(Physics2DDirectBodyState state) {
-        if (target != null) {
-            if (target is Player player) {
+        switch (target) {
+            case Player player:
                 if (player.Inventory.CanFitInInventory(itemDef)) {
                     MoveToTarget(state);
                     
                     if (GlobalPosition.DistanceTo(player.GlobalPosition) < 15) {
-                        Events.EmitEvent(nameof(Events.ItemPickedUp), itemDef);
-                        QueueFree();
+                        if (player.Inventory.PickUpItem(itemDef)) {
+                            QueueFree();
+                        }
                     }
                 }
-            }
+
+                break;
+            case null:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
-    private void MoveToTarget(Physics2DDirectBodyState state) {
+        private void MoveToTarget(Physics2DDirectBodyState state) {
         direction = (GlobalPosition - target.GlobalPosition).Normalized();
         ApplyCentralImpulse(-direction * 5);
     }

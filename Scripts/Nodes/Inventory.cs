@@ -25,7 +25,6 @@ public class Inventory : Node2D {
 	private Slot selectedSlot;
 
 	public override void _Ready() {
-		Events.ConnectEvent(nameof(Events.ItemPickedUp), this, nameof(OnItemPickedUp));
 		Events.ConnectEvent(nameof(Events.CraftItem), this, nameof(OnCraftItem));
 		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
 		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
@@ -99,8 +98,15 @@ public class Inventory : Node2D {
 		return slot.ItemDef;
 	}
 
-	private void OnItemPickedUp(Resource itemDef) {
-		AddItem(new RW_Item(itemDef));
+	public bool PickUpItem(RW_Item itemDef) {
+		if (CanFitInInventory(itemDef)) {
+			AddItem(new RW_Item(itemDef));
+			return true;
+		}
+		else {
+			GD.Print("Inventory full, can't pick up item!" + itemDef.EntityName);
+			return false;
+		}
 	}
 
 	private void AddItem(RW_Item itemDef, int amount = 1) {
@@ -119,13 +125,7 @@ public class Inventory : Node2D {
 				slot.AddItem(itemDef);
 				return;
 			}
-			GD.Print( slot.SlotName + " " + slot.ItemDef + " " + itemDef);
 		}
-		// foreach (Slot slot in inventorySlots) {
-		// 	if (slot.IsEmpty()) {
-		// 		slot.AddItem(itemDef);
-		// 		return;
-		// 	}
 	}
 	
 	private void AddToPlayerItems(RW_Item itemDef) {

@@ -16,8 +16,6 @@ public class Events : Node {
 
     //Item pickup/inventory signals
     [Signal]
-    public delegate void ItemPickedUp(RW_Item itemDef);
-    [Signal]
     public delegate void PlaceObject(RW_Item selectedItem);
     [Signal]
     public delegate void RemoveSelectedItem(RW_Item selectedItem);
