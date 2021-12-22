@@ -10,7 +10,7 @@ const NIGHT_COLOR = Color("2d2246")
 
 
 onready var Player = $YSort/Player
-onready var PlayerPosition2D = $YSort/Player.get_node("PlayerInteractArea/Position2D")
+onready var PlayerPosition2D = $YSort/Player.get_node("InteractAreaAnchor/Position2D")
 onready var MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
 onready var TileSelector = $YSort/TileSelector
 onready var CanvasModulater = $CanvasModulate
