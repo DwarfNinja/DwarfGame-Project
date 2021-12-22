@@ -33,7 +33,7 @@ public class ContainerEntity : InteractableEntity {
         randomNumberGenerator.Randomize();
     }
 
-    protected override void Interact() {
+    public override void Interact(KinematicBody2D interactingKinematicBody) {
         switch (animationPlayer.AssignedAnimation) {
             case "Close":
                 DropItems();

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Text.RegularExpressions;
 
 [Tool]
 public class Entity : StaticBody2D {
@@ -32,26 +31,26 @@ public class Entity : StaticBody2D {
         Right = 3
     }
     
-    protected Sprite entitySprite;
-    private CollisionShape2D collisionShape2D;
+    protected Sprite EntitySprite;
+    public CollisionShape2D collisionShape2D;
 
     private Vector2 convertedRectDimensions;
     private Vector2 absoluteSpritePosition;
     
     public override void _Ready() {
-        entitySprite = (Sprite) GetNode("EntitySprite");
+        EntitySprite = (Sprite) GetNode("EntitySprite");
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
         
         if (!Engine.EditorHint) {
             if (entityDef == null) {
-                entitySprite.Texture = null;
+                EntitySprite.Texture = null;
                 throw new Exception("No entity_def defined in entity " + this + " with name: " + Name);
             }     
         }
     }
 
     private void SetEntity() {
-        entitySprite = (Sprite) GetNode("EntitySprite");
+        EntitySprite = (Sprite) GetNode("EntitySprite");
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
         SetNodeName();
         SetSprite();
@@ -79,15 +78,15 @@ public class Entity : StaticBody2D {
     }
     
     private void SetSprite() {
-        entitySprite.Texture = entityDef.EntityTexture;
-        entitySprite.FrameCoords = new Vector2(entitySprite.FrameCoords.x, (float) facing);
+        EntitySprite.Texture = entityDef.EntityTexture;
+        EntitySprite.FrameCoords = new Vector2(EntitySprite.FrameCoords.x, (float) facing);
     }
 
     private void CalculateSpriteData() {
-        Image imageData = entitySprite.Texture.GetData();
-        Vector2 textureSize = entitySprite.Texture.GetSize();
+        Image imageData = EntitySprite.Texture.GetData();
+        Vector2 textureSize = EntitySprite.Texture.GetSize();
         Vector2 individualFrameSize =
-            new Vector2((textureSize.x / entitySprite.Hframes), (textureSize.y / entitySprite.Vframes));
+            new Vector2((textureSize.x / EntitySprite.Hframes), (textureSize.y / EntitySprite.Vframes));
         Image currentSpriteFrame = GetSpriteFrame(imageData, individualFrameSize);
 
         int shadowHeight = GetShadowHeight(currentSpriteFrame);
@@ -96,12 +95,12 @@ public class Entity : StaticBody2D {
     }
 
     private void SetSpriteFrames(int hFrames, int vFrames) {
-        entitySprite.Hframes = hFrames;
-        entitySprite.Vframes = vFrames;
+        EntitySprite.Hframes = hFrames;
+        EntitySprite.Vframes = vFrames;
     }
 
     private void SetSpritePosition() {
-        entitySprite.Position = -absoluteSpritePosition + new Vector2(convertedRectDimensions.x, -convertedRectDimensions.y);
+        EntitySprite.Position = -absoluteSpritePosition + new Vector2(convertedRectDimensions.x, -convertedRectDimensions.y);
     }
 
     private void SetCollisionShapePosition() {
