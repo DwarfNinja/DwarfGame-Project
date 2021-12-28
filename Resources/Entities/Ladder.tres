@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Entities/Ladder.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+EntityType = 1
+EntityName = "Ladder"
+EntityTheme = 0
+TileFootprint = Vector2( 0, 0 )
+CollisionFootprint = Vector2( 0, 0 )
+EntityTexture = ExtResource( 2 )
