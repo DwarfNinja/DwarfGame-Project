@@ -126,7 +126,7 @@ func random_generation() -> void:
 	place_player_spawn()
 	place_enemies()
 	place_loot()
-	Events.emit_signal("randomgenhouse_loaded")
+	Events.emit_signal("RandomGenHouseLoaded")
 	
 func cleanup_random_gen() -> void:
 	fill_outer_walls()

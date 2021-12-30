@@ -16,7 +16,7 @@ signal cave_scene_loaded()
 
 
 func _ready():
-	Events.connect("exited_cave", self, "_on_exited_cave")
+	Events.connect("ExitedCave", self, "_on_exited_cave")
 	Events.connect("entered_cave", self, "_on_entered_cave")
 
 func _process(delta):
