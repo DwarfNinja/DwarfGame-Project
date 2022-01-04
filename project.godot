@@ -640,7 +640,7 @@ config/icon="res://icon.png"
 
 Events="*res://Scripts/Managers/Events.cs"
 HUD="*res://Scenes/UI/HUD.tscn"
-GameManager="*res://Scripts/Managers/GameManager.gd"
+GameManager="*res://Scripts/Managers/GameManager.cs"
 
 [debug]
 

@@ -25,6 +25,8 @@ public class HUD : CanvasLayer {
         Events.ConnectEvent(nameof(Events.ExitedCave), this, nameof(OnExitedCave));
         //RandomGenHouse signals
         Events.ConnectEvent(nameof(Events.RandomGenHouseLoaded), this, nameof(OnRandomgenhouseLoaded));
+        
+        GameManager.ConnectEvent(nameof(GameManager.UpdatedGameTime), this, nameof(OnUpdatedGameTime));
     }
 
     private void OnExitedCave() {
@@ -42,5 +44,9 @@ public class HUD : CanvasLayer {
     
     private void OnUpdateHudCoins(int inventoryGoldcoinsAmount) {
         goldCoins.Text = inventoryGoldcoinsAmount.ToString();
+    }
+
+    private void OnUpdatedGameTime(string formattedTime) {
+        dayTimeLabel.Text = formattedTime;
     }
 }
