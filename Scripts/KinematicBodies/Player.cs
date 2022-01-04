@@ -15,7 +15,6 @@ public class Player : KinematicBody2D {
     private AnimationTree animationTree;
     private Area2D interactArea;
     private Node2D interactAreaAnchor;
-    private RayCast2D interactRayCast;
     private Area2D playerPickupArea;
     private Inventory inventory;
 	
@@ -29,16 +28,15 @@ public class Player : KinematicBody2D {
     private InteractableEntity closestInteractable = null;
 
     private Dictionary<string, Vector2> directionDic = new Dictionary<string, Vector2> {
-        {"up", new Vector2(0, -10)},
-        {"down", new Vector2(0, 10)},
-        {"left", new Vector2(-10, 0)},
-        {"right", new Vector2(10, 0)},
+        ["up"] = new Vector2(0, -10),
+        ["down"] = new Vector2(0, 10),
+        ["left"] = new Vector2(-10, 0),
+        ["right"] = new Vector2(10, 0)
     };
 	
     public override void _Ready() {
         playerSprite = (Sprite) GetNode("PlayerSprite");
         animationTree = (AnimationTree) GetNode("AnimationTree");
-        interactRayCast = (RayCast2D) GetNode("InteractRayCast");
         interactArea = (Area2D) GetNode("InteractAreaAnchor/InteractArea");
         interactAreaAnchor = (Node2D) GetNode("InteractAreaAnchor");
         playerPickupArea = (Area2D) GetNode("PlayerPickupArea");
@@ -118,8 +116,10 @@ public class Player : KinematicBody2D {
         Array<InteractableEntity> visibleInteractables = new Array<InteractableEntity>();
         Physics2DDirectSpaceState directState = GetWorld2d().DirectSpaceState;
         foreach (InteractableEntity interactable in interactablesInArea) {
+            CollisionShape2D closestInteractableCollisionShape = (CollisionShape2D) interactable.GetNode("CollisionShape2D");
+            
             Dictionary collision = directState.IntersectRay(GlobalPosition,
-                interactable.CollisionShape2D.GlobalPosition, new Array(this), 0b1000);
+                closestInteractableCollisionShape.GlobalPosition, new Array(this), 0b1000);
             if (collision.Contains("collider")) {
                 if (collision["collider"] == interactable) {
                     visibleInteractables.Add(interactable);
@@ -135,8 +135,11 @@ public class Player : KinematicBody2D {
         closestInteractable = null;
         foreach (InteractableEntity interactable in interactablesArray) {
             closestInteractable ??= interactable;
-            if (interactable.collisionShape2D.GlobalPosition.DistanceTo(GlobalPosition) <
-                closestInteractable.collisionShape2D.GlobalPosition.DistanceTo(GlobalPosition)) {
+            CollisionShape2D closestInteractableCollisionShape = (CollisionShape2D) interactable.GetNode("CollisionShape2D");
+            CollisionShape2D interactableCollisionShape = (CollisionShape2D) interactable.GetNode("CollisionShape2D");
+            
+            if (interactableCollisionShape.GlobalPosition.DistanceTo(GlobalPosition) <
+                closestInteractableCollisionShape.GlobalPosition.DistanceTo(GlobalPosition)) {
                 closestInteractable.InteractingBodyExited();
                 closestInteractable = interactable;
             }
@@ -169,12 +172,12 @@ public class Player : KinematicBody2D {
         }
     }
 
-    public override void _Draw() {
-        Color laserColour = new Color((float) 1.0, (float) 0.329, (float) 0.298);
-
-        foreach (Vector2 collision in collisionPositions) {
-            DrawCircle((collision - Position).Rotated(-Rotation), 1, laserColour);
-            DrawLine(interactAreaAnchor.Position, (collision - Position).Rotated(-Rotation), laserColour);
-        }
-    }
+    // public override void _Draw() {
+    //     Color laserColour = new Color((float) 1.0, (float) 0.329, (float) 0.298);
+    //
+    //     foreach (Vector2 collision in collisionPositions) {
+    //         DrawCircle((collision - Position).Rotated(-Rotation), 1, laserColour);
+    //         DrawLine(interactAreaAnchor.Position, (collision - Position).Rotated(-Rotation), laserColour);
+    //     }
+    // }
 }
