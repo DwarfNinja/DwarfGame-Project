@@ -2,10 +2,13 @@ using Godot;
 using System;
 
 public class PickableItem : RigidBody2D {
-    [Export] 
-    private Resource itemDefResource;
-    
-    private RW_Item itemDef;
+    [Export]
+    public R_Item ItemDef {
+        get => itemDef;
+        set => itemDef = value;
+    }
+
+    private R_Item itemDef;
 
     private Sprite itemSprite;
     private Particles2D trailParticles2D;
@@ -17,14 +20,8 @@ public class PickableItem : RigidBody2D {
     private Node2D target = null;
     private Vector2 targetPos;
 
-    public RW_Item ItemDef {
-        get => itemDef;
-        set => itemDefResource = value.Resource;
-    }
-
     public override void _Ready() {
         // animationPlayer.Connect("animation_finished", this, nameof(OnAnimationPlayerAnimationFinished));
-        itemDef = new RW_Item(itemDefResource);
         itemSprite = (Sprite) GetNode("ItemSprite");
         tween = (Tween) GetNode("Tween");
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
@@ -35,7 +32,7 @@ public class PickableItem : RigidBody2D {
             itemSprite.Texture = null;
             throw new Exception("ERROR: No item_def defined in item " + this);
         }
-        SetItem(itemDef);
+        SetItem();
     }
 
     public override void _IntegrateForces(Physics2DDirectBodyState state) {
@@ -64,9 +61,8 @@ public class PickableItem : RigidBody2D {
         ApplyCentralImpulse(-direction * 5);
     }
 
-    private void SetItem(RW_Item itemDef) {
-        this.itemDef = itemDef;
-        itemSprite.Texture = this.itemDef.ItemTexture;
+    private void SetItem() {
+        itemSprite.Texture = itemDef.ItemTexture;
     }
 
     public void PlayChestDropAnimation(Vector2 dropDirection) {

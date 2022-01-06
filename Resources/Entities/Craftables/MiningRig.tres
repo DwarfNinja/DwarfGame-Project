@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=6 format=2]
 
-[ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Craftable.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/UI/CraftingTable/HUD CraftingTableButton Miningrig.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/UI/InventoryBar/HUD MiningRig.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Items/Placeholder-Item.png" type="Texture" id=4]
@@ -8,7 +8,7 @@
 
 [resource]
 script = ExtResource( 1 )
-EntityType = 2
+EntityType = 3
 EntityName = "MiningRig"
 ItemTexture = ExtResource( 4 )
 HudTexture = ExtResource( 3 )
@@ -17,8 +17,8 @@ TileFootprint = Vector2( 2, 1 )
 CollisionFootprint = Vector2( 32, 12 )
 EntityTexture = ExtResource( 5 )
 RequiredItems = {
-Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2,
-Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2
+Resource( "res://Resources/Entities/Resources/Wood.tres" ): 2,
+Resource( "res://Resources/Entities/Resources/Iron.tres" ): 2
 }
 BlueprintIcon = ExtResource( 2 )
 PackedsceneString = "res://Scenes/Interactables/Craftables/MiningRig.tscn"

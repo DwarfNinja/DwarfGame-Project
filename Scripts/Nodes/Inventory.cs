@@ -7,7 +7,7 @@ using Array = Godot.Collections.Array;
 
 public class Inventory : Node2D {
 
-	private RW_Item goldcoins = RW_Item.LoadResource("res://Resources/Entities/Resources/GoldCoins.tres");
+	private R_Item goldcoins = (R_Item) GD.Load("res://Resources/Entities/Resources/GoldCoins.tres");
 
 	private Array<Slot> inventorySlots = new Array<Slot>() {
 		new Slot("Slot_0", null, 0),
@@ -18,10 +18,10 @@ public class Inventory : Node2D {
 		new Slot("Slot_5", null, 0),
 	};
 
-	private System.Collections.Generic.Dictionary<RW_Item, int> playerItems;
+	private System.Collections.Generic.Dictionary<R_Item, int> playerItems;
 
 	private int selectorPosition = 0;
-	private RW_Item selectedItem;
+	private R_Item selectedItem;
 	private Slot selectedSlot;
 
 	public override void _Ready() {
@@ -29,7 +29,7 @@ public class Inventory : Node2D {
 		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
 		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
 		
-		playerItems = new System.Collections.Generic.Dictionary<RW_Item, int>() {
+		playerItems = new System.Collections.Generic.Dictionary<R_Item, int>() {
 			[goldcoins] =  0,
 		};
 	}
@@ -41,7 +41,7 @@ public class Inventory : Node2D {
 			if (GetTree().CurrentScene.Name == "Cave") {
 				if (Input.IsActionJustPressed("key_leftclick")) {
 					if (GetItemInSlot(currentSlot) != null) {
-						if (GetItemInSlot(currentSlot).EntityType == RW_Item.Type.Craftable) {
+						if (GetItemInSlot(currentSlot).EntityType == R_Item.Type.Craftable) {
 							SelectSlot(currentSlot);
 						}
 					}
@@ -49,7 +49,7 @@ public class Inventory : Node2D {
 
 				if (Input.IsActionPressed("key_rightclick")) {
 					if (selectedItem != null) {
-						if (selectedItem.EntityType == RW_Item.Type.Craftable) {
+						if (selectedItem.EntityType == R_Item.Type.Craftable) {
 							Events.EmitEvent(nameof(Events.PlaceObject), selectedItem);
 							SelectSlot(currentSlot);
 						}
@@ -94,13 +94,13 @@ public class Inventory : Node2D {
 		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
 	}
 
-	private RW_Item GetItemInSlot(Slot slot) {
+	private R_Item GetItemInSlot(Slot slot) {
 		return slot.ItemDef;
 	}
 
-	public bool PickUpItem(RW_Item itemDef) {
+	public bool PickUpItem(R_Item itemDef) {
 		if (CanFitInInventory(itemDef)) {
-			AddItem(new RW_Item(itemDef));
+			AddItem(itemDef);
 			return true;
 		}
 		else {
@@ -109,7 +109,7 @@ public class Inventory : Node2D {
 		}
 	}
 
-	private void AddItem(RW_Item itemDef, int amount = 1) {
+	private void AddItem(R_Item itemDef, int amount = 1) {
 		
 		if (playerItems.ContainsKey(itemDef)) {
 			AddToPlayerItems(itemDef);
@@ -128,14 +128,14 @@ public class Inventory : Node2D {
 		}
 	}
 	
-	private void AddToPlayerItems(RW_Item itemDef) {
+	private void AddToPlayerItems(R_Item itemDef) {
 		playerItems[itemDef] += 1;
 		if (itemDef.Equals(goldcoins)) {
 			Events.EmitEvent(nameof(Events.UpdateHudCoins), playerItems[goldcoins]);
 		}
 	}
 	
-	private void RemoveItem(RW_Item itemDef, int amount = 1) {
+	private void RemoveItem(R_Item itemDef, int amount = 1) {
 		for (int i = inventorySlots.Count - 1; i >= 0; i--) {
 			Slot slot = inventorySlots[i];
 			if (!slot.HasItem(itemDef)) {
@@ -149,7 +149,7 @@ public class Inventory : Node2D {
 		}
 	}
 
-	public bool CanFitInInventory(RW_Item itemDef) {
+	public bool CanFitInInventory(R_Item itemDef) {
 		if (playerItems.ContainsKey(itemDef)) {
 			return true;
 		}
@@ -164,7 +164,7 @@ public class Inventory : Node2D {
 		return false;
 	}
 
-	private bool HasItemInInventory(RW_Item itemDef, int amount = 1) {
+	private bool HasItemInInventory(R_Item itemDef, int amount = 1) {
 		foreach (Slot slot in inventorySlots) {
 			if (slot.HasItem(itemDef) && slot.HasAmount(amount)) {
 				return true;
@@ -173,10 +173,10 @@ public class Inventory : Node2D {
 		return false;
 	}
 
-	private bool HasRequiredItemsToCraft(RW_Craftable craftableDef) {
-		Dictionary<RW_Item, int> requiredItems = craftableDef.RequiredItems.Duplicate();
+	private bool HasRequiredItemsToCraft(R_Craftable craftableDef) {
+		Dictionary<R_Item, int> requiredItems = craftableDef.RequiredItems.Duplicate();
 
-		foreach (RW_Item requiredItem in requiredItems.Keys) {
+		foreach (R_Item requiredItem in requiredItems.Keys) {
 			if (!HasItemInInventory(requiredItem, requiredItems[requiredItem])) {
 				return false;
 			}
@@ -184,7 +184,7 @@ public class Inventory : Node2D {
 		return true;
 	}
 	
-	private void OnRemoveSelectedItem(RW_Item itemDef) {
+	private void OnRemoveSelectedItem(R_Item itemDef) {
 		if (playerItems.ContainsKey(itemDef)) {
 			playerItems[itemDef] -= 1;
 			return;
@@ -192,10 +192,10 @@ public class Inventory : Node2D {
 		selectedSlot.RemoveItem(itemDef);
 	}
 	
-	private void OnCraftItem(RW_Craftable craftableDef) {
+	private void OnCraftItem(R_Craftable craftableDef) {
 		if (HasRequiredItemsToCraft(craftableDef)) {
-			Dictionary<RW_Item, int> requiredItems = craftableDef.RequiredItems.Duplicate();
-			foreach (RW_Item requiredItem in requiredItems.Keys) {
+			Dictionary<R_Item, int> requiredItems = craftableDef.RequiredItems.Duplicate();
+			foreach (R_Item requiredItem in requiredItems.Keys) {
 				RemoveItem(requiredItem, requiredItems[requiredItem]);
 			}
 			AddItem(craftableDef);

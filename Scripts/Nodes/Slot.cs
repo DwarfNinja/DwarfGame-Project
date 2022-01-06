@@ -3,10 +3,10 @@ using Godot;
 namespace DwarfGameProject.Scripts.Nodes {
     public class Slot : Node2D {
         private string slotName;
-        private RW_Item itemDef;
+        private R_Item itemDef;
         private int amount;
 
-        public Slot(string slotName, RW_Item itemDef, int amount) {
+        public Slot(string slotName, R_Item itemDef, int amount) {
             this.slotName = slotName;
             this.itemDef = itemDef;
             this.amount = amount;
@@ -14,7 +14,7 @@ namespace DwarfGameProject.Scripts.Nodes {
 
         public string SlotName => slotName;
 
-        public RW_Item ItemDef {
+        public R_Item ItemDef {
             get => itemDef;
             set => itemDef = value;
         }
@@ -24,13 +24,13 @@ namespace DwarfGameProject.Scripts.Nodes {
             set => amount = value;
         }
 
-        public void AddItem(RW_Item itemDef) {
+        public void AddItem(R_Item itemDef) {
             this.itemDef = itemDef;
             amount += 1;
             Events.EmitEvent(nameof(Events.UpdateSlot), this);
         }
         
-        public void RemoveItem(RW_Item itemDef) {
+        public void RemoveItem(R_Item itemDef) {
             if (this.itemDef.Equals(itemDef)) {
                 if (!IsEmpty()) {
                     amount -= 1;
@@ -42,7 +42,7 @@ namespace DwarfGameProject.Scripts.Nodes {
             }
         }
         
-        public bool HasItem(RW_Item itemDef) {
+        public bool HasItem(R_Item itemDef) {
             return this.itemDef.Equals(itemDef);
         }
         

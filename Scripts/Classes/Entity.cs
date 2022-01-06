@@ -5,21 +5,17 @@ using System;
 public class Entity : StaticBody2D {
     
     [Export] 
-    public Resource EntityDef {
-        get => entityDef?.Resource;
+    public R_Entity EntityDef {
+        get => entityDef;
         set {
-            entityDef = value switch {
-                null => null,
-                RW_Entity entity => entity,
-                _ => new RW_Entity(value)
-            };
+            entityDef = value;
             if (entityDef != null) {
                 SetEntity();
             }
         } 
     }
 
-    private RW_Entity entityDef;
+    private R_Entity entityDef;
     
     [Export] 
     private Direction facing = Direction.Front;
@@ -47,6 +43,10 @@ public class Entity : StaticBody2D {
                 throw new Exception("No entity_def defined in entity " + this + " with name: " + Name);
             }     
         }
+        
+        if (entityDef != null) {
+            SetEntity();
+        }
     }
 
     private void SetEntity() {
@@ -57,14 +57,16 @@ public class Entity : StaticBody2D {
         CalculateSpriteData();
 
         switch (entityDef.EntityType) {
-            case RW_Item.Type.Prop:
-                SetSpriteFrames(1, 4);
-                break;
-            case RW_Item.Type.Lootable:
+            case R_Item.Type.Interactable:
+                return;
+            case R_Item.Type.Lootable:
                 SetSpriteFrames(3, 1);
                 break;
-            case RW_Item.Type.Craftable:
+            case R_Item.Type.Craftable:
                 return;
+            case R_Item.Type.Prop:
+                SetSpriteFrames(1, 4);
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -3,7 +3,7 @@ using System;
 
 public class Forge : InteractableEntity {
 
-    private RW_Item iron;
+    private R_Item iron;
     
     private Texture iron1;
     private Texture iron2;
@@ -18,7 +18,7 @@ public class Forge : InteractableEntity {
     public override void _Ready() {
         base._Ready();
 
-        iron = RW_Item.LoadResource("res://Resources/Entities/Resources/Iron.tres");
+        iron = (R_Item) GD.Load("res://Resources/Entities/Resources/Iron.tres");
         iron1 = (Texture) GD.Load("res://Sprites/Interactables/Craftables/Forge/Forge Iron1.png");
         iron2 = (Texture) GD.Load("res://Sprites/Interactables/Craftables/Forge/Forge Iron2.png");
 

@@ -3,7 +3,7 @@ using System;
 
 public class MiningRig : InteractableEntity {
     
-    private RW_Item goldCoins;
+    private R_Item goldCoins;
 
     private Texture goldCoins1;
     private Texture goldCoins2;
@@ -16,7 +16,7 @@ public class MiningRig : InteractableEntity {
     
     public override void _Ready() {
         base._Ready();
-        goldCoins = RW_Item.LoadResource("res://Resources/Entities/Resources/GoldCoins.tres");
+        goldCoins = (R_Item) GD.Load("res://Resources/Entities/Resources/GoldCoins.tres");
         
         goldCoins1 = (Texture) GD.Load("res://Sprites/Interactables/Craftables/MiningRig/CoinsOne.png");
         goldCoins2 = (Texture) GD.Load("res://Sprites/Interactables/Craftables/MiningRig/CoinsTwo.png");

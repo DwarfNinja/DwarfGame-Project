@@ -16,11 +16,11 @@ public class Events : Node {
 
     //Item pickup/inventory signals
     [Signal]
-    public delegate void PlaceObject(RW_Item selectedItem);
+    public delegate void PlaceObject(R_Item selectedItem);
     [Signal]
-    public delegate void RemoveSelectedItem(RW_Item selectedItem);
+    public delegate void RemoveSelectedItem(R_Item selectedItem);
     [Signal]
-    public delegate void DropSelectedItem(RW_Item selectedItem);
+    public delegate void DropSelectedItem(R_Item selectedItem);
 
     [Signal]
     public delegate void UpdateSlotSelectors(int selectorPosition, Dictionary selectedSlot);
@@ -39,7 +39,7 @@ public class Events : Node {
     public delegate void CloseCraftingTable();
     
     [Signal]
-    public delegate void CraftItem(RW_Craftable craftableDef);
+    public delegate void CraftItem(R_Craftable craftableDef);
 
     //Forge signals
     [Signal]

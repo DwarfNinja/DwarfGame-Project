@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Resources/R_Entity.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Resources/R_Entity.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Entities/Kitchen_Drawer.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
-EntityType = 3
+EntityType = 4
 EntityName = "KitchenDrawer"
 EntityTheme = 1
 TileFootprint = Vector2( 1, 1 )
