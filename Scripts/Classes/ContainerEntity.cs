@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 public class ContainerEntity : InteractableEntity {
 
@@ -12,6 +13,7 @@ public class ContainerEntity : InteractableEntity {
     private PackedScene itemScene;
     private AnimationPlayer animationPlayer;
     private Position2D itemSpawnPosition;
+    private bool containerOpened = false;
     private RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
     private Array<Vector2> directionList= new Array<Vector2>() {
@@ -31,18 +33,15 @@ public class ContainerEntity : InteractableEntity {
     }
 
     public override void Interact(KinematicBody2D interactingKinematicBody) {
-        switch (animationPlayer.AssignedAnimation) {
-            case "Close":
+        switch (containerOpened) {
+            case false:
                 DropItems();
                 animationPlayer.Play("Open");
+                containerOpened = true;
                 break;
-            case "Open":
-                DropItems();
+            case true:
                 animationPlayer.Play("Close");
-                break;
-            default:
-                DropItems();
-                animationPlayer.Play("Open");
+                containerOpened = false;
                 break;
         }
     }
@@ -56,7 +55,7 @@ public class ContainerEntity : InteractableEntity {
             PickableItem randomItem = (PickableItem) itemScene.Instance();
             randomItem.ItemDef = randomItemResource;
             
-            AddChild(randomItem, true);
+            GetParent().AddChild(randomItem, true);
             randomItem.GlobalPosition = itemSpawnPosition.GlobalPosition;
             Vector2 randomDirection = GetRandomDropDirection(availableDirections);
             randomItem.PlayChestDropAnimation(randomDirection);
@@ -72,7 +71,7 @@ public class ContainerEntity : InteractableEntity {
             totalDropChance += dropTableEntry.DropRate;
         }
         
-        int rng = (int) randomNumberGenerator.Randi() % totalDropChance;
+        int rng = randomNumberGenerator.RandiRange(0, totalDropChance);
         foreach (R_DropTableEntry dropTableEntry in dropTable) {
             cumulativeDropChance += dropTableEntry.DropRate;
             //if the RNG is <= item cumulated total_drop_chance then drop that item
