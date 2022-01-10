@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/R_ConnectionEnd.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/L_ConnectionEnd.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/SE_3x2.tscn" type="PackedScene" id=4]
@@ -66,6 +66,7 @@ collision_mask = 0
 format = 1
 
 [node name="Props" type="TileMap" parent="Nav2D"]
+tile_set = ExtResource( 1 )
 format = 1
 
 [node name="HouseRooms" type="Node2D" parent="."]

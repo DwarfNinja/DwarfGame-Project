@@ -1,7 +1,7 @@
 extends Node2D
 
 # Tileset
-onready var HouseTileset: TileSet = preload("res://TileSets/HouseTileset.tres")
+onready var HouseTileset: TileSet = preload("res://Tilesets/HouseTileset.tres")
 
 # Node references
 onready var HouseRooms: Node2D = get_node("HouseRooms") as Node2D

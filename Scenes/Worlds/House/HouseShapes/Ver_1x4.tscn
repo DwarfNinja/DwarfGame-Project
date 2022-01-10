@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scripts/Worlds/House/Shape.gd" type="Script" id=2]
 
 [node name="Ver_1x4" type="Node2D"]
