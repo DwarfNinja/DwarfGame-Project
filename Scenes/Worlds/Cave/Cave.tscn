@@ -1,7 +1,6 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Resources/Entities/Craftables/MiningRig.tres" type="Resource" id=1]
-[ext_resource path="res://Resources/Entities/Lootables/Chest.tres" type="Resource" id=2]
 [ext_resource path="res://Resources/Entities/Props/KitchenCounter.tres" type="Resource" id=3]
 [ext_resource path="res://Scenes/Entities/Entity.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Interactables/Craftables/Forge.tscn" type="PackedScene" id=5]
@@ -18,7 +17,6 @@
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Resources/Entities/Craftables/Forge.tres" type="Resource" id=17]
 [ext_resource path="res://Resources/Entities/Ladder.tres" type="Resource" id=18]
-[ext_resource path="res://Resources/Drop_Tables/ChestDropTable.tres" type="Resource" id=19]
 
 [node name="Cave" type="Node2D"]
 script = ExtResource( 8 )
@@ -59,8 +57,7 @@ position = Vector2( 80, 32 )
 
 [node name="Chest" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 88, 128 )
-EntityDef = ExtResource( 2 )
-dropTableDef = ExtResource( 19 )
+dynamicEntity = false
 
 [node name="TileSelector" type="Sprite" parent="YSort"]
 z_index = 1
@@ -69,10 +66,12 @@ texture = ExtResource( 9 )
 [node name="KitchenCounter" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 192, 112 )
 EntityDef = ExtResource( 3 )
+dynamicEntity = false
 
 [node name="MiningRig" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 177, 32 )
 EntityDef = ExtResource( 1 )
+dynamicEntity = false
 
 [node name="Forge" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 202, 20 )
