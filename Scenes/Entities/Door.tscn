@@ -11,10 +11,12 @@ extents = Vector2( 24, 8 )
 [node name="Door" type="StaticBody2D"]
 collision_layer = 8
 script = ExtResource( 2 )
+dynamicEntity = false
 
 [node name="EntitySprite" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.00392157 )
 material = ExtResource( 4 )
-position = Vector2( 24, 8 )
+position = Vector2( 24, 6 )
 z_index = 2
 texture = ExtResource( 3 )
 
