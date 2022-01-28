@@ -5,11 +5,14 @@ using System;
 public class Entity : StaticBody2D {
     
     [Export] 
+    private bool dynamicEntity = true;
+    
+    [Export] 
     public R_Entity EntityDef {
         get => entityDef;
         set {
             entityDef = value;
-            if (entityDef != null) {
+            if (dynamicEntity && entityDef != null) {
                 SetEntity();
             }
         } 
@@ -37,15 +40,14 @@ public class Entity : StaticBody2D {
         EntitySprite = (Sprite) GetNode("EntitySprite");
         collisionShape2D = (CollisionShape2D) GetNode("CollisionShape2D");
         
-        if (!Engine.EditorHint) {
+        if (!Engine.EditorHint && dynamicEntity) {
             if (entityDef == null) {
                 EntitySprite.Texture = null;
                 throw new Exception("No entity_def defined in entity " + this + " with name: " + Name);
-            }     
-        }
-        
-        if (entityDef != null) {
-            SetEntity();
+            }   
+            if (entityDef != null) {
+                SetEntity();
+            }
         }
     }
 
