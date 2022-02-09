@@ -101,4 +101,8 @@ public class Events : Node {
     public static void ConnectEvent(string signal, Object target, string method, Array binds = null, uint flags = 0U) {
         instance.Connect(signal, target, method, binds, flags);
     }
+    
+    public static void DisconnectEvent(string signal, Object target, string method) {
+        instance.Disconnect(signal, target, method);
+    }
 }

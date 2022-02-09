@@ -21,15 +21,9 @@ public class GameManager : Node {
     private int dayStartTime = 7;
 
     private string gameTimeString = "00 : 00";
-    
+
     [Signal]
-    public delegate void CaveSceneSaved();
-    
-    [Signal]
-    public delegate void CaveSceneLoaded();
-    
-    [Signal]
-    public delegate void UpdatedGameTime(string formattedTime);
+    public delegate void UpdatedGameTime(float seconds, int dayStartTime);
     
     private static GameManager instance;
 
@@ -43,6 +37,8 @@ public class GameManager : Node {
         
         Events.ConnectEvent(nameof(Events.EnteredCave), this, nameof(OnEnteredCave));
         Events.ConnectEvent(nameof(Events.ExitedCave), this, nameof(OnExitedCave));
+        
+        GD.Randomize();
     }
 
     public override void _Process(float delta) {
@@ -68,10 +64,16 @@ public class GameManager : Node {
 
     //Implemented for later use
     private void SaveScene(Node nodeToSave) {
-        string filePath = "res://your_scene.tscn";
+        string filePath = "user://User-" + nodeToSave.Name + ".tscn";
         PackedScene newPackedScene = new PackedScene();
         newPackedScene.Pack(nodeToSave);
         ResourceSaver.Save(filePath, newPackedScene);
+    }
+    
+    private PackedScene LoadScene(string sceneName) {
+        string filePath = "user://User-" + sceneName + ".tscn";
+        PackedScene loadedScene = ResourceLoader.Load<PackedScene>(filePath, "PackedScene");
+        return loadedScene;
     }
 
     private void TempCacheScene(Node nodeToSave) {
@@ -95,22 +97,9 @@ public class GameManager : Node {
             EndDay();
         }
         seconds += delta * timeSpeed;
-        CalculateTime();
+        EmitSignal(nameof(UpdatedGameTime), seconds, dayStartTime); 
     }
 
-    private void CalculateTime() {
-        double minutes = seconds / 60;
-        int gameHours =  (int) minutes + dayStartTime % 24;
-        int gameMinutes = (int) seconds % 60;
-        
-        string formattedTime = $"{gameHours:00} : {gameMinutes:00}";
-        
-        // Localised Time format
-        // string timeFormatted = new DateTime(2000, 1, 1, gameHours, gameMinutes, 0).ToString("t");
-        
-        EmitSignal(nameof(UpdatedGameTime), formattedTime); 
-    }
-    
     private void StartDay() {
         seconds = 0;
         dayEnded = false;
@@ -142,5 +131,9 @@ public class GameManager : Node {
 
     public static void ConnectEvent(string signal, Object target, string method, Array binds = null, uint flags = 0U) {
         instance.Connect(signal, target, method, binds, flags);
+    }
+    
+    public static void DisconnectEvent(string signal, Object target, string method) {
+        instance.Disconnect(signal, target, method);
     }
 }
