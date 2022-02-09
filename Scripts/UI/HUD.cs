@@ -14,7 +14,7 @@ public class HUD : CanvasLayer {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
         goldCoins = (Label) GetNode("VBoxContainer/Labels/HBoxContainer/GoldCoins");
-        travelingScreen = (TextureRect) GetNode("Control/TravelingScreen"); 
+        travelingScreen = (TextureRect) GetNode("UIs/TravelingScreen"); 
         screenTimer = (Timer) GetNode("ScreenTimer");
         dayTimeLabel = (Label) GetNode("VBoxContainer/Labels/HBoxContainer/DayTimeLabel");
         
@@ -46,7 +46,16 @@ public class HUD : CanvasLayer {
         goldCoins.Text = inventoryGoldcoinsAmount.ToString();
     }
 
-    private void OnUpdatedGameTime(string formattedTime) {
+    private void OnUpdatedGameTime(int seconds, int dayStartTime) {
+        double minutes = seconds / 60;
+        int gameHours =  (int) minutes + dayStartTime % 24;
+        int gameMinutes = (int) seconds % 60;
+        
+        string formattedTime = $"{gameHours:00} : {gameMinutes:00}";
+        
+        // Localised Time format
+        // string timeFormatted = new DateTime(2000, 1, 1, gameHours, gameMinutes, 0).ToString("t");
+        
         dayTimeLabel.Text = formattedTime;
     }
 }
