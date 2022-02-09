@@ -4,13 +4,7 @@ using System;
 public abstract class InteractableEntity : Entity, Interactable {
 
     private bool canInteract;
-    private Area2D interactArea;
     private KinematicBody2D interactingBody;
-
-    public override void _Ready() {
-        base._Ready();
-        interactArea = (Area2D) GetNode("InteractArea");
-    }
 
     public CollisionShape2D CollisionShape2D { 
         get => collisionShape2D; 

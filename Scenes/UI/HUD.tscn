@@ -117,7 +117,7 @@ margin_left = 86.0
 margin_right = 234.0
 margin_bottom = 26.0
 
-[node name="Control" type="Control" parent="."]
+[node name="UIs" type="Control" parent="."]
 margin_left = 2.0
 margin_top = 1.0
 margin_right = 2.0
@@ -126,7 +126,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CraftingTableHUD" parent="Control" instance=ExtResource( 5 )]
+[node name="CraftingTableUI" parent="UIs" instance=ExtResource( 5 )]
 visible = false
 margin_left = 84.0
 margin_top = 39.0
@@ -134,14 +134,14 @@ margin_right = 232.0
 margin_bottom = 135.0
 stretch_mode = 6
 
-[node name="ForgeHUD" parent="Control" instance=ExtResource( 6 )]
+[node name="ForgeUI" parent="UIs" instance=ExtResource( 6 )]
 visible = false
 margin_left = 118.0
 margin_top = 55.0
 margin_right = 196.0
 margin_bottom = 113.0
 
-[node name="TravelingScreen" type="TextureRect" parent="Control"]
+[node name="TravelingScreen" type="TextureRect" parent="UIs"]
 visible = false
 margin_left = -2.0
 margin_top = -1.0

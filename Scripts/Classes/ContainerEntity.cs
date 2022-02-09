@@ -14,7 +14,6 @@ public class ContainerEntity : InteractableEntity {
     private AnimationPlayer animationPlayer;
     private Position2D itemSpawnPosition;
     private bool containerOpened = false;
-    private RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
     private Array<Vector2> directionList= new Array<Vector2>() {
         new Vector2(22,-20), new Vector2(0,-20), new Vector2(-22,-20),
@@ -25,11 +24,9 @@ public class ContainerEntity : InteractableEntity {
     public override void _Ready() {
         base._Ready();
         
-        itemScene = (PackedScene) ResourceLoader.Load("res://Scenes/Items/Item.tscn");
+        itemScene = (PackedScene) GD.Load("res://Scenes/Items/Item.tscn");
         animationPlayer = (AnimationPlayer) GetNode("AnimationPlayer");
         itemSpawnPosition = (Position2D) GetNode("ItemSpawnPosition");
-        
-        randomNumberGenerator.Randomize();
     }
 
     public override void Interact(KinematicBody2D interactingKinematicBody) {
@@ -71,7 +68,7 @@ public class ContainerEntity : InteractableEntity {
             totalDropChance += dropTableEntry.DropRate;
         }
         
-        int rng = randomNumberGenerator.RandiRange(0, totalDropChance);
+        int rng = (int) Math.Round(GD.RandRange(0, totalDropChance));
         foreach (R_DropTableEntry dropTableEntry in dropTable) {
             cumulativeDropChance += dropTableEntry.DropRate;
             //if the RNG is <= item cumulated total_drop_chance then drop that item
@@ -91,7 +88,7 @@ public class ContainerEntity : InteractableEntity {
     }
     
     private int GetRandomItemAmount() {
-        uint numberOfitems = randomNumberGenerator.Randi() % 3 + 2;
+        uint numberOfitems = GD.Randi() % 3 + 2;
         return (int) numberOfitems;
     }
 }

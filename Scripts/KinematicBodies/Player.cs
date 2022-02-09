@@ -33,6 +33,8 @@ public class Player : KinematicBody2D {
         ["left"] = new Vector2(-10, 0),
         ["right"] = new Vector2(10, 0)
     };
+    
+    public Inventory Inventory => inventory;
 	
     public override void _Ready() {
         playerSprite = (Sprite) GetNode("PlayerSprite");
@@ -135,19 +137,19 @@ public class Player : KinematicBody2D {
         closestInteractable = null;
         foreach (InteractableEntity interactable in interactablesArray) {
             closestInteractable ??= interactable;
-            CollisionShape2D closestInteractableCollisionShape = (CollisionShape2D) interactable.GetNode("CollisionShape2D");
+            CollisionShape2D closestInteractableCollisionShape =
+                (CollisionShape2D) interactable.GetNode("CollisionShape2D");
             CollisionShape2D interactableCollisionShape = (CollisionShape2D) interactable.GetNode("CollisionShape2D");
-            
+
             if (interactableCollisionShape.GlobalPosition.DistanceTo(GlobalPosition) <
                 closestInteractableCollisionShape.GlobalPosition.DistanceTo(GlobalPosition)) {
                 closestInteractable.InteractingBodyExited();
                 closestInteractable = interactable;
             }
         }
+
         return closestInteractable;
     }
-
-    public Inventory Inventory => inventory;
 
     private void OnPlayerPickupAreaBodyEntered(PickableItem item) {
         if (inventory.CanFitInInventory(item.ItemDef)) {
@@ -166,6 +168,10 @@ public class Player : KinematicBody2D {
     private void OnInteractAreaBodyExited(Node2D body) {
         if (body is InteractableEntity interactableEntity) {
             if (interactablesInArea.Contains(interactableEntity)) {
+                if (interactableEntity == closestInteractable) {
+                    closestInteractable = null;
+                }
+                
                 interactablesInArea.Remove(interactableEntity);
                 interactableEntity.InteractingBodyExited();
             }
