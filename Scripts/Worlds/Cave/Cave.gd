@@ -55,7 +55,7 @@ func _on_cave_scene_loaded():
 	player_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
 
 func update_tileselector():
-	var selected_item = Player.inventory.selectedItem
+	var selected_item = Player.Inventory.SelectedItem
 	if selected_item != null:
 		TileSelector.visible = true
 		TileSelector.global_position = $Floor.map_to_world($Floor.world_to_map(PlayerPosition2D.global_position)) + Vector2(8,8)
