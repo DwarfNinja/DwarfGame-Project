@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using DwarfGameProject.Scripts.Nodes;
 using Godot.Collections;
-using Array = Godot.Collections.Array;
 
 public class Inventory : Node2D {
 
@@ -24,6 +23,10 @@ public class Inventory : Node2D {
 	private R_Item selectedItem;
 	private Slot selectedSlot;
 
+	public R_Item SelectedItem {
+		get => selectedItem;
+	}
+
 	public override void _Ready() {
 		Events.ConnectEvent(nameof(Events.CraftItem), this, nameof(OnCraftItem));
 		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
@@ -38,7 +41,7 @@ public class Inventory : Node2D {
 		Slot currentSlot = inventorySlots[selectorPosition];
 
 		if (HUD.MenuOpen == false) {
-			if (GetTree().CurrentScene.Name == "Cave") {
+			if (GetTree().CurrentScene?.Name == "Cave") {
 				if (Input.IsActionJustPressed("key_leftclick")) {
 					if (GetItemInSlot(currentSlot) != null) {
 						if (GetItemInSlot(currentSlot).EntityType == R_Item.Type.Craftable) {
@@ -81,6 +84,39 @@ public class Inventory : Node2D {
 			}
 		}
 	}
+	
+	public bool PickUpItem(R_Item itemDef) {
+		if (CanFitInInventory(itemDef)) {
+			AddItem(itemDef);
+			return true;
+		}
+		GD.Print("Inventory full, can't pick up item! " + itemDef.EntityName);
+		return false;
+	}
+	
+	public bool RemoveItemFromInventory(R_Item itemDef, int amount = 1) {
+		if (HasItemInInventory(itemDef, amount)) {
+			RemoveItem(itemDef, amount);
+			return true;
+		}
+		GD.Print("Item not in Inventory, can't remove item! " + itemDef.EntityName);
+		return false;
+	}
+	
+	public bool CanFitInInventory(R_Item itemDef) {
+		if (playerItems.ContainsKey(itemDef)) {
+			return true;
+		}
+		foreach (Slot slot in inventorySlots){
+			if (slot.IsEmpty()) {
+				return true;
+			}
+			if (!slot.IsFull() && slot.HasItem(itemDef)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private void SelectSlot(Slot currentSlot) {
 		selectedSlot = currentSlot;
@@ -98,17 +134,6 @@ public class Inventory : Node2D {
 		return slot.ItemDef;
 	}
 
-	public bool PickUpItem(R_Item itemDef) {
-		if (CanFitInInventory(itemDef)) {
-			AddItem(itemDef);
-			return true;
-		}
-		else {
-			GD.Print("Inventory full, can't pick up item!" + itemDef.EntityName);
-			return false;
-		}
-	}
-
 	private void AddItem(R_Item itemDef, int amount = 1) {
 		
 		if (playerItems.ContainsKey(itemDef)) {
@@ -116,14 +141,16 @@ public class Inventory : Node2D {
 			return;
 		}
 		foreach (Slot slot in inventorySlots) {
-			if (slot.IsEmpty()) {
-				slot.AddItem(itemDef);
-				return;
-			}
+			for (int i = 0; i < amount; i++) {
+				if (slot.IsEmpty()) {
+					slot.AddItem(itemDef);
+					return;
+				}
 
-			if (slot.HasItem(itemDef) && !slot.IsFull()) {
-				slot.AddItem(itemDef);
-				return;
+				if (slot.HasItem(itemDef) && !slot.IsFull()) {
+					slot.AddItem(itemDef);
+					return;
+				}
 			}
 		}
 	}
@@ -149,28 +176,19 @@ public class Inventory : Node2D {
 		}
 	}
 
-	public bool CanFitInInventory(R_Item itemDef) {
-		if (playerItems.ContainsKey(itemDef)) {
-			return true;
-		}
-		foreach (Slot slot in inventorySlots){
-			if (slot.IsEmpty()) {
-				return true;
-			}
-			if (!slot.IsFull() && slot.HasItem(itemDef)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private bool HasItemInInventory(R_Item itemDef, int amount = 1) {
-		foreach (Slot slot in inventorySlots) {
-			if (slot.HasItem(itemDef) && slot.HasAmount(amount)) {
-				return true;
+		for (int i = inventorySlots.Count - 1; i >= 0; i--) {
+			Slot slot = inventorySlots[i];
+			if (!slot.HasItem(itemDef)) {
+				continue;
+			}
+
+			while (!slot.IsEmpty() && amount > 0) {
+				amount -= 1;
 			}
 		}
-		return false;
+
+		return amount > 0;
 	}
 
 	private bool HasRequiredItemsToCraft(R_Craftable craftableDef) {
@@ -201,53 +219,4 @@ public class Inventory : Node2D {
 			AddItem(craftableDef);
 		}
 	}
-	
-	// //TODO: Algorithm can be improved
-	// private void RemoveRequiredItems(R_Craftable craftableDef) {
-	// 	Dictionary<R_Item, int> requiredItems = craftableDef.requiredItems.Duplicate();
-	//
-	// 	for (int i = inventorySlots.Count - 1; i >= 0; i--) {
-	// 		Slot slot = inventorySlots[i];
-	// 		if (slot.ItemDef == null) {
-	// 			continue;
-	// 		}
-	// 		foreach (R_Item requiredItem in requiredItems.Keys) {
-	// 			if (slot.HasItem(requiredItem)) {
-	// 				foreach (int amount in Enumerable.Range(0, requiredItems[requiredItem])) {
-	// 					if (!slot.IsEmpty()) {
-	// 						slot.RemoveItem(requiredItem);
-	// 						requiredItems[requiredItem] -= 1;
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-	//
-	// //TODO: Algorithm could be improved
-	// private bool HasRequiredItemsInInventory(R_Craftable craftableDef) {
-	// 	Dictionary<R_Item, int> requiredItems = craftableDef.requiredItems.Duplicate();
-	// 	
-	// 	foreach (R_Item requiredItem in requiredItems.Keys) {
-	// 		foreach (Slot slot in inventorySlots) {
-	// 			if (slot.HasItem(requiredItem)) {
-	// 				requiredItems[requiredItem] -= slot.Count;
-	// 			}
-	// 		}
-	// 		if (requiredItems[requiredItem] > 0) {
-	// 			return false;
-	// 		}
-	// 	}
-	// 	return true;
-	// }
-	//
-	// //TODO: Could be merged with RemoveRequiredItems and/or HasRequiredItemsInInventory
-	// private void RemoveSpecificResource(R_Item itemDef, int amount) {
-	// 	foreach (Slot slot in inventorySlots) {
-	// 		while (!slot.IsEmpty() && amount > 0) {
-	// 			slot.RemoveItem(itemDef);
-	// 			amount -= 1;
-	// 		}
-	// 	}
-	// }
 }
