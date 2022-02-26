@@ -1,24 +1,24 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Scripts/Worlds/House/RoomV1.3.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Worlds/House/Room.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Entities/Lamp.tscn" type="PackedScene" id=3]
 
 [node name="Room_2" type="Node2D"]
 script = ExtResource( 2 )
-openings = {
-"east": false,
-"north": true,
-"northeast_east": false,
-"northeast_north": false,
-"northwest_north": false,
-"northwest_west": false,
-"south": false,
-"southeast_east": false,
-"southeast_south": false,
-"southwest_south": false,
-"southwest_west": false,
-"west": true
+Openings = {
+"East": false,
+"North": true,
+"NortheastEast": false,
+"NortheastNorth": false,
+"NorthwestNorth": false,
+"NorthwestWest": false,
+"South": false,
+"SoutheastEast": false,
+"SoutheastSouth": false,
+"SouthwestSouth": false,
+"SouthwestWest": false,
+"West": true
 }
 
 [node name="Floor" type="TileMap" parent="."]
