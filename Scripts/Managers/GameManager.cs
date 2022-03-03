@@ -23,7 +23,7 @@ public class GameManager : Node {
     private string gameTimeString = "00 : 00";
 
     [Signal]
-    public delegate void UpdatedGameTime(float seconds, int dayStartTime);
+    public delegate void UpdatedGameTime(double seconds, int dayStartTime);
     
     private static GameManager instance;
 
@@ -93,7 +93,7 @@ public class GameManager : Node {
     }
 
     private void RunTime(float delta) {
-        if ((int) seconds == totalDayDuration) {
+        if ((int) Math.Round(seconds) == totalDayDuration) {
             EndDay();
         }
         seconds += delta * timeSpeed;

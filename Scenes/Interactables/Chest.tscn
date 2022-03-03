@@ -45,6 +45,7 @@ tracks/0/keys = {
 [node name="Chest" type="StaticBody2D"]
 collision_layer = 8
 script = ExtResource( 3 )
+dynamicEntity = false
 dropTableDef = ExtResource( 5 )
 
 [node name="EntitySprite" type="Sprite" parent="."]

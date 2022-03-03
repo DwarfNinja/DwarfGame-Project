@@ -14,6 +14,7 @@ radius = 7.5
 [node name="Ladder" type="StaticBody2D"]
 collision_layer = 8
 script = ExtResource( 2 )
+dynamicEntity = false
 
 [node name="EntitySprite" type="Sprite" parent="."]
 material = ExtResource( 3 )

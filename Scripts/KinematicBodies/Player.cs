@@ -72,8 +72,8 @@ public class Player : KinematicBody2D {
             inputVector = inputVector.Normalized();
 
             if (inputVector != Vector2.Zero) {
-                animationTree.Set("parameters/Idle/blend_position", inputVector);
-                animationTree.Set("parameters/Run/blend_position", inputVector);
+                SetBlendPosition("Idle", inputVector);
+                SetBlendPosition("Run", inputVector);
                 animationState.Travel("Run");
                 velocity = velocity.MoveToward(inputVector * MaxSpeed, Acceleration * delta);
             }
@@ -176,6 +176,10 @@ public class Player : KinematicBody2D {
                 interactableEntity.InteractingBodyExited();
             }
         }
+    }
+
+    public void SetBlendPosition(string animationName, Vector2 value) {
+        animationTree.Set("parameters/" + animationName + "/blend_position", value);
     }
 
     // public override void _Draw() {

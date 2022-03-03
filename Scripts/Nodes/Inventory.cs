@@ -1,7 +1,5 @@
 using Godot;
 using System;
-using System.Linq;
-using DwarfGameProject.Scripts.Nodes;
 using Godot.Collections;
 
 public class Inventory : Node2D {
@@ -17,7 +15,7 @@ public class Inventory : Node2D {
 		new Slot("Slot_5", null, 0),
 	};
 
-	private System.Collections.Generic.Dictionary<R_Item, int> playerItems;
+	private Dictionary<R_Item, int> playerItems;
 
 	private int selectorPosition = 0;
 	private R_Item selectedItem;
@@ -32,7 +30,7 @@ public class Inventory : Node2D {
 		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
 		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
 		
-		playerItems = new System.Collections.Generic.Dictionary<R_Item, int>() {
+		playerItems = new Dictionary<R_Item, int>() {
 			[goldcoins] =  0,
 		};
 	}

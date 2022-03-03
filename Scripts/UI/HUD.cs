@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Diagnostics;
 
 public class HUD : CanvasLayer {
 
@@ -46,10 +45,10 @@ public class HUD : CanvasLayer {
         goldCoins.Text = inventoryGoldcoinsAmount.ToString();
     }
 
-    private void OnUpdatedGameTime(int seconds, int dayStartTime) {
+    private void OnUpdatedGameTime(double seconds, int dayStartTime) {
         double minutes = seconds / 60;
-        int gameHours =  (int) minutes + dayStartTime % 24;
-        int gameMinutes = (int) seconds % 60;
+        double gameHours =  minutes + dayStartTime % 24;
+        double gameMinutes = seconds % 60;
         
         string formattedTime = $"{gameHours:00} : {gameMinutes:00}";
         

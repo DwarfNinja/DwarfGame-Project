@@ -1,8 +1,6 @@
 using Godot;
 using System;
 using System.Linq;
-using DwarfGameProject.Scripts.Nodes;
-using Godot.Collections;
 
 public class InventoryBar : MarginContainer {
 
