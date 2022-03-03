@@ -7,7 +7,7 @@ onready var HouseTileset: TileSet = preload("res://Tilesets/HouseTileset.tres")
 onready var HouseRooms: Node2D = get_node("HouseRooms") as Node2D
 onready var HouseShapes: Node2D = get_node("HouseShapes") as Node2D
 onready var TopConnectionEnd: TileMap = get_node("ConnectionEnds/TopConnectionEnd") as TileMap
-onready var L_SideConnectionEnd: TileMap = get_node("ConnectionEnds/L_ConnectionEnd") as TileMap
+onready var L_SideConnectionEnd: TileMap = get_node("ConnectionEnds/L_SideConnectionEnd") as TileMap
 onready var R_SideConnectionEnd: TileMap = get_node("ConnectionEnds/R_SideConnectionEnd") as TileMap
 
 #TileMap references
@@ -151,11 +151,11 @@ func check_randomroom_viability() -> void:
 			current_occupied_room_locations.append(last_room_location)
 			continue
 
-		for direction in last_room.openings.keys():
-			if last_room.openings[direction] == true and new_room.get_connection(direction):
+		for direction in last_room.Openings.keys():
+			if last_room.Openings[direction] == true and new_room.call("GetConnection", direction):
 				possible_new_room_directions.append(direction)
 		if selected_randomroom_direction:
-			possible_new_room_directions.erase(last_room.mapping[selected_randomroom_direction])
+			possible_new_room_directions.erase(last_room.Mapping[selected_randomroom_direction])
 				
 		if possible_new_room_directions != []:
 			selected_randomroom_direction = select_random_from_array(possible_new_room_directions)
@@ -192,8 +192,8 @@ func set_random_room(random_room: Node2D, random_room_location: Vector2, _last_r
 func check_extent_of_shape() -> void:
 	while shapes < max_shapes:
 		var random_shape: Node2D = select_random_from_array(HouseShapes.get_children())
-		var random_shape_width: int = random_shape.shape_width
-		var random_shape_height: int = random_shape.shape_height
+		var random_shape_width: int = random_shape.ShapeWidth
+		var random_shape_height: int = random_shape.ShapeHeight
 		var possible_shape_locations: Array = []
 		
 		for cell in Areas.get_used_cells():
@@ -397,27 +397,27 @@ func place_spawn_zone(door: Node2D) -> void:
 		Vector2(-1,ceil(spawn_zone_height/2) + 1), spawn_zone_width, spawn_zone_height)
 	
 	for cell in spawn_zone:
-		if Indexes.get_cellv(cell) != -1:
-			Indexes.set_cell(cell.x, cell.y, -1)
+		if Indexes.get_cellv(cell) == -1:
+			Indexes.set_cell(cell.x, cell.y, loot_index_tile_id)
 
 
 func location_of_value(converted_randomroom_location: String) -> Vector2:
 	var locations: Dictionary = {
-	"northwest_north": room_pos_north,
-	"north": room_pos_north,
-	"northeast_north": room_pos_north,
+	"NorthwestNorth": room_pos_north,
+	"North": room_pos_north,
+	"NortheastNorth": room_pos_north,
 	
-	"northeast_east": room_pos_east,
-	"east": room_pos_east,
-	"southeast_east": room_pos_east,
+	"NortheastEast": room_pos_east,
+	"East": room_pos_east,
+	"SoutheastEast": room_pos_east,
 	
-	"southeast_south": room_pos_south,
-	"south": room_pos_south,
-	"southwest_south": room_pos_south,
+	"SoutheastSouth": room_pos_south,
+	"South": room_pos_south,
+	"SouthwestSouth": room_pos_south,
 	
-	"southwest_west": room_pos_west,
-	"west": room_pos_west,
-	"northwest_west": room_pos_west
+	"SouthwestWest": room_pos_west,
+	"West": room_pos_west,
+	"NorthwestWest": room_pos_west
 	}
 	return locations[converted_randomroom_location] 
 
