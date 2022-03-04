@@ -46,10 +46,11 @@ public class HUD : CanvasLayer {
     }
 
     private void OnUpdatedGameTime(double seconds, int dayStartTime) {
-        double minutes = seconds / 60;
-        double gameHours =  minutes + dayStartTime % 24;
-        double gameMinutes = seconds % 60;
-        
+        int intSeconds = (int) Math.Round(seconds);
+        int minutes = intSeconds / 60;
+        int gameHours =  minutes + dayStartTime % 24;
+        int gameMinutes = intSeconds % 60;
+
         string formattedTime = $"{gameHours:00} : {gameMinutes:00}";
         
         // Localised Time format
