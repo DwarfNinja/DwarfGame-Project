@@ -88,7 +88,7 @@ public class Events : Node {
     public delegate void RequestRoamCell(Node2D body);
     
     [Signal]
-    public delegate void UpdateLastKnownPlayerPosition(Vector2 lastKnownPlayerPosition, int state);
+    public delegate void UpdateLastKnownPlayerPosition(Vector2 lastKnownPlayerPosition, Villager.States state);
     
     [Signal]
     public delegate void UpdateHudCoins(int inventoryGoldcoinsAmount);
