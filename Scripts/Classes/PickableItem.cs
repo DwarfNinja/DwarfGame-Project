@@ -30,7 +30,7 @@ public class PickableItem : RigidBody2D {
 
         if (itemDef == null) {
             itemSprite.Texture = null;
-            throw new Exception("ERROR: No item_def defined in item " + this);
+            throw new Exception("ERROR: No itemDef defined in item " + this);
         }
         SetItem();
     }
