@@ -8,9 +8,9 @@ var current_playerposition
 var uptodate_last_known_playerpositon
 
 func _ready():
-	Events.connect("request_roamcell", self, "_on_request_roamcell")
-	Events.connect("request_navpath", self, "_on_request_navpath")
-	Events.connect("update_lastknown_playerposition", self, "_on_update_lastknown_playerposition")
+	Events.connect("RequestRoamCell", self, "_on_request_roamcell")
+	Events.connect("RequestNavPath", self, "_on_request_navpath")
+	Events.connect("UpdateLastKnownPlayerPosition", self, "_on_update_lastknown_playerposition")
 	$Walls/PlayerGhost/PlayerGhostArea.connect("body_entered", self, "_on_PlayerGhostArea_body_entered")
 
 #FIX: Make it unreliant on ("Walls/Player"), decoupling

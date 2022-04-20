@@ -138,7 +138,7 @@ func detect():
 
 func get_random_roamcell():
 	var villager_id = self
-	Events.emit_signal("request_roamcell", villager_id)
+	Events.emit_signal("RequestRoamCell", villager_id)
 
 func _on_DetectionTimer_timeout():
 	if can_see_target == true:
