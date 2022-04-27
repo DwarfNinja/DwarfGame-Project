@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Scripts/UI/CraftingTable/CraftingTableHUD.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/UI/CraftingTable/CraftingTableHUD.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Fonts/Tres FontData/Big Square fontdata.tres" type="DynamicFontData" id=3]
 [ext_resource path="res://Sprites/UI/CraftingTable/HUD CraftingTable.png" type="Texture" id=4]
@@ -52,7 +52,7 @@ margin_right = 37.0
 margin_bottom = 27.0
 custom_styles/focus = SubResource( 1 )
 icon = ExtResource( 9 )
-craftable_def = ExtResource( 7 )
+CraftableDef = ExtResource( 7 )
 
 [node name="CraftingButton_2" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 27.0
@@ -61,7 +61,7 @@ margin_right = 64.0
 margin_bottom = 27.0
 custom_styles/focus = SubResource( 1 )
 icon = ExtResource( 6 )
-craftable_def = ExtResource( 8 )
+CraftableDef = ExtResource( 8 )
 
 [node name="CraftingButton_4" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 54.0
@@ -70,7 +70,7 @@ margin_right = 91.0
 margin_bottom = 27.0
 custom_styles/focus = SubResource( 1 )
 icon = ExtResource( 6 )
-craftable_def = ExtResource( 8 )
+CraftableDef = ExtResource( 8 )
 
 [node name="CraftingButton_1" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
@@ -79,7 +79,7 @@ margin_right = 37.0
 margin_bottom = 56.0
 custom_styles/focus = SubResource( 1 )
 icon = ExtResource( 9 )
-craftable_def = ExtResource( 7 )
+CraftableDef = ExtResource( 7 )
 
 [node name="CraftingButton_3" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 27.0
@@ -88,7 +88,7 @@ margin_right = 64.0
 margin_bottom = 56.0
 custom_styles/focus = SubResource( 1 )
 icon = ExtResource( 9 )
-craftable_def = ExtResource( 7 )
+CraftableDef = ExtResource( 7 )
 
 [node name="CraftingButton_5" parent="GridContainer" instance=ExtResource( 2 )]
 margin_left = 54.0
@@ -97,7 +97,7 @@ margin_right = 91.0
 margin_bottom = 56.0
 custom_styles/focus = SubResource( 1 )
 icon = ExtResource( 9 )
-craftable_def = ExtResource( 7 )
+CraftableDef = ExtResource( 7 )
 
 [node name="ResouceBar" type="TextureRect" parent="."]
 margin_left = 148.0
@@ -110,23 +110,22 @@ __meta__ = {
 }
 
 [node name="WoodCostLabel" type="Label" parent="ResouceBar"]
-margin_left = 7.0
+margin_left = 3.0
 margin_top = 16.0
-margin_right = 13.0
+margin_right = 17.0
 margin_bottom = 28.0
 custom_fonts/font = SubResource( 2 )
 text = "0"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="IronCostLabel" type="Label" parent="ResouceBar"]
-margin_left = 7.0
+margin_left = 3.0
 margin_top = 37.0
-margin_right = 13.0
+margin_right = 17.0
 margin_bottom = 49.0
 custom_fonts/font = SubResource( 3 )
 text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+align = 1
