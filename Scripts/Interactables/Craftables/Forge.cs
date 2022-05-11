@@ -8,7 +8,7 @@ public class Forge : InteractableEntity {
     private Texture iron1;
     private Texture iron2;
     
-    private int forgeTime;
+    private int forgeTime = 5;
     private int ironInForge;
     private int setIronAmount;
     
@@ -25,16 +25,30 @@ public class Forge : InteractableEntity {
         forgeTimer = (Timer) GetNode("ForgeTimer");
         ironSprite = (Sprite) GetNode("IronSprite");
         forgeTimer.Connect("timeout", this, nameof(OnForgeTimerTimeout));
-        Events.ConnectEvent(nameof(Events.IronAmountSet), this, nameof(OnIronAmountSet));
     }
-    
+
     public override void _Process(float delta) {
+        if (canInteract) {
+            if (forgeTimer.IsStopped() && ironInForge == 0) {
+                ShowShader();
+            }
+            else if (ironInForge > 0) {
+                HideShader();
+                ShaderMaterial ironSpriteMaterial = (ShaderMaterial) ironSprite.Material;
+                ironSpriteMaterial.SetShaderParam("outline_color", new Color(240,240,240,255));
+            }
+            else {
+                HideShader();
+                ShaderMaterial ironSpriteMaterial = (ShaderMaterial) ironSprite.Material;
+                ironSpriteMaterial.SetShaderParam("outline_color", new Color(240,240,240,0));
+            }
+        }
+        UpdateIronSprite();
     }
 
     public override void Interact(Player interactingPlayer) {
-        Player player = (Player) interactingKinematicBody;
         if (ironInForge == 0) {
-            Events.EmitEvent(nameof(Events.OpenForge), this);
+            Events.EmitEvent(nameof(Events.OpenForge), this, interactingPlayer);
         }
         else if (ironInForge > 0) {
             if (interactingPlayer.Inventory.PickUpItem(iron)) {
@@ -55,12 +69,10 @@ public class Forge : InteractableEntity {
         }
     }
 
-    private void OnIronAmountSet(Forge forge,int ironAmount) {
-        if (Equals(forge)) {
-            forgeTimer.WaitTime = forgeTime * ironAmount;
-            forgeTimer.Start();
-            setIronAmount = ironAmount;
-        }
+    public void SetIronAmount(int ironAmount) {
+        forgeTimer.WaitTime = forgeTime * ironAmount;
+        forgeTimer.Start();
+        setIronAmount = ironAmount;
     }
 
     private void OnForgeTimerTimeout() {
