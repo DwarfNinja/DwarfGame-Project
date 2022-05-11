@@ -3,7 +3,7 @@ using System;
 
 public class Ladder : InteractableEntity {
 
-    public override void Interact(KinematicBody2D interactingKinematicBody) {
+    public override void Interact(Player interactingPlayer) {
         Events.EmitEvent(nameof(Events.ExitedCave));
     }
 }

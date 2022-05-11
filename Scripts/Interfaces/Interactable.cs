@@ -9,7 +9,7 @@ public interface Interactable {
     }
     
     
-    public abstract void Interact(KinematicBody2D interactingKinematicBody);
+    public abstract void Interact(Player interactingPlayer);
     //Declared in the specific Interactable
 
     public abstract void InteractingBodyEntered();

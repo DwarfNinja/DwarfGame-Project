@@ -31,10 +31,9 @@ public class MiningRig : InteractableEntity {
         UpdateGoldCoinSprite();
     }
 
-    public override void Interact(KinematicBody2D interactingKinematicBody) {
-        Player player = (Player) interactingKinematicBody;
+    public override void Interact(Player interactingPlayer) {
         if (goldCoinsInMine > 0) {
-            if (player.Inventory.PickUpItem(goldCoins)) {
+            if (interactingPlayer.Inventory.PickUpItem(goldCoins)) {
                 goldCoinsInMine -= 1; 
             }
         }

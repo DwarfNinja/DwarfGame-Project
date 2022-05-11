@@ -29,7 +29,7 @@ public class ContainerEntity : InteractableEntity {
         itemSpawnPosition = (Position2D) GetNode("ItemSpawnPosition");
     }
 
-    public override void Interact(KinematicBody2D interactingKinematicBody) {
+    public override void Interact(Player interactingPlayer) {
         switch (containerOpened) {
             case false:
                 DropItems();

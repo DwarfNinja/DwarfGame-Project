@@ -31,13 +31,13 @@ public class Forge : InteractableEntity {
     public override void _Process(float delta) {
     }
 
-    public override void Interact(KinematicBody2D interactingKinematicBody) {
+    public override void Interact(Player interactingPlayer) {
         Player player = (Player) interactingKinematicBody;
         if (ironInForge == 0) {
             Events.EmitEvent(nameof(Events.OpenForge), this);
         }
         else if (ironInForge > 0) {
-            if (player.Inventory.PickUpItem(iron)) {
+            if (interactingPlayer.Inventory.PickUpItem(iron)) {
                 ironInForge -= 1;
             }
         }

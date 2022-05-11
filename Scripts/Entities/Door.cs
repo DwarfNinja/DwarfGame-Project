@@ -10,7 +10,7 @@ public class Door : InteractableEntity {
         position2D = GetNode<Position2D>("Position2D");
     }
 
-    public override void Interact(KinematicBody2D interactingKinematicBody) {
+    public override void Interact(Player interactingPlayer) {
         Events.EmitEvent(nameof(Events.EnteredCave));
     }
 }
