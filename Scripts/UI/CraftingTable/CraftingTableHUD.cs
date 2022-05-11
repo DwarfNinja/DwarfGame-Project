@@ -15,8 +15,6 @@ public class CraftingTableHUD : TextureRect {
         gridContainer = GetNode<GridContainer>("GridContainer");
         selectedButton = GetNode<CraftingButton>("GridContainer/CraftingButton_" + craftingSelectorPosition);
         
-        Events.ConnectEvent(nameof(Events.OpenCraftingTable), this, nameof(OnOpenCraftingTable));
-        Events.ConnectEvent(nameof(Events.CloseCraftingTable), this, nameof(OnCloseCraftingTable));
         Events.ConnectEvent(nameof(Events.CraftingButtonMouseEntered), this, nameof(OnCraftingButtonMouseEntered));
     }
     
@@ -28,9 +26,7 @@ public class CraftingTableHUD : TextureRect {
             int vertAdd = 1;
             
             if (Input.IsActionJustPressed("key_esc")) {
-                Hide();
-                craftingTableOpened = false;
-                HUD.MenuOpen = false;
+                CloseCraftingTableUI();
             }
 
             if (Input.IsActionJustPressed("ui_right") || Input.IsActionJustReleased("scroll_up")) {
@@ -100,15 +96,13 @@ public class CraftingTableHUD : TextureRect {
         craftingSelectorPosition = button.Name.Split("CraftingButton_")[1].ToInt();
     }
 
-    private void OnOpenCraftingTable() {
+    public void OpenCraftingTableUI() {
         Show();
         craftingTableOpened = true;
-        HUD.MenuOpen = true;
     }
     
-    private void OnCloseCraftingTable() {
+    public void CloseCraftingTableUI() {
         Hide();
         craftingTableOpened = false;
-        HUD.MenuOpen = false;
     }
 }

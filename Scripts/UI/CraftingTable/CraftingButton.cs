@@ -28,7 +28,7 @@ public class CraftingButton : Button {
     }
 
     public void CraftItem() {
-        Events.EmitEvent("craft_item", craftableDef);
+        Events.EmitEvent(nameof(Events.CraftItem), craftableDef);
     }
 
     public void ActivateCraftingSelector() {
