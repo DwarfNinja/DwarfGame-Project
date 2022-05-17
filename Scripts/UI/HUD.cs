@@ -1,21 +1,35 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public class HUD : CanvasLayer {
 
     private Label goldCoins;
-    private TextureRect travelingScreen; 
     private Timer screenTimer;
     private Label dayTimeLabel;
+    
+    private TextureRect travelingScreen; 
+
+    private CraftingTableHUD craftingTableUi;
+    private ForgeHUD forgeUi;
 
     public static bool MenuOpen = false;
+    
+    private static HUD instance;
 
-    // Called when the node enters the scene tree for the first time.
+    private HUD() {
+        Debug.Assert(instance == null, "instance == null");
+        instance = this;
+    }
+    
     public override void _Ready() {
-        goldCoins = (Label) GetNode("VBoxContainer/Labels/HBoxContainer/GoldCoins");
-        travelingScreen = (TextureRect) GetNode("UIs/TravelingScreen"); 
-        screenTimer = (Timer) GetNode("ScreenTimer");
-        dayTimeLabel = (Label) GetNode("VBoxContainer/Labels/HBoxContainer/DayTimeLabel");
+        goldCoins = GetNode<Label>("VBoxContainer/Labels/HBoxContainer/GoldCoins");
+        travelingScreen = GetNode<TextureRect>("UIs/TravelingScreen"); 
+        screenTimer = GetNode<Timer>("ScreenTimer");
+        dayTimeLabel = GetNode<Label>("VBoxContainer/Labels/HBoxContainer/DayTimeLabel");
+        
+        craftingTableUi = GetNode<CraftingTableHUD>("UIs/CraftingTableUI"); 
+        forgeUi = GetNode<ForgeHUD>("UIs/ForgeUI"); 
         
         //Connect Signals
         screenTimer.Connect("timeout", this, nameof(OnScreenTimerTimeout));
@@ -24,8 +38,12 @@ public class HUD : CanvasLayer {
         Events.ConnectEvent(nameof(Events.ExitedCave), this, nameof(OnExitedCave));
         //RandomGenHouse signals
         Events.ConnectEvent(nameof(Events.RandomGenHouseLoaded), this, nameof(OnRandomgenhouseLoaded));
-        
+
         GameManager.ConnectEvent(nameof(GameManager.UpdatedGameTime), this, nameof(OnUpdatedGameTime));
+        
+        Events.ConnectEvent(nameof(Events.OpenForge), this, nameof(OnOpenForge));
+        
+        Events.ConnectEvent(nameof(Events.OpenCraftingTable), this, nameof(OnOpenCraftingTable));
     }
 
     private void OnExitedCave() {
@@ -57,5 +75,13 @@ public class HUD : CanvasLayer {
         // string timeFormatted = new DateTime(2000, 1, 1, gameHours, gameMinutes, 0).ToString("t");
         
         dayTimeLabel.Text = formattedTime;
+    }
+    
+    public void OnOpenCraftingTable() {
+        craftingTableUi.OpenCraftingTableUI();
+    }
+
+    public void OnOpenForge(Forge forge, Player interactingBody) {
+        forgeUi.OpenForgeUI(forge, interactingBody);
     }
 }

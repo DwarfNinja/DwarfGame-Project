@@ -42,7 +42,7 @@ public class Events : Node {
 
     //Forge signals
     [Signal]
-    public delegate void OpenForge(Node2D currentOpenedForge);
+    public delegate void OpenForge(Forge forge, Player interactingPlayer);
     [Signal]
     public delegate void CloseForge();
     [Signal]
