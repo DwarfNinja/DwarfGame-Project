@@ -12,6 +12,10 @@ public class Events : Node {
         Debug.Assert(instance == null, "instance == null");
         instance = this;
     }
+    
+    //Game signals
+    [Signal]
+    public delegate void StartNewGame();
 
     //Item pickup/inventory signals
     [Signal]

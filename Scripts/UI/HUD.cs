@@ -4,6 +4,8 @@ using System.Diagnostics;
 
 public class HUD : CanvasLayer {
 
+    private VBoxContainer vBoxContainer;
+
     private Label goldCoins;
     private Timer screenTimer;
     private Label dayTimeLabel;
@@ -23,16 +25,21 @@ public class HUD : CanvasLayer {
     }
     
     public override void _Ready() {
+        vBoxContainer = GetNode<VBoxContainer>("VBoxContainer"); 
+        
         goldCoins = GetNode<Label>("VBoxContainer/Labels/HBoxContainer/GoldCoins");
         travelingScreen = GetNode<TextureRect>("UIs/TravelingScreen"); 
         screenTimer = GetNode<Timer>("ScreenTimer");
         dayTimeLabel = GetNode<Label>("VBoxContainer/Labels/HBoxContainer/DayTimeLabel");
-        
+
         craftingTableUi = GetNode<CraftingTableHUD>("UIs/CraftingTableUI"); 
         forgeUi = GetNode<ForgeHUD>("UIs/ForgeUI"); 
         
         //Connect Signals
         screenTimer.Connect("timeout", this, nameof(OnScreenTimerTimeout));
+        
+        Events.ConnectEvent(nameof(Events.StartNewGame), this, nameof(OnStartNewGame));
+        
         Events.ConnectEvent(nameof(Events.UpdateHudCoins), this, nameof(OnUpdateHudCoins));
         //Enter/Exit location signals
         Events.ConnectEvent(nameof(Events.ExitedCave), this, nameof(OnExitedCave));
@@ -46,6 +53,11 @@ public class HUD : CanvasLayer {
         Events.ConnectEvent(nameof(Events.OpenCraftingTable), this, nameof(OnOpenCraftingTable));
     }
 
+    private void OnStartNewGame() {
+        vBoxContainer.Show();
+        MenuOpen = false;
+    }
+    
     private void OnExitedCave() {
         //GameManager.day_ended = false
         travelingScreen.Visible = true;

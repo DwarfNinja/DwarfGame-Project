@@ -24,7 +24,7 @@ public class GameManager : Node {
 
     [Signal]
     public delegate void UpdatedGameTime(double seconds, int dayStartTime);
-    
+
     private static GameManager instance;
 
     private GameManager() {
@@ -35,6 +35,7 @@ public class GameManager : Node {
     public override void _Ready() {
         houseScene = (PackedScene) GD.Load("res://Scenes/Worlds/House/House.tscn");
         
+        Events.ConnectEvent(nameof(Events.StartNewGame), this, nameof(OnStartNewGame));
         Events.ConnectEvent(nameof(Events.EnteredCave), this, nameof(OnEnteredCave));
         Events.ConnectEvent(nameof(Events.ExitedCave), this, nameof(OnExitedCave));
         
@@ -109,6 +110,10 @@ public class GameManager : Node {
     private void EndDay() {
         dayEnded = true;
         Events.EmitEvent(nameof(Events.DayEnded), tax);
+    }
+    
+    private void OnStartNewGame() {
+        GetTree().ChangeScene("res://Scenes/Worlds/Cave/Cave.tscn");
     }
 
     private void OnEnteredCave() {
