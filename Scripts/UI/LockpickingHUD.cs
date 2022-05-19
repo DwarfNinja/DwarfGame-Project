@@ -11,11 +11,11 @@ public class LockpickingHUD : TextureRect {
     private AnimationPlayer animationPlayer;
     
     private double currentAngle = 0;
-    private double randomUnlockAngle;
+    private int randomUnlockAngle = 90;
     
     private bool lockPickBroken = false;
-    private double closestDistance;
-    private double possibleTurnRadius;
+    private int closestDistance;
+    private int possibleTurnRadius;
     private int difficultyModifier = 5;
     private int lockPickHealth = 50;
     
@@ -37,7 +37,6 @@ public class LockpickingHUD : TextureRect {
     }
 
     public override void _PhysicsProcess(float delta) {
-        GD.Print(lockCylinder.RectRotation);
         if (CanReceiveInput()) {
             lockpickRotAnchor.RectGlobalPosition = lockpickPosAnchor.RectGlobalPosition;
             RotateLockpick();
@@ -65,12 +64,12 @@ public class LockpickingHUD : TextureRect {
             lockpickRotAnchor.SetRotation(Mathf.LerpAngle(lockpickRotAnchor.GetRotation(), angleToMouse.Angle(), (float) 0.2));
 
             currentAngle = Math.Round(Mathf.Rad2Deg(angleToMouse.Angle()));
-            currentAngle = currentAngle < 0 ? currentAngle : currentAngle + 360;
+            currentAngle = currentAngle < 0 ? currentAngle + 360 : currentAngle;
         }
     }
     
     private void TurnCylinder() {
-        if (lockCylinder.RectRotation < Math.Min(possibleTurnRadius + difficultyModifier, 88)) {
+        if (lockCylinder.RectRotation < Math.Min(possibleTurnRadius + difficultyModifier, 90)) {
             lockCylinder.RectRotation += 2;
         }
         else {
@@ -78,24 +77,24 @@ public class LockpickingHUD : TextureRect {
         }
     }
 
-    private double GetRandomUnlockAngle() {
-        return Math.Round(GD.RandRange(-180, 180));
+    private int GetRandomUnlockAngle() {
+        return (int) Math.Round(GD.RandRange(-180, 180));
     }
 
-    private double CalculateClosestHalf() {
+    private int CalculateClosestHalf() {
         double firstHalf = Math.Abs(currentAngle - randomUnlockAngle);
         double secondHalf = Math.Abs(randomUnlockAngle + (360 - currentAngle));
-        return Math.Min(firstHalf, secondHalf);
+        return (int) Math.Min(firstHalf, secondHalf);
     }
 
-    private double CalculatePossibleTurnRadius() {
-        double anglePercentage = (closestDistance / 180) * 100;
+    private int CalculatePossibleTurnRadius() {
+        double anglePercentage = (double) closestDistance / 180 * 100;
         double flippedAnglePercentage = 100 - anglePercentage;
-        return Math.Round(90 * (flippedAnglePercentage / 100));
+        return (int) Math.Round(90 * (flippedAnglePercentage / 100));
     }
 
     private bool LockIsUnlocked() {
-        return Math.Round(lockCylinder.RectRotation) >= 90;
+        return lockCylinder.RectRotation >= 90;
     }
 
     private bool CanReceiveInput() {
