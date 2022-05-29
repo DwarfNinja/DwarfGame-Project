@@ -181,12 +181,13 @@ public class Inventory : Node2D {
 				continue;
 			}
 
-			while (!slot.IsEmpty() && amount > 0) {
+			int slotAmount = slot.Amount;
+			while (slotAmount > 0 && amount > 0) {
+				slotAmount -= 1;
 				amount -= 1;
 			}
 		}
-
-		return amount > 0;
+		return amount == 0;
 	}
 
 	private bool HasRequiredItemsToCraft(R_Craftable craftableDef) {

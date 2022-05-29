@@ -43,7 +43,7 @@ public class Slot : Node2D {
     }
     
     public bool HasItem(R_Item itemDef) {
-        return this.itemDef.Equals(itemDef);
+        return this.itemDef != null && this.itemDef.Equals(itemDef);
     }
     
     public bool HasAmount(int amount) {
