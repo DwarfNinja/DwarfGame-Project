@@ -59,6 +59,16 @@ public class Forge : InteractableEntity {
             GD.Print("Forge is still smelting!");
         }
     }
+    
+    public void StartForge(int ironAmount) {
+        setIronAmount = ironAmount;
+        forgeTimer.WaitTime = forgeTime * ironAmount;
+        forgeTimer.Start();
+    }
+
+    public bool CanStartForge() {
+        return forgeTimer.IsStopped() && ironInForge == 0;
+    }
 
     private void UpdateIronSprite() {
         if (ironInForge > 0) {
@@ -67,12 +77,6 @@ public class Forge : InteractableEntity {
         else {
             ironSprite.Texture = null;
         }
-    }
-
-    public void SetIronAmount(int ironAmount) {
-        forgeTimer.WaitTime = forgeTime * ironAmount;
-        forgeTimer.Start();
-        setIronAmount = ironAmount;
     }
 
     private void OnForgeTimerTimeout() {

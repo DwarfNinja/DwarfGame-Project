@@ -24,6 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "Crafting Selector Selecting"
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Selector:texture")
 tracks/0/interp = 1
@@ -47,19 +48,14 @@ custom_styles/focus = SubResource( 1 )
 enabled_focus_mode = 0
 flat = true
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Selector" type="TextureRect" parent="."]
+visible = false
 margin_left = 4.0
 margin_top = 1.0
 margin_right = 33.0
 margin_bottom = 26.0
 texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/Crafting Selector Idle" = SubResource( 2 )

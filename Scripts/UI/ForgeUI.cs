@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class ForgeHUD : TextureRect {
+public class ForgeUI : PopupDialog {
 
     private R_Item iron;
     private HSlider ironAmountHSlider;
@@ -19,27 +19,34 @@ public class ForgeHUD : TextureRect {
         ironAmountLabel = GetNode<Label>("IronAmountLabel");
         
         ironAmountHSlider.Connect("value_changed", this, nameof(OnHSliderValueChanged));
+        
+        Connect("popup_hide", this, nameof(OnPopUpHide));
     }
-
-    public override void _Process(float delta) {
+    
+    public override void _GuiInput(InputEvent @event) {
         if (currentOpenedForge != null) {
-            if (Input.IsActionJustPressed("key_e")) {
+            if (@event.IsActionPressed("key_e")) {
                 InsertIron();
             }
-
-            if (Input.IsActionJustPressed("key_esc")) {
-                CloseForgeUI();
-            }
         }
+    }
+    
+    public void OpenForgeUI(Forge forge, Player interactingPlayer) {
+        PopupCentered();
+        currentOpenedForge = forge;
+        this.interactingPlayer = interactingPlayer;
+        ironAmountHSlider.Editable = true;
     }
 
     private void InsertIron() {
-        if (interactingPlayer.Inventory.RemoveItemFromInventory(iron, sliderIronAmount)) {
-            currentOpenedForge.SetIronAmount(sliderIronAmount);
-            ironAmountHSlider.Editable = false;
-        }
-        else {
-            GD.Print("Not enough resources!");
+        if (currentOpenedForge.CanStartForge()) {
+            if (interactingPlayer.Inventory.RemoveItemFromInventory(iron, sliderIronAmount)) {
+                currentOpenedForge.StartForge(sliderIronAmount);
+                ironAmountHSlider.Editable = false;
+            }
+            else {
+                GD.Print("Not enough resources!");
+            }
         }
     }
 
@@ -47,16 +54,8 @@ public class ForgeHUD : TextureRect {
         sliderIronAmount = (int) value;
         ironAmountLabel.Text = sliderIronAmount.ToString();
     }
-    
-    public void OpenForgeUI(Forge forge, Player interactingPlayer) {
-        Show();
-        currentOpenedForge = forge;
-        this.interactingPlayer = interactingPlayer;
-        ironAmountHSlider.Editable = true;
-    }
-    
-    public void CloseForgeUI() {
-        Hide();
+
+    private void OnPopUpHide() {
         currentOpenedForge = null;
         interactingPlayer = null;
     }

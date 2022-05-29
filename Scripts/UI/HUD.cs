@@ -12,8 +12,8 @@ public class HUD : CanvasLayer {
     
     private TextureRect travelingScreen; 
 
-    private CraftingTableHUD craftingTableUi;
-    private ForgeHUD forgeUi;
+    private CraftingTableUI craftingTableUi;
+    private ForgeUI forgeUi;
 
     public static bool MenuOpen = false;
     
@@ -32,11 +32,15 @@ public class HUD : CanvasLayer {
         screenTimer = GetNode<Timer>("ScreenTimer");
         dayTimeLabel = GetNode<Label>("VBoxContainer/Labels/HBoxContainer/DayTimeLabel");
 
-        craftingTableUi = GetNode<CraftingTableHUD>("UIs/CraftingTableUI"); 
-        forgeUi = GetNode<ForgeHUD>("UIs/ForgeUI"); 
+        craftingTableUi = GetNode<CraftingTableUI>("UIs/CraftingTableUI"); 
+        forgeUi = GetNode<ForgeUI>("UIs/ForgeUI"); 
         
         //Connect Signals
         screenTimer.Connect("timeout", this, nameof(OnScreenTimerTimeout));
+        
+        craftingTableUi.Connect("popup_hide", this, nameof(OnPopUpHide));
+        
+        forgeUi.Connect("popup_hide", this, nameof(OnPopUpHide));
         
         Events.ConnectEvent(nameof(Events.StartNewGame), this, nameof(OnStartNewGame));
         
@@ -91,9 +95,15 @@ public class HUD : CanvasLayer {
     
     public void OnOpenCraftingTable() {
         craftingTableUi.OpenCraftingTableUI();
+        MenuOpen = true;
     }
 
     public void OnOpenForge(Forge forge, Player interactingBody) {
         forgeUi.OpenForgeUI(forge, interactingBody);
+        MenuOpen = true;
+    }
+
+    private void OnPopUpHide() {
+        MenuOpen = false;
     }
 }
