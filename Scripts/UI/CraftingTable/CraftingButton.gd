@@ -7,13 +7,13 @@ export (Resource) var craftable_def setget set_craftable_def #R_Craftable
 signal craftingbutton_mouse_entered(crafting_button)
 
 func _ready():
-	icon = craftable_def.blueprint_icon
+	icon = craftable_def.BlueprintIcon
 	connect("pressed", self, "_on_Button_pressed")
 	connect("mouse_entered", self, "_on_mouse_entered")
 
 func set_craftable_def(_craftable_def):
 	craftable_def = _craftable_def
-	icon = craftable_def.blueprint_icon
+	icon = craftable_def.BlueprintIcon
 	
 
 func _on_Button_pressed():

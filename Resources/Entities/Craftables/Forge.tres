@@ -2,23 +2,23 @@
 
 [ext_resource path="res://Sprites/Items/Forge-Item.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/UI/InventoryBar/HUD Forge.png" type="Texture" id=2]
-[ext_resource path="res://Scripts/Resources/R_Craftable.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Resources/R_Craftable.cs" type="Script" id=3]
 [ext_resource path="res://Sprites/UI/CraftingTable/HUD CraftingTableButton Forge.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Interactables/Craftables/Forge/Forge.png" type="Texture" id=5]
 
 [resource]
 script = ExtResource( 3 )
-type = 2
-entity_name = "forge"
-item_texture = ExtResource( 1 )
-hud_texture = ExtResource( 2 )
-theme = 0
-tile_footprint = Vector2( 3, 0 )
-collision_footprint = Vector2( 0, 0 )
-entity_texture = ExtResource( 5 )
-required_items = {
+EntityType = 3
+EntityName = "Forge"
+ItemTexture = ExtResource( 1 )
+HudTexture = ExtResource( 2 )
+EntityTheme = 0
+TileFootprint = Vector2( 2, 1 )
+CollisionFootprint = Vector2( 38, 9 )
+EntityTexture = ExtResource( 5 )
+RequiredItems = {
 Resource( "res://Resources/Entities/Resources/Wood.tres" ): 1,
 Resource( "res://Resources/Entities/Resources/Iron.tres" ): 3
 }
-blueprint_icon = ExtResource( 4 )
-packedscene_string = "res://Scenes/Interactables/Craftables/Forge.tscn"
+BlueprintIcon = ExtResource( 4 )
+PackedsceneString = "res://Scenes/Interactables/Craftables/Forge.tscn"

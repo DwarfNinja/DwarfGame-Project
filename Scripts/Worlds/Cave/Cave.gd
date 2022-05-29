@@ -10,7 +10,7 @@ const NIGHT_COLOR = Color("2d2246")
 
 
 onready var Player = $YSort/Player
-onready var PlayerPosition2D = $YSort/Player.get_node("PlayerInteractArea/Position2D")
+onready var PlayerPosition2D = $YSort/Player.get_node("InteractAreaAnchor/Position2D")
 onready var MapCoordOfPlayerPosition2D = $Floor.world_to_map(PlayerPosition2D.global_position)
 onready var TileSelector = $YSort/TileSelector
 onready var CanvasModulater = $CanvasModulate
@@ -55,7 +55,7 @@ func _on_cave_scene_loaded():
 	player_scene_instance.set_owner(get_tree().get_root().get_node("Cave"))
 
 func update_tileselector():
-	var selected_item = Player.Inventory.selected_item
+	var selected_item = Player.Inventory.SelectedItem
 	if selected_item != null:
 		TileSelector.visible = true
 		TileSelector.global_position = $Floor.map_to_world($Floor.world_to_map(PlayerPosition2D.global_position)) + Vector2(8,8)

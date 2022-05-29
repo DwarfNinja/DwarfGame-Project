@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/R_ConnectionEnd.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/L_ConnectionEnd.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/SE_3x2.tscn" type="PackedScene" id=4]
@@ -8,8 +8,8 @@
 [ext_resource path="res://Scenes/Worlds/House/HouseShapes/Hor_4x1.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_2.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Worlds/House/ConnectionEnds/TopConnectionEnd.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scripts/Worlds/House/V.1.35-RandomGenHouse.gd" type="Script" id=9]
-[ext_resource path="res://Scripts/Worlds/House/Nav2D.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Worlds/House/RandomGenHouse.cs" type="Script" id=9]
+[ext_resource path="res://Scripts/Worlds/House/Nav2D.cs" type="Script" id=10]
 [ext_resource path="res://Scenes/UI/PlayerGhost.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Worlds/House/HouseRooms/Room_1.tscn" type="PackedScene" id=13]
@@ -58,7 +58,6 @@ collision_mask = 0
 format = 1
 
 [node name="Indexes" type="TileMap" parent="Nav2D"]
-visible = false
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 0
@@ -66,6 +65,7 @@ collision_mask = 0
 format = 1
 
 [node name="Props" type="TileMap" parent="Nav2D"]
+tile_set = ExtResource( 1 )
 format = 1
 
 [node name="HouseRooms" type="Node2D" parent="."]
@@ -76,51 +76,51 @@ __meta__ = {
 }
 
 [node name="Room_1" parent="HouseRooms" instance=ExtResource( 13 )]
-openings = {
-"east": true,
-"north": false,
-"northeast_east": false,
-"northeast_north": false,
-"northwest_north": true,
-"northwest_west": false,
-"south": true,
-"southeast_east": false,
-"southeast_south": false,
-"southwest_south": false,
-"southwest_west": false,
-"west": false
+Openings = {
+"East": true,
+"North": false,
+"NortheastEast": false,
+"NortheastNorth": false,
+"NorthwestNorth": true,
+"NorthwestWest": false,
+"South": true,
+"SoutheastEast": false,
+"SoutheastSouth": false,
+"SouthwestSouth": false,
+"SouthwestWest": false,
+"West": false
 }
 
 [node name="Room_2" parent="HouseRooms" instance=ExtResource( 7 )]
-openings = {
-"east": false,
-"north": true,
-"northeast_east": false,
-"northeast_north": false,
-"northwest_north": false,
-"northwest_west": false,
-"south": false,
-"southeast_east": false,
-"southeast_south": false,
-"southwest_south": false,
-"southwest_west": false,
-"west": true
+Openings = {
+"East": false,
+"North": true,
+"NortheastEast": false,
+"NortheastNorth": false,
+"NorthwestNorth": false,
+"NorthwestWest": false,
+"South": false,
+"SoutheastEast": false,
+"SoutheastSouth": false,
+"SouthwestSouth": false,
+"SouthwestWest": false,
+"West": true
 }
 
 [node name="Room_3" parent="HouseRooms" instance=ExtResource( 16 )]
-openings = {
-"east": false,
-"north": true,
-"northeast_east": false,
-"northeast_north": false,
-"northwest_north": false,
-"northwest_west": false,
-"south": true,
-"southeast_east": false,
-"southeast_south": false,
-"southwest_south": false,
-"southwest_west": false,
-"west": true
+Openings = {
+"East": false,
+"North": true,
+"NortheastEast": false,
+"NortheastNorth": false,
+"NorthwestNorth": false,
+"NorthwestWest": false,
+"South": true,
+"SoutheastEast": false,
+"SoutheastSouth": false,
+"SouthwestSouth": false,
+"SouthwestWest": false,
+"West": true
 }
 
 [node name="HouseShapes" type="Node2D" parent="."]
@@ -149,7 +149,7 @@ __meta__ = {
 
 [node name="TopConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 8 )]
 
-[node name="L_ConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 3 )]
+[node name="L_SideConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 3 )]
 
 [node name="R_SideConnectionEnd" parent="ConnectionEnds" instance=ExtResource( 2 )]
 

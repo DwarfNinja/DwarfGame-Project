@@ -1,29 +1,29 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Entities/Lamp.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/Worlds/House/RoomV1.3.gd" type="Script" id=2]
-[ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=3]
+[ext_resource path="res://Scripts/Worlds/House/Room.cs" type="Script" id=2]
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=3]
 [ext_resource path="res://Scenes/Entities/Entity.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Resources/Entities/Props/Kitchen_Counter.tres" type="Resource" id=5]
-[ext_resource path="res://Resources/Entities/Props/Kitchen_Drawer.tres" type="Resource" id=6]
-[ext_resource path="res://Resources/Entities/Props/Wooden_Drawer.tres" type="Resource" id=7]
-[ext_resource path="res://Resources/Entities/Props/Wooden_Table.tres" type="Resource" id=8]
+[ext_resource path="res://Resources/Entities/Props/KitchenCounter.tres" type="Resource" id=5]
+[ext_resource path="res://Resources/Entities/Props/KitchenDrawer.tres" type="Resource" id=6]
+[ext_resource path="res://Resources/Entities/Props/WoodenDrawer.tres" type="Resource" id=7]
+[ext_resource path="res://Resources/Entities/Props/WoodenTable.tres" type="Resource" id=8]
 
 [node name="Room_1" type="Node2D"]
 script = ExtResource( 2 )
-openings = {
-"east": true,
-"north": false,
-"northeast_east": false,
-"northeast_north": false,
-"northwest_north": true,
-"northwest_west": false,
-"south": true,
-"southeast_east": false,
-"southeast_south": false,
-"southwest_south": false,
-"southwest_west": false,
-"west": false
+Openings = {
+"East": true,
+"North": false,
+"NortheastEast": false,
+"NortheastNorth": false,
+"NorthwestNorth": true,
+"NorthwestWest": false,
+"South": true,
+"SoutheastEast": false,
+"SoutheastSouth": false,
+"SouthwestSouth": false,
+"SouthwestWest": false,
+"West": false
 }
 
 [node name="Floor" type="TileMap" parent="."]
@@ -83,17 +83,17 @@ position = Vector2( 336, 160 )
 
 [node name="KitchenCounter" parent="Templates/Template_1/Props" instance=ExtResource( 4 )]
 position = Vector2( 72, 341 )
-entity_def = ExtResource( 5 )
+EntityDef = ExtResource( 5 )
 facing = 1
 
 [node name="KitchenDrawer" parent="Templates/Template_1/Props" instance=ExtResource( 4 )]
 position = Vector2( 53, 340 )
-entity_def = ExtResource( 6 )
+EntityDef = ExtResource( 6 )
 facing = 1
 
 [node name="WoodenTable" parent="Templates/Template_1/Props" instance=ExtResource( 4 )]
 position = Vector2( 253, 135 )
-entity_def = ExtResource( 8 )
+EntityDef = ExtResource( 8 )
 facing = 2
 
 [node name="Template_2" type="Node2D" parent="Templates"]
@@ -142,13 +142,13 @@ position = Vector2( 336, 160 )
 
 [node name="KitchenCounter" parent="Templates/Template_2/Props" instance=ExtResource( 4 )]
 position = Vector2( 224, 60 )
-entity_def = ExtResource( 5 )
+EntityDef = ExtResource( 5 )
 
 [node name="KitchenDrawer" parent="Templates/Template_2/Props" instance=ExtResource( 4 )]
 position = Vector2( 302, 97 )
-entity_def = ExtResource( 6 )
+EntityDef = ExtResource( 6 )
 facing = 2
 
 [node name="WoodenDrawer" parent="Templates/Template_2/Props" instance=ExtResource( 4 )]
 position = Vector2( 144, 58 )
-entity_def = ExtResource( 7 )
+EntityDef = ExtResource( 7 )

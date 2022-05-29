@@ -1,13 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://TileSets/HouseTileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Scripts/Entities/Door.gd" type="Script" id=2]
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Entities/Door.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/Interactables/Door.png" type="Texture" id=3]
+[ext_resource path="res://Shaders/Materials/Outline.tres" type="Material" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 8 )
 
 [node name="Door" type="StaticBody2D"]
+collision_layer = 8
 script = ExtResource( 2 )
+dynamicEntity = false
+
+[node name="EntitySprite" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.00392157 )
+material = ExtResource( 4 )
+position = Vector2( 24, 6 )
+z_index = 2
+texture = ExtResource( 3 )
 
 [node name="TileMap" type="TileMap" parent="."]
 light_mask = 4
@@ -23,10 +34,6 @@ tile_data = PoolIntArray( 0, 11, 0, 1, 11, 1, 2, 11, 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 24, 8 )
 shape = SubResource( 1 )
-disabled = true
 
-[node name="InteractArea" type="Area2D" parent="."]
-position = Vector2( 24, 8 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InteractArea"]
-polygon = PoolVector2Array( -12, -8, -12, -2, -11, -2, -11, -1, -10, -1, -10, 0, -9, 0, -9, 1, -8, 1, -8, 2, -7, 2, -7, 3, -4, 3, -4, 4, 4, 4, 4, 3, 7, 3, 7, 2, 8, 2, 8, 1, 9, 1, 9, 0, 10, 0, 10, -1, 11, -1, 11, -2, 12, -2, 12, -8 )
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 24, -8 )

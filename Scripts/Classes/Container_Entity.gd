@@ -36,7 +36,7 @@ func drop_items():
 	for _item in range(1, select_random_itemamount()):
 		var random_item_resource = select_item_from_drop_table()
 		var random_item = ItemScene.instance()
-		random_item.item_def = random_item_resource
+		random_item.itemDef = random_item_resource
 		add_child(random_item, true)
 		random_item.set_global_position(ItemSpawnPosition.global_position)
 		var random_direction = choose_random_drop_direction(available_direction_list)

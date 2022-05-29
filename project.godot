@@ -29,41 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Classes/Pickable_Item.gd"
 }, {
-"base": "Resource",
-"class": "R_AI",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_AI.gd"
-}, {
-"base": "R_Entity",
-"class": "R_Craftable",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Craftable.gd"
-}, {
-"base": "Resource",
-"class": "R_DropTable",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_DropTable.gd"
-}, {
-"base": "Resource",
-"class": "R_DropTable_Entry",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_DropTable_Entry.gd"
-}, {
-"base": "R_Item",
-"class": "R_Entity",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Entity.gd"
-}, {
-"base": "Resource",
-"class": "R_Item",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Item.gd"
-}, {
-"base": "Resource",
-"class": "R_Room",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Room.gd"
-}, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseGeneric2d",
 "language": "GDScript",
@@ -529,13 +494,6 @@ _global_script_class_icons={
 "Entity": "",
 "Interactable_Entity": "",
 "Pickable_Item": "",
-"R_AI": "",
-"R_Craftable": "",
-"R_DropTable": "",
-"R_DropTable_Entry": "",
-"R_Entity": "",
-"R_Item": "",
-"R_Room": "",
 "VisualShaderNodeNoiseGeneric2d": "",
 "VisualShaderNodeNoiseGeneric2dFractal": "",
 "VisualShaderNodeNoisePerlin2d": "",
@@ -630,6 +588,12 @@ _global_script_class_icons={
 "VisualShaderToolsvec2Compose": ""
 }
 
+[MonoCustomResourceRegistry]
+
+ClassPrefix=""
+SearchType=0
+ResourceScriptDirectories=[ "res://" ]
+
 [application]
 
 config/name="DwarfGame-Project"
@@ -638,9 +602,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://Scripts/Managers/Events.gd"
+Events="*res://Scripts/Managers/Events.cs"
 HUD="*res://Scenes/UI/HUD.tscn"
-GameManager="*res://Scripts/Managers/GameManager.gd"
+GameManager="*res://Scripts/Managers/GameManager.cs"
 
 [debug]
 
@@ -660,7 +624,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Todo_Manager" )
+enabled=PoolStringArray( "res://addons/MonoCustomResourceRegistry/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg" )
 
 [importer_defaults]
 

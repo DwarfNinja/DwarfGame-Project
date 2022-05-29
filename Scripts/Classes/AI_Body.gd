@@ -4,7 +4,7 @@ class_name AI_Body
 
 export (Resource) var ai_def
 onready var node_name = get_name().lstrip("@").split("@", false, 1)[0]
-onready var AISprite = get_node(node_name + "Sprite")
+onready var AISprite = get_node("AISprite")
 onready var VisionConeArea = get_node("VisionConeArea")
 
 var direction = Vector2.ZERO
@@ -43,7 +43,7 @@ func set_ai(_ai_def):
 	ai_def = _ai_def
 	if not AISprite:
 		return
-	AISprite.texture = ai_def.ai_spritesheet
+	AISprite.texture = ai_def.AiSpriteSheet
 
 
 func set_target(new_targetpos):
@@ -66,7 +66,7 @@ func set_lastknown_playerposition(new_playerposition):
 			last_known_playerposition = new_playerposition
 	else:
 		last_known_playerposition = new_playerposition
-	Events.emit_signal("update_lastknown_playerposition", last_known_playerposition, state)
+	Events.emit_signal("UpdateLastKnownPlayerPosition", last_known_playerposition, state)
 
 func aim_raycasts():
 	if player_in_visioncone:
@@ -120,7 +120,7 @@ func chase_target(delta):
 
 func update_path():
 #	Events.call_deferred("emit_signal", "request_navpath", self, target)
-	Events.emit_signal("request_navpath", self, targetpos)
+	Events.emit_signal("RequestNavPath", self, targetpos)
 	
 
 func _on_VisionConeArea_body_entered(body):

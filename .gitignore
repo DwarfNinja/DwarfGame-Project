@@ -11,3 +11,8 @@ data_*/
 addons/Todo_Manager/todo.cfg
 *.csproj
 *.sln
+
+# User-specific files
+*.user
+
+.idea/.idea.DwarfGame-Project/.idea/discord.xml

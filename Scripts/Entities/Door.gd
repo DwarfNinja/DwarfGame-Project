@@ -8,4 +8,4 @@ func _ready():
 func _on_InteractArea_body_entered(body):
 	if body.get_name() == "Player":
 #		Events.emit_signal("entered_cave")
-		Events.call_deferred('emit_signal', 'entered_cave')
+		Events.call_deferred('emit_signal', 'EnteredCave')
