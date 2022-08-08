@@ -32,6 +32,7 @@ height = 14.0
 [node name="MiningRig" type="StaticBody2D"]
 collision_layer = 8
 script = ExtResource( 4 )
+dynamicEntity = false
 
 [node name="EntitySprite" type="Sprite" parent="."]
 material = ExtResource( 3 )
