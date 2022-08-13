@@ -24,11 +24,12 @@ public class Events : Node {
     public delegate void RemoveSelectedItem(R_Item selectedItem);
     [Signal]
     public delegate void DropSelectedItem(R_Item selectedItem);
-
-    [Signal]
-    public delegate void UpdateSlotSelectors(int selectorPosition, Dictionary selectedSlot);
+    
     [Signal]
     public delegate void UpdateSlot(Slot slot);
+    
+    [Signal]
+    public delegate void UpdateSelector(Slot slot, bool selecting);
     
     [Signal]
     public delegate void EnteredPickupArea(PickableItem item, Node2D target);

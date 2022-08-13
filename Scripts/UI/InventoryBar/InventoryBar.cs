@@ -6,27 +6,15 @@ public class InventoryBar : MarginContainer {
 
     private HBoxContainer hBoxContainer;
 
+    private TextureRect selectedSlot;
+
     public override void _Ready() {
         hBoxContainer = (HBoxContainer) GetNode("SlotContainer/HBoxContainer");
         
         Events.ConnectEvent(nameof(Events.UpdateSlot), this, nameof(OnUpdateSlot));
-        Events.ConnectEvent(nameof(Events.UpdateSlotSelectors), this, nameof(OnUpdateSlotSelectors));
-    }
+        Events.ConnectEvent(nameof(Events.UpdateSelector), this, nameof(OnUpdateSelector));
 
-    //TODO: Could be improved + ActivateSelector
-    public void OnUpdateSlotSelectors(int selectorPosition, string selectedSlot) {
-    //Iterates over all the slots and determines if it is the slot selected,
-    //all other slot's selectors are turned off
-    
-        foreach (int index in Enumerable.Range(0, hBoxContainer.GetChildCount())) {
-            TextureRect slot = (TextureRect) hBoxContainer.GetChildren()[index];
-            if (index == selectorPosition) {
-                ActivateSelector(slot, selectedSlot);
-            }
-            else {
-                DeactivateSelector(slot);
-            }
-        } 
+        selectedSlot = hBoxContainer.GetNode<TextureRect>("Slot_0");
     }
 
     private void OnUpdateSlot(Slot slot) {
@@ -49,23 +37,17 @@ public class InventoryBar : MarginContainer {
         }
     }
 
-    private void ActivateSelector(TextureRect slot, string selectedSlot) {
-        TextureRect slotSelector = (TextureRect) slot.GetNode("Selector");
-        slotSelector.Show();
-        AnimationPlayer slotSelectorAnimationPlayer = (AnimationPlayer) slotSelector.GetNode("AnimationPlayer");
-        if (slot.Name == selectedSlot) {
-            slotSelectorAnimationPlayer.Play("Selector Selecting");
-        }
-        else {
-            slotSelectorAnimationPlayer.Play("Selector Idle");
-        }
-    }
-
-    private void DeactivateSelector(TextureRect slot) {
-        TextureRect slotSelector = (TextureRect) slot.GetNode("Selector");
+    private void OnUpdateSelector(Slot slot, bool selecting) {
+        TextureRect slotSelector = selectedSlot.GetNode<TextureRect>("Selector");
         slotSelector.Hide();
-        AnimationPlayer slotSelectorAnimationPlayer = (AnimationPlayer) slotSelector.GetNode("AnimationPlayer");
-        slotSelectorAnimationPlayer.Play("Selector Idle");
+        
+        selectedSlot = hBoxContainer.GetNode<TextureRect>(slot.SlotName);
+        slotSelector = selectedSlot.GetNode<TextureRect>("Selector");
+        
+        AnimationPlayer slotSelectorAnimationPlayer = (AnimationPlayer) selectedSlot.GetNode("AnimationPlayer");
+        
+        slotSelector.Show();
+        slotSelectorAnimationPlayer.Play(selecting ? "Selector Selecting" : "Selector Idle");
     }
 }
 
