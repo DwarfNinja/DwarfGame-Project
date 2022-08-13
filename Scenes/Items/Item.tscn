@@ -1,9 +1,9 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Scripts/Classes/Pickable_Item.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Classes/PickableItem.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Items/Shine.png" type="Texture" id=2]
-[ext_resource path="res://Shaders/Shine VisualShader.tres" type="Shader" id=3]
-[ext_resource path="res://Sprites/Items/Iron_Shadow-Sheet.png" type="Texture" id=4]
+[ext_resource path="res://Shaders/Shine+Outline Visual.tres" type="Shader" id=3]
+[ext_resource path="res://Sprites/Items/Item_Shadow.png" type="Texture" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
@@ -198,15 +198,14 @@ material = SubResource( 1 )
 position = Vector2( -1, -5 )
 
 [node name="ItemShadow" type="Sprite" parent="."]
-position = Vector2( -1, -5 )
+position = Vector2( 0, 2 )
 texture = ExtResource( 4 )
-hframes = 5
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 2 )
 rotation = 1.5708
 shape = SubResource( 2 )
+disabled = true
 
 [node name="TrailParticles2D" type="Particles2D" parent="."]
 show_behind_parent = true
@@ -227,7 +226,7 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Hover"
 playback_process_mode = 0
-playback_speed = 0.6
+playback_speed = 0.25
 anims/Drop_centre = SubResource( 6 )
 anims/Drop_left = SubResource( 7 )
 anims/Drop_right = SubResource( 8 )

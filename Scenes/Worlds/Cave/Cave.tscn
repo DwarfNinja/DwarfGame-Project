@@ -1,29 +1,25 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Shaders/outline.shader" type="Shader" id=1]
+[ext_resource path="res://Resources/Entities/Craftables/MiningRig.tres" type="Resource" id=1]
+[ext_resource path="res://Scripts/Worlds/Cave/Cave.cs" type="Script" id=2]
+[ext_resource path="res://Resources/Entities/Props/KitchenCounter.tres" type="Resource" id=3]
+[ext_resource path="res://Scenes/Entities/Entity.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Interactables/Craftables/Forge.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Interactables/Craftables/MiningRig.tscn" type="PackedScene" id=6]
-[ext_resource path="res://CaveTileset.tres" type="TileSet" id=7]
-[ext_resource path="res://Scripts/Worlds/Cave/Cave.gd" type="Script" id=8]
+[ext_resource path="res://Tilesets/CaveTileset.tres" type="TileSet" id=7]
 [ext_resource path="res://Sprites/UI/Other/TileSelector.png" type="Texture" id=9]
 [ext_resource path="res://Scenes/Interactables/CraftingTable.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Interactables/Shop.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Interactables/BlackMarket.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scenes/Objects/Rock.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scenes/Objects/Ladder.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Entities/Rock.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Entities/Ladder.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Interactables/Chest.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Scenes/KinematicBodies/Player.tscn" type="PackedScene" id=16]
-
-[sub_resource type="ShaderMaterial" id=1]
-resource_local_to_scene = true
-shader = ExtResource( 1 )
-shader_param/Smooth = false
-shader_param/width = 1.0
-shader_param/outline_color = Color( 0.941176, 0.941176, 0.941176, 0 )
-shader_param/pixel_size = 1
+[ext_resource path="res://Resources/Entities/Craftables/Forge.tres" type="Resource" id=17]
+[ext_resource path="res://Resources/Entities/Ladder.tres" type="Resource" id=18]
 
 [node name="Cave" type="Node2D"]
-script = ExtResource( 8 )
+script = ExtResource( 2 )
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 7 )
@@ -44,19 +40,14 @@ position = Vector2( 139, 79 )
 
 [node name="Rock" parent="YSort" instance=ExtResource( 13 )]
 position = Vector2( 104, 57 )
+collision_mask = 2147483776
 
 [node name="CraftingTable" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 32, 113 )
 
-[node name="MiningRig" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 160, 32 )
-
-[node name="Forge" parent="YSort" instance=ExtResource( 5 )]
-material = SubResource( 1 )
-position = Vector2( 208, 32 )
-
 [node name="Ladder" parent="YSort" instance=ExtResource( 14 )]
 position = Vector2( 247, 78 )
+EntityDef = ExtResource( 18 )
 
 [node name="BlackMarket" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( 26, 39 )
@@ -70,3 +61,20 @@ position = Vector2( 88, 128 )
 [node name="TileSelector" type="Sprite" parent="YSort"]
 z_index = 1
 texture = ExtResource( 9 )
+
+[node name="KitchenCounter" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 192, 112 )
+EntityDef = ExtResource( 3 )
+dynamicEntity = false
+
+[node name="MiningRig" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 177, 32 )
+EntityDef = ExtResource( 1 )
+dynamicEntity = false
+
+[node name="Forge" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 202, 20 )
+EntityDef = ExtResource( 17 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.59, 0.57, 0.64, 1 )

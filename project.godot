@@ -9,521 +9,467 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
-"class": "AI_Object",
-"language": "GDScript",
-"path": "res://Scripts/Classes/AI_Object.gd"
-}, {
-"base": "StaticBody2D",
-"class": "Interactable_Object",
-"language": "GDScript",
-"path": "res://Scripts/Classes/Interactable_Object.gd"
-}, {
-"base": "RigidBody2D",
-"class": "Pickable_Item",
-"language": "GDScript",
-"path": "res://Scripts/Classes/Pickable_Item.gd"
-}, {
-"base": "Resource",
-"class": "R_AI",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_AI.gd"
-}, {
-"base": "R_Item",
-"class": "R_Craftable",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Craftable.gd"
-}, {
-"base": "Resource",
-"class": "R_DropTable_Entry",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_DropTable_Entry.gd"
-}, {
-"base": "Resource",
-"class": "R_Item",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Item.gd"
-}, {
-"base": "Resource",
-"class": "R_LootTable",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_DropTable.gd"
-}, {
-"base": "Resource",
-"class": "R_Room",
-"language": "GDScript",
-"path": "res://Scripts/Resources/R_Room.gd"
-}, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseGeneric2d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/generic2d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/generic2d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseGeneric2dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/generic2d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/generic2d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlin2d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/perlin2d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/perlin2d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlin2dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/perlin2d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/perlin2d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlin3d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/perlin3d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/perlin3d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlin3dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/perlin3d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/perlin3d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlin4d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/perlin4d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/perlin4d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlin4dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/perlin4d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/perlin4d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoisePerlinPeriodic3d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/perlinPeriodic3d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/perlinPeriodic3d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseSimplex2d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/simplex2d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/simplex2d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseSimplex2dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/simplex2d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/simplex2d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseSimplex3d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/simplex3d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/simplex3d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseSimplex3dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/simplex3d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/simplex3d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseSimplex4d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/simplex4d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/simplex4d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseSimplex4dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/simplex4d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/simplex4d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseWorley2d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/worley2d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/worley2d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseWorley2dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/worley2d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/worley2d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseWorley2x2",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/worley2x2.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/worley2x2.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseWorley2x2x2",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/worley2x2x2.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/worley2x2x2.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseWorley3d",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/worley3d.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/worley3d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeNoiseWorley3dFractal",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/noise/fractal/worley3d_fractal.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/noise/fractal/worley3d_fractal.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAadjustmentBCS",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/BCSAdjustment.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/BCSAdjustment.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAblackNwhite",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/blackNwhite.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/blackNwhite.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAblend",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/blendAwithB.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/blendAwithB.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAbloom",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/bloom.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/bloom.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAblur9sample",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/blur/blur9sample.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/blur/blur9sample.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAblurCustom",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/blur/blurCustom.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/blur/blurCustom.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAchromaticAberration",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/chromaticAberration.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/chromaticAberration.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcolorCorrectionAdjustment",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/colorCorrectionAdjustment.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/colorCorrectionAdjustment.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcreateCheckerboard",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/chekerboardPattern.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/chekerboardPattern.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcreateCircle",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/generateCircle.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/generateCircle.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcreateCircle2",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/generateCircle2.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/generateCircle2.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcreateRegularPolygon",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/generateRegularNgon.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/generateRegularNgon.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcreateSpiral",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/generateSpiral.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/generateSpiral.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAcreateStripesRandom",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/stripesRandom.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/stripesRandom.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAemboss",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/emboss.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/emboss.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAfireFX",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/fireFX.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/fireFX.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAglowEmpty",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/glow/glowEmpty.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/glow/glowEmpty.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAgradient4corners",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/gradient4corners.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/gradient4corners.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAgradientMapping",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/gradientMapping.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/gradientMapping.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAgrayscale",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/grayscale.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/grayscale.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAgridShape",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/gridShape.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/gridShape.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAhue",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/hue.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/hue.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAinnerGlow",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/glow/innerGlow.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/glow/innerGlow.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAinnerGlowEmpty",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/glow/innerGlowEmpty.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/glow/innerGlowEmpty.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAinverseColor",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/inverseColor.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/inverseColor.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAmaskAlpha",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/maskAlpha.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/maskAlpha.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAnormalFromHeightmap",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/normalFromHeightmap.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/normalFromHeightmap.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAouterGlow",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/glow/outerGlow.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/glow/outerGlow.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAouterGlowEmpty",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/glow/outerGlowEmpty.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/glow/outerGlowEmpty.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAposterize",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/posterize.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/posterize.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAscanLinesSharp",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/generate_shapes/scanLinesSharp.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/generate_shapes/scanLinesSharp.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAshiftHSV",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/shiftHSV.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/shiftHSV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAshineFX",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/shineFX.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/shineFX.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAsobelEdge",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/sobelEdge.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/sobelEdge.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAtintRGBA",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/tintRGBA.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/tintRGBA.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAtonemap",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/tonemap.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/tonemap.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAturnCGA4Palette",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/turnCGA4Palette.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/turnCGA4Palette.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAturnGameBoyPalette",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/turnGBPalette.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/turnGBPalette.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeRGBAzoomBlur",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/blur/zoomBlur.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/blur/zoomBlur.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVclampAlpha",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/rgba/clamp.gd"
+"path": "res://Shaders/Examples/shaderV/rgba/clamp.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVdistortion",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/distortionUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/distortionUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVdistortionAnimated",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/animated/distortionUVAnimated.gd"
+"path": "res://Shaders/Examples/shaderV/uv/animated/distortionUVAnimated.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVdoodle",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/animated/doodleUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/animated/doodleUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVflip",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/flipUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/flipUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVlensDistortion",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/lensDistortion.gd"
+"path": "res://Shaders/Examples/shaderV/uv/lensDistortion.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVpixelate",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/pixelate.gd"
+"path": "res://Shaders/Examples/shaderV/uv/pixelate.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVrotate",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/rotate.gd"
+"path": "res://Shaders/Examples/shaderV/uv/rotate.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVrotateAnimated",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/animated/rotateAnimated.gd"
+"path": "res://Shaders/Examples/shaderV/uv/animated/rotateAnimated.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVscale",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/scaleUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/scaleUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVspherical",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/sphericalUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/sphericalUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVswirl",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/animated/swirlUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/animated/swirlUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVtile",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/tileUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/tileUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVtilingNoffset",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/tilingNoffset.gd"
+"path": "res://Shaders/Examples/shaderV/uv/tilingNoffset.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVtilingNoffsetAnimated",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/animated/tilingNoffsetAnimated.gd"
+"path": "res://Shaders/Examples/shaderV/uv/animated/tilingNoffsetAnimated.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVtransform",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/transformUV.gd"
+"path": "res://Shaders/Examples/shaderV/uv/transformUV.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderNodeUVtwirl",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/uv/twirl.gd"
+"path": "res://Shaders/Examples/shaderV/uv/twirl.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsCartesianToPolar",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/transformCoordinates/cartesianToPolar.gd"
+"path": "res://Shaders/Examples/shaderV/tools/transformCoordinates/cartesianToPolar.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsCartesianToSpherical",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/transformCoordinates/cartesianToSpherical.gd"
+"path": "res://Shaders/Examples/shaderV/tools/transformCoordinates/cartesianToSpherical.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsHash",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/random/hash1d.gd"
+"path": "res://Shaders/Examples/shaderV/tools/random/hash1d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsHash2D",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/random/hash2d.gd"
+"path": "res://Shaders/Examples/shaderV/tools/random/hash2d.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsHash2Dvec",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/random/hash2dvector.gd"
+"path": "res://Shaders/Examples/shaderV/tools/random/hash2dvector.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsPolarToCartesian",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/transformCoordinates/polarToCartesian.gd"
+"path": "res://Shaders/Examples/shaderV/tools/transformCoordinates/polarToCartesian.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsRandomFloat",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/random/randomFloat.gd"
+"path": "res://Shaders/Examples/shaderV/tools/random/randomFloat.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsRandomFloatGoldenRation",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/random/randomGoldNoiseFloat.gd"
+"path": "res://Shaders/Examples/shaderV/tools/random/randomGoldNoiseFloat.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsRandomFloatImproved",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/random/randomFloatImproved.gd"
+"path": "res://Shaders/Examples/shaderV/tools/random/randomFloatImproved.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsRelay",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/relay.gd"
+"path": "res://Shaders/Examples/shaderV/tools/relay.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsRemap",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/remap.gd"
+"path": "res://Shaders/Examples/shaderV/tools/remap.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsSinTIME",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/sinTime.gd"
+"path": "res://Shaders/Examples/shaderV/tools/sinTime.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsSphericalToCartesian",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/transformCoordinates/sphericalToCartesian.gd"
+"path": "res://Shaders/Examples/shaderV/tools/transformCoordinates/sphericalToCartesian.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsTIMEscaled",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/TimeScaled.gd"
+"path": "res://Shaders/Examples/shaderV/tools/TimeScaled.gd"
 }, {
 "base": "VisualShaderNodeCustom",
 "class": "VisualShaderToolsvec2Compose",
 "language": "GDScript",
-"path": "res://Shaders/shaderV/tools/vec2Compose.gd"
+"path": "res://Shaders/Examples/shaderV/tools/vec2Compose.gd"
 } ]
 _global_script_class_icons={
-"AI_Object": "",
-"Interactable_Object": "",
-"Pickable_Item": "",
-"R_AI": "",
-"R_Craftable": "",
-"R_DropTable_Entry": "",
-"R_Item": "",
-"R_LootTable": "",
-"R_Room": "",
 "VisualShaderNodeNoiseGeneric2d": "",
 "VisualShaderNodeNoiseGeneric2dFractal": "",
 "VisualShaderNodeNoisePerlin2d": "",
@@ -618,6 +564,12 @@ _global_script_class_icons={
 "VisualShaderToolsvec2Compose": ""
 }
 
+[MonoCustomResourceRegistry]
+
+ClassPrefix=""
+SearchType=0
+ResourceScriptDirectories=[ "res://" ]
+
 [application]
 
 config/name="DwarfGame-Project"
@@ -626,10 +578,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Events="*res://Scripts/Managers/Events.gd"
+Events="*res://Scripts/Managers/Events.cs"
 HUD="*res://Scenes/UI/HUD.tscn"
-GameManager="*res://Scripts/Managers/GameManager.gd"
-BTDebugServer="*res://addons/btree/script/bt_debug_server.gd"
+GameManager="*res://Scripts/Managers/GameManager.cs"
 
 [debug]
 
@@ -643,12 +594,13 @@ window/size/height=180
 window/size/resizable=false
 window/size/test_width=1440
 window/size/test_height=810
+window/vsync/use_vsync=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "Todo_Manager", "btree" )
+enabled=PoolStringArray( "res://addons/MonoCustomResourceRegistry/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg" )
 
 [importer_defaults]
 
@@ -677,61 +629,61 @@ texture={
 
 ui_left={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":-1.0,"script":null)
  ]
 }
 ui_right={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
  ]
 }
 ui_up={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":-1.0,"script":null)
  ]
 }
 ui_down={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":1.0,"script":null)
  ]
 }
 key_right={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
  ]
 }
 key_left={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
  ]
 }
 key_up={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
  ]
 }
 key_down={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
  ]
 }
 key_e={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 key_r={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 scroll_up={
@@ -760,23 +712,25 @@ key_rightclick={
 }
 key_esc={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 key_f={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 key_q={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
 [layer_names]
 
+2d_render/layer_1="Player"
+2d_render/layer_3="Walls"
 2d_physics/layer_1="Player"
 2d_physics/layer_2="AI"
 2d_physics/layer_3="Scent"
@@ -785,13 +739,9 @@ key_q={
 2d_physics/layer_6="Static Object"
 2d_physics/layer_7="PlayerGhost"
 
-[network]
-
-limits/websocket_server/max_in_buffer_kb=4096
-limits/websocket_server/max_out_buffer_kb=4096
-
 [rendering]
 
-quality/2d/use_pixel_snap=true
+2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false
+quality/2d/use_pixel_snap=true

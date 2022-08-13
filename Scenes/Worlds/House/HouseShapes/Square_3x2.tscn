@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Worlds/House/Shape.cs" type="Script" id=2]
+
+[node name="Square_3x2" type="Node2D"]
+script = ExtResource( 2 )
+ShapeWidth = 3
+ShapeHeight = 5
+
+[node name="Walls" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 1, 1, 1, 2, 1, 2, 65536, 1, 131072, 65537, 1, 131073, 65538, 1, 131074, 131072, 2, 0, 131073, 2, 196610, 131074, 2, 3, 196608, 2, 65536, 196609, 2, 196609, 196610, 2, 65539, 262144, 3, 1, 262145, 3, 2, 262146, 3, 3 )

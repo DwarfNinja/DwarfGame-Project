@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/UI/InventoryBar/InventoryBar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scripts/UI/HUD.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/UI/HUD.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/UI/Other/HUD GoldCoin.png" type="Texture" id=3]
 [ext_resource path="res://Fonts/Tres FontData/Mini Square fontdata.tres" type="DynamicFontData" id=4]
-[ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingTableHUD.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/UI/ForgeHUD/ForgeHUD.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI/CraftingTableHUD/CraftingTableUI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UI/ForgeHUD/ForgeUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Sprites/UI/Other/HUD King Icon.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/UI/Screens/Travelling1.1.png" type="Texture" id=8]
 
@@ -85,14 +85,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TaxTimerLabel" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
+[node name="DayTimeLabel" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
 margin_left = 287.0
 margin_right = 313.0
 margin_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_fonts/font = SubResource( 2 )
-text = "20 : 00"
+text = "07 : 00"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
@@ -117,31 +117,26 @@ margin_left = 86.0
 margin_right = 234.0
 margin_bottom = 26.0
 
-[node name="Control" type="Control" parent="."]
+[node name="UIs" type="Control" parent="."]
 margin_left = 2.0
 margin_top = 1.0
 margin_right = 2.0
 margin_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="CraftingTableHUD" parent="Control" instance=ExtResource( 5 )]
-visible = false
+[node name="CraftingTableUI" parent="UIs" instance=ExtResource( 5 )]
 margin_left = 84.0
 margin_top = 39.0
 margin_right = 232.0
 margin_bottom = 135.0
-stretch_mode = 6
+focus_mode = 2
 
-[node name="ForgeHUD" parent="Control" instance=ExtResource( 6 )]
-visible = false
+[node name="ForgeUI" parent="UIs" instance=ExtResource( 6 )]
 margin_left = 118.0
 margin_top = 55.0
 margin_right = 196.0
 margin_bottom = 113.0
 
-[node name="TravelingScreen" type="TextureRect" parent="Control"]
+[node name="TravelingScreen" type="TextureRect" parent="UIs"]
 visible = false
 margin_left = -2.0
 margin_top = -1.0
@@ -152,10 +147,6 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="TaxTimer" type="Timer" parent="."]
-wait_time = 900.0
-one_shot = true
 
 [node name="ScreenTimer" type="Timer" parent="."]
 wait_time = 1.2

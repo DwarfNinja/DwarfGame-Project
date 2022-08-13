@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Entities/Door.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/Interactables/Door.png" type="Texture" id=3]
+[ext_resource path="res://Shaders/Materials/Outline.tres" type="Material" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 8 )
+
+[node name="Door" type="StaticBody2D"]
+collision_layer = 8
+script = ExtResource( 2 )
+dynamicEntity = false
+
+[node name="EntitySprite" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.00392157 )
+material = ExtResource( 4 )
+position = Vector2( 24, 6 )
+z_index = 2
+texture = ExtResource( 3 )
+
+[node name="TileMap" type="TileMap" parent="."]
+light_mask = 4
+z_index = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 32
+collision_mask = 3
+occluder_light_mask = 2
+format = 1
+tile_data = PoolIntArray( 0, 11, 0, 1, 11, 1, 2, 11, 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 24, 8 )
+shape = SubResource( 1 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 24, -8 )

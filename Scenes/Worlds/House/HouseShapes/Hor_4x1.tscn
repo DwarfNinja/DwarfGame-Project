@@ -1,13 +1,15 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://HouseTileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Scripts/Worlds/House/Shape.gd" type="Script" id=2]
+[ext_resource path="res://Tilesets/HouseTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Worlds/House/Shape.cs" type="Script" id=2]
 
-[node name="Hor_4x1" type="TileMap"]
+[node name="Hor_4x1" type="Node2D"]
+script = ExtResource( 2 )
+ShapeWidth = 4
+ShapeHeight = 4
+
+[node name="Walls" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 1, 196608, 1, 1, 196609, 2, 1, 196609, 3, 1, 196610, 65536, 2, 0, 65537, 2, 196610, 65538, 2, 196610, 65539, 2, 3, 131072, 2, 65536, 131073, 2, 196609, 131074, 2, 196609, 131075, 2, 65539, 196608, 3, 1, 196609, 3, 2, 196610, 3, 2, 196611, 3, 3 )
-script = ExtResource( 2 )
-shape_width = 4
-shape_height = 4
