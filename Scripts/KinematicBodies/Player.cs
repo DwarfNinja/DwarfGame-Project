@@ -8,8 +8,6 @@ public class Player : KinematicBody2D {
     private const int MaxSpeed = 60;
     private const int Friction = 800;
     private Vector2 velocity = Vector2.Zero;
-		
-    private string facing = "down";
 
     private Sprite playerSprite;
     private AnimationTree animationTree;
@@ -27,13 +25,6 @@ public class Player : KinematicBody2D {
 
     private InteractableEntity closestInteractable = null;
 
-    private Dictionary<string, Vector2> directionDic = new Dictionary<string, Vector2> {
-        ["up"] = new Vector2(0, -10),
-        ["down"] = new Vector2(0, 10),
-        ["left"] = new Vector2(-10, 0),
-        ["right"] = new Vector2(10, 0)
-    };
-    
     public Inventory Inventory => inventory;
 	
     public override void _Ready() {
@@ -51,10 +42,6 @@ public class Player : KinematicBody2D {
     }
 
     public override void _UnhandledInput(InputEvent @event) {
-        inputVector.x = @event.GetActionStrength("key_right") - @event.GetActionStrength("key_left");
-        inputVector.y = @event.GetActionStrength("key_down") - @event.GetActionStrength("key_up");
-        inputVector = inputVector.Normalized();
-		
         if (@event.IsActionPressed("key_e")) {
             closestInteractable?.Interact(this);
         }
@@ -66,11 +53,12 @@ public class Player : KinematicBody2D {
 
     public override void _PhysicsProcess(float delta) { 
         if (IsVisibleInTree()) {
-            //if HUD.menu_open == false:
-            inputVector.x = Input.GetActionStrength("key_right") - Input.GetActionStrength("key_left");
-            inputVector.y = Input.GetActionStrength("key_down") - Input.GetActionStrength("key_up");
-            inputVector = inputVector.Normalized();
-
+            if (HUD.MenuOpen == false) {
+                inputVector.x = Input.GetActionStrength("key_right") - Input.GetActionStrength("key_left");
+                inputVector.y = Input.GetActionStrength("key_down") - Input.GetActionStrength("key_up");
+                inputVector = inputVector.Normalized();
+            }
+            
             if (inputVector != Vector2.Zero) {
                 SetBlendPosition("Idle", inputVector);
                 SetBlendPosition("Run", inputVector);
@@ -85,21 +73,17 @@ public class Player : KinematicBody2D {
             velocity = MoveAndSlide(velocity); 
         }
 
-        if (playerSprite.Frame >= 0 && playerSprite.Frame <= 7) {
+        if (playerSprite.Frame >= 0 && playerSprite.Frame <= 7) { // Facing up
             interactAreaAnchor.RotationDegrees = 270;
-            facing = "right";
         }
-        if (playerSprite.Frame >= 8 && playerSprite.Frame <= 15) {
+        if (playerSprite.Frame >= 8 && playerSprite.Frame <= 15) { // Facing left
             interactAreaAnchor.RotationDegrees = 90;
-            facing = "left";
         }
-        if (playerSprite.Frame >= 16 && playerSprite.Frame <= 23) {
+        if (playerSprite.Frame >= 16 && playerSprite.Frame <= 23) { // Facing right
             interactAreaAnchor.RotationDegrees = 180;
-            facing = "up";
         }
-        if (playerSprite.Frame >= 24 && playerSprite.Frame <= 31) {
+        if (playerSprite.Frame >= 24 && playerSprite.Frame <= 31) { // Facing down
             interactAreaAnchor.RotationDegrees = 0;
-            facing = "down";
         }
         
         CheckVisibleInteractables();
