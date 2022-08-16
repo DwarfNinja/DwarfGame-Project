@@ -9,10 +9,12 @@ public class LockpickingHUD : TextureRect {
     private Control lockCylinder;
     
     private AnimationPlayer animationPlayer;
+
+    private bool turningCylinder = false;
     
     private double currentAngle = 0;
     private int randomUnlockAngle = 90;
-    
+
     private bool lockPickBroken = false;
     private int closestDistance;
     private int possibleTurnRadius;
@@ -36,6 +38,21 @@ public class LockpickingHUD : TextureRect {
         possibleTurnRadius = CalculatePossibleTurnRadius();
     }
 
+    public override void _UnhandledInput(InputEvent @event) {
+        if (@event.IsActionPressed("key_up")) {
+            turningCylinder = true;
+        }
+        else if (@event.IsActionReleased("key_up")) {
+            turningCylinder = false;
+        }
+        
+        if (@event.IsActionPressed("key_f")) {
+            lockPickHealth = 50;
+            lockPickBroken = false;
+            animationPlayer.Play("RESET");
+        }
+    }
+
     public override void _PhysicsProcess(float delta) {
         if (CanReceiveInput()) {
             lockpickRotAnchor.RectGlobalPosition = lockpickPosAnchor.RectGlobalPosition;
@@ -43,18 +60,12 @@ public class LockpickingHUD : TextureRect {
             closestDistance = CalculateClosestHalf();
             possibleTurnRadius = CalculatePossibleTurnRadius();
 
-            if (Input.IsActionPressed("key_up")) {
+            if (turningCylinder) {
                 TurnCylinder();
             }
             else if (lockCylinder.RectRotation > 0) {
                 lockCylinder.RectRotation -= 1;
             }
-        }
-        
-        if (Input.IsActionPressed("key_f")) {
-            lockPickHealth = 50;
-            lockPickBroken = false;
-            animationPlayer.Play("RESET");
         }
     }
 
