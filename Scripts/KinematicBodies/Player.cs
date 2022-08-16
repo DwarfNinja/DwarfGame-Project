@@ -34,7 +34,7 @@ public class Player : KinematicBody2D {
         interactAreaAnchor = (Node2D) GetNode("InteractAreaAnchor");
         playerPickupArea = (Area2D) GetNode("PlayerPickupArea");
         inventory = (Inventory) GetNode("Inventory");
-        animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/playback");
+        animationState = (AnimationNodeStateMachinePlayback) animationTree.Get("parameters/BlendTree/StateMachine/playback");
 		
         playerPickupArea.Connect("body_entered", this, nameof(OnPlayerPickupAreaBodyEntered));
         interactArea.Connect("body_entered", this, nameof(OnInteractAreaBodyEntered));
@@ -163,7 +163,7 @@ public class Player : KinematicBody2D {
     }
 
     public void SetBlendPosition(string animationName, Vector2 value) {
-        animationTree.Set("parameters/" + animationName + "/blend_position", value);
+        animationTree.Set("parameters/BlendTree/StateMachine/" + animationName + "/blend_position", value);
     }
 
     // public override void _Draw() {
