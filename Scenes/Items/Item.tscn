@@ -205,7 +205,6 @@ texture = ExtResource( 4 )
 position = Vector2( -0.5, 2 )
 rotation = 1.5708
 shape = SubResource( 2 )
-disabled = true
 
 [node name="TrailParticles2D" type="Particles2D" parent="."]
 show_behind_parent = true

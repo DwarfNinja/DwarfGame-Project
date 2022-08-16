@@ -44,9 +44,6 @@ tracks/0/keys = {
 margin_right = 22.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 22, 20 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ItemCount" type="Label" parent="."]
 margin_top = 9.0
@@ -61,17 +58,16 @@ __meta__ = {
 }
 
 [node name="Selector" type="TextureRect" parent="."]
+visible = false
 margin_left = -2.0
 margin_top = -2.0
 margin_right = 24.0
 margin_bottom = 22.0
 size_flags_vertical = 3
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+texture = ExtResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Selector")
 autoplay = "Selector Idle"
 "anims/Selector Idle" = SubResource( 2 )
 "anims/Selector Selecting" = SubResource( 3 )

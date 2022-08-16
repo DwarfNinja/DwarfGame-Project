@@ -24,7 +24,6 @@ font_data = ExtResource( 5 )
 margin_right = 40.0
 margin_bottom = 40.0
 focus_mode = 2
-mouse_filter = 2
 script = ExtResource( 2 )
 
 [node name="ForgeUI" type="TextureRect" parent="."]
@@ -37,7 +36,6 @@ margin_left = 7.0
 margin_top = 39.0
 margin_right = 59.0
 margin_bottom = 50.0
-focus_mode = 0
 custom_icons/tick = SubResource( 1 )
 custom_icons/grabber_disabled = ExtResource( 4 )
 custom_icons/grabber_highlight = ExtResource( 4 )

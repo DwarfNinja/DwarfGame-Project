@@ -10,9 +10,6 @@ anchor_bottom = 0.144
 margin_right = 0.160004
 margin_bottom = 0.079998
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="InventoryBarTexture" type="TextureRect" parent="."]
 margin_right = 148.0

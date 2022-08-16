@@ -29,9 +29,6 @@ script = ExtResource( 2 )
 visible = false
 margin_right = 320.0
 margin_bottom = 180.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Icons" type="MarginContainer" parent="VBoxContainer"]
 margin_right = 320.0

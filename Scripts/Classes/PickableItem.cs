@@ -56,7 +56,7 @@ public class PickableItem : RigidBody2D {
         }
     }
 
-        private void MoveToTarget(Physics2DDirectBodyState state) {
+    private void MoveToTarget(Physics2DDirectBodyState state) {
         direction = (GlobalPosition - target.GlobalPosition).Normalized();
         ApplyCentralImpulse(-direction * 5);
     }
