@@ -6,7 +6,7 @@ public class Inventory : Node2D {
 
 	private R_Item goldcoins = (R_Item) GD.Load("res://Resources/Entities/Resources/GoldCoins.tres");
 
-	private Array<Slot> inventorySlots = new Array<Slot>() {
+	private Array<Slot> inventorySlots = new Array<Slot> {
 		new Slot("Slot_0", null, 0),
 		new Slot("Slot_1", null, 0),
 		new Slot("Slot_2", null, 0),
@@ -19,70 +19,68 @@ public class Inventory : Node2D {
 
 	private int selectorPosition = 0;
 	private R_Item selectedItem;
-	private Slot selectedSlot;
+	private Slot currentSlot;
 
 	public R_Item SelectedItem {
 		get => selectedItem;
 	}
 
 	public override void _Ready() {
-		Events.ConnectEvent(nameof(Events.CraftItem), this, nameof(OnCraftItem));
-		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
-		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
-		
-		playerItems = new Dictionary<R_Item, int>() {
+		currentSlot = inventorySlots[0];
+		playerItems = new Dictionary<R_Item, int> {
 			[goldcoins] =  0,
 		};
+		
+		Events.ConnectEvent(nameof(Events.CraftItem), this, nameof(OnCraftItem));
+		Events.ConnectEvent(nameof(Events.RemoveSelectedItem), this, nameof(OnRemoveSelectedItem));
+		Events.EmitEvent(nameof(Events.UpdateSelector), currentSlot, false);
+
+
 	}
 
-	public override void _Process(float delta) {
-		Slot currentSlot = inventorySlots[selectorPosition];
-
+	public override void _UnhandledInput(InputEvent @event) {
 		if (HUD.MenuOpen == false) {
 			if (GetTree().CurrentScene?.Name == "Cave") {
-				if (Input.IsActionJustPressed("key_leftclick")) {
-					if (GetItemInSlot(currentSlot) != null) {
+				if (@event.IsActionPressed("key_leftclick")) {
+					if (!currentSlot.IsEmpty()) {
 						if (GetItemInSlot(currentSlot).EntityType == R_Item.Type.Craftable) {
-							SelectSlot(currentSlot);
+							SelectSlot();
 						}
 					}
 				}
-
-				if (Input.IsActionPressed("key_rightclick")) {
+				
+				if (@event.IsActionPressed("key_rightclick")) {
 					if (selectedItem != null) {
 						if (selectedItem.EntityType == R_Item.Type.Craftable) {
 							Events.EmitEvent(nameof(Events.PlaceObject), selectedItem);
-							SelectSlot(currentSlot);
+							if (currentSlot.IsEmpty()) {
+								DeselectSlot();
+							}
 						}
 					}
 				}
-			}
-
-			//Determines Selector position based on scroll wheel movement
-			if (Input.IsActionJustReleased("scroll_up")) {
-				selectorPosition += 1;
-				if (selectorPosition > 5) {
-					selectorPosition = 0;
+				
+				if (@event.IsActionPressed("scroll_up")) {
+					selectorPosition = selectorPosition < 5 ? selectorPosition += 1 : 0;
+					currentSlot = inventorySlots[selectorPosition];
+					Events.EmitEvent(nameof(Events.UpdateSelector), currentSlot, false);
 				}
-				DeselectSlot();
-			}
 
-			else if (Input.IsActionJustReleased("scroll_down")) {
-				selectorPosition -= 1;
-				if (selectorPosition < 0) {
-					selectorPosition = 5;
+				else if (@event.IsActionPressed("scroll_down")) {
+					selectorPosition = selectorPosition > 0 ? selectorPosition -= 1 : 5;
+					currentSlot = inventorySlots[selectorPosition];
+					Events.EmitEvent(nameof(Events.UpdateSelector), currentSlot, false);
 				}
-				DeselectSlot();
-			}
 
-			if (Input.IsActionJustPressed("key_q")) {
-				if (GetItemInSlot(currentSlot) != null) {
-					Events.EmitEvent(nameof(Events.DropSelectedItem), GetItemInSlot(currentSlot));
+				if (@event.IsActionPressed("key_q")) {
+					if (!currentSlot.IsEmpty()) {
+						Events.EmitEvent(nameof(Events.DropSelectedItem), GetItemInSlot(currentSlot));
+					}
 				}
 			}
 		}
 	}
-	
+
 	public bool PickUpItem(R_Item itemDef) {
 		if (CanFitInInventory(itemDef)) {
 			AddItem(itemDef);
@@ -116,16 +114,14 @@ public class Inventory : Node2D {
 		return false;
 	}
 
-	private void SelectSlot(Slot currentSlot) {
-		selectedSlot = currentSlot;
+	private void SelectSlot() {
 		selectedItem = GetItemInSlot(currentSlot);
-		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), currentSlot);
+		Events.EmitEvent(nameof(Events.UpdateSelector), currentSlot, true);
 	}
-
+	
 	private void DeselectSlot() {
-		selectedSlot = null;
 		selectedItem = null;
-		Events.EmitEvent(nameof(Events.UpdateSlotSelectors), selectorPosition, selectedSlot);
+		Events.EmitEvent(nameof(Events.UpdateSelector), currentSlot, false);
 	}
 
 	private R_Item GetItemInSlot(Slot slot) {
@@ -206,7 +202,7 @@ public class Inventory : Node2D {
 			playerItems[itemDef] -= 1;
 			return;
 		}
-		selectedSlot.RemoveItem(itemDef);
+		currentSlot.RemoveItem(itemDef);
 	}
 	
 	private void OnCraftItem(R_Craftable craftableDef) {

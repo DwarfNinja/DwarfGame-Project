@@ -55,6 +55,6 @@ public class Slot : Node2D {
     }
 
     public bool IsEmpty() {
-        return amount <= 0;
+        return amount == 0;
     }
 }
