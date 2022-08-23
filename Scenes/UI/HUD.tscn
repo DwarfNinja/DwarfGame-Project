@@ -29,10 +29,12 @@ script = ExtResource( 2 )
 visible = false
 margin_right = 320.0
 margin_bottom = 180.0
+mouse_filter = 2
 
 [node name="Icons" type="MarginContainer" parent="VBoxContainer"]
 margin_right = 320.0
 margin_bottom = 19.0
+mouse_filter = 2
 custom_constants/margin_top = 3
 custom_constants/margin_left = 5
 
@@ -41,17 +43,20 @@ margin_left = 5.0
 margin_top = 3.0
 margin_right = 320.0
 margin_bottom = 19.0
+mouse_filter = 2
 custom_constants/separation = 272
 
 [node name="GoldCoin" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
 margin_right = 14.0
 margin_bottom = 16.0
+mouse_filter = 2
 texture = ExtResource( 3 )
 
 [node name="KingSprite" type="TextureRect" parent="VBoxContainer/Icons/HBoxContainer"]
 margin_left = 286.0
 margin_right = 302.0
 margin_bottom = 16.0
+mouse_filter = 2
 texture = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,6 +66,7 @@ __meta__ = {
 margin_top = 23.0
 margin_right = 320.0
 margin_bottom = 28.0
+mouse_filter = 2
 custom_constants/margin_top = -6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Labels"]
@@ -68,6 +74,7 @@ margin_top = -6.0
 margin_right = 320.0
 margin_bottom = 5.0
 rect_min_size = Vector2( 100, 0 )
+mouse_filter = 2
 custom_constants/separation = 262
 
 [node name="GoldCoins" type="Label" parent="VBoxContainer/Labels/HBoxContainer"]
@@ -97,12 +104,14 @@ modulate = Color( 1, 1, 1, 0 )
 margin_top = 32.0
 margin_right = 320.0
 margin_bottom = 147.0
+mouse_filter = 2
 custom_constants/separation = 115
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 margin_top = 151.0
 margin_right = 320.0
 margin_bottom = 177.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -113,6 +122,7 @@ anchor_bottom = 0.0
 margin_left = 86.0
 margin_right = 234.0
 margin_bottom = 26.0
+mouse_filter = 2
 
 [node name="UIs" type="Control" parent="."]
 margin_left = 2.0
