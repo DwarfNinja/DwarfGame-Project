@@ -739,6 +739,10 @@ key_q={
 2d_physics/layer_6="Static Object"
 2d_physics/layer_7="PlayerGhost"
 
+[mono]
+
+project/assembly_name="DwarfGame-Project"
+
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
