@@ -24,6 +24,7 @@ var ignore_paths := []
 var full_path := false
 var sort_alphabetical := true
 var auto_refresh := true
+var builtin_enabled := false
 
 var patterns := [["\\bTODO\\b", Color("96f1ad")], ["\\bHACK\\b", Color("d5bc70")], ["\\bFIXME\\b", Color("d57070")]]
 
@@ -66,21 +67,42 @@ func get_active_script() -> TodoItem:
 				return todo_item
 		
 		# nothing found
-		var todo_item := TodoItem.new()
-		todo_item.script_path = script_path
+		var todo_item := TodoItem.new(script_path, [])
 		return todo_item
 	else:
 		# not a script
-		var todo_item := TodoItem.new()
-		todo_item.script_path = "res://Documentation"
+		var todo_item := TodoItem.new("res://Documentation", [])
 		return todo_item
 
 
 func go_to_script(script_path: String, line_number : int = 0) -> void:
-	var script := load(script_path)
-	plugin.get_editor_interface().edit_resource(script)
-	plugin.get_editor_interface().get_script_editor().goto_line(line_number - 1)
+	if plugin.get_editor_interface().get_editor_settings().get_setting("text_editor/external/use_external_editor"):
+		var exec_path = plugin.get_editor_interface().get_editor_settings().get_setting("text_editor/external/exec_path")
+		var args := get_exec_flags(exec_path, script_path, line_number)
+		OS.execute(exec_path, args)
+	else:
+		var script := load(script_path)
+		plugin.get_editor_interface().edit_resource(script)
+		plugin.get_editor_interface().get_script_editor().goto_line(line_number - 1)
 
+func get_exec_flags(editor_path : String, script_path : String, line_number : int) -> PoolStringArray:
+	var args : PoolStringArray
+	var script_global_path = ProjectSettings.globalize_path(script_path)
+	
+	if editor_path.ends_with("code.cmd") or editor_path.ends_with("code"): ## VS Code
+		args.append(ProjectSettings.globalize_path("res://"))
+		args.append("--goto")
+		args.append(script_global_path +  ":" + String(line_number))
+	
+	elif editor_path.ends_with("rider64.exe") or editor_path.ends_with("rider"): ## Rider
+		args.append("--line")
+		args.append(String(line_number))
+		args.append(script_global_path)
+		
+	else: ## Atom / Sublime
+		args.append(script_global_path + ":" + String(line_number))
+	
+	return args
 
 func sort_alphabetical(a, b) -> bool:
 	if a.script_path > b.script_path:
@@ -146,6 +168,7 @@ func create_config_file() -> void:
 	config.set_value("patterns", "patterns", patterns)
 	
 	config.set_value("config", "auto_refresh", auto_refresh)
+	config.set_value("config", "builtin_enabled", builtin_enabled)
 	
 	var err = config.save("res://addons/Todo_Manager/todo.cfg")
 
@@ -159,6 +182,7 @@ func load_config() -> void:
 		ignore_paths = config.get_value("scripts", "ignore_paths", [])
 		patterns = config.get_value("patterns", "patterns", DEFAULT_PATTERNS)
 		auto_refresh = config.get_value("config", "auto_refresh", true)
+		builtin_enabled = config.get_value("config", "builtin_enabled", false)
 	else:
 		create_config_file()
 
@@ -170,7 +194,7 @@ func _on_SettingsButton_toggled(button_pressed: bool) -> void:
 		create_config_file()
 #		plugin.find_tokens_from_path(plugin.script_cache)
 		if auto_refresh:
-			plugin.rescan_files()
+			plugin.rescan_files(true)
 
 func _on_Tree_item_activated() -> void:
 	var item : TreeItem
@@ -196,7 +220,7 @@ func _on_TODOColourPickerButton_color_changed(color: Color) -> void:
 	patterns[0][1] = color
 
 func _on_RescanButton_pressed() -> void:
-	plugin.rescan_files()
+	plugin.rescan_files(true)
 
 func change_colour(colour: Color, index: int) -> void:
 	patterns[index][1] = colour
@@ -248,3 +272,6 @@ func _on_ignore_paths_changed(new_text: String) -> void:
 func _on_TabContainer_tab_changed(tab: int) -> void:
 	build_tree()
 
+func _on_BuiltInCheckButton_toggled(button_pressed: bool) -> void:
+	builtin_enabled = button_pressed
+	plugin.rescan_files(true)
